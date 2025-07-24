@@ -1,7 +1,8 @@
 import jax
 import jax.numpy as jnp
-from jaxmat.tensors.linear_algebra import eig33_HarariAlbocher, eig33
+from jaxmat.tensors.linear_algebra import eig33, isotropic_function
 import numpy as np
+import scipy.linalg as sl
 import pytest
 
 
@@ -45,7 +46,7 @@ def batch_build_A(diag, quats):
 
 
 def batch_eigvals(A_batch):
-    return jax.vmap(eig33_HarariAlbocher)(A_batch)
+    return jax.vmap(eig33)(A_batch)
 
 
 diags_rand = jnp.array(np.random.rand(10, 3))
@@ -59,22 +60,37 @@ diags_three = jnp.array([[1, 1, 1]])  # , [0, 0, 0]])
 diags = np.vstack((diags_rand, diags_two, diags_three))
 
 
-@pytest.mark.parametrize("diag", diags)
-def test_eigenvalue(diag):
+@pytest.fixture(params=diags)
+def diagonal(request):
+    return request.param
+
+
+@pytest.fixture
+def quaternions():
     key = jax.random.PRNGKey(0)
-
     batch_size = int(10)
+    return random_unit_quaternions(key, batch_size)
 
-    quats = random_unit_quaternions(key, batch_size)
 
-    # Build matrices A = Rᵀ D R
-    A_batch = batch_build_A(diag, quats)
+def test_eigenvalue(diagonal, quaternions):
+    A_batch = batch_build_A(diagonal, quaternions)
     for A in A_batch:
-        eigvals, dyads = eig33_HarariAlbocher(A)
+        eigvals, dyads = eig33(A)
         A_reconstructed = sum([lamb * v for (lamb, v) in zip(eigvals, dyads)])
-        assert np.allclose(jnp.sort(diag), eigvals)
+        assert np.allclose(jnp.sort(diagonal), eigvals)
         assert np.allclose(A, A_reconstructed)
 
     # test_batching
     eigvals_batch, dyads_batch = batch_eigvals(A_batch)
 
+
+@pytest.mark.parametrize(
+    ("matrix_fun", "scalar_fun"),
+    [(sl.expm, jnp.exp), (sl.logm, jnp.log), (sl.sqrtm, jnp.sqrt)],
+)
+def test_isotropic_function(matrix_fun, scalar_fun, diagonal, quaternions):
+    A_batch = batch_build_A(jnp.abs(diagonal), quaternions)
+    for A in A_batch:
+        fA = matrix_fun(A)
+        fA_ = isotropic_function(scalar_fun, A)
+        assert np.allclose(fA, fA_)
