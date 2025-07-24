@@ -133,6 +133,45 @@ def eig33(A, rtol=1e-16):
     return eigvals, eigendyads
 
 
+def stretch_tensor(F):
+    C = F.T @ F
+    return sqrtm(C)
+
+
+def _sqrtm(C):
+    Id = jnp.eye(3)
+    C2 = C @ C
+    eigvals, _ = eig33(C)
+    lamb = jnp.sqrt(eigvals)
+    i1 = jnp.sum(lamb)
+    i2 = lamb[0] * lamb[1] + lamb[1] * lamb[2] + lamb[0] * lamb[2]
+    i3 = jnp.prod(lamb)
+    D = i1 * i2 - i3
+    U = 1 / D * (-C2 + (i1**2 - i2) * C + i1 * i3 * Id)
+    U_inv = 1 / i3 * (C - i1 * U + i2 * Id)
+    return U, U_inv
+
+
+def sqrtm(A):
+    return _sqrtm(A)[0]
+
+
+def inv_sqrtm(A):
+    return _sqrtm(A)[1]
+
+
+@partial(jax.jit, static_argnums=1)
+def polar(F, type="RU"):
+    C = F.T @ F
+    U, U_inv = _sqrtm(C)
+    R = F @ U_inv
+    if type == "RU":
+        return R, U
+    elif type == "VR":
+        V = R @ U @ R.T
+        return V, R
+
+
 def isotropic_function(fun, A):
     eigvals, eigendyads = eig33(A)
     f = fun(eigvals)
@@ -145,10 +184,6 @@ def expm(A):
 
 def logm(A):
     return isotropic_function(jnp.log, A)
-
-
-def sqrtm(A):
-    return isotropic_function(jnp.sqrt, A)
 
 
 def powm(A, m):

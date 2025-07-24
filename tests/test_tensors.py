@@ -1,6 +1,13 @@
 import jax
 import jax.numpy as jnp
-from jaxmat.tensors.linear_algebra import eig33, isotropic_function
+from jaxmat.tensors.linear_algebra import (
+    eig33,
+    isotropic_function,
+    stretch_tensor,
+    polar,
+    sqrtm,
+    inv_sqrtm,
+)
 import numpy as np
 import scipy.linalg as sl
 import pytest
@@ -86,7 +93,7 @@ def test_eigenvalue(diagonal, quaternions):
 
 @pytest.mark.parametrize(
     ("matrix_fun", "scalar_fun"),
-    [(sl.expm, jnp.exp), (sl.logm, jnp.log), (sl.sqrtm, jnp.sqrt)],
+    [(sl.expm, jnp.exp), (sl.logm, jnp.log)],
 )
 def test_isotropic_function(matrix_fun, scalar_fun, diagonal, quaternions):
     A_batch = batch_build_A(jnp.abs(diagonal), quaternions)
@@ -94,3 +101,29 @@ def test_isotropic_function(matrix_fun, scalar_fun, diagonal, quaternions):
         fA = matrix_fun(A)
         fA_ = isotropic_function(scalar_fun, A)
         assert np.allclose(fA, fA_)
+
+
+def test_sqrtm(diagonal, quaternions):
+    A_batch = batch_build_A(jnp.abs(diagonal), quaternions)
+    for A in A_batch:
+        fA = sqrtm(A)
+        fA_ = isotropic_function(jnp.sqrt, A)
+        assert np.allclose(fA, fA_)
+        fA = inv_sqrtm(A)
+        fA_ = isotropic_function(lambda x: 1 / jnp.sqrt(x), A)
+        assert np.allclose(fA, fA_)
+
+
+def test_stretch_tensor():
+    gamma = 0.75
+    Id = jnp.eye(3)
+    F = jnp.array([[1, 1 + gamma, 0], [0, 1, 0], [0, 0, 1]])
+    R, U = polar(F)
+    C = F.T @ F
+    B = F @ F.T
+    assert jnp.allclose(F, R @ U)
+    assert jnp.allclose(C, U @ U)
+    assert jnp.allclose(Id, R.T @ R)
+    V, R_ = polar(F, type="VR")
+    assert jnp.allclose(R, R_)
+    assert jnp.allclose(B, V @ V)
