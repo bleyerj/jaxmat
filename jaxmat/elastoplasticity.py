@@ -3,7 +3,7 @@ import jax.numpy as jnp
 from dolfinx_materials.material.jax import JAXMaterial, tangent_AD, JAXNewton
 from dolfinx_materials.jax_materials.tensors import to_mat, dev
 import optimistix as optx
-from tensor_utils import eig33, jacobi_eig_3x3
+from jaxmat.tensors.linear_algebra import eig33, jacobi_eig_3x3
 
 
 def FB(x, y):

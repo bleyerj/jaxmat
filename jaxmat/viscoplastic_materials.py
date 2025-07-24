@@ -3,7 +3,7 @@ import jax
 import jax.numpy as jnp
 import equinox as eqx
 from dolfinx_materials.jax_materials.tensors import dev, to_mat
-from tensor_utils import jacobi_eig_3x3, eig33
+from jaxmat.tensors.linear_algebra import jacobi_eig_3x3, eig33
 
 
 class AbstractPlasticSurface(eqx.Module):
