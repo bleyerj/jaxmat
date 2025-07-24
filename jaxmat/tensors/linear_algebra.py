@@ -1,18 +1,21 @@
+from functools import partial
 import jax
 import jax.numpy as jnp
 from jax import lax
-from functools import partial
 
 
 def dim(A):
+    """Dimension of a n-rank tensor, assuming shape=(dim, dim, ..., dim)."""
     return A.shape[0]
 
 
 def tr(A):
+    """Trace of a n-dim 2nd-rank tensor."""
     return jnp.trace(A)
 
 
 def dev(A):
+    """Deviatoric part of a n-dim 2nd-rank tensor."""
     d = dim(A)
     Id = jnp.eye(d)
     return A - tr(A) / d * Id
@@ -45,7 +48,7 @@ def inv33(A):
 
 
 def invariants_principal(A):
-    """Principal invariants of a real 3×3 tensor A."""
+    """Principal invariants of a real 3x3 tensor A."""
     i1 = jnp.trace(A)
     i2 = (jnp.trace(A) ** 2 - jnp.trace(A.dot(A))) / 2
     i3 = jnp.linalg.det(A)
@@ -81,6 +84,12 @@ def eig33(A, rtol=1e-16):
     #     return (N1, N2, N3)
 
     def compute_eigvals_HarariAlbocher(A):
+        """
+        Eigendecomposition of 3x3 symmetric matrix based on
+        Harari, I., & Albocher, U. (2023). Computation of eigenvalues of a real,
+        symmetric 3× 3 matrix with particular reference to the pernicious case of two nearly equal eigenvalues.
+        International Journal for Numerical Methods in Engineering, 124(5), 1089-1110.
+        """
         norm = jnp.linalg.norm(A)
         Id = jnp.eye(dim(A))
         I1 = jnp.trace(A)
@@ -134,11 +143,16 @@ def eig33(A, rtol=1e-16):
 
 
 def stretch_tensor(F):
+    """Computes the strech tensor U = sqrtm(F.T @ F)."""
     C = F.T @ F
     return sqrtm(C)
 
 
 def _sqrtm(C):
+    """
+    Unified expression for sqrt and inverse sqrt of a symmetric matrix `C`,
+    see Simo & Hugues, Computational Inelasticity, p.244
+    """
     Id = jnp.eye(3)
     C2 = C @ C
     eigvals, _ = eig33(C)
@@ -153,38 +167,58 @@ def _sqrtm(C):
 
 
 def sqrtm(A):
+    """Computes the matrix square-root of a symmetric 3x3 matrix."""
     return _sqrtm(A)[0]
 
 
 def inv_sqrtm(A):
+    """Computes the matrix inverse square-root of a symmetric 3x3 matrix."""
     return _sqrtm(A)[1]
 
 
 @partial(jax.jit, static_argnums=1)
-def polar(F, type="RU"):
+def polar(F, mode="RU"):
+    """Computes the 'RU' or 'VR' polar decomposition of F."""
     C = F.T @ F
     U, U_inv = _sqrtm(C)
     R = F @ U_inv
-    if type == "RU":
+    if mode == "RU":
         return R, U
-    elif type == "VR":
+    elif mode == "VR":
         V = R @ U @ R.T
         return V, R
 
 
 def isotropic_function(fun, A):
+    r"""Computes an isotropic function of a symmetric 3x3 matrix.
+
+    Parameters
+    ----------
+    fun : callable
+        A scalar function f(x)
+    A : jax.Array
+        A symmetric 3x3 matrix
+
+    Returns
+    -------
+    jax.Array
+        A new 3x3 matrix such that `f_A = sum_i f(\lambda_i) n_i \times n_i`
+    """
     eigvals, eigendyads = eig33(A)
     f = fun(eigvals)
     return sum([fi * Ni for fi, Ni in zip(f, eigendyads)])
 
 
 def expm(A):
+    """Computes the matrix exponential of a symmetric 3x3 matrix."""
     return isotropic_function(jnp.exp, A)
 
 
 def logm(A):
+    """Computes the matrix logarithm of a symmetric 3x3 matrix."""
     return isotropic_function(jnp.log, A)
 
 
 def powm(A, m):
+    """Computes the matrix power of exponent m of a symmetric 3x3 matrix."""
     return isotropic_function(lambda x: jnp.power(x, m), A)

@@ -67,13 +67,13 @@ diags_three = jnp.array([[1, 1, 1]])  # , [0, 0, 0]])
 diags = np.vstack((diags_rand, diags_two, diags_three))
 
 
-@pytest.fixture(params=diags)
-def diagonal(request):
+@pytest.fixture(name="diagonal", params=diags)
+def fixture_diagonal(request):
     return request.param
 
 
-@pytest.fixture
-def quaternions():
+@pytest.fixture(name="quaternions")
+def fixture_quaternions():
     key = jax.random.PRNGKey(0)
     batch_size = int(10)
     return random_unit_quaternions(key, batch_size)
@@ -88,7 +88,7 @@ def test_eigenvalue(diagonal, quaternions):
         assert np.allclose(A, A_reconstructed)
 
     # test_batching
-    eigvals_batch, dyads_batch = batch_eigvals(A_batch)
+    batch_eigvals(A_batch)
 
 
 @pytest.mark.parametrize(
@@ -124,6 +124,8 @@ def test_stretch_tensor():
     assert jnp.allclose(F, R @ U)
     assert jnp.allclose(C, U @ U)
     assert jnp.allclose(Id, R.T @ R)
-    V, R_ = polar(F, type="VR")
+    V, R_ = polar(F, mode="VR")
     assert jnp.allclose(R, R_)
     assert jnp.allclose(B, V @ V)
+    U_ = stretch_tensor(F)
+    assert jnp.allclose(U, U_)
