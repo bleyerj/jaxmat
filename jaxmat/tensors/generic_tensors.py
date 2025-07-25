@@ -184,7 +184,7 @@ class SymmetricTensor2(Tensor2):
         return Tensor2
 
 
-def kelvin_mandel_index_map(d):
+def symmetric_kelvin_mandel_index_map(d):
     """
     Returns:
         - km_to_ij: list mapping KM index → (i,j)
@@ -193,11 +193,16 @@ def kelvin_mandel_index_map(d):
     km_to_ij = []
     ij_to_km = {}
     idx = 0
+    sqrt2 = 2**0.5
     for i in range(d):
-        for j in range(i, d):
-            km_to_ij.append((i, j))
-            ij_to_km[(i, j)] = idx
-            ij_to_km[(j, i)] = idx  # symmetry
+        ij_to_km[(i, i)] = (idx, 1.0)
+        km_to_ij.append(((i, i), 1.0))
+        idx += 1
+    for i in range(d):
+        for j in range(i + 1, d):
+            km_to_ij.append(((i, j), sqrt2))
+            ij_to_km[(i, j)] = (idx, sqrt2)
+            ij_to_km[(j, i)] = (idx, sqrt2)  # symmetry
             idx += 1
     return km_to_ij, ij_to_km
 
@@ -233,14 +238,12 @@ class SymmetricTensor4(Tensor):
     def _as_array(self, tensor: jax.Array) -> jax.Array:
         d = self.dim
         n = self.array_shape[0]
-        km_to_ij, _ = kelvin_mandel_index_map(d)
+        km_to_ij, _ = symmetric_kelvin_mandel_index_map(d)
         array = jnp.zeros((n, n))
 
-        for a, (i, j) in enumerate(km_to_ij):
-            Na = jnp.sqrt(2.0) if i != j else 1.0
-            for b, (k, l) in enumerate(km_to_ij):
-                Nb = jnp.sqrt(2.0) if k != l else 1.0
-                array = array.at[a, b].set(Na * Nb * tensor[i, j, k, l])
+        for a, (ij, Na) in enumerate(km_to_ij):
+            for b, (kl, Nb) in enumerate(km_to_ij):
+                array = array.at[a, b].set(Na * Nb * tensor[*ij, *kl])
         return array
 
     def _as_tensor(self, array: jax.Array) -> jax.Array:
@@ -248,18 +251,16 @@ class SymmetricTensor4(Tensor):
         Converts a KM matrix (n,n) back to full symmetric 4th-order tensor (d,d,d,d)
         """
         d = self.dim
-        km_to_ij, _ = kelvin_mandel_index_map(d)
+        km_to_ij, _ = symmetric_kelvin_mandel_index_map(d)
         tensor = jnp.zeros((d, d, d, d))
 
-        for a, (i, j) in enumerate(km_to_ij):
-            Na = jnp.sqrt(2.0) if i != j else 1.0
-            for b, (k, l) in enumerate(km_to_ij):
-                Nb = jnp.sqrt(2.0) if k != l else 1.0
+        for a, (ij, Na) in enumerate(km_to_ij):
+            for b, (kl, Nb) in enumerate(km_to_ij):
                 val = array[a, b] / (Na * Nb)
 
                 # Assign to all symmetric permutations
-                for ii, jj in {(i, j), (j, i)}:
-                    for kk, ll in {(k, l), (l, k)}:
+                for ii, jj in {ij, reversed(ij)}:
+                    for kk, ll in {kl, reversed(kl)}:
                         tensor = tensor.at[ii, jj, kk, ll].set(val)
                         tensor = tensor.at[kk, ll, ii, jj].set(val)
         return tensor

@@ -139,6 +139,3 @@ def test_tensor4():
     jnp.allclose(J @ J, J)
     jnp.allclose(K @ K, K)
     jnp.allclose(J @ K, 0)
-
-
-test_tensor4()
