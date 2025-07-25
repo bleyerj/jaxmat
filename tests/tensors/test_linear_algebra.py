@@ -1,5 +1,9 @@
+import numpy as np
+import scipy.linalg as sl
+import pytest
 import jax
 import jax.numpy as jnp
+from jaxmat.tensors import SymmetricTensor2, Tensor2
 from jaxmat.tensors.linear_algebra import (
     eig33,
     isotropic_function,
@@ -8,9 +12,6 @@ from jaxmat.tensors.linear_algebra import (
     sqrtm,
     inv_sqrtm,
 )
-import numpy as np
-import scipy.linalg as sl
-import pytest
 
 
 def random_unit_quaternions(key, batch_size):
