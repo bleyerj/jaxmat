@@ -1,11 +1,8 @@
 import jax
 import jax.numpy as jnp
-from dolfinx_materials.material.jax import JAXMaterial
 import equinox as eqx
 import optimistix as optx
-from jaxmat.tensors import to_mat
 from jaxmat.tensors import dev_vect as dev
-from jaxmat.tensors.linear_algebra import eig33
 from jaxmat.viscoplastic_materials import (
     LinearElasticIsotropic,
     AbstractPlasticSurface,
