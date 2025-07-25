@@ -1,5 +1,4 @@
 from typing import Optional, Tuple
-import numpy as np
 import jax
 import jax.numpy as jnp
 import equinox as eqx
@@ -9,7 +8,6 @@ from . import linear_algebra
 class Tensor(eqx.Module):
     dim: int
     rank: int
-    shape: tuple
     _tensor: jax.Array
 
     def __init__(
@@ -18,15 +16,18 @@ class Tensor(eqx.Module):
 
         if tensor is not None:
             if tensor.shape != self.shape:
-                raise ValueError("Wrong shape {tensor.shape} <> {self.shape}")
+                raise ValueError(f"Wrong shape {tensor.shape} <> {self.shape}")
             self._tensor = jnp.asarray(tensor)
-            self.array  # force call to do some sanity checks
         elif array is not None:
             if array.shape != self.array_shape:
                 raise ValueError(f"Wrong shape {array.shape} <> {self.array_shape}")
             self._tensor = self._as_tensor(jnp.asarray(array))
         else:
             self._tensor = jnp.zeros(self.shape)
+
+    @property
+    def shape(self):
+        return (self.dim,) * self.rank
 
     @property
     def tensor(self):
@@ -51,16 +52,21 @@ class Tensor(eqx.Module):
         return self._tensor
 
     def __array__(self, dtype=None):
-        return np.asarray(self._tensor, dtype=dtype)
+        return jnp.asarray(self._tensor, dtype=dtype)
 
     def __add__(self, other):
-        return self.__class__(tensor=self.tensor + jnp.asarray(other))
+        cls = self._weaken_with(other)
+        return cls(tensor=self.tensor + jnp.asarray(other))
 
     def __sub__(self, other):
-        return self.__class__(tensor=self.tensor - jnp.asarray(other))
+        cls = self._weaken_with(other)
+        return cls(tensor=self.tensor - jnp.asarray(other))
 
     def __mul__(self, other):
         return self.__class__(tensor=other * self.tensor)
+
+    def __truediv__(self, other):
+        return self.__class__(tensor=self.tensor / other)
 
     def __rmul__(self, other):
         return self.__mul__(other)
@@ -77,14 +83,20 @@ class Tensor(eqx.Module):
     def _as_array(self, tensor):
         return tensor.ravel()
 
-    def _as_tensor(self, vector):
-        return vector.reshape(self.shape)
+    def _as_tensor(self, array):
+        return array.reshape(self.shape)
+
+    def _weaken_with(self, other):
+        return self.__class__
 
 
 class Tensor2(Tensor):
     dim = 3
     rank = 2
-    shape = (dim, dim)
+
+    @classmethod
+    def identity(cls):
+        return cls(tensor=jnp.eye(cls.dim))
 
     def _as_array(self, tensor):
         d = self.dim
@@ -95,19 +107,19 @@ class Tensor2(Tensor):
                 vec.append(tensor[j, i])
         return jnp.array(vec)
 
-    def _as_tensor(self, vector):
+    def _as_tensor(self, array):
         d = self.dim
         tensor = jnp.zeros((d, d))
         # Diagonal terms
         for i in range(d):
-            tensor = tensor.at[i, i].set(vector[i])
+            tensor = tensor.at[i, i].set(array[i])
 
         # Off-diagonal terms
         offset = d
         for i in range(d):
             for j in range(i + 1, d):
-                tensor = tensor.at[i, j].set(vector[offset])
-                tensor = tensor.at[j, i].set(vector[offset + 1])
+                tensor = tensor.at[i, j].set(array[offset])
+                tensor = tensor.at[j, i].set(array[offset + 1])
                 offset += 2
 
         return tensor
@@ -118,7 +130,7 @@ class Tensor2(Tensor):
 
     @property
     def inv(self):
-        return Tensor2(tensor=linear_algebra.inv33(self.tensor))
+        return self.__class__(tensor=linear_algebra.inv33(self.tensor))
 
     @property
     def eigenvalues(self):
@@ -143,19 +155,19 @@ class SymmetricTensor2(Tensor2):
                 vec.append(jnp.sqrt(2) * tensor[i, j])
         return jnp.array(vec)
 
-    def _as_tensor(self, vector):
+    def _as_tensor(self, array):
         d = self.dim
         tensor = jnp.zeros((d, d))
 
         # Diagonal entries
         for i in range(d):
-            tensor = tensor.at[i, i].set(vector[i])
+            tensor = tensor.at[i, i].set(array[i])
 
         # Off-diagonal entries (upper triangle) scaled by 1/sqrt(2)
         offset = d
         for i in range(d):
             for j in range(i + 1, d):
-                val = vector[offset] / jnp.sqrt(2)
+                val = array[offset] / jnp.sqrt(2)
                 tensor = tensor.at[i, j].set(val)
                 tensor = tensor.at[j, i].set(val)  # symmetry
                 offset += 1
@@ -164,7 +176,98 @@ class SymmetricTensor2(Tensor2):
 
     def __matmul__(self, other):
         # Multiplication of symmetric tensors cannot be ensured to remain symmetric
-        return Tensor2(tensor=self.tensor @ other.tensor)
+        return Tensor2(tensor=self.tensor @ jnp.asarray(other))
+
+    def _weaken_with(self, other):
+        if isinstance(other, self.__class__):
+            return self.__class__
+        return Tensor2
 
 
-from .tensor_utils import polar, stretch_tensor
+def kelvin_mandel_index_map(d):
+    """
+    Returns:
+        - km_to_ij: list mapping KM index → (i,j)
+        - ij_to_km: dict mapping (i,j) → KM index
+    """
+    km_to_ij = []
+    ij_to_km = {}
+    idx = 0
+    for i in range(d):
+        for j in range(i, d):
+            km_to_ij.append((i, j))
+            ij_to_km[(i, j)] = idx
+            ij_to_km[(j, i)] = idx  # symmetry
+            idx += 1
+    return km_to_ij, ij_to_km
+
+
+class SymmetricTensor4(Tensor):
+    dim = 3
+    rank = 4
+
+    @classmethod
+    def identity(cls):
+        I = jnp.eye(cls.dim)
+        I4 = jnp.einsum("ik,jl->ijkl", I, I)
+        return cls(tensor=I4)
+
+    @classmethod
+    def J(cls):
+        I2 = SymmetricTensor2.identity()
+        J = jnp.einsum("ij,kl->ijkl", I2, I2) / cls.dim
+        return cls(tensor=J)
+
+    @classmethod
+    def K(cls):
+        return cls.identity() - cls.J()
+
+    @property
+    def array_shape(self):
+        vdim = self.dim * (self.dim + 1) // 2
+        return (vdim, vdim)
+
+    def is_symmetric(self):
+        return jnp.allclose(self, self.T)
+
+    def _as_array(self, tensor: jax.Array) -> jax.Array:
+        d = self.dim
+        n = self.array_shape[0]
+        km_to_ij, _ = kelvin_mandel_index_map(d)
+        array = jnp.zeros((n, n))
+
+        for a, (i, j) in enumerate(km_to_ij):
+            Na = jnp.sqrt(2.0) if i != j else 1.0
+            for b, (k, l) in enumerate(km_to_ij):
+                Nb = jnp.sqrt(2.0) if k != l else 1.0
+                array = array.at[a, b].set(Na * Nb * tensor[i, j, k, l])
+        return array
+
+    def _as_tensor(self, array: jax.Array) -> jax.Array:
+        """
+        Converts a KM matrix (n,n) back to full symmetric 4th-order tensor (d,d,d,d)
+        """
+        d = self.dim
+        km_to_ij, _ = kelvin_mandel_index_map(d)
+        tensor = jnp.zeros((d, d, d, d))
+
+        for a, (i, j) in enumerate(km_to_ij):
+            Na = jnp.sqrt(2.0) if i != j else 1.0
+            for b, (k, l) in enumerate(km_to_ij):
+                Nb = jnp.sqrt(2.0) if k != l else 1.0
+                val = array[a, b] / (Na * Nb)
+
+                # Assign to all symmetric permutations
+                for ii, jj in {(i, j), (j, i)}:
+                    for kk, ll in {(k, l), (l, k)}:
+                        tensor = tensor.at[ii, jj, kk, ll].set(val)
+                        tensor = tensor.at[kk, ll, ii, jj].set(val)
+        return tensor
+
+    def __matmul__(self, other):
+        return other.__class__(
+            tensor=jnp.tensordot(jnp.asarray(self), jnp.asarray(other).T)
+        )
+
+
+from .tensor_utils import polar, stretch_tensor, dev, skew, sym

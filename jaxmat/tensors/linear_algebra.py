@@ -90,6 +90,7 @@ def eig33(A, rtol=1e-16):
         symmetric 3× 3 matrix with particular reference to the pernicious case of two nearly equal eigenvalues.
         International Journal for Numerical Methods in Engineering, 124(5), 1089-1110.
         """
+        A = jnp.asarray(A)
         norm = jnp.linalg.norm(A)
         Id = jnp.eye(dim(A))
         I1 = jnp.trace(A)
