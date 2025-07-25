@@ -1,7 +1,7 @@
 import pytest
 import equinox as eqx
 import jax.numpy as jnp
-from jaxmat.tensors import SymmetricTensor2, Tensor2
+from jaxmat.tensors import SymmetricTensor2, Tensor2, polar, stretch_tensor
 from jaxmat.tensors.linear_algebra import expm
 
 
@@ -37,9 +37,9 @@ def test_tensor2_init():
     # check wrong size on initialization
     with pytest.raises(ValueError):
         SymmetricTensor2(array=T_vect_)
-    # check symmetry failure
-    with pytest.raises(ValueError):
-        SymmetricTensor2(tensor=T_)
+    # Warning: we don't check for symmetry upon initialization
+    # But symmetry can be checked
+    assert not SymmetricTensor2(tensor=T_).is_symmetric()
 
 
 def test_sym_tensor2_init():
@@ -60,3 +60,23 @@ def test_sym_tensor2_init():
     assert not jnp.allclose(S @ S2, S2 @ S)
     assert isinstance((S @ S2).sym, SymmetricTensor2)
     assert jnp.allclose((S @ S2).sym, (S2 @ S).sym)
+
+
+def test_stretch_tensor():
+    gamma = 0.75
+    Id = jnp.eye(3)
+    F = Tensor2(
+        tensor=jnp.array([[1, 1 + gamma, 0], [0, 1, 0], [0, 0, 1]], dtype=jnp.float64)
+    )
+    R, U = polar(F)
+    C = (F.T @ F).sym
+    B = (F @ F.T).sym
+    # print(C, B)
+    assert jnp.allclose(F, R @ U)
+    assert jnp.allclose(C, U @ U)
+    assert jnp.allclose(Id, R.T @ R)
+    V, R_ = polar(F, mode="VR")
+    assert jnp.allclose(R, R_)
+    assert jnp.allclose(B, V @ V)
+    U_ = stretch_tensor(F)
+    assert jnp.allclose(U, U_)

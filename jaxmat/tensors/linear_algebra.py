@@ -142,12 +142,6 @@ def eig33(A, rtol=1e-16):
     return eigvals, eigendyads
 
 
-def stretch_tensor(F):
-    """Computes the strech tensor U = sqrtm(F.T @ F)."""
-    C = F.T @ F
-    return sqrtm(C)
-
-
 def _sqrtm(C):
     """
     Unified expression for sqrt and inverse sqrt of a symmetric matrix `C`,
@@ -174,19 +168,6 @@ def sqrtm(A):
 def inv_sqrtm(A):
     """Computes the matrix inverse square-root of a symmetric 3x3 matrix."""
     return _sqrtm(A)[1]
-
-
-@partial(jax.jit, static_argnums=1)
-def polar(F, mode="RU"):
-    """Computes the 'RU' or 'VR' polar decomposition of F."""
-    C = F.T @ F
-    U, U_inv = _sqrtm(C)
-    R = F @ U_inv
-    if mode == "RU":
-        return R, U
-    elif mode == "VR":
-        V = R @ U @ R.T
-        return V, R
 
 
 def isotropic_function(fun, A):

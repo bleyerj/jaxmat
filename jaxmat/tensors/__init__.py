@@ -3,6 +3,7 @@ import numpy as np
 import jax
 import jax.numpy as jnp
 import equinox as eqx
+from . import linear_algebra
 
 
 class Tensor(eqx.Module):
@@ -18,12 +19,12 @@ class Tensor(eqx.Module):
         if tensor is not None:
             if tensor.shape != self.shape:
                 raise ValueError("Wrong shape {tensor.shape} <> {self.shape}")
-            self._tensor = tensor
+            self._tensor = jnp.asarray(tensor)
             self.array  # force call to do some sanity checks
         elif array is not None:
             if array.shape != self.array_shape:
                 raise ValueError(f"Wrong shape {array.shape} <> {self.array_shape}")
-            self._tensor = self._as_tensor(array)
+            self._tensor = self._as_tensor(jnp.asarray(array))
         else:
             self._tensor = jnp.zeros(self.shape)
 
@@ -33,7 +34,7 @@ class Tensor(eqx.Module):
 
     @property
     def T(self):
-        return jnp.transpose(self.tensor)
+        return self.__class__(tensor=jnp.transpose(self.tensor))
 
     @property
     def array(self):
@@ -53,10 +54,10 @@ class Tensor(eqx.Module):
         return np.asarray(self._tensor, dtype=dtype)
 
     def __add__(self, other):
-        return self.__class__(tensor=self.tensor + other.tensor)
+        return self.__class__(tensor=self.tensor + jnp.asarray(other))
 
     def __sub__(self, other):
-        return self.__class__(tensor=self.tensor - other.tensor)
+        return self.__class__(tensor=self.tensor - jnp.asarray(other))
 
     def __mul__(self, other):
         return self.__class__(tensor=other * self.tensor)
@@ -65,7 +66,7 @@ class Tensor(eqx.Module):
         return self.__mul__(other)
 
     def __matmul__(self, other):
-        return self.__class__(tensor=self.tensor @ other.tensor)
+        return self.__class__(tensor=jnp.asarray(self) @ jnp.asarray(other))
 
     def __neg__(self):
         return self.__class__(tensor=-self.tensor)
@@ -115,6 +116,15 @@ class Tensor2(Tensor):
     def sym(self):
         return SymmetricTensor2(tensor=0.5 * (self.tensor + self.tensor.T))
 
+    @property
+    def inv(self):
+        return Tensor2(tensor=linear_algebra.inv33(self.tensor))
+
+    @property
+    def eigenvalues(self):
+        eivenvalues, eigendyads = linear_algebra.eig33(self.tensor)
+        return eivenvalues, jnp.asarray([SymmetricTensor2(N) for N in eigendyads])
+
 
 class SymmetricTensor2(Tensor2):
 
@@ -122,9 +132,10 @@ class SymmetricTensor2(Tensor2):
     def array_shape(self):
         return (self.dim * (self.dim + 1) // 2,)
 
+    def is_symmetric(self):
+        return jnp.allclose(self, self.T)
+
     def _as_array(self, tensor):
-        if not jnp.allclose(tensor, tensor.T):
-            raise ValueError("Tensor is not symmetric.")
         d = self.dim
         vec = [tensor[i, i] for i in range(d)]
         for i in range(d):
@@ -154,3 +165,6 @@ class SymmetricTensor2(Tensor2):
     def __matmul__(self, other):
         # Multiplication of symmetric tensors cannot be ensured to remain symmetric
         return Tensor2(tensor=self.tensor @ other.tensor)
+
+
+from .tensor_utils import polar, stretch_tensor

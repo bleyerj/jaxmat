@@ -3,12 +3,9 @@ import scipy.linalg as sl
 import pytest
 import jax
 import jax.numpy as jnp
-from jaxmat.tensors import SymmetricTensor2, Tensor2
 from jaxmat.tensors.linear_algebra import (
     eig33,
     isotropic_function,
-    stretch_tensor,
-    polar,
     sqrtm,
     inv_sqrtm,
 )
@@ -113,20 +110,3 @@ def test_sqrtm(diagonal, quaternions):
         fA = inv_sqrtm(A)
         fA_ = isotropic_function(lambda x: 1 / jnp.sqrt(x), A)
         assert np.allclose(fA, fA_)
-
-
-def test_stretch_tensor():
-    gamma = 0.75
-    Id = jnp.eye(3)
-    F = jnp.array([[1, 1 + gamma, 0], [0, 1, 0], [0, 0, 1]])
-    R, U = polar(F)
-    C = F.T @ F
-    B = F @ F.T
-    assert jnp.allclose(F, R @ U)
-    assert jnp.allclose(C, U @ U)
-    assert jnp.allclose(Id, R.T @ R)
-    V, R_ = polar(F, mode="VR")
-    assert jnp.allclose(R, R_)
-    assert jnp.allclose(B, V @ V)
-    U_ = stretch_tensor(F)
-    assert jnp.allclose(U, U_)
