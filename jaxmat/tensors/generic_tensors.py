@@ -213,9 +213,9 @@ class SymmetricTensor4(Tensor):
 
     @classmethod
     def identity(cls):
-        I = jnp.eye(cls.dim)
-        I4 = jnp.einsum("ik,jl->ijkl", I, I)
-        return cls(tensor=I4)
+        d = cls.dim
+        n = d * (d + 1) // 2
+        return cls(array=jnp.eye(n))
 
     @classmethod
     def J(cls):
@@ -269,3 +269,38 @@ class SymmetricTensor4(Tensor):
         return other.__class__(
             tensor=jnp.tensordot(jnp.asarray(self), jnp.asarray(other).T)
         )
+
+    @property
+    def inv(self):
+        return self.__class__(array=jnp.linalg.inv(self.array))
+
+
+def _eval_basis(coeffs, basis):
+    return sum([c * b for (c, b) in zip(coeffs, basis)])
+
+
+class IsotropicTensor4(SymmetricTensor4):
+    kappa: float
+    mu: float
+
+    def __init__(self, kappa, mu):
+        self.kappa = kappa
+        self.mu = mu
+        super().__init__(self.eval())
+
+    @property
+    def basis(self):
+        J = SymmetricTensor4.J()
+        K = SymmetricTensor4.K()
+        return [J, K]
+
+    @property
+    def coeffs(self):
+        return jnp.asarray([3 * self.kappa, 2 * self.mu])
+
+    def eval(self):
+        return _eval_basis(self.coeffs, self.basis)
+
+    @property
+    def inv(self):
+        return IsotropicTensor4(1 / 9 / self.kappa, 1 / 4 / self.mu)

@@ -5,6 +5,7 @@ from jaxmat.tensors import (
     SymmetricTensor2,
     Tensor2,
     SymmetricTensor4,
+    IsotropicTensor4,
     polar,
     stretch_tensor,
     dev,
@@ -121,21 +122,38 @@ def test_stretch_tensor():
 
 def test_tensor4():
     Id = SymmetricTensor4.identity()
+    Id2 = SymmetricTensor2.identity()
     key = jax.random.PRNGKey(0)
     A_ = jax.random.normal(key, (6, 6))
-    A_ = 0.5 * (A_ + A_.T) / 2
+    A_ = 0.5 * (A_ + A_.T)
     b_ = jax.random.normal(key, (3, 3))
-    b_ = 0.5 * (b_ + b_.T) / 2
+    b_ = 0.5 * (b_ + b_.T)
     A = SymmetricTensor4(array=A_)
     B = SymmetricTensor2(tensor=b_)
     assert jnp.allclose(A @ Id, A)
+    assert jnp.allclose((A @ Id).array, A_)
     assert jnp.allclose(Id @ B, B)
 
     J = SymmetricTensor4.J()
     K = SymmetricTensor4.K()
 
-    jnp.allclose(J @ B, jnp.trace(B) / 3)
-    jnp.allclose(K @ B, dev(B))
-    jnp.allclose(J @ J, J)
-    jnp.allclose(K @ K, K)
-    jnp.allclose(J @ K, 0)
+    assert jnp.allclose(J + K, Id)
+    assert jnp.allclose(J @ B, jnp.trace(B) / 3 * Id2)
+    assert jnp.allclose(K @ B, dev(B))
+    assert jnp.allclose(J @ J, J)
+    assert jnp.allclose(K @ K, K)
+    assert jnp.allclose(J @ K, 0)
+
+
+def test_isotropic_tensor():
+    kappa = 1.0
+    mu = 1.0
+    lmbda = kappa - 2 / 3 * mu
+    C = IsotropicTensor4(kappa, mu)
+    assert lmbda + 2 * mu == C.array[2, 2]
+    assert lmbda == C.array[0, 1]
+    assert 2 * mu == C.array[4, 4]
+    C_ = SymmetricTensor4(array=C.array)
+    S = IsotropicTensor4(1 / 9 / kappa, 1 / 4 / mu)
+    assert jnp.allclose(C_.inv, S)
+    assert jnp.allclose(C_.inv, C.inv)
