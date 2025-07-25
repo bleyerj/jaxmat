@@ -20,6 +20,10 @@ class MechanicalState(AbstractState):
     strain: jax.Array  # = eqx.field(default_factory=jnp.zeros((6,)))
     stress: jax.Array  # = eqx.field(default_factory=jnp.zeros((6,)))
 
+    def __init__(self):
+        self.stress = jnp.zeros((6,))
+        self.strain = jnp.zeros((6,))
+
 
 def make_batched(module: eqx.Module, Nbatch: int) -> eqx.Module:
     """Broadcasts all leaf arrays of a single unbatched module into a batched version.

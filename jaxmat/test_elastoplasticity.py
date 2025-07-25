@@ -1,110 +1,102 @@
 import jax
 
-# jax.config.update("jax_platform_name", "cpu")
 
-
+from time import time
 import numpy as np
-from dolfinx_materials.jax_materials import (
-    LinearElasticIsotropic,
-)
-from dolfinx_materials.jax_materials.tensors import to_vect, dev
+import equinox as eqx
+import optimistix as optx
 import matplotlib.pyplot as plt
 import jax.numpy as jnp
-from elastoplasticity import (
-    vonMisesIsotropicHardening,
-    GeneralIsotropicHardening,
-    von_Mises_stress,
-    Hosford_stress,
+
+from material_point_loading import (
+    create_imposed_loading,
+    create_loading_residual,
 )
-from time import time
+from state import MechanicalState, make_batched
 
-print(jax.devices())
-# raise
-
-
-def residual(eps, sig, imposed_eps):
-    return jnp.concatenate((jnp.atleast_1d(eps[0] - imposed_eps), sig[1:]))
+from viscoplastic_materials import LinearElasticIsotropic, vonMises, Hosford
+from elastoplasticity import GeneralIsotropicHardening, vonMisesIsotropicHardening
 
 
-def jacobian(eps, sig, Ct):
-    Jac = jnp.zeros_like(Ct)
-    Jac = Jac.at[0, 0].set(1)
-    Jac = Jac.at[1:, :].set(Ct[1:, :])
-    return Jac
+class State(MechanicalState):
+    p: jax.Array
+    epsp: jax.Array
 
-
-def correct_eps(eps, sig, Ct, imposed_eps):
-    res = residual(eps, sig, imposed_eps)
-    Jac = jacobian(eps, sig, Ct)
-    return eps + jnp.linalg.solve(Jac, -res)
-
-
-global_residual = jax.vmap(jax.jit(residual), in_axes=(0, 0, None))
-global_correct = jax.vmap(jax.jit(correct_eps), in_axes=(0, 0, 0, None))
+    def __init__(self):
+        super().__init__()
+        self.p = jnp.zeros((1,))
+        self.epsp = jnp.zeros((6,))
 
 
 def test_vonMises(Nbatch=1):
-    E = 70e3
+    E, nu = 200e3, 0.3
+    elastic_model = LinearElasticIsotropic(E, nu)
+
     sig0 = 350.0
     sigu = 500.0
     b = 1e3
-    elastic_model = LinearElasticIsotropic(E=70e3, nu=0.3)
 
-    def yield_stress(p):
-        return sig0 + (sigu - sig0) * (1 - jnp.exp(-b * p))
+    class YieldStress(eqx.Module):
+        def __call__(self, p):
+            return sig0 + (sigu - sig0) * (1 - jnp.exp(-b * p))
 
-    # material = vonMisesIsotropicHardening(elastic_model, yield_stress)
     material = GeneralIsotropicHardening(
         elastic_model,
-        yield_stress,
-        Hosford_stress,
-        # lambda sig: jnp.sqrt(3 / 2.0) * jnp.linalg.norm(dev(sig), ord=10),
+        Hosford(),
+        YieldStress(),
     )
+    # material = vonMisesIsotropicHardening(elastic_model, YieldStress())
 
-    material.set_data_manager(Nbatch)
+    state = make_batched(State(), Nbatch)
+
+    def solve_mechanical_state(Eps, state, loading_data, material, dt):
+        solver = optx.Newton(rtol=1e-8, atol=1e-8)
+        residual = create_loading_residual(material)
+        args = (loading_data, state, dt)
+        sol = optx.root_find(
+            residual, solver, Eps, args, has_aux=True
+        )  # TODO: implement root find manually ?
+        eps = sol.value
+        sig, state = material.constitutive_update(
+            eps, sol.aux, dt
+        )  # evaluate one last time to compute state outside root_find which does not differentiate wrt auxiliary variables
+        return eps, state, sol.stats
+
+    global_solve = jax.jit(
+        jax.vmap(solve_mechanical_state, in_axes=(0, 0, None, None, None))
+    )
 
     plt.figure()
     Nsteps = 20
     eps_dot = 5e-3
     Eps = jnp.zeros((Nbatch, 6))
-    sig = jnp.zeros_like(Eps)
+    Sig = jnp.zeros_like(Eps)
     imposed_eps = 0
+
+    plt.plot(Eps[0][0], Sig[0][0], "xb")
 
     dt = 0
     Nsteps = 30
-    times = np.linspace(0, 5, Nsteps)
+    times = np.linspace(0, 4.0, Nsteps)
     t = 0
-    for dt in np.diff(times):
+    for i, dt in enumerate(np.diff(times)):
         t += dt
-        print("Time", t)
+        # print("Time", t)
         imposed_eps += eps_dot * dt
         Eps = Eps.at[:, 0].set(imposed_eps)
+        loading_data = create_imposed_loading(epsxx=imposed_eps)
 
-        # Newton-Raphson solve
-        nres = 1
-        nres0 = jnp.max(jnp.linalg.norm(global_residual(Eps, sig, imposed_eps), axis=1))
-        niter = 0
-        atol = 1e-8
-        rtol = 1e-8
-        niter_max = 20
-        while (nres > max(atol, rtol * nres0)) and (niter < niter_max):
+        tic = time()
+        Eps, state, stats = global_solve(Eps, state, loading_data, material, dt)
+        num_steps = stats["num_steps"][0]
+        print(
+            f"Incr {i+1}: Num iter = {num_steps} Resolution time/iteration:",
+            (time() - tic) / num_steps,
+        )
 
-            tic = time()
-            sig, isv, Ct = material.integrate(Eps, dt)
-            print("Integration time:", time() - tic)
-            # tic = time()
-            Eps = global_correct(Eps, sig, Ct, imposed_eps)
-            # print("Correction time:", time() - tic)
-            nres = jnp.max(
-                jnp.linalg.norm(global_residual(Eps, sig, imposed_eps), axis=1)
-            )
+        Sig = state.stress
 
-            niter += 1
-            if niter >= niter_max:
-                raise ValueError(f"Not converged within {niter_max} iterations.")
-
-        material.data_manager.update()
-        plt.plot(Eps[0][0], sig[0][0], "xb")
+        plt.plot(Eps[0][0], Sig[0][0], "xb")
     plt.show()
 
 
