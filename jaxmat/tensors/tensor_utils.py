@@ -30,6 +30,7 @@ def skew(A):
 
 
 def tr(A):
+    """Trace of a n-dim 2nd-rank tensor."""
     return jnp.trace(A)
 
 

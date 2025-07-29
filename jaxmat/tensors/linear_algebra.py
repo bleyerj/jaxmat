@@ -43,14 +43,14 @@ def inv33(A):
         + a13 * (a21 * a32 - a22 * a31)
     )
 
-    invA = cof.T / det
+    invA = cof / det
     return invA
 
 
 def invariants_principal(A):
     """Principal invariants of a real 3x3 tensor A."""
     i1 = jnp.trace(A)
-    i2 = (jnp.trace(A) ** 2 - jnp.trace(A.dot(A))) / 2
+    i2 = (jnp.trace(A) ** 2 - jnp.trace(A @ A)) / 2
     i3 = jnp.linalg.det(A)
     return i1, i2, i3
 
