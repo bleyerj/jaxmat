@@ -136,8 +136,8 @@ def test_tensor4():
 
     J = SymmetricTensor4.J()
     K = SymmetricTensor4.K()
-
-    assert jnp.allclose(J + K, Id)
+    assert type(2.0 * J + 2.0 * K) is SymmetricTensor4
+    assert jnp.allclose(2 * J + 2 * K, 2 * Id)
     assert jnp.allclose(J @ B, jnp.trace(B) / 3 * Id2)
     assert jnp.allclose(K @ B, dev(B))
     assert jnp.allclose(J @ J, J)
