@@ -5,15 +5,24 @@ import jax.numpy as jnp
 
 class AbstractState(eqx.Module):
     def add(self, **changes):
+        existing_keys = self.__dict__.keys()
+        valid_changes = {k: v for k, v in changes.items() if k in existing_keys}
+
         return eqx.tree_at(
-            lambda c: [c.__dict__[key] for key in changes.keys()],
+            lambda c: [getattr(c, k) for k in valid_changes],
             self,
-            [self.__dict__[key] + val for key, val in changes.items()],
+            [getattr(self, k) + v for k, v in valid_changes.items()],
         )
 
     def update(self, **changes):
-        keys, vals = zip(*changes.items())
-        return eqx.tree_at(lambda c: [c.__dict__[key] for key in keys], self, vals)
+        existing_keys = self.__dict__.keys()
+        valid_changes = {k: v for k, v in changes.items() if k in existing_keys}
+
+        return eqx.tree_at(
+            lambda c: [getattr(c, k) for k in valid_changes],
+            self,
+            list(valid_changes.values()),
+        )
 
 
 class MechanicalState(AbstractState):

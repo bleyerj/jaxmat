@@ -14,11 +14,17 @@ class MyState(MechanicalState):
 
 def test_state():
     state = MyState(additional_state=jnp.zeros((3,)))
+    assert hasattr(state, "strain")
+    assert hasattr(state, "stress")
+    assert hasattr(state, "additional_state")
+
     state = state.update(strain=jnp.ones((6,)))
     assert jnp.allclose(state.strain, jnp.ones((6,)))
     state = state.add(stress=2 * jnp.ones((6,)), strain=0.5 * jnp.ones((6,)))
     assert jnp.allclose(state.strain, 1.5 * jnp.ones((6,)))
     assert jnp.allclose(state.stress, 2 * jnp.ones((6,)))
+    state = state.add(foobar=0)
+    assert not hasattr(state, "foobar")
 
 
 @pytest.mark.parametrize("Nbatch", [1, 10, 100])
