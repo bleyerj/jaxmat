@@ -1,0 +1,28 @@
+import equinox as eqx
+from jaxmat.tensors import IsotropicTensor4
+
+
+class LinearElasticIsotropic(eqx.Module):
+    E: float
+    nu: float
+
+    @property
+    def kappa(self):
+        return self.E / (3 * (1 - 2 * self.nu))
+
+    @property
+    def mu(self):
+        return self.E / (2 * (1 + self.nu))
+
+    @property
+    def C(self):
+        return IsotropicTensor4(self.kappa, self.mu)
+
+    @property
+    def S(self):
+        return self.C.inv
+
+    def constitutive_update(self, eps, state, dt):
+        sig = self.C @ eps
+        state = state.update(strain=eps, stress=sig)
+        return sig, state
