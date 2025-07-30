@@ -1,0 +1,78 @@
+# Book settings
+# Learn more at https://jupyterbook.org/customize/config.html
+
+title: jaxmat
+author: Jeremy Bleyer
+
+# Force re-execution of notebooks on each build.
+# See https://jupyterbook.org/content/execute.html
+execute:
+  execute_notebooks: cache
+
+  # Set timeout for any example to 20 minutes
+  timeout: 1800
+
+
+# Define the name of the latex output file for PDF builds
+latex:
+  latex_documents:
+    targetname: book.tex
+
+# Add a bibtex file so that we can create citations
+bibtex_bibfiles:
+  - references.bib
+
+# Information about where the book exists on the web
+# repository:
+#   url: https://github.com/bleyerj/comet-fenicsx  # Online location of your book
+#   branch: main  # Which branch of the repository should be used when creating links (optional)
+
+
+exclude_patterns: [
+    ...,
+    docs/index.md,
+    README.md,
+    "**/*.ipynb"]
+
+# Sphinx configuration for custom theme
+sphinx:
+  config:
+    autosummary_generate: True
+    autoclass_content: both
+    add_module_names: False
+    bibtex_reference_style: author_year
+    html_theme: sphinx_book_theme
+    html_show_copyright: false
+    # html_static_path: ["_static"]
+    # html_css_files: ["custom.css"]
+    html_theme_options:
+      pygment_light_style: "friendly"
+      show_navbar_depth: 1
+      home_page_in_toc: true
+      show_toc_level: 2
+      repository_url: https://github.com/bleyerj/jaxmat
+      use_edit_page_button: true
+      use_repository_button: true
+      use_download_button: false
+    myst_heading_anchors: 3
+  extra_extensions:
+  - 'sphinx.ext.autodoc'
+  - 'sphinx.ext.napoleon'
+  - 'sphinx.ext.viewcode'
+  - 'sphinx.ext.autosummary'
+  # - 'docs.remove_docstring' # remove module docstring
+    
+parse:
+  myst_enable_extensions:
+    - "amsmath"
+    - "colon_fence"
+    - "deflist"
+    - "dollarmath"
+    - "html_admonition"
+    - "html_image"
+    - "linkify"
+    - "replacements"
+    - "smartquotes"
+    - "substitution"
+    - "attrs_inline"
+

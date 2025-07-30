@@ -1,0 +1,35 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: index
+title: jaxmat Documentation
+
+
+parts:
+  - caption: User guide
+    chapters:
+      - file: intro.md
+      # - file: jax.md
+      # - file: mfront.md
+      
+  # - caption: JAX demos
+  #   chapters:
+  #     - file: jax_elastoplasticity.md
+  #     - file: demos/jax/elastoplasticity/Hosford_yield_surface.md
+  #     - file: demos/jax/elastoplasticity/plane_elastoplasticity.md
+  #     - file: demos/jax/finite_strain_elastoplasticity/finite_strain_elastoplasticity.md
+  # - caption: MFront demos
+  #   chapters:
+  #     - file: demos/mfront/finite_strain_elastoplasticity/finite_strain_elastoplasticity.md
+  #     - file: demos/mfront/hyperelasticity/hyperelasticity.md
+  #     - file: demos/mfront/multimaterials/multimaterials.md
+  #     - file: demos/mfront/heat_transfer/nonlinear_heat_transfer.md
+  #     - file: demos/mfront/heat_transfer/phase_change.md
+  # - caption: CVXPY demos
+  #   chapters:
+  #     - file: cvxpy.md
+  #     - file: demos/cvxpy/cvxpy_return_mapping.md
+  - caption: API
+    chapters:
+      - file: api/api.rst

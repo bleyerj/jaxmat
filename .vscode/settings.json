@@ -1,0 +1,10 @@
+{
+    "python.terminal.executeInFileDir": false,
+    "command-runner.commands": {
+        
+        "quick preview Jupyter book": "jupytext --update --to notebook docs/*.md && jupyter-book build docs/ && firefox docs/_build/html/index.html &",
+        "process, build and preview Jupyter book": "jupyter-book build docs/ && firefox docs/_build/html/index.html &",
+        "execute notebooks": "jupytext --to notebook --execute docs/*.md",
+        "deploy website": "ghp-import -n -p -f docs/_build/html",
+    }
+}
