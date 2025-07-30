@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 import jax.numpy as jnp
 
 from jaxmat.tensors import dev, SymmetricTensor2
-from time import time
 import optimistix as optx
 import equinox as eqx
 from jaxmat.loader import ImposedLoading, global_solve
@@ -22,16 +21,13 @@ from jaxmat.materials.viscoplasticity import (
     VoceHardening,
     NortonFlow,
 )
-from jaxmat.state import AbstractState, make_batched
+from jaxmat.state import SmallStrainState, make_batched, tree_add, tree_zeros_like
 
 
-class State(AbstractState):
-    strain: SymmetricTensor2 = SymmetricTensor2()
-    stress: SymmetricTensor2 = SymmetricTensor2()
+class InternalState(eqx.Module):
     p: float = eqx.field(default_factory=lambda: jnp.float64(0.0))
     epsp: SymmetricTensor2 = SymmetricTensor2()
-    a1: SymmetricTensor2 = SymmetricTensor2()
-    a2: SymmetricTensor2 = SymmetricTensor2()
+    a: SymmetricTensor2 = make_batched(SymmetricTensor2(), 2)
 
 
 class AmrstrongFrederickViscoplasticity(eqx.Module):
@@ -44,58 +40,47 @@ class AmrstrongFrederickViscoplasticity(eqx.Module):
         static=True, default=optx.Newton(rtol=1e-8, atol=1e-8)
     )
 
+    def get_state(self, Nbatch):
+        return make_batched(SmallStrainState(internal=InternalState()), Nbatch)
+
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)
     def constitutive_update(self, eps, state, dt):
         eps_old = state.strain
-
         deps = eps - eps_old
-        p_old = state.p
-        epsp_old = state.epsp
-        a_old1 = state.a1
-        a_old2 = state.a2
+        isv_old = state.internal
         sig_old = state.stress
-        sig_eq = lambda sig: jnp.clip(
-            self.plastic_surface(sig), min=1e-8 * self.elastic_model.E
-        )
+        sig_eq = lambda sig: self.plastic_surface(sig)
 
-        def compute_stress(deps, p_old, epsp_old, a_old1, a_old2):
-            def residual(y, args):
-                dp, depsp, da1, da2 = y
-                da = jnp.asarray([da1, da2])
-                a_old = jnp.asarray([a_old1, a_old2])
-                a = a_old + da
-                sig = sig_old + self.elastic_model.C @ (deps - dev(depsp))
-                sig_eff = self.kinematic_hardening.sig_eff(sig, a)
-                yield_criterion = sig_eq(sig_eff) - self.yield_stress(p_old + dp)
+        def eval_stress(deps, dy):
+            return sig_old + self.elastic_model.C @ (deps - dev(dy.epsp))
+
+        def solve_state(deps, y_old):
+            def residual(dy, args):
+                y = tree_add(y_old, dy)
+                sig = eval_stress(deps, dy)
+                sig_eff = self.kinematic_hardening.sig_eff(sig, y.a)
+                yield_criterion = sig_eq(sig_eff) - self.yield_stress(y.p)
                 n = self.plastic_surface.normal(sig_eff)
                 res = (
-                    dp - dt * self.viscous_flow(yield_criterion),
-                    depsp - n * dp,
+                    dy.p - dt * self.viscous_flow(yield_criterion),
+                    dy.epsp - n * dy.p,
+                    dy.a
+                    + dy.p * self.kinematic_hardening.g * y.a
+                    - dy.p * make_batched(n, 2),
                 )
-                res = res + tuple(
-                    da[i] - dp * (n - self.kinematic_hardening.g * a[i])
-                    for i in range(2)
-                )
-                return res, sig
+                return res, y
 
-            y0 = (jnp.array(0.0), 0 * eps_old, 0 * a_old1, 0 * a_old2)
-            sol = optx.root_find(residual, self.solver, y0, has_aux=True)
-            dp, depsp, da1, da2 = sol.value
-            da = jnp.asarray([da1, da2])
-            a_old = jnp.asarray([a_old1, a_old2])
+            dy0 = tree_zeros_like(isv_old)
+            sol = optx.root_find(residual, self.solver, dy0, has_aux=True)
+            dy = sol.value
+            y = sol.aux
+            sig = eval_stress(deps, dy)
+            return sig, y
 
-            sig = sig_old + self.elastic_model.C @ (deps - dev(depsp))
-            sig_eff = self.kinematic_hardening.sig_eff(sig, a_old + da)
-            aux = (depsp, dp, da1, da2, sig_eff)
-            return sig, aux
+        sig, isv = solve_state(deps, isv_old)
 
-        sig, aux = compute_stress(deps, p_old, epsp_old, a_old1, a_old2)
-        # Ct, aux = jax.jacfwd(compute_stress, has_aux=True)(deps, p_old, epsp_old, a_old)
-        (depsp, dp, da1, da2, sig_eff) = aux
-        new_state = state.add(strain=deps, p=dp, epsp=depsp, a1=da1, a2=da2)
-        new_state = new_state.update(stress=sig)
-
+        new_state = state.update(strain=eps, stress=sig, internal=isv)
         return sig, new_state
 
 
@@ -121,13 +106,14 @@ def test_explicit(Nbatch=1):
     material = AmrstrongFrederickViscoplasticity(
         elastic_model, plastic_surface, yield_stress, viscous_flow, kin_hardening
     )
-
-    state = make_batched(State(), Nbatch)
+    state = material.get_state(
+        Nbatch
+    )  # make_batched(SmallStrainState(internal=InternalState()), Nbatch)
     Eps = state.strain
 
     plt.figure()
-    eps_dot = 10e-4
 
+    eps_dot = 10e-4
     imposed_eps = 0
 
     t = 0
@@ -190,4 +176,4 @@ def test_explicit(Nbatch=1):
     plt.show()
 
 
-test_explicit(Nbatch=int(10))
+test_explicit(Nbatch=int(1e2))

@@ -1,3 +1,7 @@
+import jax
+
+# jax.config.update("jax_platform_name", "cpu")
+
 from time import time
 import equinox as eqx
 import matplotlib.pyplot as plt
@@ -6,7 +10,7 @@ import jax.numpy as jnp
 from jaxmat.loader import ImposedLoading, global_solve
 from jaxmat.state import AbstractState, make_batched
 from jaxmat.tensors import SymmetricTensor2
-from jaxmat.materials.viscoplasticity import Hosford
+from jaxmat.materials.viscoplasticity import Hosford, vonMises
 from jaxmat.materials.elasticity import LinearElasticIsotropic
 from jaxmat.materials.elastoplasticity import (
     GeneralIsotropicHardening,
@@ -14,16 +18,9 @@ from jaxmat.materials.elastoplasticity import (
 )
 
 
-class SmallStrainState(AbstractState):
-    strain: SymmetricTensor2 = SymmetricTensor2()
-    stress: SymmetricTensor2 = SymmetricTensor2()
-    p: float = eqx.field(default_factory=lambda: jnp.float64(0.0))
-    epsp: SymmetricTensor2 = SymmetricTensor2()
-
-
 def test_elastoplasticity(material, Nbatch=1):
 
-    state = make_batched(SmallStrainState(), Nbatch)
+    state = material.get_state(Nbatch)
     Eps = state.strain
 
     plt.figure()
@@ -32,7 +29,7 @@ def test_elastoplasticity(material, Nbatch=1):
 
     imposed_eps = 0
     dt = 0
-    Nsteps = 30
+    Nsteps = 11
     times = jnp.linspace(0, 4.0, Nsteps)
     t = 0
     for i, dt in enumerate(jnp.diff(times)):
@@ -83,6 +80,7 @@ test_elastoplasticity(material, Nbatch=Nbatch)
 
 material = GeneralIsotropicHardening(
     elastic_model,
+    # vonMises(),
     Hosford(a=10.0),
     YieldStress(),
 )

@@ -1,7 +1,14 @@
 import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
-from jaxmat.tensors import dev
+from jaxmat.state import (
+    AbstractState,
+    SmallStrainState,
+    make_batched,
+    tree_add,
+    tree_zeros_like,
+)
+from jaxmat.tensors import SymmetricTensor2, dev
 from jaxmat.materials.elasticity import LinearElasticIsotropic
 from jaxmat.materials.viscoplasticity import (
     AbstractPlasticSurface,
@@ -10,7 +17,13 @@ from jaxmat.materials.viscoplasticity import (
 
 
 def FB(x, y):
+    """Scalar Fischer-Burmeister function"""
     return x + y - jnp.sqrt(x**2 + y**2)
+
+
+class InternalState(AbstractState):
+    p: float = eqx.field(default_factory=lambda: jnp.float64(0.0))
+    epsp: SymmetricTensor2 = SymmetricTensor2()
 
 
 class vonMisesIsotropicHardening(eqx.Module):
@@ -21,45 +34,42 @@ class vonMisesIsotropicHardening(eqx.Module):
         static=True, default=optx.Newton(rtol=1e-8, atol=1e-8)
     )
 
+    def get_state(self, Nbatch):
+        return make_batched(SmallStrainState(internal=InternalState()), Nbatch)
+
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)
     def constitutive_update(self, eps, state, dt):
         eps_old = state.strain
         deps = eps - eps_old
-        p_old = state.p
-        epsp_old = state.epsp
+        isv_old = state.internal
         sig_old = state.stress
         mu = self.elastic_model.mu
         sig_el = sig_old + self.elastic_model.C @ deps
         sig_eq_el = self.plastic_surface(sig_el)
         n_el = self.plastic_surface.normal(sig_el)
 
-        def compute_stress(deps, p_old, epsp_old):
-            def residual(y, args):
-                dp = y
-                depsp = n_el * dp
-                sig = sig_el - self.elastic_model.C @ dev(depsp)
-                yield_criterion = (
-                    sig_eq_el - 3 * mu * dp - self.yield_stress(p_old + dp)
-                )
-                res = FB(-yield_criterion / self.elastic_model.E, dp)
-                return res, sig
+        def solve_state(deps, isv_old):
+            p_old = isv_old.p
 
-            y0 = jnp.array(0.0)
-            sol = optx.root_find(residual, self.solver, y0, has_aux=True)
+            def residual(dp, args):
+                p = p_old + dp
+                yield_criterion = sig_eq_el - 3 * mu * dp - self.yield_stress(p)
+                res = FB(-yield_criterion / self.elastic_model.E, dp)
+                return res
+
+            dy0 = jnp.array(0.0)
+            sol = optx.root_find(residual, self.solver, dy0)
             dp = sol.value
 
             depsp = n_el * dp
             sig = sig_old + self.elastic_model.C @ (deps - dev(depsp))
-            aux = (dp, depsp)
-            return sig, aux
+            isv = isv_old.add(p=dp, epsp=depsp)
+            return sig, isv
 
-        sig, aux = compute_stress(deps, p_old, epsp_old)
-        (dp, depsp) = aux
-
-        state = state.add(strain=deps, p=dp, epsp=depsp)
-        state = state.update(stress=sig)
-        return sig, state
+        sig, isv = solve_state(deps, isv_old)
+        new_state = state.update(strain=eps, stress=sig, internal=isv)
+        return sig, new_state
 
 
 class GeneralIsotropicHardening(eqx.Module):
@@ -70,19 +80,26 @@ class GeneralIsotropicHardening(eqx.Module):
         static=True, default=optx.Newton(rtol=1e-8, atol=1e-8)
     )
 
+    def get_state(self, Nbatch):
+        return make_batched(SmallStrainState(internal=InternalState()), Nbatch)
+
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)
     def constitutive_update(self, eps, state, dt):
         eps_old = state.strain
 
         deps = eps - eps_old
-        p_old = state.p
-        epsp_old = state.epsp
+        isv_old = state.internal
         sig_old = state.stress
 
-        def compute_stress(deps, p_old, epsp_old):
-            def residual(y, args):
-                dp, depsp = y
+        def eval_stress(deps, dy):
+            return sig_old + self.elastic_model.C @ (deps - dev(dy.epsp))
+
+        def solve_state(deps, y_old):
+            p_old = y_old.p
+
+            def residual(dy, args):
+                dp, depsp = dy.p, dy.epsp
                 sig = sig_old + self.elastic_model.C @ (deps - dev(depsp))
                 yield_criterion = self.plastic_surface(sig) - self.yield_stress(
                     p_old + dp
@@ -92,18 +109,16 @@ class GeneralIsotropicHardening(eqx.Module):
                     FB(-yield_criterion / self.elastic_model.E, dp),
                     depsp - n * dp,
                 )
-                return res, sig
+                y = tree_add(y_old, dy)
+                return (res, y)
 
-            y0 = (0.0, eps_old * 0)
-            sol = optx.root_find(residual, self.solver, y0, has_aux=True)
-            dp, depsp = sol.value
+            dy0 = tree_zeros_like(isv_old)
+            sol = optx.root_find(residual, self.solver, dy0, has_aux=True)
+            dy = sol.value
+            y = sol.aux
+            sig = eval_stress(deps, dy)
+            return sig, y
 
-            sig = sig_old + self.elastic_model.C @ (deps - dev(depsp))
-            aux = (dp, depsp)
-            return sig, aux
-
-        sig, aux = compute_stress(deps, p_old, epsp_old)
-        (dp, depsp) = aux
-        state = state.add(strain=deps, p=dp, epsp=depsp)
-        state = state.update(stress=sig)
-        return sig, state
+        sig, isv = solve_state(deps, isv_old)
+        new_state = state.update(stress=sig, strain=eps, internal=isv)
+        return sig, new_state
