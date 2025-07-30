@@ -11,8 +11,5 @@ from .tensor_utils import (
     dev,
     skew,
     sym,
-    to_mat,
-    to_vect,
-    dev_vect,
     eigenvalues,
 )
