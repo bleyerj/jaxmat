@@ -22,7 +22,7 @@ from jaxmat.materials.viscoplasticity import (
     VoceHardening,
     NortonFlow,
 )
-from state import AbstractState, make_batched
+from jaxmat.state import AbstractState, make_batched
 
 
 class State(AbstractState):
