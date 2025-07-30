@@ -1,10 +1,9 @@
-import jax
 import jax.numpy as jnp
 from jaxmat.state import AbstractState, make_batched
 from jaxmat.loader import ImposedLoading, global_solve, stack_loadings
-from jaxmat.elasticity import LinearElasticIsotropic
-from jaxmat.hyperelasticity import CompressibleNeoHookean, Hyperelasticity
-from jaxmat.tensors import SymmetricTensor2, Tensor2, Tensor
+from jaxmat.materials.elasticity import LinearElasticIsotropic
+from jaxmat.materials.hyperelasticity import CompressibleNeoHookean, Hyperelasticity
+from jaxmat.tensors import SymmetricTensor2, Tensor2
 import pytest
 
 

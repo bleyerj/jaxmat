@@ -15,13 +15,9 @@ from jaxmat.tensors import dev_vect as dev
 from elastoviscoplasticity import AmrstrongFrederickViscoplasticity
 from time import time
 import optimistix as optx
-from material_point_loading import (
-    create_imposed_loading,
-    create_loading_residual,
-)
 
 import equinox as eqx
-from viscoplastic_materials import (
+from jaxmat.materials.viscoplasticity import (
     vonMises,
     Hosford,
     VoceHardening,

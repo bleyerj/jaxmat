@@ -4,7 +4,7 @@ import equinox as eqx
 import optimistix as optx
 from lineax import AutoLinearSolver
 from typing import Literal
-from jaxmat.tensors import SymmetricTensor2, Tensor2
+from jaxmat.tensors import SymmetricTensor2
 
 
 class ImposedLoading(eqx.Module):
@@ -13,9 +13,11 @@ class ImposedLoading(eqx.Module):
     strain_mask: jnp.ndarray
 
     def __init__(
-        self, type: Literal["small_strain", "finite_strain"] = "small_strain", **kwargs
+        self,
+        hypothesis: Literal["small_strain", "finite_strain"] = "small_strain",
+        **kwargs,
     ):
-        eps_vals, sig_vals, strain_mask = _make_imposed_loading(type, **kwargs)
+        eps_vals, sig_vals, strain_mask = _make_imposed_loading(hypothesis, **kwargs)
         self.eps_vals = eps_vals
         self.sig_vals = sig_vals
         self.strain_mask = strain_mask
@@ -35,7 +37,7 @@ class ImposedLoading(eqx.Module):
 
 
 def _make_imposed_loading(
-    type: Literal["small_strain", "finite_strain"] = "small_strain", **kwargs
+    hypothesis: Literal["small_strain", "finite_strain"] = "small_strain", **kwargs
 ) -> ImposedLoading:
 
     COMPONENTS = (
@@ -45,14 +47,14 @@ def _make_imposed_loading(
             for j, xj in enumerate("xyz")
             # if j >= i
         }
-        if type == "small_strain"
+        if hypothesis == "small_strain"
         else {
             f"{xi}{xj}": (i, j)
             for i, xi in enumerate("XYZ")
             for j, xj in enumerate("XYZ")
         }
     )
-    labels = ("eps", "sig") if type == "small_strain" else ("F", "P")
+    labels = ("eps", "sig") if hypothesis == "small_strain" else ("F", "P")
 
     all_arrays = [jnp.atleast_1d(v) for k, v in kwargs.items()]
 

@@ -1,15 +1,17 @@
-import jax
 from time import time
 import equinox as eqx
 import matplotlib.pyplot as plt
 import jax.numpy as jnp
 
 from jaxmat.loader import ImposedLoading, global_solve
-from state import AbstractState, make_batched
+from jaxmat.state import AbstractState, make_batched
 from jaxmat.tensors import SymmetricTensor2
-from viscoplastic_materials import Hosford
-from elasticity import LinearElasticIsotropic
-from elastoplasticity import GeneralIsotropicHardening, vonMisesIsotropicHardening
+from jaxmat.materials.viscoplasticity import Hosford
+from jaxmat.materials.elasticity import LinearElasticIsotropic
+from jaxmat.materials.elastoplasticity import (
+    GeneralIsotropicHardening,
+    vonMisesIsotropicHardening,
+)
 
 
 class SmallStrainState(AbstractState):

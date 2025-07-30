@@ -11,7 +11,6 @@ from jaxmat.tensors import (
     dev,
     sym,
 )
-from jaxmat.tensors.linear_algebra import expm
 
 
 def _tensor2_init(tensor_type, T_, T_vect_):

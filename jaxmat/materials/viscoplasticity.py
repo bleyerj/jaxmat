@@ -2,38 +2,7 @@ from abc import abstractmethod
 import jax
 import jax.numpy as jnp
 import equinox as eqx
-from jaxmat.tensors import SymmetricTensor4, to_mat, eigenvalues, to_vect, dev
-
-# from jaxmat.tensors import dev_vect as dev
-
-# K = SymmetricTensor4.K().array
-# J = SymmetricTensor4.J().array
-
-
-# class LinearElasticIsotropic(eqx.Module):
-#     E: float = eqx.field(converter=jax.numpy.asarray)
-#     nu: float = eqx.field(converter=jax.numpy.asarray)
-
-#     @property
-#     def kappa(self):
-#         return self.E / (3 * (1 - 2 * self.nu))
-
-#     @property
-#     def mu(self):
-#         return self.E / (2 * (1 + self.nu))
-
-#     @property
-#     def C(self):
-#         return 3 * self.kappa * J + 2 * self.mu * K
-
-#     @property
-#     def S(self):
-#         return 1 / (3 * self.kappa) * J + 1 / (2 * self.mu) * K
-
-#     def constitutive_update(self, eps, state, dt):
-#         sig = to_mat(self.C @ to_vect(eps, True))
-#         state = state.update(strain=eps, stress=sig)
-#         return sig, state
+from jaxmat.tensors import eigenvalues, dev
 
 
 class AbstractPlasticSurface(eqx.Module):
@@ -74,7 +43,7 @@ class VoceHardening(eqx.Module):
     b: float = eqx.field(converter=jax.numpy.asarray)
 
     def __call__(self, p):
-        return self.sig0 + (self.sigu - self.sig0) * (1 - jnp.exp(-self.b * p))
+        return self.sig0 + (self.sigu - self.sig0) * (1 - jnp.exp(-1.0 * self.b * p))
 
 
 class NortonFlow(eqx.Module):

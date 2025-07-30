@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import jax.numpy as jnp
 
 from jaxmat.loader import ImposedLoading, global_solve
-from state import make_batched, AbstractState
+from jaxmat.state import make_batched, AbstractState
 from jaxmat.tensors import Tensor2, SymmetricTensor2
-from hyperelasticity import (
+from jaxmat.materials.hyperelasticity import (
     Hyperelasticity,
     CompressibleGhentMooneyRivlin,
     CompressibleNeoHookean,

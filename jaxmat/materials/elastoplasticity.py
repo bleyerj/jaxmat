@@ -1,13 +1,9 @@
-import jax
 import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
-
-# from jaxmat.tensors import dev_vect as dev
 from jaxmat.tensors import dev
-from jaxmat.elasticity import LinearElasticIsotropic
-from jaxmat.viscoplastic_materials import (
-    # LinearElasticIsotropic,
+from jaxmat.materials.elasticity import LinearElasticIsotropic
+from jaxmat.materials.viscoplasticity import (
     AbstractPlasticSurface,
     vonMises,
 )
