@@ -8,14 +8,8 @@ import optimistix as optx
 import matplotlib.pyplot as plt
 import jax.numpy as jnp
 
-# from material_point_loading import (
-#     create_imposed_loading,
-#     create_loading_residual,
-#     extract_loading_data,
-# )
 from new_material_point import make_imposed_loading, global_solve
 from state import make_batched, AbstractState
-from jaxmat.tensors.linear_algebra import invariants_principal
 from jaxmat.tensors import Tensor2, SymmetricTensor2
 from hyperelasticity import (
     Hyperelasticity,

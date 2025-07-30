@@ -1,8 +1,6 @@
 import jax
 import jax.numpy as jnp
 import equinox as eqx
-import optimistix as optx
-from jaxmat.tensors import Tensor2
 from jaxmat.tensors.linear_algebra import invariants_principal
 from jaxmat.tensors.linear_algebra import det33 as det
 
@@ -47,7 +45,7 @@ class CompressibleNeoHookean(HyperelasticPotential):
         C = F.T @ F
         I1, I2, I3 = invariants_principal(C)
         J = jnp.sqrt(I3)
-        return self.mu / 2 * (I1 - 3) + self.kappa * self.volumetric(J)
+        return self.mu / 2 * (I1 - 3 - 2 * jnp.log(J)) + self.kappa * self.volumetric(J)
 
 
 class CompressibleGhentMooneyRivlin(HyperelasticPotential):

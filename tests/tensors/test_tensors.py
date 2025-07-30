@@ -9,6 +9,7 @@ from jaxmat.tensors import (
     polar,
     stretch_tensor,
     dev,
+    sym,
 )
 from jaxmat.tensors.linear_algebra import expm
 
@@ -54,9 +55,6 @@ def test_tensor2_init():
     # But symmetry can be checked
     assert not SymmetricTensor2(tensor=T_).is_symmetric()
     assert jnp.allclose(Tensor2.identity(), jnp.eye(3))
-
-
-test_tensor2_init()
 
 
 def test_sym_tensor2_init():
@@ -161,6 +159,19 @@ def test_isotropic_tensor():
     S = IsotropicTensor4(1 / 9 / kappa, 1 / 4 / mu)
     assert jnp.allclose(C_.inv, S)
     assert jnp.allclose(C_.inv, C.inv)
+
+
+def test_operator_symmetry():
+    kappa = 1.0
+    mu = 1.0
+    C = IsotropicTensor4(kappa, mu)
+    K = SymmetricTensor4.K()
+    eps = SymmetricTensor2.identity()
+    assert type(sym(eps)) is SymmetricTensor2
+    assert type(dev(eps)) is SymmetricTensor2
+    assert type(K @ eps) is SymmetricTensor2
+    assert type(C @ eps) is SymmetricTensor2
+    assert type(C @ K @ eps) is SymmetricTensor2
 
 
 def test_batch_tensors():
