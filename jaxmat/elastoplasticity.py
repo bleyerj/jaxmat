@@ -2,9 +2,12 @@ import jax
 import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
-from jaxmat.tensors import dev_vect as dev
+
+# from jaxmat.tensors import dev_vect as dev
+from jaxmat.tensors import dev
+from jaxmat.elasticity import LinearElasticIsotropic
 from jaxmat.viscoplastic_materials import (
-    LinearElasticIsotropic,
+    # LinearElasticIsotropic,
     AbstractPlasticSurface,
     vonMises,
 )
@@ -26,9 +29,8 @@ class vonMisesIsotropicHardening(eqx.Module):
     @eqx.debug.assert_max_traces(max_traces=1)
     def constitutive_update(self, eps, state, dt):
         eps_old = state.strain
-
         deps = eps - eps_old
-        p_old = state.p[0]  # convert to scalar
+        p_old = state.p
         epsp_old = state.epsp
         sig_old = state.stress
         mu = self.elastic_model.mu
@@ -58,6 +60,7 @@ class vonMisesIsotropicHardening(eqx.Module):
 
         sig, aux = compute_stress(deps, p_old, epsp_old)
         (dp, depsp) = aux
+
         state = state.add(strain=deps, p=dp, epsp=depsp)
         state = state.update(stress=sig)
         return sig, state
@@ -77,7 +80,7 @@ class GeneralIsotropicHardening(eqx.Module):
         eps_old = state.strain
 
         deps = eps - eps_old
-        p_old = state.p[0]  # convert to scalar
+        p_old = state.p
         epsp_old = state.epsp
         sig_old = state.stress
 
@@ -95,7 +98,7 @@ class GeneralIsotropicHardening(eqx.Module):
                 )
                 return res, sig
 
-            y0 = (jnp.array(0.0), jnp.zeros_like(eps_old))
+            y0 = (0.0, eps_old * 0)
             sol = optx.root_find(residual, self.solver, y0, has_aux=True)
             dp, depsp = sol.value
 

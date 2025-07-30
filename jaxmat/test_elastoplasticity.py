@@ -1,97 +1,58 @@
 import jax
-
-
 from time import time
-import numpy as np
 import equinox as eqx
-import optimistix as optx
 import matplotlib.pyplot as plt
 import jax.numpy as jnp
 
-from material_point_loading import (
-    create_imposed_loading,
-    create_loading_residual,
-)
-from state import MechanicalState, make_batched
-
-from viscoplastic_materials import LinearElasticIsotropic, vonMises, Hosford
+from new_material_point import make_imposed_loading, global_solve
+from state import AbstractState, make_batched
+from jaxmat.tensors import SymmetricTensor2
+from viscoplastic_materials import Hosford
+from elasticity import LinearElasticIsotropic
 from elastoplasticity import GeneralIsotropicHardening, vonMisesIsotropicHardening
 
 
-class State(MechanicalState):
-    p: jax.Array
-    epsp: jax.Array
-
-    def __init__(self):
-        super().__init__()
-        self.p = jnp.zeros((1,))
-        self.epsp = jnp.zeros((6,))
+class SmallStrainState(AbstractState):
+    strain: SymmetricTensor2 = SymmetricTensor2()
+    stress: SymmetricTensor2 = SymmetricTensor2()
+    p: float = eqx.field(default_factory=lambda: jnp.float64(0.0))
+    epsp: SymmetricTensor2 = SymmetricTensor2()
 
 
-def test_vonMises(Nbatch=1):
-    E, nu = 200e3, 0.3
-    elastic_model = LinearElasticIsotropic(E, nu)
+def test_elastoplasticity(material, Nbatch=1):
 
-    sig0 = 350.0
-    sigu = 500.0
-    b = 1e3
-
-    class YieldStress(eqx.Module):
-        def __call__(self, p):
-            return sig0 + (sigu - sig0) * (1 - jnp.exp(-b * p))
-
-    material = GeneralIsotropicHardening(
-        elastic_model,
-        Hosford(),
-        YieldStress(),
-    )
-    # material = vonMisesIsotropicHardening(elastic_model, YieldStress())
-
-    state = make_batched(State(), Nbatch)
-
-    def solve_mechanical_state(Eps, state, loading_data, material, dt):
-        solver = optx.Newton(rtol=1e-8, atol=1e-8)
-        residual = create_loading_residual(material)
-        args = (loading_data, state, dt)
-        sol = optx.root_find(
-            residual, solver, Eps, args, has_aux=True
-        )  # TODO: implement root find manually ?
-        eps = sol.value
-        sig, state = material.constitutive_update(
-            eps, sol.aux, dt
-        )  # evaluate one last time to compute state outside root_find which does not differentiate wrt auxiliary variables
-        return eps, state, sol.stats
-
-    global_solve = jax.jit(
-        jax.vmap(solve_mechanical_state, in_axes=(0, 0, None, None, None))
-    )
+    state = make_batched(SmallStrainState(), Nbatch)
+    Eps = state.strain
 
     plt.figure()
     Nsteps = 20
     eps_dot = 5e-3
-    Eps = jnp.zeros((Nbatch, 6))
-    Sig = jnp.zeros_like(Eps)
+
     imposed_eps = 0
-
-    plt.plot(Eps[0][0], Sig[0][0], "xb")
-
     dt = 0
     Nsteps = 30
-    times = np.linspace(0, 4.0, Nsteps)
+    times = jnp.linspace(0, 4.0, Nsteps)
     t = 0
-    for i, dt in enumerate(np.diff(times)):
+    for i, dt in enumerate(jnp.diff(times)):
         t += dt
-        # print("Time", t)
         imposed_eps += eps_dot * dt
-        Eps = Eps.at[:, 0].set(imposed_eps)
-        loading_data = create_imposed_loading(epsxx=imposed_eps)
+
+        # FIXME: need to start with non zero Eps
+        def setxx(Eps):
+            return SymmetricTensor2(tensor=Eps.tensor.at[0, 0].set(imposed_eps))
+
+        Eps = eqx.filter_vmap(
+            setxx,
+        )(Eps)
+
+        loading = make_imposed_loading(epsxx=imposed_eps * jnp.ones((Nbatch,)))
 
         tic = time()
-        Eps, state, stats = global_solve(Eps, state, loading_data, material, dt)
+        Eps, state, stats = global_solve(Eps, state, loading, material, dt)
         num_steps = stats["num_steps"][0]
         print(
-            f"Incr {i+1}: Num iter = {num_steps} Resolution time/iteration:",
-            (time() - tic) / num_steps,
+            f"Incr {i+1}: Num iter = {num_steps} Resolution time/iteration/batch:",
+            (time() - tic) / num_steps / Nbatch,
         )
 
         Sig = state.stress
@@ -100,4 +61,27 @@ def test_vonMises(Nbatch=1):
     plt.show()
 
 
-test_vonMises(Nbatch=int(1e3))
+E, nu = 200e3, 0.3
+elastic_model = LinearElasticIsotropic(E, nu)
+
+sig0 = 350.0
+sigu = 500.0
+b = 1e3
+
+
+class YieldStress(eqx.Module):
+    def __call__(self, p):
+        return sig0 + (sigu - sig0) * (1 - jnp.exp(-b * p))
+
+
+Nbatch = int(1e3)
+
+material = vonMisesIsotropicHardening(elastic_model, YieldStress())
+test_elastoplasticity(material, Nbatch=Nbatch)
+
+material = GeneralIsotropicHardening(
+    elastic_model,
+    Hosford(a=10.0),
+    YieldStress(),
+)
+test_elastoplasticity(material, Nbatch=Nbatch)

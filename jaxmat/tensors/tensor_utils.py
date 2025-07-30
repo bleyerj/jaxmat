@@ -36,7 +36,7 @@ def tr(A):
 
 def dev(A):
     Id = SymmetricTensor2.identity()
-    return A - tr(A) / A.dim * Id
+    return A - Id * (tr(A) / A.dim)
 
 
 def dev_vect(A):
