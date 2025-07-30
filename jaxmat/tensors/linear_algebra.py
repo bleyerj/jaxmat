@@ -21,6 +21,17 @@ def dev(A):
     return A - tr(A) / d * Id
 
 
+def det33(A):
+    a11, a12, a13 = A[0, 0], A[0, 1], A[0, 2]
+    a21, a22, a23 = A[1, 0], A[1, 1], A[1, 2]
+    a31, a32, a33 = A[2, 0], A[2, 1], A[2, 2]
+    return (
+        a11 * (a22 * a33 - a23 * a32)
+        - a12 * (a21 * a33 - a23 * a31)
+        + a13 * (a21 * a32 - a22 * a31)
+    )
+
+
 def inv33(A):
     """Explicit inverse of a 3x3 matrix A using cofactor formula."""
     # Minors and cofactors
@@ -51,7 +62,7 @@ def invariants_principal(A):
     """Principal invariants of a real 3x3 tensor A."""
     i1 = jnp.trace(A)
     i2 = (jnp.trace(A) ** 2 - jnp.trace(A @ A)) / 2
-    i3 = jnp.linalg.det(A)
+    i3 = det33(A)
     return i1, i2, i3
 
 

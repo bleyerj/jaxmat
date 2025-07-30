@@ -56,23 +56,28 @@ class Tensor(eqx.Module):
 
     def __add__(self, other):
         cls = self._weaken_with(other)
-        return cls(tensor=self.tensor + jnp.asarray(other))
+        other_array = jnp.asarray(other).reshape(self.tensor.shape)
+        return cls(tensor=self.tensor + other_array)
 
     def __sub__(self, other):
         cls = self._weaken_with(other)
-        return cls(tensor=self.tensor - jnp.asarray(other))
+        other_array = jnp.asarray(other).reshape(self.tensor.shape)
+        return cls(tensor=self.tensor - other_array)
 
     def __mul__(self, other):
-        return self.__class__(tensor=other * self.tensor)
+        return self.__class__(tensor=jnp.asarray(other) * self.tensor)
 
     def __truediv__(self, other):
-        return self.__class__(tensor=self.tensor / other)
+        return self.__class__(tensor=self.tensor / jnp.asarray(other))
 
     def __rmul__(self, other):
         return self.__mul__(other)
 
     def __matmul__(self, other):
         return self.__class__(tensor=jnp.asarray(self) @ jnp.asarray(other))
+
+    def __rmatmul__(self, other):
+        return self.__class__(tensor=jnp.asarray(other) @ self.tensor)
 
     def __neg__(self):
         return self.__class__(tensor=-self.tensor)
@@ -100,12 +105,20 @@ class Tensor2(Tensor):
 
     def _as_array(self, tensor):
         d = self.dim
-        vec = [tensor[i, i] for i in range(d)]
-        for i in range(d):
-            for j in range(i + 1, d):
-                vec.append(tensor[i, j])
-                vec.append(tensor[j, i])
-        return jnp.array(vec)
+        if tensor.ndim == 2:
+            vec = [tensor[i, i] for i in range(d)]
+            for i in range(d):
+                for j in range(i + 1, d):
+                    vec.append(tensor[i, j])
+                    vec.append(tensor[j, i])
+            return jnp.array(vec)
+        elif tensor.ndim == 3:
+            vec = [tensor[:, i, i] for i in range(d)]
+            for i in range(d):
+                for j in range(i + 1, d):
+                    vec.append(tensor[:, i, j])
+                    vec.append(tensor[:, j, i])
+            return jnp.array(vec).T
 
     def _as_tensor(self, array):
         d = self.dim
@@ -149,11 +162,19 @@ class SymmetricTensor2(Tensor2):
 
     def _as_array(self, tensor):
         d = self.dim
-        vec = [tensor[i, i] for i in range(d)]
-        for i in range(d):
-            for j in range(i + 1, d):
-                vec.append(jnp.sqrt(2) * tensor[i, j])
-        return jnp.array(vec)
+
+        if tensor.ndim == 2:
+            vec = [tensor[i, i] for i in range(d)]
+            for i in range(d):
+                for j in range(i + 1, d):
+                    vec.append(jnp.sqrt(2) * tensor[i, j])
+            return jnp.array(vec)
+        elif tensor.ndim == 3:
+            vec = [tensor[:, i, i] for i in range(d)]
+            for i in range(d):
+                for j in range(i + 1, d):
+                    vec.append(jnp.sqrt(2) * tensor[:, i, j])
+            return jnp.array(vec).T
 
     def _as_tensor(self, array):
         d = self.dim

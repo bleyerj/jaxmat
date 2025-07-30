@@ -24,6 +24,7 @@ def _tensor2_init(tensor_type, T_, T_vect_):
         (T + T).array,
         2 * T_vect_,
     )
+    assert type((T @ T.T * jnp.linalg.det(T)).sym) is SymmetricTensor2
     assert jnp.allclose(
         (3 * T - T).array,
         2 * T_vect_,
@@ -53,6 +54,9 @@ def test_tensor2_init():
     # But symmetry can be checked
     assert not SymmetricTensor2(tensor=T_).is_symmetric()
     assert jnp.allclose(Tensor2.identity(), jnp.eye(3))
+
+
+test_tensor2_init()
 
 
 def test_sym_tensor2_init():
@@ -157,3 +161,7 @@ def test_isotropic_tensor():
     S = IsotropicTensor4(1 / 9 / kappa, 1 / 4 / mu)
     assert jnp.allclose(C_.inv, S)
     assert jnp.allclose(C_.inv, C.inv)
+
+
+def test_batch_tensors():
+    assert False
