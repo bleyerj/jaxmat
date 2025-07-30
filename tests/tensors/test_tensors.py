@@ -11,6 +11,7 @@ from jaxmat.tensors import (
     dev,
     sym,
 )
+from jaxmat.state import make_batched
 
 
 def _tensor2_init(tensor_type, T_, T_vect_):
@@ -173,5 +174,17 @@ def test_operator_symmetry():
     assert type(C @ K @ eps) is SymmetricTensor2
 
 
-def test_batch_tensors():
-    assert False
+def test_batch_tensors(cls):
+    Nbatch = 3
+    val = 0.5 * jnp.eye(3)
+    A = make_batched(cls(val), Nbatch=Nbatch)
+    assert type(A) is cls
+    assert jnp.allclose(A[1], val)
+    assert type(A + A) is cls
+    assert jnp.allclose(A + A, jnp.broadcast_to(2 * val, (Nbatch, 3, 3)))
+    assert type(A @ A) is cls if cls == Tensor2 else Tensor2
+    assert jnp.allclose(A @ A, jnp.broadcast_to(val @ val, (Nbatch, 3, 3)))
+
+
+test_batch_tensors(Tensor2)
+test_batch_tensors(SymmetricTensor2)

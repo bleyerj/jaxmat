@@ -15,7 +15,7 @@ class Tensor(eqx.Module):
     ):
 
         if tensor is not None:
-            if tensor.shape != self.shape:
+            if tensor.shape[-2:] != self.shape[-2:]:
                 raise ValueError(f"Wrong shape {tensor.shape} <> {self.shape}")
             self._tensor = jnp.asarray(tensor)
         elif array is not None:
