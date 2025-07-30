@@ -1,14 +1,9 @@
 import jax
 
-
-from time import time
-import numpy as np
-import equinox as eqx
-import optimistix as optx
 import matplotlib.pyplot as plt
 import jax.numpy as jnp
 
-from new_material_point import make_imposed_loading, global_solve
+from jaxmat.loader import ImposedLoading, global_solve
 from state import make_batched, AbstractState
 from jaxmat.tensors import Tensor2, SymmetricTensor2
 from hyperelasticity import (
@@ -24,7 +19,7 @@ class FiniteStrainState(AbstractState):
     PK2: jax.Array
 
     def __init__(self):
-        self.F = Tensor2(np.eye(3))
+        self.F = Tensor2(jnp.eye(3))
         self.stress = Tensor2()
         self.PK2 = SymmetricTensor2()
 
@@ -37,15 +32,15 @@ def test_hyperelasticity():
     )
 
     lamb_list = jnp.linspace(1.0, 8.0, 51)
-    loading_uni = make_imposed_loading("finite_strain", FXX=lamb_list)
+    loading_uni = ImposedLoading("finite_strain", FXX=lamb_list)
 
     lamb_list = jnp.linspace(1.0, 8.0, 51)
-    loading_simple = make_imposed_loading(
+    loading_simple = ImposedLoading(
         "finite_strain", FXX=lamb_list, FYY=jnp.ones_like(lamb_list)
     )
 
     lamb_list = jnp.linspace(1.0, 6, 51)
-    loading_equiax = make_imposed_loading("finite_strain", FXX=lamb_list, FYY=lamb_list)
+    loading_equiax = ImposedLoading("finite_strain", FXX=lamb_list, FYY=lamb_list)
     loadings = [loading_uni, loading_simple, loading_equiax]
 
     Sig = []

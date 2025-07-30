@@ -1,7 +1,7 @@
 import jax
 import jax.numpy as jnp
 from jaxmat.state import AbstractState, make_batched
-from jaxmat.new_material_point import global_solve, make_imposed_loading, stack_loaders
+from jaxmat.loader import ImposedLoading, global_solve, stack_loadings
 from jaxmat.elasticity import LinearElasticIsotropic
 from jaxmat.hyperelasticity import CompressibleNeoHookean, Hyperelasticity
 from jaxmat.tensors import SymmetricTensor2, Tensor2, Tensor
@@ -15,12 +15,12 @@ def test_small_strain():
         strain: SymmetricTensor2 = SymmetricTensor2()
         stress: SymmetricTensor2 = SymmetricTensor2()
 
-    loader1 = make_imposed_loading("small_strain", epsxx=0.02, sigxy=5.0)
-    loader2 = make_imposed_loading("small_strain", sigxx=10.0)
-    loader3 = make_imposed_loading("small_strain", epsyy=0.02 * jnp.ones((10,)))
+    loading1 = ImposedLoading("small_strain", epsxx=0.02, sigxy=5.0)
+    loading2 = ImposedLoading("small_strain", sigxx=10.0)
+    loading3 = ImposedLoading("small_strain", epsyy=0.02 * jnp.ones((10,)))
 
-    loaders = [loader1, loader2, loader3]
-    loading = stack_loaders(loaders)
+    loadings = [loading1, loading2, loading3]
+    loading = stack_loadings(loadings)
     dt = 0.1
 
     Nbatch = len(loading)
@@ -39,7 +39,7 @@ def test_small_strain():
     )
 
     with pytest.raises(ValueError):
-        make_imposed_loading("small_strain", epsXX=0.02)
+        ImposedLoading("small_strain", epsXX=0.02)
 
 
 def test_finite_strain():
@@ -61,8 +61,8 @@ def test_finite_strain():
     S = mu * (1 - iC)  # + kappa * (J - 1) * J * iC
     sig = mu / J * (C - 1)  # + kappa * (J - 1)
 
-    loader1 = make_imposed_loading("finite_strain", FXX=lamb, FYY=lamb_, FZZ=lamb_)
-    loader2 = make_imposed_loading(
+    loading1 = ImposedLoading("finite_strain", FXX=lamb, FYY=lamb_, FZZ=lamb_)
+    loading2 = ImposedLoading(
         "finite_strain",
         FXX=lamb,
         FYY=lamb_,
@@ -76,17 +76,17 @@ def test_finite_strain():
     )
     lamb_list = jnp.full((10,), lamb)
     _lamb_list = 1 / jnp.sqrt(lamb_list)
-    loader3 = make_imposed_loading(
+    loading3 = ImposedLoading(
         "finite_strain", FXX=lamb_list, FYY=_lamb_list, FZZ=_lamb_list
     )
 
-    loading = stack_loaders([loader1, loader2, loader3])
-    Nbatch = len(loading)
+    loadings = stack_loadings([loading1, loading2, loading3])
+    Nbatch = len(loadings)
 
     state = make_batched(FiniteStrain(), Nbatch)
     F0 = state.strain
     dt = 0.0
-    F_sol, state_sol, stats = global_solve(F0, state, loading, material, dt)
+    F_sol, state_sol, stats = global_solve(F0, state, loadings, material, dt)
     assert jnp.allclose(state_sol.PK2[0], jnp.diag(S))
     assert jnp.allclose(state_sol.Cauchy[0], jnp.diag(sig))
     assert jnp.allclose(state_sol.PK2[1], jnp.diag(S))

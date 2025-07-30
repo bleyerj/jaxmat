@@ -4,7 +4,7 @@ import equinox as eqx
 import matplotlib.pyplot as plt
 import jax.numpy as jnp
 
-from new_material_point import make_imposed_loading, global_solve
+from jaxmat.loader import ImposedLoading, global_solve
 from state import AbstractState, make_batched
 from jaxmat.tensors import SymmetricTensor2
 from viscoplastic_materials import Hosford
@@ -45,7 +45,7 @@ def test_elastoplasticity(material, Nbatch=1):
             setxx,
         )(Eps)
 
-        loading = make_imposed_loading(epsxx=imposed_eps * jnp.ones((Nbatch,)))
+        loading = ImposedLoading(epsxx=imposed_eps * jnp.ones((Nbatch,)))
 
         tic = time()
         Eps, state, stats = global_solve(Eps, state, loading, material, dt)

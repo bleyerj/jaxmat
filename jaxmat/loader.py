@@ -4,7 +4,6 @@ import equinox as eqx
 import optimistix as optx
 from lineax import AutoLinearSolver
 from typing import Literal
-from jaxmat import GaussNewtonLineSearch
 from jaxmat.tensors import SymmetricTensor2, Tensor2
 
 
@@ -12,6 +11,14 @@ class ImposedLoading(eqx.Module):
     eps_vals: jnp.ndarray
     sig_vals: jnp.ndarray
     strain_mask: jnp.ndarray
+
+    def __init__(
+        self, type: Literal["small_strain", "finite_strain"] = "small_strain", **kwargs
+    ):
+        eps_vals, sig_vals, strain_mask = _make_imposed_loading(type, **kwargs)
+        self.eps_vals = eps_vals
+        self.sig_vals = sig_vals
+        self.strain_mask = strain_mask
 
     def __call__(self):
         return self.eps_vals, self.sig_vals, self.strain_mask
@@ -27,7 +34,7 @@ class ImposedLoading(eqx.Module):
         return lens.pop()
 
 
-def make_imposed_loading(
+def _make_imposed_loading(
     type: Literal["small_strain", "finite_strain"] = "small_strain", **kwargs
 ) -> ImposedLoading:
 
@@ -84,7 +91,7 @@ def make_imposed_loading(
             sig_vals = sig_vals.at[:, i, j].set(s)
             strain_mask = strain_mask.at[:, i, j].set(False)
 
-    return ImposedLoading(eps_vals, sig_vals, strain_mask)
+    return eps_vals, sig_vals, strain_mask
 
 
 def residual(
@@ -111,11 +118,10 @@ def residual(
     return residual_vector, state
 
 
-def stack_loaders(loaders):
+def stack_loadings(loadings: list):
     return jax.tree.map(
         lambda *xs: jnp.concatenate(xs, axis=0),
-        *loaders,
-        # is_leaf=lambda x: isinstance(x, Tensor2),
+        *loadings,
     )
 
 
