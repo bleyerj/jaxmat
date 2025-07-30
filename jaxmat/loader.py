@@ -143,4 +143,6 @@ def solve_mechanical_state(eps0, state, loading_data: ImposedLoading, material, 
     return eps, new_state, sol.stats
 
 
-global_solve = jax.jit(jax.vmap(solve_mechanical_state, in_axes=(0, 0, 0, None, None)))
+global_solve = eqx.filter_jit(
+    eqx.filter_vmap(solve_mechanical_state, in_axes=(0, 0, 0, None, None))
+)
