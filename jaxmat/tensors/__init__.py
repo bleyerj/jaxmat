@@ -1,4 +1,5 @@
 from .generic_tensors import (
+    Tensor,
     Tensor2,
     SymmetricTensor2,
     SymmetricTensor4,
