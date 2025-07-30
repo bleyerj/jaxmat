@@ -137,7 +137,10 @@ def solve_mechanical_state(eps0, state, loading_data: ImposedLoading, material, 
         return res, new_state
 
     sol = optx.root_find(res_fn, solver, eps0, state, has_aux=True)
-    return sol.value, sol.aux, sol.stats
+    eps = sol.value
+    state = sol.aux
+    res, new_state = residual(material, loading_data, eps, state, dt)
+    return eps, new_state, sol.stats
 
 
 global_solve = jax.jit(jax.vmap(solve_mechanical_state, in_axes=(0, 0, 0, None, None)))
