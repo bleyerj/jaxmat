@@ -1,6 +1,7 @@
 import jax
 import equinox as eqx
 import jax.numpy as jnp
+from jaxmat.tensors import Tensor2, SymmetricTensor2
 
 
 class AbstractState(eqx.Module):
@@ -25,13 +26,18 @@ class AbstractState(eqx.Module):
         )
 
 
-class MechanicalState(AbstractState):
-    strain: jax.Array  # = eqx.field(default_factory=jnp.zeros((6,)))
-    stress: jax.Array  # = eqx.field(default_factory=jnp.zeros((6,)))
+def tree_add(tree1, tree2):
+    return jax.tree.map(lambda x, y: x + y, tree1, tree2)
 
-    def __init__(self):
-        self.stress = jnp.zeros((6,))
-        self.strain = jnp.zeros((6,))
+
+def tree_zeros_like(tree):
+    return jax.tree.map(jnp.zeros_like, tree)
+
+
+class SmallStrainState(AbstractState):
+    internal: eqx.Module
+    strain: SymmetricTensor2 = SymmetricTensor2()
+    stress: SymmetricTensor2 = SymmetricTensor2()
 
 
 def make_batched(module: eqx.Module, Nbatch: int) -> eqx.Module:

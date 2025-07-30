@@ -1,6 +1,7 @@
 import jax
 import jax.numpy as jnp
-from jaxmat.state import MechanicalState, make_batched
+import equinox as eqx
+from jaxmat.state import MechanicalState, make_batched, tree_add, tree_zeros_like
 import pytest
 
 
@@ -40,3 +41,15 @@ def test_batching(Nbatch):
     )
     batched_state = make_batched(state, Nbatch)
     assert batched_state.additional_state.shape == (Nbatch, 3, 3)
+
+
+def test_tree_utils():
+    class MyModule(eqx.Module):
+        var: float = 0
+
+    m1 = MyModule(var=1.0)
+    m2 = MyModule(var=jnp.eye(3))
+    m = tree_add(m1, m2)
+    assert jnp.allclose(m.var, jnp.eye(3) + 1)
+    m = tree_zeros_like(m2)
+    assert jnp.allclose(m.var, jnp.zeros_like(m2.var))
