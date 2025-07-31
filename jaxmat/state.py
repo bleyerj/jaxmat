@@ -88,7 +88,7 @@ class FiniteStrainState(AbstractState):
     @property
     def sig(self):
         # Divide on the right rather than on the left to preserve Tensor object due to operator dispatch priority.
-        return eqx.filter_vmap(PK1_to_PK2)(self.F, self.PK1)
+        return eqx.filter_vmap(PK1_to_Cauchy)(self.F, self.PK1)
 
     @property
     def Cauchy(self):
