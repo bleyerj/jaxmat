@@ -2,30 +2,21 @@ import jax
 import jax.numpy as jnp
 import equinox as eqx
 from jaxmat.tensors.linear_algebra import invariants_principal
-from jaxmat.tensors.linear_algebra import det33 as det
+from .behavior import FiniteStrainBehavior
 
 
 class HyperelasticPotential(eqx.Module):
     def PK1(self, F):
         return jax.jacfwd(self.__call__)(F)
 
-    def PK2(self, F):
-        return (F.inv @ self.PK1(F)).sym
 
-    def Cauchy(self, F):
-        J = det(F)
-        # Divide on the right rather than on the left to preserve Tensor object due to operator dispatch priority.
-        return (self.PK1(F) @ F.T / J).sym
-
-
-class Hyperelasticity(eqx.Module):
+class Hyperelasticity(FiniteStrainBehavior):
     potential: HyperelasticPotential
+    internal = None
 
     def constitutive_update(self, F, state, dt):
         PK1 = self.potential.PK1(F)
-        PK2 = self.potential.PK2(F)
-        sig = self.potential.Cauchy(F)
-        new_state = state.update(stress=PK1, PK2=PK2, Cauchy=sig)
+        new_state = state.update(stress=PK1)
         return PK1, new_state
 
 

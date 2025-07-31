@@ -1,27 +1,12 @@
-import jax
-
 import matplotlib.pyplot as plt
 import jax.numpy as jnp
 
 from jaxmat.loader import ImposedLoading, global_solve
-from jaxmat.state import make_batched, AbstractState
-from jaxmat.tensors import Tensor2, SymmetricTensor2
 from jaxmat.materials.hyperelasticity import (
     Hyperelasticity,
     CompressibleGhentMooneyRivlin,
     CompressibleNeoHookean,
 )
-
-
-class FiniteStrainState(AbstractState):
-    F: jax.Array
-    stress: jax.Array
-    PK2: jax.Array
-
-    def __init__(self):
-        self.F = Tensor2(jnp.eye(3))
-        self.stress = Tensor2()
-        self.PK2 = SymmetricTensor2()
 
 
 def test_hyperelasticity():
@@ -47,7 +32,7 @@ def test_hyperelasticity():
     F = []
     for loading in loadings:  # [loading_equiax]:
         Nbatch = len(lamb_list)
-        state = make_batched(FiniteStrainState(), Nbatch)
+        state = material.get_state(Nbatch)
         F0 = state.F
         dt = 0.0
         F_sol, state_sol, stats = global_solve(F0, state, loading, material, dt)
