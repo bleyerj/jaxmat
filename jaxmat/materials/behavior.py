@@ -2,6 +2,7 @@ from abc import abstractmethod
 import equinox as eqx
 import optimistix as optx
 from jaxmat.state import (
+    AbstractState,
     SmallStrainState,
     FiniteStrainState,
     make_batched,
@@ -25,10 +26,14 @@ class AbstractBehavior(eqx.Module):
 
 
 class SmallStrainBehavior(AbstractBehavior):
+    internal: eqx.AbstractVar[AbstractState]
+
     def get_state(self, Nbatch):
         return make_batched(SmallStrainState(internal=self.internal), Nbatch)
 
 
 class FiniteStrainBehavior(AbstractBehavior):
+    internal: eqx.AbstractVar[AbstractState]
+
     def get_state(self, Nbatch):
         return make_batched(FiniteStrainState(internal=self.internal), Nbatch)
