@@ -1,18 +1,11 @@
 import jax.numpy as jnp
-from jaxmat.state import AbstractState, make_batched
 from jaxmat.loader import ImposedLoading, global_solve, stack_loadings
-from jaxmat.materials.elasticity import LinearElasticIsotropic
-from jaxmat.materials.hyperelasticity import CompressibleNeoHookean, Hyperelasticity
-from jaxmat.tensors import SymmetricTensor2, Tensor2
+import jaxmat.materials as jm
 import pytest
 
 
 def test_small_strain():
-    material = LinearElasticIsotropic(E=1e3, nu=0.3)
-
-    class SmallStrainState(AbstractState):
-        strain: SymmetricTensor2 = SymmetricTensor2()
-        stress: SymmetricTensor2 = SymmetricTensor2()
+    material = jm.ElasticBehavior(jm.LinearElasticIsotropic(E=1e3, nu=0.3))
 
     loading1 = ImposedLoading("small_strain", epsxx=0.02, sigxy=5.0)
     loading2 = ImposedLoading("small_strain", sigxx=10.0)
@@ -23,7 +16,7 @@ def test_small_strain():
     dt = 0.1
 
     Nbatch = len(loading)
-    state = make_batched(SmallStrainState(), Nbatch)
+    state = material.get_state(Nbatch)
     eps0 = state.strain
     eps_sol, state_sol, stats = global_solve(eps0, state, loading, material, dt)
     stress = state_sol.stress
@@ -43,13 +36,7 @@ def test_small_strain():
 
 def test_finite_strain():
     mu, kappa = 7.0, 1e3
-    material = Hyperelasticity(CompressibleNeoHookean(mu=mu, kappa=kappa))
-
-    class FiniteStrain(AbstractState):
-        strain: Tensor2 = Tensor2().identity()
-        stress: Tensor2 = Tensor2()
-        PK2: SymmetricTensor2 = SymmetricTensor2()
-        Cauchy: SymmetricTensor2 = SymmetricTensor2()
+    material = jm.Hyperelasticity(jm.CompressibleNeoHookean(mu=mu, kappa=kappa))
 
     lamb = 2.5
     lamb_ = 1 / jnp.sqrt(lamb)  # 1.0
@@ -82,7 +69,7 @@ def test_finite_strain():
     loadings = stack_loadings([loading1, loading2, loading3])
     Nbatch = len(loadings)
 
-    state = make_batched(FiniteStrain(), Nbatch)
+    state = material.get_state(Nbatch)
     F0 = state.strain
     dt = 0.0
     F_sol, state_sol, stats = global_solve(F0, state, loadings, material, dt)
