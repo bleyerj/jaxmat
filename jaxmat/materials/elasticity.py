@@ -1,10 +1,12 @@
 import equinox as eqx
 from jaxmat.tensors import IsotropicTensor4
+from .behavior import SmallStrainBehavior
 
 
 class LinearElasticIsotropic(eqx.Module):
     E: float
     nu: float
+    internal = None
 
     @property
     def kappa(self):
@@ -22,7 +24,12 @@ class LinearElasticIsotropic(eqx.Module):
     def S(self):
         return self.C.inv
 
+
+class ElasticBehavior(SmallStrainBehavior):
+    elasticity: eqx.Module
+    internal = None
+
     def constitutive_update(self, eps, state, dt):
-        sig = self.C @ eps
+        sig = self.elasticity.C @ eps
         state = state.update(strain=eps, stress=sig)
         return sig, state
