@@ -2,18 +2,13 @@ import matplotlib.pyplot as plt
 import jax.numpy as jnp
 
 from jaxmat.loader import ImposedLoading, global_solve
-from jaxmat.materials.hyperelasticity import (
-    Hyperelasticity,
-    CompressibleGhentMooneyRivlin,
-    CompressibleNeoHookean,
-)
+import jaxmat.materials as jm
 
 
 def test_hyperelasticity():
-
-    # material = Hyperelasticity(CompressibleNeoHookean(mu=2.8977, kappa=1e3))
-    material = Hyperelasticity(
-        CompressibleGhentMooneyRivlin(c1=2.8977, c2=0.0635, Jm=91.41, kappa=1e3)
+    # material = jm.Hyperelasticity(jm.CompressibleNeoHookean(mu=2.8977, kappa=1e3))
+    material = jm.Hyperelasticity(
+        jm.CompressibleGhentMooneyRivlin(c1=2.8977, c2=0.0635, Jm=91.41, kappa=1e3)
     )
 
     lamb_list = jnp.linspace(1.0, 8.0, 51)
@@ -35,10 +30,11 @@ def test_hyperelasticity():
         state = material.get_state(Nbatch)
         F0 = state.F
         dt = 0.0
-        F_sol, state_sol, stats = global_solve(F0, state, loading, material, dt)
+        F_sol, state_sol, _ = global_solve(F0, state, loading, material, dt)
 
         F.append(F_sol)
-        Sig.append(state_sol.stress)
+        Sig.append(state_sol.PK1)
+        print(state_sol.PK1, state_sol)
 
     for f, sig in zip(F, Sig):
         plt.plot(f[:, 0, 0], sig[:, 0, 0], "x-")

@@ -1,3 +1,4 @@
+from abc import abstractmethod
 import jax
 import jax.numpy as jnp
 import equinox as eqx
@@ -6,6 +7,10 @@ from .behavior import FiniteStrainBehavior
 
 
 class HyperelasticPotential(eqx.Module):
+    @abstractmethod
+    def __call__(self):
+        pass
+
     def PK1(self, F):
         return jax.jacfwd(self.__call__)(F)
 
@@ -34,7 +39,7 @@ class CompressibleNeoHookean(HyperelasticPotential):
 
     def __call__(self, F):
         C = F.T @ F
-        I1, I2, I3 = invariants_principal(C)
+        I1, _, I3 = invariants_principal(C)
         J = jnp.sqrt(I3)
         return self.mu / 2 * (I1 - 3 - 2 * jnp.log(J)) + self.kappa * self.volumetric(J)
 
