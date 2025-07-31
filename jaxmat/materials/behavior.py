@@ -1,3 +1,4 @@
+from abc import abstractmethod
 import equinox as eqx
 import optimistix as optx
 from jaxmat.state import (
@@ -5,21 +6,31 @@ from jaxmat.state import (
     FiniteStrainState,
     make_batched,
 )
+from jaxmat.solvers import GaussNewtonLineSearch
+
+DEFAULT_SOLVER = optx.Newton(rtol=1e-8, atol=1e-8, cauchy_termination=False)
 
 
-class SmallStrainBehavior(eqx.Module):
+class AbstractBehavior(eqx.Module):
     solver: optx.AbstractRootFinder = eqx.field(
-        static=True, init=False, default=optx.Newton(rtol=1e-8, atol=1e-8)
+        static=True, init=False, default=DEFAULT_SOLVER
     )
 
+    @abstractmethod
+    def constitutive_update(self, eps, state, dt):
+        pass
+
+    def batched_constitutive_update(self, eps, state, dt):
+        return eqx.filter_jit(
+            eqx.filter_vmap(self.constitutive_update, in_axes=(0, 0, None))
+        )(eps, state, dt)
+
+
+class SmallStrainBehavior(AbstractBehavior):
     def get_state(self, Nbatch):
         return make_batched(SmallStrainState(internal=self.internal), Nbatch)
 
 
-class FiniteStrainBehavior(eqx.Module):
-    solver: optx.AbstractRootFinder = eqx.field(
-        static=True, init=False, default=optx.Newton(rtol=1e-8, atol=1e-8)
-    )
-
+class FiniteStrainBehavior(AbstractBehavior):
     def get_state(self, Nbatch):
         return make_batched(FiniteStrainState(internal=self.internal), Nbatch)

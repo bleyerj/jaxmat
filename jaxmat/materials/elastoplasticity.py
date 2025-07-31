@@ -76,7 +76,6 @@ class GeneralIsotropicHardening(SmallStrainBehavior):
     @eqx.debug.assert_max_traces(max_traces=1)
     def constitutive_update(self, eps, state, dt):
         eps_old = state.strain
-
         deps = eps - eps_old
         isv_old = state.internal
         sig_old = state.stress

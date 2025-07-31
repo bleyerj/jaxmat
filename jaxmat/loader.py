@@ -128,9 +128,7 @@ def stack_loadings(loadings: list):
 
 
 def solve_mechanical_state(eps0, state, loading_data: ImposedLoading, material, dt):
-    solver = optx.Newton(
-        rtol=1e-8, atol=1e-8, linear_solver=AutoLinearSolver(well_posed=False)
-    )
+    solver = material.solver
 
     def res_fn(eps, state):
         res, new_state = residual(material, loading_data, eps, state, dt)
