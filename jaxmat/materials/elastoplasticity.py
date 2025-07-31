@@ -3,14 +3,13 @@ import equinox as eqx
 import optimistix as optx
 from jaxmat.state import (
     AbstractState,
-    SmallStrainState,
-    make_batched,
     tree_add,
     tree_zeros_like,
 )
 from jaxmat.tensors import SymmetricTensor2, dev
-from jaxmat.materials.elasticity import LinearElasticIsotropic
-from jaxmat.materials.viscoplasticity import (
+from .behavior import SmallStrainBehavior
+from .elasticity import LinearElasticIsotropic
+from .plastic_surfaces import (
     AbstractPlasticSurface,
     vonMises,
 )
@@ -26,16 +25,11 @@ class InternalState(AbstractState):
     epsp: SymmetricTensor2 = SymmetricTensor2()
 
 
-class vonMisesIsotropicHardening(eqx.Module):
+class vonMisesIsotropicHardening(SmallStrainBehavior):
     elastic_model: LinearElasticIsotropic
-    plastic_surface = vonMises()
     yield_stress: eqx.Module
-    solver: optx.AbstractRootFinder = eqx.field(
-        static=True, default=optx.Newton(rtol=1e-8, atol=1e-8)
-    )
-
-    def get_state(self, Nbatch):
-        return make_batched(SmallStrainState(internal=InternalState()), Nbatch)
+    plastic_surface: AbstractPlasticSurface = vonMises()
+    internal: AbstractState = InternalState()
 
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)
@@ -72,16 +66,11 @@ class vonMisesIsotropicHardening(eqx.Module):
         return sig, new_state
 
 
-class GeneralIsotropicHardening(eqx.Module):
+class GeneralIsotropicHardening(SmallStrainBehavior):
     elastic_model: LinearElasticIsotropic
-    plastic_surface: AbstractPlasticSurface
     yield_stress: eqx.Module
-    solver: optx.AbstractRootFinder = eqx.field(
-        static=True, default=optx.Newton(rtol=1e-8, atol=1e-8)
-    )
-
-    def get_state(self, Nbatch):
-        return make_batched(SmallStrainState(internal=InternalState()), Nbatch)
+    plastic_surface: AbstractPlasticSurface
+    internal = InternalState()
 
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)

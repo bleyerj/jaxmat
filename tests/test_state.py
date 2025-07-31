@@ -8,7 +8,7 @@ from jaxmat.state import (
     tree_add,
     tree_zeros_like,
 )
-from jaxmat.tensors import Tensor2, SymmetricTensor2
+from jaxmat.tensors import SymmetricTensor2
 import pytest
 
 

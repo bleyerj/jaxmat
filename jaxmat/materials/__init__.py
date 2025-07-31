@@ -1,20 +1,9 @@
-import equinox as eqx
-from jaxmat.state import (
-    SmallStrainState,
-    FiniteStrainState,
-    make_batched,
+from .elasticity import LinearElasticIsotropic
+from .elastoplasticity import vonMisesIsotropicHardening, GeneralIsotropicHardening
+from .viscoplasticity import AmrstrongFrederickViscoplasticity
+from .plastic_surfaces import vonMises, Hosford
+from .viscoplastic_flows import (
+    VoceHardening,
+    NortonFlow,
+    ArmstrongFrederickHardening,
 )
-
-
-class SmallStrainBehaviour(eqx.Module):
-    internal: None
-
-    def get_state(self, Nbatch):
-        return make_batched(SmallStrainState(internal=self.internal), Nbatch)
-
-
-class FiniteStrainBehaviour(eqx.Module):
-    internal: None
-
-    def get_state(self, Nbatch):
-        return make_batched(FiniteStrainState(internal=self.internal), Nbatch)

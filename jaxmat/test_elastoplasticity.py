@@ -8,14 +8,8 @@ import matplotlib.pyplot as plt
 import jax.numpy as jnp
 
 from jaxmat.loader import ImposedLoading, global_solve
-from jaxmat.state import AbstractState, make_batched
 from jaxmat.tensors import SymmetricTensor2
-from jaxmat.materials.viscoplasticity import Hosford, vonMises
-from jaxmat.materials.elasticity import LinearElasticIsotropic
-from jaxmat.materials.elastoplasticity import (
-    GeneralIsotropicHardening,
-    vonMisesIsotropicHardening,
-)
+import jaxmat.materials as jm
 
 
 def test_elastoplasticity(material, Nbatch=1):
@@ -61,7 +55,7 @@ def test_elastoplasticity(material, Nbatch=1):
 
 
 E, nu = 200e3, 0.3
-elastic_model = LinearElasticIsotropic(E, nu)
+elastic_model = jm.LinearElasticIsotropic(E, nu)
 
 sig0 = 350.0
 sigu = 500.0
@@ -75,13 +69,12 @@ class YieldStress(eqx.Module):
 
 Nbatch = int(1e3)
 
-material = vonMisesIsotropicHardening(elastic_model, YieldStress())
+material = jm.vonMisesIsotropicHardening(elastic_model, YieldStress())
 test_elastoplasticity(material, Nbatch=Nbatch)
 
-material = GeneralIsotropicHardening(
+material = jm.GeneralIsotropicHardening(
     elastic_model,
-    # vonMises(),
-    Hosford(a=10.0),
     YieldStress(),
+    jm.Hosford(a=10.0),
 )
 test_elastoplasticity(material, Nbatch=Nbatch)
