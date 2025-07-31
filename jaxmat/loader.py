@@ -5,6 +5,7 @@ import optimistix as optx
 from lineax import AutoLinearSolver
 from typing import Literal
 from jaxmat.tensors import SymmetricTensor2
+from jaxmat.solvers import DEFAULT_SOLVER
 
 
 class ImposedLoading(eqx.Module):
@@ -128,7 +129,7 @@ def stack_loadings(loadings: list):
 
 
 def solve_mechanical_state(eps0, state, loading_data: ImposedLoading, material, dt):
-    solver = material.solver
+    solver = DEFAULT_SOLVER
 
     def res_fn(eps, state):
         res, new_state = residual(material, loading_data, eps, state, dt)

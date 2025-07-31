@@ -6,9 +6,7 @@ from jaxmat.state import (
     FiniteStrainState,
     make_batched,
 )
-from jaxmat.solvers import GaussNewtonLineSearch
-
-DEFAULT_SOLVER = optx.Newton(rtol=1e-8, atol=1e-8, cauchy_termination=False)
+from jaxmat.solvers import DEFAULT_SOLVER
 
 
 class AbstractBehavior(eqx.Module):
