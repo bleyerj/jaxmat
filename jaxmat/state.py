@@ -57,6 +57,14 @@ class SmallStrainState(AbstractState):
         return self.stress
 
 
+def PK1_to_PK2(F, PK1):
+    return (F.inv @ PK1).sym
+
+
+def PK1_to_Cauchy(F, PK1):
+    return (PK1 @ F.T).sym / jnp.linalg.det(F)
+
+
 class FiniteStrainState(AbstractState):
     internal: eqx.Module = None
     strain: Tensor2 = Tensor2().identity()
@@ -72,6 +80,19 @@ class FiniteStrainState(AbstractState):
     @property
     def PK1(self):
         return self.stress
+
+    @property
+    def PK2(self):
+        return eqx.filter_vmap(PK1_to_PK2)(self.F, self.PK1)
+
+    @property
+    def sig(self):
+        # Divide on the right rather than on the left to preserve Tensor object due to operator dispatch priority.
+        return eqx.filter_vmap(PK1_to_PK2)(self.F, self.PK1)
+
+    @property
+    def Cauchy(self):
+        return self.sig
 
 
 def make_batched(module: eqx.Module, Nbatch: int) -> eqx.Module:
