@@ -2,7 +2,6 @@ import jax
 import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
-from lineax import AutoLinearSolver
 from typing import Literal
 from jaxmat.tensors import SymmetricTensor2
 from jaxmat.solvers import DEFAULT_SOLVER
@@ -138,7 +137,8 @@ def solve_mechanical_state(eps0, state, loading_data: ImposedLoading, material, 
     sol = optx.root_find(res_fn, solver, eps0, state, has_aux=True)
     eps = sol.value
     state = sol.aux
-    res, new_state = residual(material, loading_data, eps, state, dt)
+    _, new_state = residual(material, loading_data, eps, state, dt)
+    new_state = new_state.update(strain=eps)
     return eps, new_state, sol.stats
 
 

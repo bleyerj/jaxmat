@@ -1,4 +1,3 @@
-import jax
 import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
@@ -67,7 +66,7 @@ class FeFpJ2Plasticity(FiniteStrainBehavior):
             sol = optx.root_find(residual, self.solver, dy0)
             return sol.value, be_bar_trial
 
-        dy, be_bar_trial = solve_state(F)
+        dy, _ = solve_state(F)
         be_bar = dy.be_bar
         dp = dy.p
         y = isv_old.update(p=isv_old.p + dp, be_bar=be_bar)
