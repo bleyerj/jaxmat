@@ -150,6 +150,14 @@ class Tensor2(Tensor):
         eivenvalues, eigendyads = linear_algebra.eig33(self.tensor)
         return eivenvalues, jnp.asarray([SymmetricTensor2(N) for N in eigendyads])
 
+    @property
+    def T(self):
+        # we tranpose only the last two indices in case of a batched tensor
+        if self.tensor.ndim == 2:
+            return self.__class__(tensor=jnp.transpose(self.tensor))
+        elif self.tensor.ndim == 3:
+            return self.__class__(tensor=jnp.transpose(self.tensor, axes=[0, 2, 1]))
+
 
 class SymmetricTensor2(Tensor2):
 
