@@ -36,10 +36,7 @@ def test_ArmstrongFrederick(Nbatch=1):
     material = jm.AmrstrongFrederickViscoplasticity(
         elastic_model, yield_stress, viscous_flow, kin_hardening
     )
-    # material = jm.GenericViscoplasticity(
-    #     elastic_model, jm.vonMises(), yield_stress, viscous_flow, kin_hardening
-    # )
-    print(material.solver)
+
     state = material.get_state(Nbatch)
     Eps = state.strain
 
