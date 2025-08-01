@@ -59,7 +59,7 @@ class vonMisesIsotropicHardening(SmallStrainBehavior):
             return sig, isv
 
         sig, isv = solve_state(deps, isv_old)
-        new_state = state.update(stress=sig, internal=isv)
+        new_state = state.update(strain=eps, stress=sig, internal=isv)
         return sig, new_state
 
 
@@ -105,5 +105,5 @@ class GeneralIsotropicHardening(SmallStrainBehavior):
             return sig, y
 
         sig, isv = solve_state(deps, isv_old)
-        new_state = state.update(stress=sig, internal=isv)
+        new_state = state.update(strain=eps, stress=sig, internal=isv)
         return sig, new_state

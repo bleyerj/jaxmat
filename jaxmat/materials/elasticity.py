@@ -1,11 +1,12 @@
+import jax.numpy as jnp
 import equinox as eqx
 from jaxmat.tensors import IsotropicTensor4
 from .behavior import SmallStrainBehavior
 
 
 class LinearElasticIsotropic(eqx.Module):
-    E: float
-    nu: float
+    E: float = eqx.field(converter=jnp.asarray)
+    nu: float = eqx.field(converter=jnp.asarray)
     internal = None
 
     @property
@@ -31,5 +32,5 @@ class ElasticBehavior(SmallStrainBehavior):
 
     def constitutive_update(self, eps, state, dt):
         sig = self.elasticity.C @ eps
-        state = state.update(strain=eps, stress=sig)
-        return sig, state
+        new_state = state.update(strain=eps, stress=sig)
+        return sig, new_state

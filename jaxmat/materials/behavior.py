@@ -28,12 +28,20 @@ class AbstractBehavior(eqx.Module):
 class SmallStrainBehavior(AbstractBehavior):
     internal: eqx.AbstractVar[AbstractState]
 
-    def get_state(self, Nbatch):
-        return make_batched(SmallStrainState(internal=self.internal), Nbatch)
+    def get_state(self, Nbatch=None):
+        state = SmallStrainState(internal=self.internal)
+        if Nbatch is None:
+            return state
+        else:
+            return make_batched(state, Nbatch)
 
 
 class FiniteStrainBehavior(AbstractBehavior):
     internal: eqx.AbstractVar[AbstractState]
 
-    def get_state(self, Nbatch):
-        return make_batched(FiniteStrainState(internal=self.internal), Nbatch)
+    def get_state(self, Nbatch=None):
+        state = FiniteStrainState(internal=self.internal)
+        if Nbatch is None:
+            return state
+        else:
+            return make_batched(state, Nbatch)
