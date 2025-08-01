@@ -32,7 +32,6 @@ class AbstractState(eqx.Module):
         )
 
 
-
 class SmallStrainState(AbstractState):
     internal: AbstractState = None
     strain: SymmetricTensor2 = SymmetricTensor2()

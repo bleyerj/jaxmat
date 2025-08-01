@@ -18,13 +18,13 @@ def test_elastoplasticity(material, Nbatch=1):
     Eps = state.strain
 
     plt.figure()
-    Nsteps = 20
+
     eps_dot = 5e-3
 
     imposed_eps = 0
     dt = 0
     Nsteps = 11
-    times = jnp.linspace(0, 4.0, Nsteps)
+    times = jnp.linspace(0, 1.0, Nsteps)
     t = 0
     for i, dt in enumerate(jnp.diff(times)):
         t += dt
@@ -41,7 +41,9 @@ def test_elastoplasticity(material, Nbatch=1):
         loading = ImposedLoading(epsxx=imposed_eps * jnp.ones((Nbatch,)))
 
         tic = time()
-        Eps, state, stats = global_solve(Eps, state, loading, material, dt)
+        Eps, state, stats = jax.block_until_ready(
+            global_solve(Eps, state, loading, material, dt)
+        )
         num_steps = stats["num_steps"][0]
         print(
             f"Incr {i+1}: Num iter = {num_steps} Resolution time/iteration/batch:",
@@ -67,14 +69,14 @@ class YieldStress(eqx.Module):
         return sig0 + (sigu - sig0) * (1 - jnp.exp(-b * p))
 
 
-Nbatch = int(1e3)
+Nbatch = int(1)
 
 material = jm.vonMisesIsotropicHardening(elastic_model, YieldStress())
 test_elastoplasticity(material, Nbatch=Nbatch)
 
-material = jm.GeneralIsotropicHardening(
-    elastic_model,
-    YieldStress(),
-    jm.Hosford(a=10.0),
-)
-test_elastoplasticity(material, Nbatch=Nbatch)
+# material = jm.GeneralIsotropicHardening(
+#     elastic_model,
+#     YieldStress(),
+#     jm.Hosford(a=10.0),
+# )
+# test_elastoplasticity(material, Nbatch=Nbatch)

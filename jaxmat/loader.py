@@ -136,12 +136,18 @@ def solve_mechanical_state(eps0, state, loading_data: ImposedLoading, material, 
 
     sol = optx.root_find(res_fn, solver, eps0, state, has_aux=True)
     eps = sol.value
-    state = sol.aux
     _, new_state = residual(material, loading_data, eps, state, dt)
-    new_state = new_state.update(strain=eps)
     return eps, new_state, sol.stats
 
 
-global_solve = eqx.filter_jit(
-    eqx.filter_vmap(solve_mechanical_state, in_axes=(0, 0, 0, None, None))
-)
+def global_solve(
+    Eps0, state, loading_data, material, dt, in_axes=(0, 0, 0, None, None)
+):
+    if in_axes is None:  # we don't vmap
+        return eqx.filter_jit(solve_mechanical_state)(
+            Eps0, state, loading_data, material, dt
+        )
+    else:
+        return eqx.filter_jit(eqx.filter_vmap(solve_mechanical_state, in_axes=in_axes))(
+            Eps0, state, loading_data, material, dt
+        )
