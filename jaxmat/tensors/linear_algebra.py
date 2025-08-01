@@ -4,6 +4,14 @@ import jax.numpy as jnp
 from jax import lax
 
 
+def safe_sqrt(x, eps=1e-16):
+    return jnp.sqrt(jnp.clip(x, min=eps))
+
+
+def safe_norm(x, eps=1e-16):
+    return jnp.sqrt(jnp.maximum(jnp.sum(x**2), eps))
+
+
 def dim(A):
     """Dimension of a n-rank tensor, assuming shape=(dim, dim, ..., dim)."""
     return A.shape[0]
@@ -102,12 +110,12 @@ def eig33(A, rtol=1e-16):
         International Journal for Numerical Methods in Engineering, 124(5), 1089-1110.
         """
         A = jnp.asarray(A)
-        norm = jnp.linalg.norm(A)
+        norm = safe_norm(A)
         Id = jnp.eye(dim(A))
         I1 = jnp.trace(A)
         S = dev(A)
-        J2 = tr(S @ S) / 2
-        s = jnp.sqrt(J2 / 3)
+        J2 = tr(S.T @ S) / 2
+        s = safe_sqrt(J2 / 3)
 
         def branch_near_iso(_):
             eigvals = jnp.ones((3,)) * I1 / 3
@@ -115,7 +123,7 @@ def eig33(A, rtol=1e-16):
 
         def branch_general(_):
             T = S @ S - 2 * J2 / 3 * Id
-            d = jnp.linalg.norm(T - s * S) / jnp.linalg.norm(T + s * S)
+            d = safe_norm(T - s * S) / safe_norm(T + s * S)
             sj = jnp.sign(1 - d)
             cond = sj * (1 - d) < rtol * norm
 

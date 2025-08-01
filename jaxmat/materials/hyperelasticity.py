@@ -2,7 +2,8 @@ from abc import abstractmethod
 import jax
 import jax.numpy as jnp
 import equinox as eqx
-from jaxmat.tensors.linear_algebra import invariants_principal
+from jaxmat.tensors import eigenvalues
+from jaxmat.tensors.linear_algebra import invariants_principal, det33
 from .behavior import FiniteStrainBehavior
 
 
@@ -13,6 +14,12 @@ class HyperelasticPotential(eqx.Module):
 
     def PK1(self, F):
         return jax.jacfwd(self.__call__)(F)
+
+    def PK2(self, F):
+        return (F.inv @ self.PK1(F)).sym
+
+    def Cauchy(self, F):
+        return (self.PK1(F) @ F.T).sym / det33(F)
 
 
 class Hyperelasticity(FiniteStrainBehavior):
@@ -32,6 +39,11 @@ class VolumetricPart(eqx.Module):
         return 1 / self.beta**2 * (J ** (self.beta) - self.beta * jnp.log(J) - 1)
 
 
+class SquaredVolumetric(eqx.Module):
+    def __call__(self, J):
+        return (J - 1) ** 2
+
+
 class CompressibleNeoHookean(HyperelasticPotential):
     mu: float
     kappa: float
@@ -42,6 +54,23 @@ class CompressibleNeoHookean(HyperelasticPotential):
         I1, _, I3 = invariants_principal(C)
         J = jnp.sqrt(I3)
         return self.mu / 2 * (I1 - 3 - 2 * jnp.log(J)) + self.kappa * self.volumetric(J)
+
+
+class CompressibleMooneyRivlin(HyperelasticPotential):
+    c1: float
+    c2: float
+    kappa: float
+    volumetric: eqx.Module = VolumetricPart()
+
+    def __call__(self, F):
+        C = F.T @ F
+        I1, I2, I3 = invariants_principal(C)
+        J = jnp.sqrt(I3)
+        return (
+            0.5 * self.c1 * (I1 - 3 - 2 * jnp.log(J))
+            + 0.5 * self.c2 * (I2 - 3)
+            + self.kappa * self.volumetric(J)
+        )
 
 
 class CompressibleGhentMooneyRivlin(HyperelasticPotential):
@@ -59,5 +88,27 @@ class CompressibleGhentMooneyRivlin(HyperelasticPotential):
         return (
             -0.5 * self.c1 * self.Jm * jnp.log(arg)
             + 0.5 * self.c2 * (I2 - 3)
-            + self.volumetric(J)
+            + self.kappa * self.volumetric(J)
+        )
+
+
+class CompressibleOgden(HyperelasticPotential):
+    mu: jax.Array
+    alpha: jax.Array
+    kappa: float
+    volumetric: eqx.Module = VolumetricPart()  #    SquaredVolumetric()
+
+    def __call__(self, F):
+        C = F.T @ F
+        J = jnp.sqrt(det33(C))
+        Cb = J ** (-2 / 3) * C
+        lambCb = eigenvalues(Cb)
+        return self.W_lamb(lambCb) + self.kappa * self.volumetric(J)
+
+    def W_lamb(self, lambCb):
+        alp2 = self.alpha / 2
+        return jnp.sum(
+            self.mu
+            / self.alpha
+            * (lambCb[0] ** alp2 + lambCb[1] ** alp2 + lambCb[2] ** alp2 - 3)
         )

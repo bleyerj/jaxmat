@@ -2,8 +2,11 @@ from .elasticity import LinearElasticIsotropic, ElasticBehavior
 from .hyperelasticity import (
     Hyperelasticity,
     HyperelasticPotential,
-    CompressibleGhentMooneyRivlin,
+    VolumetricPart,
     CompressibleNeoHookean,
+    CompressibleMooneyRivlin,
+    CompressibleGhentMooneyRivlin,
+    CompressibleOgden,
 )
 from .elastoplasticity import vonMisesIsotropicHardening, GeneralIsotropicHardening
 from .fe_fp_elastoplasticity import FeFpJ2Plasticity
@@ -14,4 +17,9 @@ from .viscoplastic_flows import (
     NortonFlow,
     ArmstrongFrederickHardening,
     AbstractKinematicHardening,
+)
+from .generalized_standard import (
+    FreeEnergy,
+    DissipationPotential,
+    GeneralizedStandardMaterial,
 )
