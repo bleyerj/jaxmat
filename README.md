@@ -16,3 +16,12 @@ In `jaxmat`, every input and parameter of a constitutive model is differentiable
 3. **Modularity**: The library is designed to be highly modular, allowing users to easily mix and match modeling components. For example, in a generic elastoviscoplastic model, you can independently swap out the plastic yield surface, the hardening laws or the viscous flow, independently. Each component can also be replaced with a data-driven alternative, such as a neural network, without disrupting the overall structure.
 
 4. **Efficiency**: `jaxmat` makes full use of JAX features such as *Just-In-Time compilation* (`jax.jit`), *automatic vectorization* (`jax.vmap`) and hardware acceleration (CPU or GPU through the XLA compiler). Constitutive models can be evaluated extremely efficiently and in parallel across batches of material points. Additionally, we have designed and selected algorithms specifically suited to the needs of computational mechanics for maximum performance, robustness, and generality, see the [Sharp bits]() section.
+
+## Installation
+
+Simply run a `pip` install and update `nvidia-cublas-cu12` as there are some issues with the version currently shipped with `jax-0.6.1`.
+
+```bash
+pip install .
+pip install --upgrade nvidia-cublas-cu12
+```
