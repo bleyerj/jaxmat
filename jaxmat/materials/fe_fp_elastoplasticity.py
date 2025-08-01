@@ -8,11 +8,7 @@ from jaxmat.tensors.linear_algebra import det33 as det
 from .behavior import FiniteStrainBehavior
 from .elasticity import LinearElasticIsotropic
 from .plastic_surfaces import AbstractPlasticSurface, vonMises
-
-
-def FB(x, y):
-    """Scalar Fischer-Burmeister function"""
-    return x + y - jnp.sqrt(x**2 + y**2)
+from jaxmat.tensors.utils import FischerBurmeister as FB
 
 
 class InternalState(AbstractState):

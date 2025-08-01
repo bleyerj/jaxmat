@@ -2,14 +2,7 @@ from functools import partial
 import jax
 import jax.numpy as jnp
 from jax import lax
-
-
-def safe_sqrt(x, eps=1e-16):
-    return jnp.sqrt(jnp.clip(x, min=eps))
-
-
-def safe_norm(x, eps=1e-16):
-    return jnp.sqrt(jnp.maximum(jnp.sum(x**2), eps))
+from .utils import safe_norm, safe_sqrt
 
 
 def dim(A):
@@ -170,7 +163,7 @@ def _sqrtm(C):
     Id = jnp.eye(3)
     C2 = C @ C
     eigvals, _ = eig33(C)
-    lamb = jnp.sqrt(eigvals)
+    lamb = safe_sqrt(eigvals)
     i1 = jnp.sum(lamb)
     i2 = lamb[0] * lamb[1] + lamb[1] * lamb[2] + lamb[0] * lamb[2]
     i3 = jnp.prod(lamb)

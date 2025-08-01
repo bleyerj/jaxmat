@@ -29,6 +29,13 @@ def skew(A):
     return 0.5 * (A - A.T)
 
 
+def axl(A):
+    """Computes the axial part of a skew symmetric tensor.
+    If not skew-symmetric, this function takes the skew-symmetric part first."""
+    As = skew(A)
+    return jnp.array([-As[1, 2], As[0, 2], -As[0, 1]])
+
+
 def tr(A):
     """Trace of a n-dim 2nd-rank tensor."""
     return jnp.trace(A)

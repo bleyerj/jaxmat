@@ -1,3 +1,4 @@
+import jax.numpy as jnp
 from .generic_tensors import (
     Tensor,
     Tensor2,
@@ -11,5 +12,6 @@ from .tensor_utils import (
     dev,
     skew,
     sym,
+    axl,
     eigenvalues,
 )

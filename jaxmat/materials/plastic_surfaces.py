@@ -3,6 +3,7 @@ import jax
 import jax.numpy as jnp
 import equinox as eqx
 from jaxmat.tensors import eigenvalues, dev
+from jaxmat.tensors.utils import safe_norm
 
 
 class AbstractPlasticSurface(eqx.Module):
@@ -18,7 +19,7 @@ class AbstractPlasticSurface(eqx.Module):
 
 class vonMises(AbstractPlasticSurface):
     def __call__(self, sig):
-        return jnp.sqrt(3 / 2.0) * jnp.linalg.norm(dev(sig))
+        return jnp.sqrt(3 / 2.0) * safe_norm(dev(sig))
 
 
 class Hosford(AbstractPlasticSurface):
