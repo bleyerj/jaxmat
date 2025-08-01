@@ -127,29 +127,14 @@ def stack_loadings(loadings: list):
     )
 
 
-import lineax as lx
-
-
 def solve_mechanical_state(eps0, state, loading_data: ImposedLoading, material, dt):
     solver, adjoint = DEFAULT_SOLVERS
-    # solver = optx.LevenbergMarquardt(
-    #     rtol=1e-5,
-    #     atol=1e-5,
-    #     linear_solver=lx.AutoLinearSolver(well_posed=False),
-    # )
 
     def res_fn(eps, state):
         res, new_state = residual(material, loading_data, eps, state, dt)
         return res, new_state
 
-    sol = optx.root_find(
-        res_fn,
-        solver,
-        eps0,
-        state,
-        has_aux=True,
-        adjoint=optx.ImplicitAdjoint(linear_solver=solver.linear_solver),
-    )
+    sol = optx.root_find(res_fn, solver, eps0, state, has_aux=True, adjoint=adjoint)
     eps = sol.value
     _, new_state = residual(material, loading_data, eps, state, dt)
     return eps, new_state, sol.stats

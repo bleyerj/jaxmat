@@ -6,7 +6,7 @@ from jaxmat.tensors import eigenvalues, dev
 
 
 class AbstractPlasticSurface(eqx.Module):
-    tol: float = 1e-8
+    tol: float = eqx.field(static=True, default=1e-8)
 
     @abstractmethod
     def __call__(self, sig):

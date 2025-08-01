@@ -35,12 +35,12 @@ class vonMisesIsotropicHardening(SmallStrainBehavior):
         deps = eps - eps_old
         isv_old = state.internal
         sig_old = state.stress
-        mu = self.elastic_model.mu
-        sig_el = sig_old + self.elastic_model.C @ deps
-        sig_eq_el = self.plastic_surface(sig_el)
-        n_el = self.plastic_surface.normal(sig_el)
 
         def solve_state(deps, isv_old):
+            mu = self.elastic_model.mu
+            sig_el = sig_old + self.elastic_model.C @ deps
+            sig_eq_el = self.plastic_surface(sig_el)
+            n_el = self.plastic_surface.normal(sig_el)
             p_old = isv_old.p
 
             def residual(dp, args):
@@ -49,7 +49,7 @@ class vonMisesIsotropicHardening(SmallStrainBehavior):
                 res = FB(-yield_criterion / self.elastic_model.E, dp)
                 return res
 
-            dy0 = jnp.array(0.0)
+            dy0 = jnp.array(0)
             sol = optx.root_find(residual, self.solver, dy0, adjoint=self.adjoint)
             dp = sol.value
 
@@ -59,6 +59,7 @@ class vonMisesIsotropicHardening(SmallStrainBehavior):
             return sig, isv
 
         sig, isv = solve_state(deps, isv_old)
+
         new_state = state.update(strain=eps, stress=sig, internal=isv)
         return sig, new_state
 
