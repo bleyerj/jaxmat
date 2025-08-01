@@ -61,7 +61,9 @@ class AmrstrongFrederickViscoplasticity(SmallStrainBehavior):
                 return res, y
 
             dy0 = tree_zeros_like(isv_old)
-            sol = optx.root_find(residual, self.solver, dy0, has_aux=True)
+            sol = optx.root_find(
+                residual, self.solver, dy0, has_aux=True, adjoint=self.adjoint
+            )
             dy = sol.value
             y = sol.aux
             sig = eval_stress(deps, dy)
@@ -121,7 +123,9 @@ class GenericViscoplasticity(SmallStrainBehavior):
                 return res, y
 
             dy0 = tree_zeros_like(isv_old)
-            sol = optx.root_find(residual, self.solver, dy0, has_aux=True)
+            sol = optx.root_find(
+                residual, self.solver, dy0, has_aux=True, adjoint=self.adjoint
+            )
             dy = sol.value
             y = sol.aux
             sig = eval_stress(deps, dy)

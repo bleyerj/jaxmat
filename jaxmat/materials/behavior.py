@@ -7,12 +7,15 @@ from jaxmat.state import (
     FiniteStrainState,
     make_batched,
 )
-from jaxmat.solvers import DEFAULT_SOLVER
+from jaxmat.solvers import DEFAULT_SOLVERS
 
 
 class AbstractBehavior(eqx.Module):
     solver: optx.AbstractRootFinder = eqx.field(
-        static=True, init=False, default=DEFAULT_SOLVER
+        static=True, init=False, default=DEFAULT_SOLVERS[0]
+    )
+    adjoint: optx.AbstractAdjoint = eqx.field(
+        static=True, init=False, default=DEFAULT_SOLVERS[1]
     )
 
     @abstractmethod

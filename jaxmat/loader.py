@@ -4,7 +4,7 @@ import equinox as eqx
 import optimistix as optx
 from typing import Literal
 from jaxmat.tensors import SymmetricTensor2
-from jaxmat.solvers import DEFAULT_SOLVER
+from jaxmat.solvers import DEFAULT_SOLVERS
 
 
 class ImposedLoading(eqx.Module):
@@ -127,14 +127,29 @@ def stack_loadings(loadings: list):
     )
 
 
+import lineax as lx
+
+
 def solve_mechanical_state(eps0, state, loading_data: ImposedLoading, material, dt):
-    solver = DEFAULT_SOLVER
+    solver, adjoint = DEFAULT_SOLVERS
+    # solver = optx.LevenbergMarquardt(
+    #     rtol=1e-5,
+    #     atol=1e-5,
+    #     linear_solver=lx.AutoLinearSolver(well_posed=False),
+    # )
 
     def res_fn(eps, state):
         res, new_state = residual(material, loading_data, eps, state, dt)
         return res, new_state
 
-    sol = optx.root_find(res_fn, solver, eps0, state, has_aux=True)
+    sol = optx.root_find(
+        res_fn,
+        solver,
+        eps0,
+        state,
+        has_aux=True,
+        adjoint=optx.ImplicitAdjoint(linear_solver=solver.linear_solver),
+    )
     eps = sol.value
     _, new_state = residual(material, loading_data, eps, state, dt)
     return eps, new_state, sol.stats

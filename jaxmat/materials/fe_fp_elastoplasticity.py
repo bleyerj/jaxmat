@@ -63,7 +63,7 @@ class FeFpJ2Plasticity(FiniteStrainBehavior):
                 return res
 
             dy0 = isv_old.update(p=0, be_bar=be_bar_trial)
-            sol = optx.root_find(residual, self.solver, dy0)
+            sol = optx.root_find(residual, self.solver, dy0, adjoint=self.adjoint)
             return sol.value, be_bar_trial
 
         dy, _ = solve_state(F)
