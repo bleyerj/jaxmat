@@ -32,16 +32,9 @@ class AbstractState(eqx.Module):
         )
 
 
-def tree_add(tree1, tree2):
-    return jax.tree.map(lambda x, y: x + y, tree1, tree2)
-
-
-def tree_zeros_like(tree):
-    return jax.tree.map(jnp.zeros_like, tree)
-
 
 class SmallStrainState(AbstractState):
-    internal: eqx.Module = None
+    internal: AbstractState = None
     strain: SymmetricTensor2 = SymmetricTensor2()
     stress: SymmetricTensor2 = SymmetricTensor2()
 
@@ -66,7 +59,7 @@ def PK1_to_Cauchy(F, PK1):
 
 
 class FiniteStrainState(AbstractState):
-    internal: eqx.Module = None
+    internal: AbstractState = None
     strain: Tensor2 = Tensor2().identity()
     stress: Tensor2 = Tensor2()
 

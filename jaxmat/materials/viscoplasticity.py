@@ -2,11 +2,10 @@ import jax
 import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
+from optax.tree_utils import tree_add, tree_zeros_like
 from jaxmat.state import (
     AbstractState,
     SmallStrainState,
-    tree_add,
-    tree_zeros_like,
     make_batched,
 )
 from jaxmat.tensors import SymmetricTensor2, dev

@@ -1,12 +1,11 @@
 import jax
 import jax.numpy as jnp
 import equinox as eqx
+from optax.tree_utils import tree_add, tree_zeros_like, tree_scale
 from jaxmat.state import (
     SmallStrainState,
     FiniteStrainState,
     make_batched,
-    tree_add,
-    tree_zeros_like,
 )
 from jaxmat.tensors import SymmetricTensor2
 import pytest
@@ -29,6 +28,7 @@ def test_state():
     state = state.add(stress=2 * ones, strain=0.5 * ones)
     assert jnp.allclose(state.strain, 1.5 * ones)
     assert jnp.allclose(state.stress, 2 * ones)
+
     state = state.add(foobar=0)
     assert jnp.allclose(state.internal, jnp.zeros((3,)))
     assert state.other_attribute is None
@@ -61,6 +61,8 @@ def test_tree_utils():
     assert jnp.allclose(m.var, jnp.eye(3) + 1)
     m = tree_zeros_like(m2)
     assert jnp.allclose(m.var, jnp.zeros_like(m2.var))
+    m = tree_scale(3.0, m1)
+    assert jnp.allclose(m.var, 3 * m1.var)
 
 
 def test_small_strain():

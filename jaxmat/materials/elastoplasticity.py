@@ -1,11 +1,8 @@
 import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
-from jaxmat.state import (
-    AbstractState,
-    tree_add,
-    tree_zeros_like,
-)
+from optax.tree_utils import tree_add, tree_zeros_like
+from jaxmat.state import AbstractState
 from jaxmat.tensors import SymmetricTensor2, dev
 from .behavior import SmallStrainBehavior
 from .elasticity import LinearElasticIsotropic
@@ -62,7 +59,7 @@ class vonMisesIsotropicHardening(SmallStrainBehavior):
             return sig, isv
 
         sig, isv = solve_state(deps, isv_old)
-        new_state = state.update(strain=eps, stress=sig, internal=isv)
+        new_state = state.update(stress=sig, internal=isv)
         return sig, new_state
 
 
@@ -108,5 +105,5 @@ class GeneralIsotropicHardening(SmallStrainBehavior):
             return sig, y
 
         sig, isv = solve_state(deps, isv_old)
-        new_state = state.update(stress=sig, strain=eps, internal=isv)
+        new_state = state.update(stress=sig, internal=isv)
         return sig, new_state
