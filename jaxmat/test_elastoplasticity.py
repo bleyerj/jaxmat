@@ -1,6 +1,6 @@
 import jax
 
-# jax.config.update("jax_platform_name", "cpu")
+jax.config.update("jax_platform_name", "cpu")
 
 from time import time
 import equinox as eqx
@@ -69,7 +69,7 @@ class YieldStress(eqx.Module):
         return sig0 + (sigu - sig0) * (1 - jnp.exp(-b * p))
 
 
-Nbatch = int(1)
+Nbatch = int(1e4)
 
 material = jm.vonMisesIsotropicHardening(elastic_model, YieldStress())
 test_elastoplasticity(material, Nbatch=Nbatch)
