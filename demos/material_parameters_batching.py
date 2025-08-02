@@ -45,7 +45,7 @@ material = jm.vonMisesIsotropicHardening(elastic_model=elasticity, yield_stress=
 print("A single material instance:", material)
 
 key = jax.random.PRNGKey(42)
-N = 50
+N = 100
 b_values = 10**(3*jax.random.lognormal(key, sigma=0.05, shape=(N,)))
 sorting = jnp.argsort(b_values)
 
@@ -63,7 +63,7 @@ print(f"A batch of {N} material instances:", batched_material)
 # +
 state = make_batched(material.init_state(), N) # FIXME: we should be able to do batched_material.init_state(), right now isv are batched once more
 
-gamma_list = jnp.linspace(0, 1e-2, 100)
+gamma_list = jnp.linspace(0, 1e-2, 50)
 tau = jnp.zeros((N, len(gamma_list)))
 for i, gamma in enumerate(gamma_list):
     new_eps = jnp.array([[0, gamma/2, 0], 
@@ -79,7 +79,8 @@ for i, gamma in enumerate(gamma_list):
 cmap = plt.get_cmap("bwr")
 colors = cmap(jnp.linspace(0, 1, N))
 for i, color in enumerate(colors):
-    plt.plot(gamma_list, tau[sorting[i], :].T, linewidth=1.0, alpha=0.5, color=colors[i])
+    plt.plot(gamma_list, tau[sorting[i], :].T, linewidth=1.0, alpha=0.25, color=colors[i])
+plt.errorbar(gamma_list, jnp.mean(tau, axis=0), jnp.std(tau, axis=0), color="k", alpha=0.5)
 plt.xlabel(r"Shear distorsion $\gamma$")
 plt.ylabel(r"Shear stress $\tau$ [MPa]");
 
