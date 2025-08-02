@@ -62,6 +62,7 @@ current_path = Path().resolve()
 #         Eps, state, _ = global_solve(Eps, state, loading, material, dt, in_axes=None)
 #         # print(state.stress)
 
+
 #         sig = state.stress
 #         p = state.internal.p
 #         results = results.at[i + 1, :].set(jnp.array([p, sig[0, 0]]))
@@ -73,7 +74,9 @@ def compute_elastoplasticity(material, loading, state):
     imposed_eps0 = 0.0
 
     Nsteps_p = 20
-    times = jnp.concatenate((jnp.linspace(0, 0.04, 11), jnp.linspace(0.04, 1.0, Nsteps_p)[1:]))
+    times = jnp.concatenate(
+        (jnp.linspace(0, 0.04, 11), jnp.linspace(0.04, 1.0, Nsteps_p)[1:])
+    )
     dts = jnp.diff(times)
     Nsteps = dts.shape[0] + 1
 
@@ -96,11 +99,12 @@ def compute_elastoplasticity(material, loading, state):
 
         # Update loading.eps_vals[0]
         loading_updated = eqx.tree_at(
-            lambda l: l.eps_vals, loading,
-            replace_fn=lambda x: x.at[0].set(imposed_eps)
+            lambda l: l.eps_vals, loading, replace_fn=lambda x: x.at[0].set(imposed_eps)
         )
 
-        Eps, state, _ = global_solve(Eps, state, loading_updated, material, dt, in_axes=None)
+        Eps, state, _ = global_solve(
+            Eps, state, loading_updated, material, dt, in_axes=None
+        )
 
         sig = state.stress
         p = state.internal.p
@@ -110,9 +114,12 @@ def compute_elastoplasticity(material, loading, state):
 
     carry_init = (imposed_eps0, 0.0, Eps, state, results_init, 0)
 
-    (imposed_eps, t, Eps, state, results_final, _), _ = jax.lax.scan(step_fn, carry_init, dts)
+    (imposed_eps, t, Eps, state, results_final, _), _ = jax.lax.scan(
+        step_fn, carry_init, dts
+    )
 
     return results_final
+
 
 E, nu = 200e3, 0.3
 elastic_model = jm.LinearElasticIsotropic(E, nu)
@@ -134,9 +141,13 @@ class YieldStress2(eqx.Module):
     scale: float = eqx.field(static=True)
 
     def __call__(self, p):
-        return self.scale*self.sig0 + jnp.sum(self.scale*self.dsigu * (1 - jnp.exp(-self.scale*self.b * p)))
-    
+        return self.scale * self.sig0 + jnp.sum(
+            self.scale * self.dsigu * (1 - jnp.exp(-self.scale * self.b * p))
+        )
+
+
 data = np.loadtxt(current_path / "X100.csv", skiprows=1, delimiter=",")
+
 
 def interpolate_data(epsp):
     return jnp.interp(epsp, data[:, 0], data[:, 1])
@@ -147,10 +158,12 @@ def interpolate_data(epsp):
 ys = YieldStress2(sig0=5.0, dsigu=jnp.asarray([4.5]), b=jnp.asarray([1.0]), scale=100.0)
 material = jm.vonMisesIsotropicHardening(elastic_model, ys)
 
-material = jax.tree.map(lambda x: jnp.asarray(x, dtype=jnp.float64), material) # force strong type for optax
+material = jax.tree.map(
+    lambda x: jnp.asarray(x, dtype=jnp.float64), material
+)  # force strong type for optax
 
 loading = ImposedLoading(epsxx=0.0)
-# state = material.get_state()
+# state = material.init_state()
 
 # results = compute_elastoplasticity(material, loading, state)
 
@@ -176,11 +189,13 @@ loading = ImposedLoading(epsxx=0.0)
 # duration = timeit(lambda: compute_elastoplasticity(material, loading, state),number=1)
 # print("Execution time", duration)
 
+
 # +
 def plot_results(ax, results):
     epsp = results[:, 0]
     sig = results[:, 1]
     ax.plot(epsp, sig, "-", alpha=0.5)
+
 
 fig, ax = plt.subplots()
 ax.plot(data[:, 0], data[:, 1], "-k")
@@ -193,17 +208,30 @@ ax.set_xlim(0, 3e-2)
 key = jax.random.PRNGKey(42)
 
 N = 4
-ys = YieldStress2(sig0=4.0, dsigu=jax.random.lognormal(key, shape=(N,)), b=jax.random.lognormal(key, shape=(N,)), scale=100.0)
+ys = YieldStress2(
+    sig0=4.0,
+    dsigu=jax.random.lognormal(key, shape=(N,)),
+    b=jax.random.lognormal(key, shape=(N,)),
+    scale=100.0,
+)
 material = jm.vonMisesIsotropicHardening(elastic_model, ys)
 
-material = jax.tree.map(lambda x: jnp.asarray(x, dtype=jnp.float64), material) # force strong type for optax
+material = jax.tree.map(
+    lambda x: jnp.asarray(x, dtype=jnp.float64), material
+)  # force strong type for optax
 
 
 # +
 import optimistix as optx
 import lineax as lx
 
-solver = optx.LevenbergMarquardt(rtol=1e-8, atol=1e-8, linear_solver=lx.AutoLinearSolver(well_posed=False), verbose=frozenset({"loss", "step_size"}))
+solver = optx.LevenbergMarquardt(
+    rtol=1e-8,
+    atol=1e-8,
+    linear_solver=lx.AutoLinearSolver(well_posed=False),
+    verbose=frozenset({"loss", "step_size"}),
+)
+
 
 # @eqx.filter_jit
 def loss(material, args):
@@ -213,13 +241,14 @@ def loss(material, args):
     epsp = results[:, 0]
     sig = results[:, 1]
     data_interp = interpolate_data(epsp)
-    return (sig-data_interp)/jnp.max(data_interp), results
+    return (sig - data_interp) / jnp.max(data_interp), results
+
 
 loss_grad = jax.jacrev(loss, argnums=0, has_aux=True)
 
 
 new_material = tree_scale(1.0, material)
-state=new_material.get_state()
+state = new_material.init_state()
 dloss, results = loss_grad(new_material, (loading, state))
 print(dloss.elastic_model.E)
 print(dloss.elastic_model.nu)
@@ -236,7 +265,16 @@ print(dloss.yield_stress.b)
 # (sig-data_interp)/jnp.linalg.norm(data_interp,ord=jnp.inf)
 # -
 
-sol = optx.least_squares(loss, solver, new_material, args=(loading, state), has_aux=True, throw=False, max_steps=200, options={"jac": "bwd"})
+sol = optx.least_squares(
+    loss,
+    solver,
+    new_material,
+    args=(loading, state),
+    has_aux=True,
+    throw=False,
+    max_steps=200,
+    options={"jac": "bwd"},
+)
 
 # +
 results = sol.aux
@@ -245,10 +283,12 @@ fig, ax = plt.subplots()
 ax.plot(data[:, 0], data[:, 1], "-k")
 epsp = results[:, 0]
 sig = results[:, 1]
-ax.plot(epsp, sig, "-oC3",)
+ax.plot(
+    epsp,
+    sig,
+    "-oC3",
+)
 ax.set_xlim(0, 8e-2)
 # -
 
 sol.value.plastic_surface.tol
-
-
