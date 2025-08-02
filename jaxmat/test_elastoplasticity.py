@@ -14,7 +14,7 @@ import jaxmat.materials as jm
 
 def test_elastoplasticity(material, Nbatch=1):
 
-    state = material.get_state(Nbatch)
+    state = material.init_state(Nbatch)
     Eps = state.strain
 
     plt.figure()

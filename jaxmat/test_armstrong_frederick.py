@@ -37,7 +37,7 @@ def test_ArmstrongFrederick(Nbatch=1):
         elastic_model, yield_stress, viscous_flow, kin_hardening
     )
 
-    state = material.get_state(Nbatch)
+    state = material.init_state(Nbatch)
     Eps = state.strain
 
     plt.figure()

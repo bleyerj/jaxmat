@@ -27,7 +27,7 @@ def test_hyperelasticity():
     F = []
     for loading in loadings:  # [loading_equiax]:
         Nbatch = len(lamb_list)
-        state = material.get_state(Nbatch)
+        state = material.init_state(Nbatch)
         F0 = state.F
         dt = 0.0
         F_sol, state_sol, _ = global_solve(F0, state, loading, material, dt)

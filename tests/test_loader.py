@@ -16,7 +16,7 @@ def test_small_strain():
     dt = 0.1
 
     Nbatch = len(loading)
-    state = material.get_state(Nbatch)
+    state = material.init_state(Nbatch)
     eps0 = state.strain
     eps_sol, state_sol, stats = global_solve(eps0, state, loading, material, dt)
     stress = state_sol.stress
@@ -69,7 +69,7 @@ def test_finite_strain():
     loadings = stack_loadings([loading1, loading2, loading3])
     Nbatch = len(loadings)
 
-    state = material.get_state(Nbatch)
+    state = material.init_state(Nbatch)
     F0 = state.strain
     dt = 0.0
     F_sol, state_sol, stats = global_solve(F0, state, loadings, material, dt)

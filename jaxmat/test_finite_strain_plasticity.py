@@ -13,7 +13,7 @@ import jaxmat.materials as jm
 
 def test_FeFp_elastoplasticity(material, Nbatch=1):
 
-    state = material.get_state(Nbatch)
+    state = material.init_state(Nbatch)
     F = state.F
 
     plt.figure()
