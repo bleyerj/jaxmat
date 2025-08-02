@@ -23,7 +23,7 @@ class vonMises(AbstractPlasticSurface):
 
 
 class Hosford(AbstractPlasticSurface):
-    a: float = 2.0
+    a: float = eqx.field(converter=jnp.asarray, default=2.0)
 
     def __call__(self, sig):
         sI = eigenvalues(sig)
