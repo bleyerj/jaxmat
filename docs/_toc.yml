@@ -7,9 +7,14 @@ title: jaxmat Documentation
 
 
 parts:
-  - caption: User guide
+  - caption: jaxmat
     chapters:
       - file: intro.md
+  - caption: Usage
+    chapters:
+      - file: demos/getting_started.md
+      - file: demos/batched_computation.md
+      - file: demos/material_parameters_batching.md
       # - file: jax.md
       # - file: mfront.md
       

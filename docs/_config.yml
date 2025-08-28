@@ -34,34 +34,6 @@ exclude_patterns: [
     README.md,
     "**/*.ipynb"]
 
-# Sphinx configuration for custom theme
-sphinx:
-  config:
-    autosummary_generate: True
-    autoclass_content: both
-    add_module_names: False
-    bibtex_reference_style: author_year
-    html_theme: sphinx_book_theme
-    html_show_copyright: false
-    # html_static_path: ["_static"]
-    # html_css_files: ["custom.css"]
-    html_theme_options:
-      pygment_light_style: "friendly"
-      show_navbar_depth: 1
-      home_page_in_toc: true
-      show_toc_level: 2
-      repository_url: https://github.com/bleyerj/jaxmat
-      use_edit_page_button: true
-      use_repository_button: true
-      use_download_button: false
-    myst_heading_anchors: 3
-  extra_extensions:
-  - 'sphinx.ext.autodoc'
-  - 'sphinx.ext.napoleon'
-  - 'sphinx.ext.viewcode'
-  - 'sphinx.ext.autosummary'
-  # - 'docs.remove_docstring' # remove module docstring
-    
 parse:
   myst_enable_extensions:
     - "amsmath"
@@ -76,3 +48,209 @@ parse:
     - "substitution"
     - "attrs_inline"
 
+# Sphinx configuration for custom theme
+sphinx:
+  extra_extensions:
+  - 'sphinx.ext.autodoc'
+  - 'sphinx.ext.napoleon'
+  - 'sphinx.ext.viewcode'
+  - 'sphinx.ext.autosummary'
+  # - 'docs.remove_docstring' # remove module docstring
+    
+  config:
+    autosummary_generate: True
+    autoclass_content: both
+    add_module_names: False
+    bibtex_reference_style: author_year
+    html_theme: sphinx_book_theme
+    html_show_copyright: false
+    # html_static_path: ["_static"]
+    # html_css_files: ["custom.css"]
+    html_theme_options:
+      pygments_light_style: "friendly"
+      show_navbar_depth: 1
+      home_page_in_toc: true
+      show_toc_level: 2
+      repository_url: https://github.com/bleyerj/jaxmat
+      use_edit_page_button: true
+      use_repository_button: true
+      use_download_button: false
+    myst_heading_anchors: 3
+    mathjax3_config:
+      tex:
+        macros:
+          # Bold lowercase letters
+          'ba': '\boldsymbol{a}'
+          'bb': '\boldsymbol{b}'
+          'bc': '\boldsymbol{c}'
+          'bd': '\boldsymbol{d}'
+          'be': '\boldsymbol{e}'
+          'bf': '\boldsymbol{f}'
+          'bg': '\boldsymbol{g}'
+          'bh': '\boldsymbol{h}'
+          'bi': '\boldsymbol{i}'
+          'bj': '\boldsymbol{j}'
+          'bk': '\boldsymbol{k}'
+          'bl': '\boldsymbol{l}'
+          'bm': '\boldsymbol{m}'
+          'bn': '\boldsymbol{n}'
+          'bo': '\boldsymbol{o}'
+          'bp': '\boldsymbol{p}'
+          'bq': '\boldsymbol{q}'
+          'br': '\boldsymbol{r}'
+          'bs': '\boldsymbol{s}'
+          'bt': '\boldsymbol{t}'
+          'bu': '\boldsymbol{u}'
+          'bv': '\boldsymbol{v}'
+          'bw': '\boldsymbol{w}'
+          'bx': '\boldsymbol{x}'
+          'by': '\boldsymbol{y}'
+          'bz': '\boldsymbol{z}'
+
+          # Bold uppercase letters
+          'bA': '\boldsymbol{A}'
+          'bB': '\boldsymbol{B}'
+          'bC': '\boldsymbol{C}'
+          'bD': '\boldsymbol{D}'
+          'bE': '\boldsymbol{E}'
+          'bF': '\boldsymbol{F}'
+          'bG': '\boldsymbol{G}'
+          'bH': '\boldsymbol{H}'
+          'bI': '\boldsymbol{I}'
+          'bJ': '\boldsymbol{J}'
+          'bK': '\boldsymbol{K}'
+          'bL': '\boldsymbol{L}'
+          'bM': '\boldsymbol{M}'
+          'bN': '\boldsymbol{N}'
+          'bO': '\boldsymbol{O}'
+          'bP': '\boldsymbol{P}'
+          'bQ': '\boldsymbol{Q}'
+          'bR': '\boldsymbol{R}'
+          'bS': '\boldsymbol{S}'
+          'bT': '\boldsymbol{T}'
+          'bU': '\boldsymbol{U}'
+          'bV': '\boldsymbol{V}'
+          'bW': '\boldsymbol{W}'
+          'bX': '\boldsymbol{X}'
+          'bY': '\boldsymbol{Y}'
+          'bZ': '\boldsymbol{Z}'
+
+          # Bold Greek letters
+          'balpha': '\boldsymbol{\alpha}'
+          'bbeta': '\boldsymbol{\beta}'
+          'bgamma': '\boldsymbol{\gamma}'
+          'bdelta': '\boldsymbol{\delta}'
+          'bepsilon': '\boldsymbol{\epsilon}'
+          'bvarepsilon': '\boldsymbol{\varepsilon}'
+          'bzeta': '\boldsymbol{\zeta}'
+          'boeta': '\boldsymbol{\eta}'
+          'btheta': '\boldsymbol{\theta}'
+          'bvartheta': '\boldsymbol{\vartheta}'
+          'biota': '\boldsymbol{\iota}'
+          'bkappa': '\boldsymbol{\kappa}'
+          'blambda': '\boldsymbol{\lambda}'
+          'bmu': '\boldsymbol{\mu}'
+          'bnu': '\boldsymbol{\nu}'
+          'bxi': '\boldsymbol{\xi}'
+          'bpi': '\boldsymbol{\pi}'
+          'brho': '\boldsymbol{\rho}'
+          'bvarrho': '\boldsymbol{\varrho}'
+          'bsig': '\boldsymbol{\sigma}'
+          'btau': '\boldsymbol{\tau}'
+          'bupsilon': '\boldsymbol{\upsilon}'
+          'bphi': '\boldsymbol{\phi}'
+          'bvarphi': '\boldsymbol{\varphi}'
+          'bchi': '\boldsymbol{\chi}'
+          'bpsi': '\boldsymbol{\psi}'
+          'bomega': '\boldsymbol{\omega}'
+
+          # Bold uppercase Greek letters
+          'bGamma': '\boldsymbol{\Gamma}'
+          'bDelta': '\boldsymbol{\Delta}'
+          'bTheta': '\boldsymbol{\Theta}'
+          'bLambda': '\boldsymbol{\Lambda}'
+          'bXi': '\boldsymbol{\Xi}'
+          'bPi': '\boldsymbol{\Pi}'
+          'bSig': '\boldsymbol{\Sigma}'
+          'bUpsilon': '\boldsymbol{\Upsilon}'
+          'bPhi': '\boldsymbol{\Phi}'
+          'bPsi': '\boldsymbol{\Psi}'
+          'bOmega': '\boldsymbol{\Omega}'
+
+          # Mathcal symbols
+          'Aa': '\mathcal{A}'
+          'Bb': '\mathcal{B}'
+          'Cc': '\mathcal{C}'
+          'Dd': '\mathcal{D}'
+          'Ee': '\mathcal{E}'
+          'Ff': '\mathcal{F}'
+          'Gg': '\mathcal{G}'
+          'Hh': '\mathcal{H}'
+          'Ii': '\mathcal{I}'
+          'Jj': '\mathcal{J}'
+          'Kk': '\mathcal{K}'
+          'Ll': '\mathcal{L}'
+          'Mm': '\mathcal{M}'
+          'Nn': '\mathcal{N}'
+          'Oo': '\mathcal{O}'
+          'Pp': '\mathcal{P}'
+          'Qq': '\mathcal{Q}'
+          'Rr': '\mathcal{R}'
+          'Ss': '\mathcal{S}'
+          'Tt': '\mathcal{T}'
+          'Uu': '\mathcal{U}'
+          'Vv': '\mathcal{V}'
+          'Ww': '\mathcal{W}'
+          'Xx': '\mathcal{X}'
+          'Yy': '\mathcal{Y}'
+          'Zz': '\mathcal{Z}'
+
+          # Mathbb symbols
+          'AA': '\mathbb{A}'
+          'BB': '\mathbb{B}'
+          'CC': '\mathbb{C}'
+          'DD': '\mathbb{D}'
+          'EE': '\mathbb{E}'
+          'FF': '\mathbb{F}'
+          'GG': '\mathbb{G}'
+          'HH': '\mathbb{H}'
+          'II': '\mathbb{I}'
+          'JJ': '\mathbb{J}'
+          'KK': '\mathbb{K}'
+          'LL': '\mathbb{L}'
+          'MM': '\mathbb{M}'
+          'NN': '\mathbb{N}'
+          'OO': '\mathbb{O}'
+          'PP': '\mathbb{P}'
+          'QQ': '\mathbb{Q}'
+          'RR': '\mathbb{R}'
+          'SS': '\mathbb{S}'
+          'TT': '\mathbb{T}'
+          'UU': '\mathbb{U}'
+          'VV': '\mathbb{V}'
+          'WW': '\mathbb{W}'
+          'XX': '\mathbb{X}'
+          'YY': '\mathbb{Y}'
+          'ZZ': '\mathbb{Z}'
+
+
+          # Other mathematical notation
+          'diff': '\,\text{d}'
+          'div': '\operatorname{div}'
+          'dev': '\operatorname{dev}'
+          'sym': '\operatorname{sym}'
+          'skew': '\operatorname{skew}'
+          'tr': '\operatorname{tr}'
+          'T': '^{\text{T}}'
+          'utilde': '\tilde{#1}'
+          'uttilde': '\tilde{\tilde{#1}}'
+          'tgrad': '\utilde{\nabla}'
+          'dOm': '\,\text{d}\Omega'
+          'Neumann': '\partial\Omega_{\text{N}}'
+          'Dirichlet': '\partial\Omega_{\text{D}}'
+          'dt': '\,\text{d}t'
+          'beps': '\bvarepsilon'
+          'epsi': '\varepsilon'
+          'bepsel': '\bvarepsilon^{\text{el}}'
+          'bepsp': '\bvarepsilon^{\text{p}}'
+          'epsp': '\varepsilon^{\text{p}}'
