@@ -25,6 +25,9 @@ class LinearElasticIsotropic(eqx.Module):
     def S(self):
         return self.C.inv
 
+    def strain_energy(self, eps):
+        return 0.5 * jnp.trace(eps @ (self.C @ eps))
+
 
 class ElasticBehavior(SmallStrainBehavior):
     elasticity: eqx.Module
