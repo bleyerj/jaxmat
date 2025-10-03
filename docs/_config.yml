@@ -30,8 +30,9 @@ bibtex_bibfiles:
 
 exclude_patterns: [
     ...,
-    docs/index.md,
+    docs/index.ipynb,
     README.md,
+    docs/intro.ipynb,
     "**/*.ipynb"]
 
 parse:

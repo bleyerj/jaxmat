@@ -1,18 +1,18 @@
 # Documentation
 
-```{image} images/logo.png
-:width: 500px
+```{image} images/jax_framework.png
+:width: 400px
 :align: center
 ```
 
-```{seealso}
-This project builds upon implementations of `jax`-based material models for FEniCSx in the [`dolfinx_materials`](https://github.com/bleyerj/dolfinx_materials) package.
+```{include} ../README.md
+:start-line: 2
 ```
 
-## Introduction
+## References
 
-```{include} ../README.md
-:start-line: 6
+```{seealso}
+This project builds upon implementations of `jax`-based material models for FEniCSx in the [`dolfinx_materials`](https://github.com/bleyerj/dolfinx_materials) package.
 ```
 
 ```{image} images/banner_tutelles.png
