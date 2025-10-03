@@ -1,10 +1,10 @@
 # `jaxmat`: Automated material constitutive modeling in JAX
 
-## Statement of need
+`jaxmat` is an open-source library for implementing material constitutive models in a way that integrates seamlessly with modern machine learning frameworks and existing finite element software.
 
-`jaxmat` is an open-source library for implementing material constitutive models in a way that integrates seamlessly with modern machine learning frameworks and existing finite element software. Built entirely in JAX, it leverages the broader JAX ecosystem -- particularly `equinox`, `diffrax`, and `optimistix` -- to provide a powerful and flexible modeling platform.
+## Aim and scope
 
-The library is designed around four core principles:
+The library is implemented in [JAX](https://github.com/google/jax) and heavily relies on additional features provided by the JAX ecosystem, in particular the [`equinox`](https://docs.kidger.site/equinox/), [`diffrax`](https://docs.kidger.site/diffrax/), and [`optimistix`](https://docs.kidger.site/optimistix/) libraries. The design choices are based on the following premises::
 
 `jaxmat` offers an open-source library for implementing material constitutive models in way that is compatible with modern machine-learning frameworks and existing finite-element software. The library is implemented in JAX and heavily relies on additional features provided by the JAX ecosystem, in particular the `equinox`, `diffrax` and `optimistix` libraries. The design choices are based on the following premises:
 
@@ -25,3 +25,4 @@ Simply run a `pip` install and update `nvidia-cublas-cu12` as there are some iss
 pip install .
 pip install --upgrade nvidia-cublas-cu12
 ```
+
