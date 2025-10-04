@@ -7,11 +7,9 @@ author: Jeremy Bleyer
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: off
-
+  execute_notebooks: cache
   # Set timeout for any example to 20 minutes
   timeout: 1800
-
 
 # Define the name of the latex output file for PDF builds
 latex:
@@ -31,7 +29,7 @@ bibtex_bibfiles:
 exclude_patterns: [
     ...,
     README.md,
-    "*.ipynb",
+    "**/*.ipynb",
     ]
 
 parse:
@@ -50,6 +48,8 @@ parse:
 
 # Sphinx configuration for custom theme
 sphinx:
+  config:
+    num_jobs: 1
   extra_extensions:
   - 'sphinx.ext.autodoc'
   - 'sphinx.ext.napoleon'

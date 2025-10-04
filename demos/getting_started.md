@@ -29,14 +29,15 @@ import jaxmat.materials as jm
 ## Defining a behavior
 
 In the `jaxmat.materials` module, various material models such as elasticity or von Mises plasticity are already available. We will use `LinearElasticIsotropic` for the elastic part and `vonMisesIsotropicHardening` for the elastoplastic model. The latter expects a yield stress module representing the isotropic hardening. In the following, we use a Voce-type exponential hardening:
+
 $$
 \sigma_\text{Y}(p) = \sigma_0 + (\sigma_\text{u}-\sigma_0)\exp(-bp)
 $$
-where $\sigma_0$ (resp. $\sigma_u$) is the initial (resp. final) yield stress and $b$ is a hardening parameter controlling the rate of convergence from
-$\sigma_0$ to $\sigma_u$ as a function of the cumulated plastic strain $p$.
-.
-For this purpose, we simply define an `equinox.Module` with the material parameter attributes $(\sigma_0,\sigma_u, b)$ and a `__call__` function which evaluates the current yield stress as a function of the cumulated plastic strain $p$.
 
+where $\sigma_0$ (resp. $\sigma_u$) is the initial (resp. final) yield stress and $b$ is a hardening parameter controlling the rate of convergence from $\sigma_0$ to $\sigma_u$ as a function of the cumulated plastic strain $p$.
+
+For this purpose, we simply define an `equinox.Module` with the material parameter attributes $(\sigma_0,\sigma_u, b)$ and a `__call__` function which evaluates the current yield stress as a function of the cumulated plastic strain $p$.
+    
 ```{code-cell} ipython3
 elasticity = jm.LinearElasticIsotropic(E=200e3, nu=0.25)
 

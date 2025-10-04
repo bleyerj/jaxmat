@@ -17,11 +17,11 @@ kernelspec:
 
 In this demo, we show how to formulate a *Physics-Augmented Neural Network* (PANN) model to learn the hyperelastic potential of a rubber material directly from experimental data. 
 
-The PANN framework {cite:p}`linden_neural_2023, maurer_utilizing_2024` embeds physical principles, such as frame invariance and polyconvexity, into the neural network architecture, ensuring that the learned strain energy function remains physically consistent while retaining the expressive power of machine learning. In particular, polyconvexity will be ensured by representing $\psi$ with a convex function of some invariants (see #REF). Representing a convex function using a neural network is possible using Input Convex Neural Networks (ICNN) {cite:p}`amos2017icnn` which have been implemented in `jaxmat.nn.incc`. 
+The PANN framework {cite:p}`linden_neural_2023, maurer_utilizing_2024` embeds physical principles, such as frame invariance and polyconvexity, into the neural network architecture, ensuring that the learned strain energy function remains physically consistent while retaining the expressive power of machine learning. In particular, polyconvexity will be ensured by representing $\psi$ with a convex function of some invariants (see #REF). Representing a convex function using a neural network is possible using Input Convex Neural Networks (ICNN) {cite:p}`amos2017icnn` which have been implemented in `jaxmat.nn.incc`.
 
-## Reference data 
+## Reference data
 
-We demonstrate the approach using the classical **Treloar rubber data** {cite:p}`treloar1944stress`, a widely used experimental dataset for uniaxial, biaxial, and pure shear tests on natural rubber. This dataset has become a benchmark for constitutive model calibration and for validating machine-learning-based material models. 
+We demonstrate the approach using the classical **Treloar rubber data** {cite:p}`treloar1944stress`, a widely used experimental dataset for uniaxial, biaxial, and pure shear tests on natural rubber. This dataset has become a benchmark for constitutive model calibration and for validating machine-learning-based material models.
 
 We first load the dataset [obtained from here](https://www.kaggle.com/datasets/swordfisho/treolar-dataset). To prepare it for training, we filter invalid entries and resample the stress–stretch curves by linear interpolation, obtaining $N_\text{sample}$ data points per loading case.
 
