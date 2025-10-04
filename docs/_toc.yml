@@ -7,13 +7,17 @@ title: jaxmat Documentation
 
 
 parts:
-  - caption: Demos
+  - caption: Quickstart tutorials
     chapters:
-      - file: demos/getting_started.md
-      - file: demos/batched_computation.md
-      - file: demos/material_parameters_batching.md
-      - file: demos/neural_network_models/hyperelastic_PANN.md
-  - caption: General concepts 
+        - file: demos/getting_started.md
+        - file: demos/batched_computation.md
+        - file: demos/material_parameters_batching.md
+  - caption: Examples
+    chapters:
+    - file: ml_models.md
+      sections:
+        - file: demos/neural_network_models/hyperelastic_PANN.md
+  - caption: General resources 
     chapters:
       - file: concepts.md
       - file: computational.md

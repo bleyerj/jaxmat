@@ -37,7 +37,7 @@ $$
 where $\sigma_0$ (resp. $\sigma_u$) is the initial (resp. final) yield stress and $b$ is a hardening parameter controlling the rate of convergence from $\sigma_0$ to $\sigma_u$ as a function of the cumulated plastic strain $p$.
 
 For this purpose, we simply define an `equinox.Module` with the material parameter attributes $(\sigma_0,\sigma_u, b)$ and a `__call__` function which evaluates the current yield stress as a function of the cumulated plastic strain $p$.
-    
+
 ```{code-cell} ipython3
 elasticity = jm.LinearElasticIsotropic(E=200e3, nu=0.25)
 
@@ -181,7 +181,7 @@ plt.legend();
 
 ## Computation for a batch of material points
 
-In this section, we will show how to adapt the previous setting to the evaluation of the constitutive law for a set of $N$ material points, which we will call a *batch* of size $N$. To do so, we will heavily rely on `jax`'s automatic vectorization functionality provided by the `jax.vmap` function. 
+In this section, we will show how to adapt the previous setting to the evaluation of the constitutive law for a set of $N$ material points, which we will call a *batch* of size $N$. To do so, we will heavily rely on `jax`'s automatic vectorization functionality provided by the `jax.vmap` function.
 
 As an illustration, let us consider here the case of perfect plasticity and perform a single evaluation of the constitutive update for points with imposed strains such that the elastic prediction will fall outside the yield surface. The result of the constitutive update will therefore produce points which are projected onto the yield surface. We consider purely deviatoric strains of the form:
 
@@ -206,14 +206,16 @@ eps = SymmetricTensor2(tensor=eps)
 ```
 
 ```{code-cell} ipython3
-sig0 = 300.0
+elastic = jm.LinearElasticIsotropic(E=200e3, nu=0)
+
 class YieldStress(eqx.Module):
     sig0: float
     H_: float = 1e-6
     def __call__(self, p):
         return  self.sig0*(1.0+self.H_*p)
-    
-new_material = jm.GeneralIsotropicHardening(elastic_model=jm.LinearElasticIsotropic(E=200e3, nu=0), yield_stress=YieldStress(sig0=sig0), plastic_surface=jm.Hosford())
+
+sig0 = 300.0
+new_material = jm.GeneralIsotropicHardening(elastic_model=elastic, yield_stress=YieldStress(sig0=sig0), plastic_surface=jm.Hosford())
 state = new_material.init_state(Nbatch=N)
 ```
 

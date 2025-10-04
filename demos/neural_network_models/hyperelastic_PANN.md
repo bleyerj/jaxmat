@@ -14,8 +14,7 @@ kernelspec:
 
 # Physics-Augmented Neural Networks for data-driven hyperelasticity
 
-
-In this demo, we show how to formulate a *Physics-Augmented Neural Network* (PANN) model to learn the hyperelastic potential of a rubber material directly from experimental data. 
+In this demo, we show how to formulate a *Physics-Augmented Neural Network* (PANN) model to learn the hyperelastic potential of a rubber material directly from experimental data.
 
 The PANN framework {cite:p}`linden_neural_2023, maurer_utilizing_2024` embeds physical principles, such as frame invariance and polyconvexity, into the neural network architecture, ensuring that the learned strain energy function remains physically consistent while retaining the expressive power of machine learning. In particular, polyconvexity will be ensured by representing $\psi$ with a convex function of some invariants (see #REF). Representing a convex function using a neural network is possible using Input Convex Neural Networks (ICNN) {cite:p}`amos2017icnn` which have been implemented in `jaxmat.nn.incc`.
 
@@ -114,7 +113,7 @@ where $\Psi$ is convex in its arguments. As mentioned above, we use an ICNN to o
 
 where $\Psi_{\btheta}$ is an ICNN of input size 4. The final layer is also constrained to enforce a positive energy. In practice, we use $\mathcal{I}=(I_1-3, I_2-3, I_3-1, -2(J-1))$ as inputs.
 
-The second Piola-Kirchhoff (PK2) stress $\bS$ is then obtained by taking the derivative of the network with respect to $\bC$. 
+The second Piola-Kirchhoff (PK2) stress $\bS$ is then obtained by taking the derivative of the network with respect to $\bC$.
 
 One issue is that the resulting stress does not necessarily vanish in the reference stress-configuration $\bC=\bI$. To achieve this the free energy is modified by adding a term so that the stress vanishes for $\bC=\bI$, see {cite:p}`linden_neural_2023` for more details. In the case of isotropic hyperelasticity, this amounts to considering:
 
@@ -123,9 +122,11 @@ One issue is that the resulting stress does not necessarily vanish in the refere
 ```
 
 The resulting PK2 stress is then:
+
 ```{math}
 \bS_{\btheta} =  2\dfrac{\partial \Psi_{\btheta}^\text{PANN}}{\partial \bC}
 ```
+
 and the PK1 stress is $\bP_{\btheta} = \bF\bS_{\btheta}$
 
 ## Defining the PANN model
@@ -181,7 +182,7 @@ PK1_ST = batched_compute_stress(material,stretches_ST)
 plt.figure()
 plt.plot(stretches_ST[:,0], train_output["simple_tension"][:,0], "-C3", label="Training data")
 plt.plot(stretches_ST[:,0], PK1_ST[:,0], label="Initial prediction")
-plt.xlabel("Stretch $\lambda_1$ [-]")
+plt.xlabel(r"Stretch $\lambda_1$ [-]")
 plt.ylabel("Engineering stress $P_1$ [MPa]")
 plt.show()
 ```
@@ -245,7 +246,7 @@ for i, label in enumerate(labels):
     plt.plot(stretches[:,0], PK1[:,0], color="royalblue", label="Prediction ($P_1$)")
     plt.plot(stretches[:,0], PK1[:,1], '-.', color="royalblue", linewidth=1, label="Prediction ($P_2$)")
     plt.plot(stretches[:,0], PK1[:,2], '--', color="royalblue", linewidth=1, label="Prediction ($P_3$)")
-    plt.xlabel("Stretch $\lambda_1$ [-]")
+    plt.xlabel(r"Stretch $\lambda_1$ [-]")
     plt.ylabel("Engineering stress [MPa]")
     plt.gca().set_xlim(1.0)
     plt.gca().set_ylim(-2, 8.0)

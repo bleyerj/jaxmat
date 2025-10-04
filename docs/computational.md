@@ -38,7 +38,7 @@ In `jaxmat`, this means we typically JIT the **constitutive update function**, o
 When JIT-tracing, concrete values are replaced by *tracers*, and operations must remain compatible with JAX’s functional semantics. Care must be taken when writing implementations involving conditionals or loops to ensure that the traced code remains valid.
 
 As in JAX, `jaxmat` supports device-portable batched constitutive updates; users may run the same code on CPU or GPU.
-The observed performance will strongly depends on the hardware device, the used batch size  and the computational intensity of the material mode, see the [](demos/performance.md) demo for more details.
+The observed performance will strongly depends on the hardware device, the used batch size  and the computational intensity of the material model, see the [](demos/performance.md) demo for more details.
 
 ## On Automatic Vectorization
 
