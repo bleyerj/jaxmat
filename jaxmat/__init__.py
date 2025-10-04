@@ -7,6 +7,17 @@ from jaxmat.solvers.gauss_newton_ls import GaussNewtonLineSearch
 
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parent
-DEMOS_DIR = PROJECT_ROOT.parent / "demos"
-DATA_DIR = DEMOS_DIR / "_data"
+
+def get_path(notebook_fallback: str | None = None) -> Path:
+    """
+    Return the directory of the current demo.
+    - In scripts: based on __file__
+    - In notebooks: fallback to Path.cwd() or a provided path
+    """
+    try:
+        return Path(__file__).resolve().parent
+    except NameError:
+        # __file__ is not defined (e.g., in Jupyter)
+        if notebook_fallback:
+            return Path(notebook_fallback).resolve()
+        return Path.cwd().resolve()

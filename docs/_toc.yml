@@ -12,6 +12,7 @@ parts:
       - file: demos/getting_started.md
       - file: demos/batched_computation.md
       - file: demos/material_parameters_batching.md
+      - file: demos/neural_network_models/hyperelastic_PANN.md
   - caption: General concepts 
     chapters:
       - file: concepts.md

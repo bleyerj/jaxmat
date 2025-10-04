@@ -7,7 +7,7 @@ author: Jeremy Bleyer
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: cache
+  execute_notebooks: off
 
   # Set timeout for any example to 20 minutes
   timeout: 1800
@@ -30,10 +30,9 @@ bibtex_bibfiles:
 
 exclude_patterns: [
     ...,
-    docs/index.ipynb,
     README.md,
-    docs/intro.ipynb,
-    "**/*.ipynb"]
+    "*.ipynb",
+    ]
 
 parse:
   myst_enable_extensions:
@@ -242,6 +241,7 @@ sphinx:
           'sym': '\operatorname{sym}'
           'skew': '\operatorname{skew}'
           'tr': '\operatorname{tr}'
+          'cof': '\operatorname{cof}'
           'T': '^{\text{T}}'
           'utilde': '\tilde{#1}'
           'uttilde': '\tilde{\tilde{#1}}'

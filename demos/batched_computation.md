@@ -1,5 +1,6 @@
 ---
 jupytext:
+  formats: md:myst,ipynb
   text_representation:
     extension: .md
     format_name: myst
@@ -31,8 +32,7 @@ where the amplitude $\epsilon$ is chosen sufficiently large to exceed the plasti
 
 We first represent $\boldsymbol{\varepsilon}$ as a batched `SymmetricTensor2` with shape `(N, 3, 3)`. By convention, the batch dimension is always the first axis.
 
-
-```{code-cell} ipython3
+```{code-cell}
 import matplotlib.pyplot as plt
 import jax
 jax.config.update("jax_platform_name", "cpu")
@@ -54,7 +54,7 @@ eps = SymmetricTensor2(tensor=eps)
 
 Next, we define an elastoplastic material based on `GeneralIsotropicHardening`, which allows us to consider different yield surfaces. Here, we choose a Hosford surface and will vary its shape parameter $a$. The yield stress is nearly constant to mimic perfect plasticity.
 
-```{code-cell} ipython3
+```{code-cell}
 sig0 = 300.0
 class YieldStress(eqx.Module):
     sig0: float
@@ -69,13 +69,13 @@ material = jm.GeneralIsotropicHardening(elastic_model=jm.LinearElasticIsotropic(
 
 We then initialize the state for all $N$ points:
 
-```{code-cell} ipython3
+```{code-cell}
 state = material.init_state(Nbatch=N)
 ```
 
 To evaluate the constitutive behavior over the entire batch, we vectorize the constitutive update using the `jax.vmap` transform. The method signature is `(material, strain, state, dt)`, so `in_axes=(None, 0, 0, None)` specifies that only the first axes of `strain` and `state` are vectorized, while `material` and the time step `dt` are shared across the batch.
 
-```{code-cell} ipython3
+```{code-cell}
 batched_constitutive_update = jax.vmap(jm.GeneralIsotropicHardening.constitutive_update, in_axes=(None, 0, 0, None))
 ```
 
@@ -85,7 +85,7 @@ We vectorize the **unbound class method** `GeneralIsotropicHardening.constitutiv
 
 Next, we iterate over different values of the Hosford parameter $a$. Using equinox.tree_at, we update the material PyTree to define a new material instance, then evaluate the batched constitutive update for the batch of strains and states. The resulting batched stress tensors are then plotted on the deviatoric $\pi$-plane.
 
-```{code-cell} ipython3
+```{code-cell}
 :tags: [hide-input]
 
 def scatter_pi_plane(stress, marker="o", **kwargs):
@@ -103,7 +103,7 @@ def scatter_pi_plane(stress, marker="o", **kwargs):
     plt.gca().set_aspect("equal")
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 plt.figure(figsize=(6, 6))
 dt = 0.0
 for i, a in enumerate([2.0, 6.0, 10.0]):
