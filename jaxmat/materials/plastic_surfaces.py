@@ -18,15 +18,43 @@ def safe_zero(method):
 
 
 class AbstractPlasticSurface(eqx.Module):
+    """Abstract plastic surface class."""
+
     @abstractmethod
     def __call__(self, sig, *args):
+        """Yield surface expression.
+
+        Note: We recommend using the `safe_zero` decorator on this method to avoid
+        NaNs for zero stresses.
+
+        Parameters
+        ----------
+        sig: Tensor
+            Stress tensor.
+        args: tuple
+            Additional thermodynamic forces entering the yield surface definition.
+        """
         pass
 
     def normal(self, sig, *args):
+        """Normal to the yield surface. Computed automatically using forward AD on `__call__`.
+
+        Parameters
+        ----------
+        sig: Tensor
+            Stress tensor.
+        args: tuple
+            Additional thermodynamic forces entering the yield surface definition.
+        """
         return jax.jacfwd(self.__call__, argnums=0)(sig, *args)
 
 
 class vonMises(AbstractPlasticSurface):
+    r"""von Mises yield surface
+
+    $$\sqrt{\dfrac{3}{2}\bs:\bs}$$
+
+    where $\bs = \dev(\bsig)$"""
 
     @safe_zero
     def __call__(self, sig):
@@ -34,6 +62,20 @@ class vonMises(AbstractPlasticSurface):
 
 
 class Hosford(AbstractPlasticSurface):
+    r"""Hosford yield surface
+
+    $$\left(\dfrac{1}{2}(|\sigma_\text{I}-\sigma_\text{II}|^a +
+    |\sigma_\text{II}-\sigma_\text{III}|^a +
+    |\sigma_\text{I}-\sigma_\text{III}|^a)\right)^{1/a}$$
+
+    with $\sigma_\text{J}$ being the stress principal values.
+
+    Parameters
+    ----------
+    a : float
+        Hosford shape parameter
+    """
+
     a: float = eqx.field(converter=jnp.asarray, default=2.0)
 
     @safe_zero
