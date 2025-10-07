@@ -17,6 +17,7 @@ parts:
     - file: pheno_models.md
       sections:
         - file: demos/phenomenological_models/viscoplastic_model.md
+        - file: demos/phenomenological_models/camclay.md
     - file: ml_models.md
       sections:
         - file: demos/neural_network_models/hyperelastic_PANN.md
