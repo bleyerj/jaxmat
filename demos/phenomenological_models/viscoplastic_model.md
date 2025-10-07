@@ -273,7 +273,7 @@ initial_state = eqx.filter_vmap(set_initial_press)(state, press_vals)
 print(initial_state.stress[:, 0, 0])
 ```
 
-From this initial state, we consider a time-varying imposed strain of a purely deviatoric form $\beps(t) = \epsilon(t)\diag(1,-1/2,-1/2)$ where the loading is first applied linearly with time at a strain rate $\dot\epsilon$ and is then held fixed once reaching the final strain $\epsilon_\text{max} = 2.10^{-3}$, i.e. $\epsilon(t) = \max{\dot\epsilon t ; \epsilon_\text{max}}$.
+From this initial state, we consider a time-varying imposed strain of a purely deviatoric form $\beps(t) = \epsilon(t)\diag(1,-1/2,-1/2)$ where the loading is first applied linearly with time at a strain rate $\dot\epsilon$ and is then held fixed once reaching the final strain $\epsilon_\text{max} = 2.10^{-3}$, i.e. $\epsilon(t) = \min\{\dot\epsilon t ; \epsilon_\text{max}\}$.
 
 The strain is imposed via the `ImposedLoading` class and the `global_solve` function[^2]. We then recover the stress state in the $(p, q)$ space.
 

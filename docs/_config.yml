@@ -239,6 +239,7 @@ sphinx:
           'div': '\operatorname{div}'
           'dev': '\operatorname{dev}'
           'sym': '\operatorname{sym}'
+          'diag': '\operatorname{diag}'
           'skew': '\operatorname{skew}'
           'tr': '\operatorname{tr}'
           'cof': '\operatorname{cof}'
