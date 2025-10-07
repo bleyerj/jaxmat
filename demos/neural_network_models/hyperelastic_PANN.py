@@ -15,7 +15,6 @@
 
 # # Physics-Augmented Neural Networks for data-driven hyperelasticity
 #
-#
 # In this demo, we show how to formulate a *Physics-Augmented Neural Network* (PANN) model to learn the hyperelastic potential of a rubber material directly from experimental data.
 #
 # The PANN framework {cite:p}`linden_neural_2023, maurer_utilizing_2024` embeds physical principles, such as frame invariance and polyconvexity, into the neural network architecture, ensuring that the learned strain energy function remains physically consistent while retaining the expressive power of machine learning. In particular, polyconvexity will be ensured by representing $\psi$ with a convex function of some invariants (see #REF). Representing a convex function using a neural network is possible using Input Convex Neural Networks (ICNN) {cite:p}`amos2017icnn` which have been implemented in `jaxmat.nn.incc`.
@@ -49,15 +48,12 @@ import jax.numpy as jnp
 import optimistix as optx
 
 current_path = get_path()
-data = np.loadtxt(
-    current_path / "../demos/_data/Treloar_rubber.csv", skiprows=1, delimiter=","
-)
+data = np.loadtxt(current_path / "../demos/_data/Treloar_rubber.csv", skiprows=1, delimiter=",")
 stress_data = []
 load_data = []
 for i in range(3):
     load_data.append(data[data[:, 2 * i] != np.inf, 2 * i])
     stress_data.append(data[data[:, 2 * i] != np.inf, 2 * i + 1])
-
 
 def resample(x, y, N, downsample_ratio=0.0):
     if N is None:
@@ -69,30 +65,21 @@ def resample(x, y, N, downsample_ratio=0.0):
         yr = jnp.interp(xr, x, y)
         return xr, yr
 
-
 Nsample = 100
-labels = [
-    "simple_tension",
-    "biaxial_tension",
-    "plane_tension",
-]
+labels = ["simple_tension",  "biaxial_tension", "plane_tension",]
 dataset = {}
 for i, label in enumerate(labels):
     lamb, stress = resample(load_data[i], stress_data[i], Nsample)
     match label:
         case "simple_tension":
             stretches = jnp.vstack((lamb, 1 / jnp.sqrt(lamb), 1 / jnp.sqrt(lamb))).T
-            stresses = jnp.vstack(
-                (stress, jnp.zeros_like(stress), jnp.zeros_like(stress))
-            ).T
+            stresses = jnp.vstack((stress, jnp.zeros_like(stress), jnp.zeros_like(stress))).T
         case "biaxial_tension":
-            stretches = jnp.vstack((lamb, lamb, 1 / lamb**2)).T
-            stresses = jnp.vstack((stress, stress, jnp.zeros_like(stress))).T
+            stretches = jnp.vstack((lamb, lamb, 1 / lamb**2)).T 
+            stresses = jnp.vstack((stress, stress, jnp.zeros_like(stress))).T 
         case "plane_tension":
-            stretches = jnp.vstack((lamb, jnp.ones_like(lamb), 1 / lamb)).T
-            stresses = jnp.vstack(
-                (stress, jnp.full_like(stress, jnp.inf), jnp.zeros_like(stress))
-            ).T  # we don't have the P2 stress for plane tension
+            stretches = jnp.vstack((lamb, jnp.ones_like(lamb), 1 / lamb)).T 
+            stresses = jnp.vstack((stress, jnp.full_like(stress, jnp.inf), jnp.zeros_like(stress))).T # we don't have the P2 stress for plane tension 
     dataset[label] = (stretches, stresses)
 
 training_cases = ["simple_tension", "biaxial_tension"]
@@ -138,9 +125,11 @@ test_output = {key: dataset[key][1] for key in labels if key not in training_cas
 # ```
 #
 # The resulting PK2 stress is then:
+#
 # ```{math}
 # \bS_{\btheta} =  2\dfrac{\partial \Psi_{\btheta}^\text{PANN}}{\partial \bC}
 # ```
+#
 # and the PK1 stress is $\bP_{\btheta} = \bF\bS_{\btheta}$
 #
 # ## Defining the PANN model
@@ -149,33 +138,36 @@ test_output = {key: dataset[key][1] for key in labels if key not in training_cas
 #
 # Finally, we use `jax.vmap` to define a batched version of the PK1 stress computation for a given PANN material model.
 
-
 # +
 class PANN(ICNN):
     def nn_energy(self, lambC):
         I3 = jnp.prod(lambC)
         J = jnp.sqrt(I3)
         I1 = jnp.sum(lambC)
-        I2 = jnp.sum(I3 / lambC)
-        inputs = jnp.asarray([I1 - 3, I2 - 3, I3 - 1, -2 * (J - 1)])
+        I2 = jnp.sum(I3/lambC)
+        inputs = jnp.asarray(
+            [I1-3, I2-3, I3-1, -2*(J-1)]
+        )
         return super().__call__(inputs)
-
+    
     def pann_energy(self, lambC):
         J = jnp.sqrt(jnp.prod(lambC))
         dpsi_dC = jax.jacfwd(self.nn_energy)(jnp.ones((3,)))[0]
-        return self.nn_energy(lambC) - 2 * dpsi_dC * (J - 1)
-
+        return self.nn_energy(lambC) - 2*dpsi_dC*(J-1)
+    
     def pann_PK2_stress(self, lambC):
         dpsi_dC = jax.jacfwd(self.pann_energy)
         return 2 * dpsi_dC(lambC)
-
+    
     def pann_PK1_stress(self, stretches):
         return jnp.diag(stretches) @ self.pann_PK2_stress(stretches**2)
 
     def __call__(self, lambC):
-        return self.pann_energy(lambC) - self.pann_energy(jnp.ones((3,)))
-
-
+        return (
+            self.pann_energy(lambC)
+            - self.pann_energy(jnp.ones((3,)))
+        )
+    
 batched_compute_stress = jax.vmap(PANN.pann_PK1_stress, in_axes=(None, 0))
 # -
 
@@ -187,18 +179,13 @@ hidden_dims = [10]
 key = jax.random.PRNGKey(42)
 material = PANN(input_dim, hidden_dims, key)
 
-stretches_ST = train_input["simple_tension"]
-PK1_ST = batched_compute_stress(material, stretches_ST)
+stretches_ST =  train_input["simple_tension"]
+PK1_ST = batched_compute_stress(material,stretches_ST)
 
 plt.figure()
-plt.plot(
-    stretches_ST[:, 0],
-    train_output["simple_tension"][:, 0],
-    "-C3",
-    label="Training data",
-)
-plt.plot(stretches_ST[:, 0], PK1_ST[:, 0], label="Initial prediction")
-plt.xlabel("Stretch $\lambda_1$ [-]")
+plt.plot(stretches_ST[:,0], train_output["simple_tension"][:,0], "-C3", label="Training data")
+plt.plot(stretches_ST[:,0], PK1_ST[:,0], label="Initial prediction")
+plt.xlabel(r"Stretch $\lambda_1$ [-]")
 plt.ylabel("Engineering stress $P_1$ [MPa]")
 plt.show()
 
@@ -208,7 +195,6 @@ plt.show()
 # ## Training the PANN model
 
 # We are now ready to set up the training. Here, we simply define the error between the predicted and the stress data and use `optimistix` least-square solvers. First, the total error is defined by mapping the `error` function over the training load cases defined as a PyTree. The `total_error` takes as a first argument the PANN model PyTree `material` while training data are stored in the second `args` argument.
-
 
 def total_error(material, args):
     input, output = args
@@ -245,11 +231,11 @@ trained_PANN = sol.value
 # We plot the resulting predicted stresses for the two training load cases (Simple and Biaxial Tension) and also evaluate the performance on the unseen Plane Tension load case. The PANN architecture succeeds in learning a good representation of the data, while ensuring almost zero out-of-plane stress in general. The prediction is still very good even on the unseen Plane Tension case.
 
 m = len(labels)
-plt.figure(figsize=(6, 5 * m))
+plt.figure(figsize=(6, 5*m))
 for i, label in enumerate(labels):
     stretches, stresses = dataset[label]
     PK1 = batched_compute_stress(trained_PANN, stretches)
-    plt.subplot(m, 1, i + 1)
+    plt.subplot(m, 1, i+1)
     plt.title(label)
     if label in training_cases:
         dtype = "Training data"
@@ -257,24 +243,10 @@ for i, label in enumerate(labels):
     else:
         dtype = "Test data"
         color = "forestgreen"
-    plt.plot(stretches[:, 0], stresses[:, 0], color=color, label=dtype)
-    plt.plot(stretches[:, 0], PK1[:, 0], color="royalblue", label="Prediction ($P_1$)")
-    plt.plot(
-        stretches[:, 0],
-        PK1[:, 1],
-        "-.",
-        color="royalblue",
-        linewidth=1,
-        label="Prediction ($P_2$)",
-    )
-    plt.plot(
-        stretches[:, 0],
-        PK1[:, 2],
-        "--",
-        color="royalblue",
-        linewidth=1,
-        label="Prediction ($P_3$)",
-    )
+    plt.plot(stretches[:,0], stresses[:,0], color=color, label=dtype)
+    plt.plot(stretches[:,0], PK1[:,0], color="royalblue", label="Prediction ($P_1$)")
+    plt.plot(stretches[:,0], PK1[:,1], '-.', color="royalblue", linewidth=1, label="Prediction ($P_2$)")
+    plt.plot(stretches[:,0], PK1[:,2], '--', color="royalblue", linewidth=1, label="Prediction ($P_3$)")
     plt.xlabel(r"Stretch $\lambda_1$ [-]")
     plt.ylabel("Engineering stress [MPa]")
     plt.gca().set_xlim(1.0)
