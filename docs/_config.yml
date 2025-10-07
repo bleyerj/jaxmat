@@ -3,6 +3,7 @@
 
 title: jaxmat
 author: Jeremy Bleyer
+logo: images/jaxmat_logo.svg
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
@@ -51,6 +52,7 @@ sphinx:
   config:
     num_jobs: 1
   extra_extensions:
+  - 'sphinx_math_dollar'
   - 'sphinx.ext.autodoc'
   - 'sphinx.ext.napoleon'
   - 'sphinx.ext.viewcode'
@@ -78,6 +80,8 @@ sphinx:
     myst_heading_anchors: 3
     mathjax3_config:
       tex:
+        inlineMath: [["$", "$"], ["\\(", "\\)"]]
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]]
         macros:
           # Bold lowercase letters
           'ba': '\boldsymbol{a}'

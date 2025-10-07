@@ -4,9 +4,7 @@
 
 ## Aim and scope
 
-The library is implemented in [JAX](https://github.com/google/jax) and heavily relies on additional features provided by the JAX ecosystem, in particular the [`equinox`](https://docs.kidger.site/equinox/), [`diffrax`](https://docs.kidger.site/diffrax/), and [`optimistix`](https://docs.kidger.site/optimistix/) libraries. The design choices are based on the following premises::
-
-`jaxmat` offers an open-source library for implementing material constitutive models in way that is compatible with modern machine-learning frameworks and existing finite-element software. The library is implemented in JAX and heavily relies on additional features provided by the JAX ecosystem, in particular the `equinox`, `diffrax` and `optimistix` libraries. The design choices are based on the following premises:
+The library is implemented in [JAX](https://github.com/google/jax) and heavily relies on additional features provided by the JAX ecosystem, in particular the [`equinox`](https://docs.kidger.site/equinox/), [`diffrax`](https://docs.kidger.site/diffrax/), and [`optimistix`](https://docs.kidger.site/optimistix/) libraries. The design choices are based on the following premises:
 
 1. **User-friendliness**: `jaxmat` provides domain-specific abstractions that simplify the definition of complex material models. It is not a database of hard-coded material behaviors with fixed parameters. Instead, it offers a generic and extensible framework for users to define, compose, and calibrate their own constitutive models with minimal boilerplate.
 
@@ -26,3 +24,7 @@ pip install .
 pip install --upgrade nvidia-cublas-cu12
 ```
 
+## About the author
+
+[Jeremy Bleyer](https://bleyerj.github.io/) is a researcher in Solid and Structural Mechanics at [Laboratoire Navier](https://navier-lab.fr), a joint research  (UMR 8205) of [Ecole Nationale des Ponts et Chaussées - IP Paris](http://www.enpc.fr),
+[Université Gustave Eiffel](https://www.univ-gustave-eiffel.fr/) and [CNRS](http://www.cnrs.fr).
