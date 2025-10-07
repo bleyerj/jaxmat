@@ -9,21 +9,21 @@ from jaxmat.tensors.utils import safe_norm
 def safe_zero(method):
     """Decorator for yield surfaces to avoid NaNs for zero stress in both fwd and bwd AD."""
 
-    def wrapper(self, x):
+    def wrapper(self, x, *args):
         x_norm = jnp.linalg.norm(x)
         x_safe = SymmetricTensor2(tensor=jnp.where(x_norm > 0, x, x))
-        return jnp.where(x_norm > 0, method(self, x_safe), 0.0)
+        return jnp.where(x_norm > 0, method(self, x_safe, *args), 0.0)
 
     return wrapper
 
 
 class AbstractPlasticSurface(eqx.Module):
     @abstractmethod
-    def __call__(self, sig):
+    def __call__(self, sig, *args):
         pass
 
-    def normal(self, sig):
-        return jax.jacfwd(self.__call__)(sig)
+    def normal(self, sig, *args):
+        return jax.jacfwd(self.__call__, argnums=0)(sig, *args)
 
 
 class vonMises(AbstractPlasticSurface):
