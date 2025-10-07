@@ -2,22 +2,33 @@ from abc import abstractmethod
 import jax
 import jax.numpy as jnp
 import equinox as eqx
-from jaxmat.tensors import eigenvalues, dev
+from jaxmat.tensors import eigenvalues, dev, SymmetricTensor2
 from jaxmat.tensors.utils import safe_norm
 
 
-class AbstractPlasticSurface(eqx.Module):
-    tol: float = eqx.field(static=True, default=1e-8)
+def safe_zero(method):
+    """Decorator for yield surfaces to avoid NaNs for zero stress in both fwd and bwd AD."""
 
+    def wrapper(self, x):
+        x_norm = jnp.linalg.norm(x)
+        x_safe = SymmetricTensor2(tensor=jnp.where(x_norm > 0, x, x))
+        return jnp.where(x_norm > 0, method(self, x_safe), 0.0)
+
+    return wrapper
+
+
+class AbstractPlasticSurface(eqx.Module):
     @abstractmethod
     def __call__(self, sig):
         pass
 
     def normal(self, sig):
-        return jax.jacfwd(lambda sig: jnp.clip(self.__call__(sig), a_min=self.tol))(sig)
+        return jax.jacfwd(self.__call__)(sig)
 
 
 class vonMises(AbstractPlasticSurface):
+
+    @safe_zero
     def __call__(self, sig):
         return jnp.sqrt(3 / 2.0) * safe_norm(dev(sig))
 
@@ -25,6 +36,7 @@ class vonMises(AbstractPlasticSurface):
 class Hosford(AbstractPlasticSurface):
     a: float = eqx.field(converter=jnp.asarray, default=2.0)
 
+    @safe_zero
     def __call__(self, sig):
         sI = eigenvalues(sig)
         return (
