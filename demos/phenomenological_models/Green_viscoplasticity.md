@@ -12,9 +12,12 @@ kernelspec:
   name: python3
 ---
 
-# Viscoplastic model with a Green yield surface and Norton flow
+# Norton viscoplastic model with a Green yield surface
 
 In this example, we implement and solve a rate-dependent viscoplastic constitutive model that combines a Green-type yield surface with a Norton viscoplastic flow rule.
+
+```{admonition} Objectives
+:class: important
 
 The goal of this demo is to illustrate how to:
 
@@ -25,25 +28,26 @@ The goal of this demo is to illustrate how to:
 - Integrate the constitutive equations over a time step using implicit local updates, solved automatically with the `optimistix` root-finding engine.
 
 - Evaluate the model response for a batch of load cases and initial states.
+```
 
 ## Model overview
 
-The **Green yield function** is defined as:
+The Green yield function is defined as:
 
 ```{math}
 f(\bsig) = \sqrt{A^2\,\sigma_m^2 + \frac{3}{2}\,\bs:\bs}
 ```
 
-where  
+where
 
-- $\sigma_m = \frac{1}{3}\,\tr(\bsig)$ is the mean (hydrostatic) stress, and  
-- $\bs = \bsig - \sigma_m \boldsymbol{I}$ is the deviatoric stress tensor.  
+- $\sigma_m = \frac{1}{3}\,\tr(\bsig)$ is the mean (hydrostatic) stress, and
+- $\bs = \bsig - \sigma_m \boldsymbol{I}$ is the deviatoric stress tensor.
 - $A$ is a material parameter describing the eccentricity of the Green ellipse.
 
 The Norton flow law relates the viscoplastic strain rate to the overstress $f(\bsig) - \sigma_y$:
 
 ```{math}
-\dot{\beps}^\text{vp} = 
+\dot{\beps}^\text{vp} =
 \left\langle\dfrac{f - \sigma_y}{K}\right\rangle_+^m
 ```
 
@@ -94,17 +98,19 @@ def safe_zero(method):
         x_norm = jnp.linalg.norm(x)
         x_safe = SymmetricTensor2(tensor=jnp.where(x_norm > 0, x, x))
         return jnp.where(x_norm > 0, method(self, x_safe), 0.0)
+
     return wrapper
+
 
 class GreenYieldSurface(eqx.Module):
     A: float = eqx.field(converter=jnp.asarray)
-    
+
     @safe_zero
     def __call__(self, sig):
         sig_m = jnp.trace(sig) / 3
         s = dev(sig)
         return jnp.sqrt(self.A**2 * sig_m**2 + 3.0 / 2.0 * jnp.vdot(s, s))
-        
+
     def normal(self, sig):
         return jax.jacfwd(self.__call__)(sig)
 ```
@@ -163,11 +169,11 @@ class GreenViscoPlasticity(jm.SmallStrainBehavior):
             return sig_old + self.elastic_model.C @ (deps - depsvp)
 
         def solve_state(deps, epsvp_old):
-            
+
             def residual(depsvp, args):
                 sig = eval_stress(deps, depsvp)
-                overstress = self.plastic_surface(sig)-self.yield_stress
-                dp = dt*self.viscoplastic_flow(overstress)
+                overstress = self.plastic_surface(sig) - self.yield_stress
+                dp = dt * self.viscoplastic_flow(overstress)
                 n = self.plastic_surface.normal(sig)
                 res = depsvp - n * dp
                 epsvp = epsvp_old + depsvp
@@ -201,7 +207,10 @@ sig0 = 300.0
 green_ys = GreenYieldSurface(A=0.6)
 viscoplastic_flow = NortonFlow(K=50.0, m=4.0)
 material = GreenViscoPlasticity(
-    elastic_model=elastic_model, yield_stress=sig0, plastic_surface=green_ys, viscoplastic_flow=viscoplastic_flow
+    elastic_model=elastic_model,
+    yield_stress=sig0,
+    plastic_surface=green_ys,
+    viscoplastic_flow=viscoplastic_flow,
 )
 ```
 
@@ -216,6 +225,7 @@ def compute_pq(sig):
     q = jnp.sqrt(3.0 / 2.0 * jnp.vdot(s, s))
     return p, q
 
+
 def compute_surface_normals(p, q):
     sig = SymmetricTensor2(
         tensor=jnp.diag(jnp.asarray([p + 2 * q / 3, p - q / 3, p - q / 3]))
@@ -225,8 +235,8 @@ def compute_surface_normals(p, q):
     x, y = p / ys, q / ys
     np = jnp.trace(n)
     nq = 2 / 3 * jnp.linalg.norm(dev(n))
-    norm_ = jnp.sqrt(np**2+nq**2)
-    return x, y, np/norm_, nq/norm_
+    norm_ = jnp.sqrt(np**2 + nq**2)
+    return x, y, np / norm_, nq / norm_
 
 
 angle = jnp.linspace(0, jnp.pi, 51)
@@ -265,9 +275,11 @@ Nbatch = 9
 press_vals = jnp.linspace(-sig0, sig0, Nbatch)
 state = material.init_state(Nbatch)
 
+
 def set_initial_press(state, press):
-    state = state.update(stress=SymmetricTensor2(tensor=-press*jnp.eye(3)))
+    state = state.update(stress=SymmetricTensor2(tensor=-press * jnp.eye(3)))
     return state
+
 
 initial_state = eqx.filter_vmap(set_initial_press)(state, press_vals)
 print(initial_state.stress[:, 0, 0])
@@ -285,7 +297,7 @@ Finally, the stress path is plotted for all imposed initial pressures. The refer
 for eps_dot in [1e-4, 1e-2, 1e0, 1e2]:
     eps_max = 2e-3
     Nsteps = 100
-    times = jnp.linspace(0, 2*eps_max/eps_dot, Nsteps)
+    times = jnp.linspace(0, 2 * eps_max / eps_dot, Nsteps)
 
     t = 0
     imposed_eps = jnp.zeros_like(press_vals)
@@ -293,33 +305,42 @@ for eps_dot in [1e-4, 1e-2, 1e0, 1e2]:
 
     state = initial_state
     p, q = jax.vmap(compute_pq)(state.stress)
-    results = results.at[0,:, 0].set(p)
-    results = results.at[0, :,1].set(q)
+    results = results.at[0, :, 0].set(p)
+    results = results.at[0, :, 1].set(q)
     for i, dt in enumerate(jnp.diff(times)):
         t += dt
         imposed_eps += eps_dot * dt
         imposed_eps = jnp.minimum(imposed_eps, eps_max)
-        
-        loading = ImposedLoading(epsxx=imposed_eps, epsyy=-imposed_eps/2, epszz=-imposed_eps/2)
+
+        loading = ImposedLoading(
+            epsxx=imposed_eps, epsyy=-imposed_eps / 2, epszz=-imposed_eps / 2
+        )
 
         Eps = state.strain
         Eps, state, stats = global_solve(Eps, state, loading, material, dt)
 
         Sig = state.stress
-        
+
         p, q = jax.vmap(compute_pq)(Sig)
-        results = results.at[i+1,:, 0].set(p)
-        results = results.at[i+1, :,1].set(q)
+        results = results.at[i + 1, :, 0].set(p)
+        results = results.at[i + 1, :, 1].set(q)
 
     cmap = plt.get_cmap("coolwarm")
     colors = cmap(jnp.linspace(0, 1, Nbatch))
     plt.title(rf"$\dot\epsilon=10^{{{jnp.log10(eps_dot):.0f}}}$")
-    plt.plot(sig0*x, sig0*y, "-k")
+    plt.plot(sig0 * x, sig0 * y, "-k")
     for i in range(Nbatch):
-        plt.plot(results[:, i, 0], results[:, i, 1], "-", color=colors[i], linewidth=4, alpha=0.75)
+        plt.plot(
+            results[:, i, 0],
+            results[:, i, 1],
+            "-",
+            color=colors[i],
+            linewidth=4,
+            alpha=0.75,
+        )
     plt.gca().set_aspect("equal")
-    plt.xlim(-2.0*sig0, 2.0*sig0)
-    plt.ylim(0.0, 1.8*sig0)
+    plt.xlim(-2.0 * sig0, 2.0 * sig0)
+    plt.ylim(0.0, 1.8 * sig0)
     plt.xlabel("Hydrostatic stress $p$ [MPa]")
     plt.ylabel("Deviatoric stress $q$ [MPa]")
     plt.show()

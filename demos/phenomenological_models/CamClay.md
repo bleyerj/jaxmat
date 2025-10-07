@@ -14,10 +14,21 @@ kernelspec:
 
 # Modified Cam-Clay
 
-In this example, we implement and solve a **Modified Cam-Clay (MCC)** model using the `jaxmat` library.  
-This demo illustrates how to define an elasto-plastic constitutive model with mixed isotropic–kinematic hardening, typical of soils and clays under consolidation and shear loading.
+In this example, we implement and solve a **Modified Cam-Clay (MCC)** model using the `jaxmat` library.
 
-The workflow follows the same structure as in the [Green viscoplastic model demo](/demos/phenomenological_models/viscoplastic_model.md): we successively define the internal variables, the yield surface, the hardening law, and the constitutive update.  
+```{admonition} Objectives
+:class: important
+
+The goal of this demo is to illustrate how to:
+
+- Define an elasto-plastic constitutive model with mixed isotropic–kinematic hardening.
+
+- Integrate the constitutive equations by solving an implicit system with plastic consistency conditions.
+
+- Evaluate the model response for non-proportional load paths.
+```
+
+The workflow follows the same structure as in the [Green viscoplastic model demo](/demos/phenomenological_models/viscoplastic_model.md): we successively define the internal variables, the yield surface, the hardening law, and the constitutive update.
 We then simulate several over-consolidation ratios (OCRs) to study the material’s transition from contractant to dilatant behavior.
 
 
@@ -29,10 +40,10 @@ The Modified Cam-Clay (MCC) yield function is defined as:
 f(\bsig, p_c) = \sqrt{(p-p_c)^2 + \left(\dfrac{q}{M}\right)^2}
 ```
 
-where  
+where
 
 - $p = -\frac{1}{3}\,\tr(\bsig)$ is the mean pressure,
-- $q = \sqrt{\frac{3}{2}\bs:\bs}$ is the von Mises equivalent stress,  
+- $q = \sqrt{\frac{3}{2}\bs:\bs}$ is the von Mises equivalent stress,
 - $M$ is a material parameter describing the *critical state line* slope in the $(p,q)$ plane
 - $p_c$ is a hardening variable called *critical pressure* ($2pc$ is the *preconsolidation pressure*).
 
@@ -116,6 +127,7 @@ class Hardening(eqx.Module):
     def __call__(self, ep):
         return self.pc0 * jnp.exp(-self.beta * ep)
 ```
+
 The function takes the volumetric plastic strain $\varepsilon_v$ as input and returns the corresponding $p_c$.
 
 ### Constitutive update

@@ -16,8 +16,8 @@ parts:
     chapters:
     - file: pheno_models.md
       sections:
-        - file: demos/phenomenological_models/viscoplastic_model.md
-        - file: demos/phenomenological_models/camclay.md
+        - file: demos/phenomenological_models/Green_viscoplasticity.md
+        - file: demos/phenomenological_models/CamClay.md
     - file: ml_models.md
       sections:
         - file: demos/neural_network_models/hyperelastic_PANN.md
@@ -31,4 +31,7 @@ parts:
       - file: models.md
   - caption: API
     chapters:
-      - file: api/api.rst
+      - file: api/materials.md
+        sections:
+          - file: api/elasticity.rst
+          - file: api/plastic_surfaces.rst
