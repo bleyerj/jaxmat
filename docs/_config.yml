@@ -254,4 +254,5 @@ sphinx:
           'epsi': '\varepsilon'
           'bepsel': '\bvarepsilon^{\text{el}}'
           'bepsp': '\bvarepsilon^{\text{p}}'
+          'bepsvp': '\bvarepsilon^{\text{vp}}'
           'epsp': '\varepsilon^{\text{p}}'
