@@ -1,6 +1,6 @@
-## Conventions for representing tensors
+# Conventions for representing tensors
 
-### 2nd-rank tensors
+## 2nd-rank tensors
 
 2nd-rank tensors are represented as vectors using the Mandel representation. Components ordering follow the conventions used by the MFront project [described here](https://thelfer.github.io/tfel/web/tensors.html).
 
@@ -26,7 +26,7 @@ $$
 \{\boldsymbol{a}\} = \begin{Bmatrix}a_{11} & a_{22} & a_{12} & a_{21} \end{Bmatrix}^\text{T}
 $$
 
-### 4th-rank tensors
+## 4th-rank tensors
 
 4th-rank tensors are represented as matrices with components complying with the representation of 2nd-rank tensors.
 

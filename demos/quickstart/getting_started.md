@@ -16,10 +16,11 @@ kernelspec:
 
 In this tutorial, we show how to define and evaluate a simple elastoplastic behavior with nonlinear isotropic hardening.
 
-We first import `jax` and may specify whether we want to run on the CPU or the GPU. We will also need the `equinox` library from which we use `Module`s to define the different behavior bricks.
+We first import `jax` and may specify whether we want to run on the CPU or the GPU. We will also need the `equinox` from which we use `Module`s to define the different behavior bricks.
 
 ```{code-cell} ipython3
 import jax
+
 jax.config.update("jax_platform_name", "cpu")
 import jax.numpy as jnp
 import equinox as eqx
@@ -41,20 +42,25 @@ For this purpose, we simply define an `equinox.Module` with the material paramet
 ```{code-cell} ipython3
 elasticity = jm.LinearElasticIsotropic(E=200e3, nu=0.25)
 
+
 class VoceHardening(eqx.Module):
     sig0: float
     sigu: float
     b: float
-    def __call__(self, p):
-        return self.sig0 + (self.sigu-self.sig0)*(1-jnp.exp(-self.b*p))
 
-hardening = VoceHardening(sig0=350., sigu=500.0, b=1e3)
+    def __call__(self, p):
+        return self.sig0 + (self.sigu - self.sig0) * (1 - jnp.exp(-self.b * p))
+
+
+hardening = VoceHardening(sig0=350.0, sigu=500.0, b=1e3)
 ```
 
-We now define the final material behavior of type `vonMisesIsotropicHardening`. We can check that it is a module containing an `elastic_model` submodule and a `yield_stress` submodule. Each of these submodules holds its own material properties. The elastic submodule also allows to access the material elastic shear modulus for instance, which is 80 GPa here.
+We now define the final material behavior of type `vonMisesIsotropicHardening`. We can check that it is a module containing an `elastic_model` submodule and a `yield_stress` subdomule. Each of these submodule holds its own material properties. The elastic submodule also allows to access the material elastic shear modulus for instance, which is 80 GPa here.
 
 ```{code-cell} ipython3
-material = jm.vonMisesIsotropicHardening(elastic_model=elasticity, yield_stress=hardening)
+material = jm.vonMisesIsotropicHardening(
+    elastic_model=elasticity, yield_stress=hardening
+)
 print(material)
 print(material.elastic_model.__dict__)
 print(material.yield_stress.__dict__)
@@ -76,20 +82,20 @@ import matplotlib.pyplot as plt
 
 plt.figure(figsize=(12, 5))
 plt.subplot(1, 2, 1)
-plt.plot(p, hardening(p), '-C0')
+plt.plot(p, hardening(p), "-C0")
 plt.gca().set_ylim(bottom=0)
 plt.xlabel("Equivalent plastic strain $p$")
-plt.ylabel("Yield stress $\sigma_Y(p)$ [MPa]");
+plt.ylabel("Yield stress $\sigma_Y(p)$ [MPa]")
 plt.subplot(1, 2, 2)
-plt.plot(p, 1e-3*H(p), '-C3')
+plt.plot(p, 1e-3 * H(p), "-C3")
 plt.gca().set_ylim(bottom=0)
 plt.xlabel("Equivalent plastic strain $p$")
-plt.ylabel("Hardening modulus $H(p)=\sigma_Y'(p)$ [GPa]");
+plt.ylabel("Hardening modulus $H(p)=\sigma_Y'(p)$ [GPa]")
 ```
 
 ## Mechanical states
 
-In order to evaluate the response of a mechanical behavior, we need a mechanical state. Each material provides an `init_state` method to initialize its corresponding mechanical state with default initial values (usually 0). Below, we see that the present state contains a `strain` and a `stress`, each of them being a symmetric 2nd-rank tensor. In addition, it also contains an `internal` field, which is itself a state consisting of many internal state variables. In the present case, both the cumulated plastic strain $p$ and the total plastic strain $\bepsp$ are declared as internal state variables.
+In order to evaluate the response of a mechanical behavior, we need a mechanical state. Each material provides an `init_state` method to initialize its correponding mechanical state with default initial values (usually 0). Below, we see that the present state contrains a `strain` and a `stress`, each of them being a symmetric 2nd-rank tensor. In addition, it also contains an `internal` field, which is itself a state consisting of many internal state variables. In the present case, both the cumulated plastic strain $p$ and the total plastic strain $\bepsp$ are declared as internal state variables.
 
 ```{code-cell} ipython3
 state = material.init_state()
@@ -100,12 +106,11 @@ print(internal_state_variables.__dict__)
 
 ```{code-cell} ipython3
 from jaxmat.tensors import SymmetricTensor2
+
 gamma = 1e-3
-new_eps = jnp.array([[0, gamma/2, 0], 
-                     [gamma/2, 0, 0], 
-                     [0, 0, 0]])
+new_eps = jnp.array([[0, gamma / 2, 0], [gamma / 2, 0, 0], [0, 0, 0]])
 new_eps = SymmetricTensor2(tensor=new_eps)
-dt=0.0
+dt = 0.0
 new_stress, new_state = material.constitutive_update(new_eps, state, dt)
 print(new_stress)
 print(new_state.__dict__)
@@ -116,11 +121,9 @@ gamma_list = jnp.linspace(0, 1e-2, 100)
 state = material.init_state()
 tau = jnp.zeros_like(gamma_list)
 for i, gamma in enumerate(gamma_list):
-    new_eps = jnp.array([[0, gamma/2, 0], 
-                     [gamma/2, 0, 0], 
-                     [0, 0, 0]])
+    new_eps = jnp.array([[0, gamma / 2, 0], [gamma / 2, 0, 0], [0, 0, 0]])
     new_eps = SymmetricTensor2(tensor=new_eps)
-    dt=0.0
+    dt = 0.0
     new_stress, new_state = material.constitutive_update(new_eps, state, dt)
     state = new_state
     tau = tau.at[i].set(new_stress[0, 1])
@@ -129,7 +132,7 @@ for i, gamma in enumerate(gamma_list):
 ```{code-cell} ipython3
 plt.plot(gamma_list, tau, "-k")
 plt.xlabel(r"Shear distorsion $\gamma$")
-plt.ylabel(r"Shear stress $\tau$ [MPa]");
+plt.ylabel(r"Shear stress $\tau$ [MPa]")
 ```
 
 ```{code-cell} ipython3
@@ -145,11 +148,9 @@ tau = jnp.zeros_like(gamma_list)
 p = jnp.zeros_like(gamma_list)
 mu_tang = jnp.zeros_like(gamma_list)
 for i, gamma in enumerate(gamma_list):
-    new_eps = jnp.array([[0, gamma/2, 0], 
-                     [gamma/2, 0, 0], 
-                     [0, 0, 0]])
+    new_eps = jnp.array([[0, gamma / 2, 0], [gamma / 2, 0, 0], [0, 0, 0]])
     new_eps = SymmetricTensor2(tensor=new_eps)
-    dt=0.0
+    dt = 0.0
     Ctang, new_state = tangent_operator(new_eps, state, dt)
     state = new_state
     new_stress = state.stress
@@ -167,14 +168,94 @@ $$
 $$
 
 ```{code-cell} ipython3
-plt.plot(gamma_list, mu_tang*1e-3, "-k", label="Consistent")
+plt.plot(gamma_list, mu_tang * 1e-3, "-k", label="Consistent")
 mu_ep = jnp.full_like(gamma_list, mu)
-plastic_points = jnp.where(p>1e-8)
+plastic_points = jnp.where(p > 1e-8)
 H_plast = H(p[plastic_points])
-mu_ep = mu_ep.at[plastic_points].set(mu*(H_plast/(3*mu+H_plast)))
-plt.plot(gamma_list, 1e-3*mu_ep, "xC3", label="Material")
+mu_ep = mu_ep.at[plastic_points].set(mu * (H_plast / (3 * mu + H_plast)))
+plt.plot(gamma_list, 1e-3 * mu_ep, "xC3", label="Material")
 plt.ylim(0, 90)
 plt.xlabel(r"Shear distorsion $\gamma$")
 plt.ylabel(r"Tangent shear modulus $\mu_\textrm{tang}$ [GPa]")
-plt.legend();
+plt.legend()
+```
+
+## Computation for a batch of material points
+
+In this section, we will show how to adapt the previous setting to the evaluation of the constitutive law for a set of $N$ material points, which we will call a *batch* of size $N$. To do so, we will heavily rely on `jax`'s automatic vectorization functionality provided by the `jax.vmap` function.
+
+As an illustration, let us consider here the case of perfect plasticity and perform a single evaluation of the constitutive update for points with imposed strains such that the elastic prediction will fall outside the yield surface. The result of the constitutive update will therefore produce points which are projected onto the yield surface. We consider purely deviatoric strains of the form:
+
+$$
+\boldsymbol{\varepsilon}=\text{diag}(e_I, e_{II}, -(e_I+e_{II}))
+$$
+
+The batch of points will consist of $N$ values such that $e_I = \epsilon\cos(\theta_k), e_{II}=\epsilon\sin(\theta_k)$ for $\theta_k \in [0;2\pi]$ and $k=1,\ldots,N$. Here the amplitude $\epsilon$ is fixed and chosen sufficiently large to fall outside the plastic yield surface.
+
+We first represent $\boldsymbol{\varepsilon}$ as a batched `SymmetricTensor2` of shape `(N,3,3)`. By convention, the batch dimension is always the first one.
+
+```{code-cell} ipython3
+N = 40
+theta = jnp.linspace(0, jnp.pi, N)
+
+eps_ = 2e-3
+eps = jnp.zeros((N, 3, 3))
+eps = eps.at[:, 0, 0].set(eps_ * jnp.cos(theta))
+eps = eps.at[:, 1, 1].set(eps_ * jnp.sin(theta))
+eps = eps.at[:, 2, 2].set(-eps[:, 0, 0] - eps[:, 1, 1])
+eps = SymmetricTensor2(tensor=eps)
+```
+
+```{code-cell} ipython3
+sig0 = 300.0
+
+
+class YieldStress(eqx.Module):
+    sig0: float
+    H_: float = 1e-6
+
+    def __call__(self, p):
+        return self.sig0 * (1.0 + self.H_ * p)
+
+
+new_material = jm.GeneralIsotropicHardening(
+    elastic_model=jm.LinearElasticIsotropic(E=200e3, nu=0),
+    yield_stress=YieldStress(sig0=sig0),
+    plastic_surface=jm.Hosford(),
+)
+state = new_material.init_state(Nbatch=N)
+```
+
+```{code-cell} ipython3
+batched_constitutive_update = jax.vmap(
+    jm.GeneralIsotropicHardening.constitutive_update, in_axes=(None, 0, 0, None)
+)
+```
+
+```{code-cell} ipython3
+def scatter_pi_plane(stress, marker="o", **kwargs):
+    from jaxmat.tensors import eigenvalues
+
+    eigvals = jax.vmap(eigenvalues, in_axes=0)(stress)
+    xx = jnp.concatenate([eigvals[:, i] - eigvals[:, (i + 2) % 3] for i in range(3)])
+    xx = jnp.concatenate((xx, -xx)) * jnp.sqrt(3) / 2
+    yy = jnp.concatenate([eigvals[:, (i + 1) % 3] for i in range(3)])
+    yy = jnp.concatenate((yy, yy)) * 3 / 2
+    plt.scatter(xx, yy, marker=marker, **kwargs)
+    margin = 0.1
+    lim = (1 + margin) * sig0
+    plt.xlim(-lim, lim)
+    plt.ylim(-lim, lim)
+    plt.gca().set_aspect("equal")
+```
+
+```{code-cell} ipython3
+plt.figure(figsize=(6, 6))
+for i, a in enumerate([2.0, 6.0, 10.0]):
+    new_material = eqx.tree_at(
+        lambda m: m.plastic_surface.a, new_material, jnp.asarray(a)
+    )
+    stress, new_state = batched_constitutive_update(new_material, eps, state, 0.0)
+    scatter_pi_plane(stress, "x", color=f"C{i}", linewidth=0.5, label=rf"$a={int(a)}$")
+plt.legend()
 ```

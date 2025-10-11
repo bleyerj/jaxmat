@@ -28,7 +28,7 @@ The goal of this demo is to illustrate how to:
 - Evaluate the model response for non-proportional load paths.
 ```
 
-The workflow follows the same structure as in the [Green viscoplastic model demo](/demos/phenomenological_models/viscoplastic_model.md): we successively define the internal variables, the yield surface, the hardening law, and the constitutive update.
+The workflow follows the same structure as in the [Green viscoplastic model demo](./Green_viscoplasticity.ipynb): we successively define the internal variables, the yield surface, the hardening law, and the constitutive update.
 We then simulate several over-consolidation ratios (OCRs) to study the material’s transition from contractant to dilatant behavior.
 
 
@@ -101,7 +101,7 @@ class InternalState(jaxmat.state.AbstractState):
 
 ### Yield surface
 
-We now define the Cam-Clay yield surface. The class inherits from `AbstractPlasticSurface` and thus automatically computes the normal vector to the yield surface via its `normal` method. We simply need to implement the expression of the yield surface in the `__call__` dunder method. We decorate the latter with  the `safe_zero` decorator as described in the [](/demos/phenomenological_models/viscoplastic_model.md) demo.
+We now define the Cam-Clay yield surface. The class inherits from `AbstractPlasticSurface` and thus automatically computes the normal vector to the yield surface via its `normal` method. We simply need to implement the expression of the yield surface in the `__call__` dunder method. We decorate the latter with  the `safe_zero` decorator as described in the [](./Green_viscoplasticity.ipynb) demo.
 
 ```{code-cell} ipython3
 class CamClaySurface(jm.AbstractPlasticSurface):
@@ -135,7 +135,7 @@ The function takes the volumetric plastic strain $\varepsilon_v$ as input and re
 We now assemble all components into the main Modified Cam-Clay class. This class inherits from `SmallStrainBehavior` and defines the local integration algorithm to update the stress and state variables implicitly as follows:
 The constitutive update proceeds first by defining the final stress expression from the known strain increment $\Delta\beps$ and the unknown plastic strain increment $\Delta\bepsp$.
 
-The residual system enforcing the plastic flow rule and yield condition is then defined. Note that although the plastic multiplier increment $\Delta\lambda$ has not been defined as a state variable, it is an auxiliary unknown that we need to solve for. Moreover, we use the Fischer–Burmeister function `FB(x,y)` (see [Fischer-Burmeister function](docs/computational.md)) to smoothly impose the complementarity condition between plastic consistency and plastic multiplier. The discretized system using an implicit Euler scheme is here to find $(\Delta\lambda,\Delta\bepsp)$ such that:
+The residual system enforcing the plastic flow rule and yield condition is then defined. Note that although the plastic multiplier increment $\Delta\lambda$ has not been defined as a state variable, it is an auxiliary unknown that we need to solve for. Moreover, we use the Fischer–Burmeister function `FB(x,y)` (see [Fischer-Burmeister function](./../computational.md)) to smoothly impose the complementarity condition between plastic consistency and plastic multiplier. The discretized system using an implicit Euler scheme is here to find $(\Delta\lambda,\Delta\bepsp)$ such that:
 
 ```{math}
 \begin{align*}

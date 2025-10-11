@@ -9,18 +9,19 @@ title: jaxmat Documentation
 parts:
   - caption: Quickstart tutorials
     chapters:
-        - file: demos/getting_started.md
-        - file: demos/batched_computation.md
-        - file: demos/material_parameters_batching.md
+        - file: demos/quickstart/getting_started.ipynb
+        - file: demos/quickstart/batched_computation.ipynb
+        - file: demos/quickstart/material_parameters_batching.ipynb
   - caption: Examples
     chapters:
     - file: pheno_models.md
       sections:
-        - file: demos/phenomenological_models/Green_viscoplasticity.md
-        - file: demos/phenomenological_models/CamClay.md
+        - file: demos/phenomenological_models/Green_viscoplasticity.ipynb
+        - file: demos/phenomenological_models/CamClay.ipynb
+        - file: demos/phenomenological_models/multisurface_plasticity.ipynb
     - file: ml_models.md
       sections:
-        - file: demos/neural_network_models/hyperelastic_PANN.md
+        - file: demos/neural_network_models/hyperelastic_PANN.ipynb
   - caption: General resources 
     chapters:
       - file: concepts.md
@@ -35,3 +36,4 @@ parts:
         sections:
           - file: api/elasticity.rst
           - file: api/plastic_surfaces.rst
+          - file: api/viscoplasticity.rst

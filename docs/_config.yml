@@ -8,7 +8,7 @@ logo: images/jaxmat_logo.svg
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: cache
+  execute_notebooks: off
   # Set timeout for any example to 20 minutes
   timeout: 1800
 
@@ -28,9 +28,11 @@ bibtex_bibfiles:
 
 
 exclude_patterns: [
-    ...,
     README.md,
-    "**/*.ipynb",
+    demos/*.md,
+    demos/**/*.md,
+    demos/identification,
+    /**/*.py,
     ]
 
 parse:
@@ -49,8 +51,6 @@ parse:
 
 # Sphinx configuration for custom theme
 sphinx:
-  config:
-    num_jobs: 1
   extra_extensions:
   - 'sphinx_math_dollar'
   - 'sphinx.ext.autodoc'
@@ -63,6 +63,13 @@ sphinx:
     autosummary_generate: True
     autoclass_content: both
     add_module_names: False
+    autodoc_typehints: "description"
+    autodoc_class_signature: "separated"
+    autodoc_default_options:
+      members: true
+      undoc-members: false
+      show-inheritance: true
+      exclude-members: "__init__,__repr__,__eq__"
     bibtex_reference_style: author_year
     html_theme: sphinx_book_theme
     html_show_copyright: false
