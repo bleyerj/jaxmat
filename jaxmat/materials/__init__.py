@@ -12,7 +12,14 @@ from .hyperelasticity import (
 from .elastoplasticity import vonMisesIsotropicHardening, GeneralIsotropicHardening
 from .fe_fp_elastoplasticity import FeFpJ2Plasticity
 from .viscoplasticity import AmrstrongFrederickViscoplasticity, GenericViscoplasticity
-from .plastic_surfaces import safe_zero, AbstractPlasticSurface, vonMises, Hosford
+from .plastic_surfaces import (
+    safe_zero,
+    AbstractPlasticSurface,
+    vonMises,
+    DruckerPrager,
+    Hosford,
+    Tresca,
+)
 from .viscoplastic_flows import (
     VoceHardening,
     NortonFlow,

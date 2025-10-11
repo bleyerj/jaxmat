@@ -15,3 +15,8 @@ from .tensor_utils import (
     axl,
     eigenvalues,
 )
+from .linear_algebra import (
+    invariants_principal,
+    invariants_main,
+    pq_invariants,
+)  # FIXME: unify invariant names

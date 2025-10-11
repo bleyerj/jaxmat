@@ -75,6 +75,18 @@ def invariants_main(A):
     return j1, j2, j3
 
 
+def pq_invariants(sig):
+    r"""Hydrostatic/deviatoric equivalent stresses $(p,q)$. Typically used in soil mechanics.
+
+    $$p = - \tr(\bsig)/3 = -I_1/3$$
+    $$q = \sqrt{\frac{3}{2}\bs:\bs} = \sqrt{3 J_2}$$
+    """
+    p = -jnp.trace(sig) / 3
+    s = dev(sig)
+    q = safe_sqrt(3.0 / 2.0 * jnp.vdot(s, s))
+    return p, q
+
+
 @partial(jax.jit, static_argnums=1)
 def eig33(A, rtol=1e-16):
     # def dyad_3_distinct(A, lamb):
@@ -157,7 +169,7 @@ def eig33(A, rtol=1e-16):
 
 def _sqrtm(C):
     """
-    Unified expression for sqrt and inverse sqrt of a symmetric matrix `C`,
+    Unified expression for sqrt and inverse sqrt of a symmetric matrix $\bC$,
     see Simo & Hugues, Computational Inelasticity, p.244
     """
     Id = jnp.eye(3)
@@ -174,12 +186,12 @@ def _sqrtm(C):
 
 
 def sqrtm(A):
-    """Computes the matrix square-root of a symmetric 3x3 matrix."""
+    """Matrix square-root of a symmetric 3x3 matrix."""
     return _sqrtm(A)[0]
 
 
 def inv_sqrtm(A):
-    """Computes the matrix inverse square-root of a symmetric 3x3 matrix."""
+    """Matrix inverse square-root of a symmetric 3x3 matrix."""
     return _sqrtm(A)[1]
 
 
@@ -204,15 +216,15 @@ def isotropic_function(fun, A):
 
 
 def expm(A):
-    """Computes the matrix exponential of a symmetric 3x3 matrix."""
+    """Matrix exponential of a symmetric 3x3 matrix."""
     return isotropic_function(jnp.exp, A)
 
 
 def logm(A):
-    """Computes the matrix logarithm of a symmetric 3x3 matrix."""
+    """Matrix logarithm of a symmetric 3x3 matrix."""
     return isotropic_function(jnp.log, A)
 
 
 def powm(A, m):
-    """Computes the matrix power of exponent m of a symmetric 3x3 matrix."""
+    """Matrix power of exponent m of a symmetric 3x3 matrix."""
     return isotropic_function(lambda x: jnp.power(x, m), A)

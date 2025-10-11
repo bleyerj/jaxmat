@@ -82,8 +82,8 @@ class Tensor(eqx.Module):
     def __neg__(self):
         return self.__class__(tensor=-self.tensor)
 
-    def __repr__(self):
-        return f"{self.__class__.__name__}=\n{self.tensor}"
+    # def __repr__(self):
+    #     return f"{self.__class__.__name__}=\n{self.tensor}"
 
     def _as_array(self, tensor):
         return tensor.ravel()

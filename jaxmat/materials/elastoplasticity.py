@@ -75,14 +75,14 @@ class GeneralIsotropicHardening(SmallStrainBehavior):
         sig_old = state.stress
 
         def eval_stress(deps, dy):
-            return sig_old + self.elastic_model.C @ (deps - dev(dy.epsp))
+            return sig_old + self.elastic_model.C @ (deps - dy.epsp)
 
         def solve_state(deps, y_old):
             p_old = y_old.p
 
             def residual(dy, args):
                 dp, depsp = dy.p, dy.epsp
-                sig = sig_old + self.elastic_model.C @ (deps - dev(depsp))
+                sig = eval_stress(deps, dy)
                 yield_criterion = self.plastic_surface(sig) - self.yield_stress(
                     p_old + dp
                 )
