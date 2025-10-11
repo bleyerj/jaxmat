@@ -3,7 +3,7 @@ import jax
 import jax.numpy as jnp
 import equinox as eqx
 from jaxmat.tensors import eigenvalues, dev, SymmetricTensor2
-from jaxmat.tensors.utils import safe_norm
+from jaxmat.tensors.utils import safe_norm, safe_sqrt
 
 
 def safe_zero(method):
@@ -61,14 +61,43 @@ class vonMises(AbstractPlasticSurface):
         return jnp.sqrt(3 / 2.0) * safe_norm(dev(sig))
 
 
+class DruckerPrager(AbstractPlasticSurface):
+    r"""Drucker-Prager yield surface
+
+    $$\alpha I_1 + \sqrt{J_2}$$
+
+    where $I_1=\tr(\bsig)$  is the first stress invariant,
+    $J_2=\dfrac{1}{2}\bs:\bs$ is the second deviatoric invariant
+    and $\alpha$ a material constant describing the slope of the conic
+    yield surface (friction effects).
+
+
+    Parameters
+    ----------
+    alpha : float
+        Pressure sensitivity parameter
+    """
+
+    alpha: float = eqx.field(converter=jnp.asarray)
+
+    @safe_zero
+    def __call__(self, sig):
+        I1 = jnp.trace(sig)
+        s = dev(sig)
+        sqrt_I2 = jnp.sqrt(1 / 2.0) * safe_sqrt(
+            jnp.vdot(s, s)
+        )  # norm(dev(sig), eps=1e-4)
+        return self.alpha * I1 + sqrt_I2
+
+
 class Hosford(AbstractPlasticSurface):
     r"""Hosford yield surface
 
-    $$\left(\dfrac{1}{2}(|\sigma_\text{I}-\sigma_\text{II}|^a +
-    |\sigma_\text{II}-\sigma_\text{III}|^a +
-    |\sigma_\text{I}-\sigma_\text{III}|^a)\right)^{1/a}$$
+    $$\left(\dfrac{1}{2}(\lvert\sigma_\text{I}-\sigma_\text{II}\rvert^a +
+    \lvert\sigma_\text{II}-\sigma_\text{III}\rvert^a +
+    \lvert\sigma_\text{I}-\sigma_\text{III}\rvert^a)\right)^{1/a}$$
 
-    with $\sigma_\text{J}$ being the stress principal values.
+    with $\sigma_\text{I}$ being the stress principal values.
 
     Parameters
     ----------
@@ -90,3 +119,21 @@ class Hosford(AbstractPlasticSurface):
                 + jnp.abs(sI[2] - sI[1]) ** self.a
             )
         ) ** (1 / self.a)
+
+
+class Tresca(AbstractPlasticSurface):
+    r"""Tresca yield surface
+
+    $$\max_{\text{I},\text{J}}|\sigma_\text{I}-\sigma_\text{J}|$$
+
+    with $\sigma_\text{I}$ being the stress principal values.
+    """
+
+    @safe_zero
+    def __call__(self, sig):
+        sI = eigenvalues(sig)
+        jax.debug.print("{}", sI)
+        return jnp.maximum(
+            jnp.abs(sI[0] - sI[1]),
+            jnp.maximum(jnp.abs(sI[0] - sI[2]), jnp.abs(sI[2] - sI[1])),
+        )
