@@ -21,12 +21,64 @@ from .viscoplastic_flows import (
 
 
 class AFInternalState(SmallStrainState):
-    p: float = eqx.field(default_factory=lambda: jnp.float64(0.0))
-    epsp: SymmetricTensor2 = SymmetricTensor2()
-    a: SymmetricTensor2 = make_batched(SymmetricTensor2(), 2)
+    """Internal state for the Armstrong-Frederick model"""
+
+    p: float = eqx.field(converter=jnp.asarray, default=0.0)
+    epsp: SymmetricTensor2 = eqx.field(default=SymmetricTensor2())
+    a: SymmetricTensor2 = eqx.field(default=make_batched(SymmetricTensor2(), 2))
 
 
 class AmrstrongFrederickViscoplasticity(SmallStrainBehavior):
+    """
+    Small-strain viscoplastic constitutive model with Armstrong-Frederick
+    kinematic hardening, Voce isotropic hardening, and Norton-type viscous flow.
+
+    This model represents a rate-dependent J2 (von Mises) viscoplastic material
+    combining isotropic and kinematic hardening mechanisms under small strain
+    assumptions. The total strain is additively decomposed into elastic and
+    viscoplastic parts, and the evolution of the backstress follows the
+    nonlinear Armstrong-Frederick law.
+
+    Fields
+    ----------
+    elastic_model : LinearElasticIsotropic
+        Linear isotropic elasticity defined by Young modulus and Poisson ratio.
+
+    yield_stress : VoceHardening
+        Isotropic hardening law controlling the evolution of the yield surface size.
+
+    viscous_flow : NortonFlow
+        Viscoplastic flow rule following Norton (power-law) viscosity formulation.
+
+    kinematic_hardening : ArmstrongFrederickHardening
+        Kinematic hardening model defining the backstress evolution rate with
+        dynamic recovery (Armstrong-Frederick formulation).
+
+    plastic_surface : vonMises
+        J2-type yield (or loading) surface based on the deviatoric stress invariant.
+
+    internal : AFInternalState
+        Internal variables associated with the accumulated plastic strain and
+        backstress tensor.
+
+    Notes
+    -----
+    - The model is suitable for cyclic loading and ratcheting simulations.
+    - When the viscous exponent tends to infinity, the model approaches the
+      rate-independent limit.
+    - The formulation assumes small strains and isotropic material symmetry.
+
+    References
+    ----------
+    Armstrong, P. J., & Frederick, C. O. (1966).
+        "A Mathematical Representation of the Multiaxial Bauschinger Effect for
+        Hardening Materials." CEGB Report RD/B/N731.
+    Voce, E. (1955).
+        "A Practical Strain-Hardening Function." Metallurgia, 51, 219-226.
+    Norton, F. H. (1929).
+        "The Creep of Steel at High Temperatures." McGraw-Hill.
+    """
+
     elastic_model: LinearElasticIsotropic
     yield_stress: VoceHardening
     viscous_flow: NortonFlow
