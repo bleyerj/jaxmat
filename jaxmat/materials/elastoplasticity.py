@@ -2,7 +2,7 @@ import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
 from optax.tree_utils import tree_add, tree_zeros_like
-from jaxmat.state import AbstractState
+from jaxmat.state import AbstractState, default_array
 from jaxmat.tensors import SymmetricTensor2, dev
 from .behavior import SmallStrainBehavior
 from .elasticity import LinearElasticIsotropic
@@ -11,11 +11,14 @@ from .plastic_surfaces import (
     vonMises,
 )
 from jaxmat.tensors.utils import FischerBurmeister as FB
+import jax
 
 
 class InternalState(AbstractState):
-    p: float = eqx.field(default_factory=lambda: jnp.float64(0.0))
-    epsp: SymmetricTensor2 = SymmetricTensor2()
+    """Internal state for hardening plasticity"""
+
+    p: jax.Array = default_array(0.0)
+    epsp: SymmetricTensor2 = eqx.field(default_factory=lambda: SymmetricTensor2())
 
 
 class vonMisesIsotropicHardening(SmallStrainBehavior):
@@ -45,7 +48,7 @@ class vonMisesIsotropicHardening(SmallStrainBehavior):
                 res = FB(-yield_criterion / self.elastic_model.E, dp)
                 return res
 
-            dy0 = jnp.array(0)
+            dy0 = jnp.array(0.0)
             sol = optx.root_find(residual, self.solver, dy0, adjoint=self.adjoint)
             dp = sol.value
 
