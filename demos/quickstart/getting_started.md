@@ -16,7 +16,7 @@ kernelspec:
 
 In this tutorial, we show how to define and evaluate a simple elastoplastic behavior with nonlinear isotropic hardening.
 
-We first import `jax` and may specify whether we want to run on the CPU or the GPU. We will also need the `equinox` from which we use `Module`s to define the different behavior bricks.
+We first import `jax` and may specify whether we want to run on the CPU or the GPU. We will also need the `equinox` package from which we use `Module`s to define the different behavior bricks, see [more details on the use of `equinox.Module`.](./../../docs/pytrees.md).
 
 ```{code-cell} ipython3
 import jax
@@ -177,85 +177,5 @@ plt.plot(gamma_list, 1e-3 * mu_ep, "xC3", label="Material")
 plt.ylim(0, 90)
 plt.xlabel(r"Shear distorsion $\gamma$")
 plt.ylabel(r"Tangent shear modulus $\mu_\textrm{tang}$ [GPa]")
-plt.legend()
-```
-
-## Computation for a batch of material points
-
-In this section, we will show how to adapt the previous setting to the evaluation of the constitutive law for a set of $N$ material points, which we will call a *batch* of size $N$. To do so, we will heavily rely on `jax`'s automatic vectorization functionality provided by the `jax.vmap` function.
-
-As an illustration, let us consider here the case of perfect plasticity and perform a single evaluation of the constitutive update for points with imposed strains such that the elastic prediction will fall outside the yield surface. The result of the constitutive update will therefore produce points which are projected onto the yield surface. We consider purely deviatoric strains of the form:
-
-$$
-\boldsymbol{\varepsilon}=\text{diag}(e_I, e_{II}, -(e_I+e_{II}))
-$$
-
-The batch of points will consist of $N$ values such that $e_I = \epsilon\cos(\theta_k), e_{II}=\epsilon\sin(\theta_k)$ for $\theta_k \in [0;2\pi]$ and $k=1,\ldots,N$. Here the amplitude $\epsilon$ is fixed and chosen sufficiently large to fall outside the plastic yield surface.
-
-We first represent $\boldsymbol{\varepsilon}$ as a batched `SymmetricTensor2` of shape `(N,3,3)`. By convention, the batch dimension is always the first one.
-
-```{code-cell} ipython3
-N = 40
-theta = jnp.linspace(0, jnp.pi, N)
-
-eps_ = 2e-3
-eps = jnp.zeros((N, 3, 3))
-eps = eps.at[:, 0, 0].set(eps_ * jnp.cos(theta))
-eps = eps.at[:, 1, 1].set(eps_ * jnp.sin(theta))
-eps = eps.at[:, 2, 2].set(-eps[:, 0, 0] - eps[:, 1, 1])
-eps = SymmetricTensor2(tensor=eps)
-```
-
-```{code-cell} ipython3
-sig0 = 300.0
-
-
-class YieldStress(eqx.Module):
-    sig0: float
-    H_: float = 1e-6
-
-    def __call__(self, p):
-        return self.sig0 * (1.0 + self.H_ * p)
-
-
-new_material = jm.GeneralIsotropicHardening(
-    elastic_model=jm.LinearElasticIsotropic(E=200e3, nu=0),
-    yield_stress=YieldStress(sig0=sig0),
-    plastic_surface=jm.Hosford(),
-)
-state = new_material.init_state(Nbatch=N)
-```
-
-```{code-cell} ipython3
-batched_constitutive_update = jax.vmap(
-    jm.GeneralIsotropicHardening.constitutive_update, in_axes=(None, 0, 0, None)
-)
-```
-
-```{code-cell} ipython3
-def scatter_pi_plane(stress, marker="o", **kwargs):
-    from jaxmat.tensors import eigenvalues
-
-    eigvals = jax.vmap(eigenvalues, in_axes=0)(stress)
-    xx = jnp.concatenate([eigvals[:, i] - eigvals[:, (i + 2) % 3] for i in range(3)])
-    xx = jnp.concatenate((xx, -xx)) * jnp.sqrt(3) / 2
-    yy = jnp.concatenate([eigvals[:, (i + 1) % 3] for i in range(3)])
-    yy = jnp.concatenate((yy, yy)) * 3 / 2
-    plt.scatter(xx, yy, marker=marker, **kwargs)
-    margin = 0.1
-    lim = (1 + margin) * sig0
-    plt.xlim(-lim, lim)
-    plt.ylim(-lim, lim)
-    plt.gca().set_aspect("equal")
-```
-
-```{code-cell} ipython3
-plt.figure(figsize=(6, 6))
-for i, a in enumerate([2.0, 6.0, 10.0]):
-    new_material = eqx.tree_at(
-        lambda m: m.plastic_surface.a, new_material, jnp.asarray(a)
-    )
-    stress, new_state = batched_constitutive_update(new_material, eps, state, 0.0)
-    scatter_pi_plane(stress, "x", color=f"C{i}", linewidth=0.5, label=rf"$a={int(a)}$")
 plt.legend()
 ```

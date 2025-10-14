@@ -12,6 +12,7 @@ parts:
         - file: demos/quickstart/getting_started.ipynb
         - file: demos/quickstart/batched_computation.ipynb
         - file: demos/quickstart/material_parameters_batching.ipynb
+        - file: pytrees.md
   - caption: Examples
     chapters:
     - file: pheno_models.md
@@ -32,8 +33,8 @@ parts:
       - file: models.md
   - caption: API
     chapters:
-      - file: api/materials.md
-        sections:
-          - file: api/elasticity.rst
-          - file: api/plastic_surfaces.rst
-          - file: api/viscoplasticity.rst
+      - file: api/jaxmat.loader.rst
+      - file: api/jaxmat.materials.rst
+      - file: api/jaxmat.solvers.rst
+      - file: api/jaxmat.state.rst
+      - file: api/jaxmat.tensors.rst

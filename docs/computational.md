@@ -10,17 +10,18 @@ As material models generally involve relatively complex nonlinear equations to s
 jax.config.update("jax_enable_x64", True)
 ```
 
-## Data as PyTrees
+<!-- ## Data as PyTrees
 
-Material models in `jaxmat` are represented as [`equinox.Module`](https://docs.kidger.site/equinox/) objects. These are a convenient extension of baseline JAX **PyTrees** (nested collections of tuples, lists, dicts, arrays, etc.), with the additional benefit of behaving like lightweight classes.
+Every material model in `jaxmat` inherits from [`equinox.Module`](https://docs.kidger.site/equinox/). These are a convenient extension of baseline JAX **PyTrees** (nested collections of tuples, lists, dicts, arrays, etc.), with the additional benefit of behaving like lightweight classes.
+This makes them JAX-compatible (PyTree nodes), immutable (frozen dataclasses) and easily nested and differentiable. So each material law is just a structured container of differentiable parameters.
 
 While internal state variables ($\balpha$) and material parameters ($\btheta$) could in principle be flattened into a single large vector, in practice they are organized hierarchically into modules and submodules.  
 For example:
 
-- an **elastoplastic model** may be represented by a parent module containing:
+- an elastoplastic model may be represented by a parent module containing:
   - an *elastic* submodule, and
   - a *plastic* submodule.  
-- the plastic submodule may itself contain submodules for the **yield surface**, **hardening law**, and **flow rule**.
+- the plastic submodule may itself contain submodules for the yield surface, hardening law, and flow rule.
 
 This modular structure makes it easy to build complex models while keeping each component reusable. Moreover:
 
@@ -28,7 +29,13 @@ This modular structure makes it easy to build complex models while keeping each 
 - `jax.vmap` can automatically apply an operation (e.g. constitutive update) across all leaves of the PyTree.  
 - When fine-grained modifications are needed (e.g. replacing a single subcomponent), standard PyTree utilities can be used.  
 
-For advanced manipulation of these data structures, see the [Equinox documentation](https://docs.kidger.site/equinox/all-of-equinox/).
+For advanced manipulation of these data structures, see the [Equinox documentation](https://docs.kidger.site/equinox/all-of-equinox/). Here is a short summary of details that often come up in `jaxmat` models:
+
+1. Some model attributes exhibit material parameters represented as floats. In this case, you should pass it as a `jax.Array`, otherwise JAX transformations will not work (Python floats don’t live on the JAX device or participate in the computational graph). To avoid the user having to think about this, we typically use `equinox.field(converter=jnp.asarray)` to automatically convert the input data as a JAX-compatible type. This also applies to material parameters represented as lists or `numpy.ndarray`.
+
+2. Attributes default values can be specified using `equinox.field(default=value)` rather than writing a length `__init__` method.
+
+3. We use `equinox.filter_jit` to filter out non-JAX types (like static members) in the arguments of a function. This means we can safely JIT functions that take as arguments entire `equinox.Module` instances which may contain static arguments. -->
 
 ## Just-In-Time Compilation and backend device
 
