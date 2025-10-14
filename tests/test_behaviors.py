@@ -1,15 +1,9 @@
-import jax
 import jax.numpy as jnp
 import equinox as eqx
-from optax.tree_utils import tree_add, tree_zeros_like, tree_scale
 from jaxmat.state import (
-    SmallStrainState,
-    FiniteStrainState,
     make_batched,
 )
-from jaxmat.tensors import SymmetricTensor2
 import jaxmat.materials as jm
-import pytest
 
 
 class YieldStress(eqx.Module):
