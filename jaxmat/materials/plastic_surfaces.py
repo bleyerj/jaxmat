@@ -21,34 +21,32 @@ class AbstractPlasticSurface(eqx.Module):
     """Abstract plastic surface class."""
 
     @abstractmethod
-    def __call__(self, sig, *args):
+    def __call__(self, sig: SymmetricTensor2, *args):
         """Yield surface expression.
 
-        Note: We recommend using the `safe_zero` decorator on this method to avoid
-        NaNs for zero stresses.
+        .. Tip::
+            We recommend using the :func:`safe_zero` decorator on this method to avoid
+            NaNs for zero stresses.
 
         Parameters
         ----------
-        sig: Tensor
+        sig:
             Stress tensor.
-        args: tuple
+        args:
             Additional thermodynamic forces entering the yield surface definition.
         """
         pass
 
-    def normal(self, sig, *args):
-        """Normal to the yield surface. Computed automatically using forward AD on `__call__`.
+    def normal(self, sig: SymmetricTensor2, *args):
+        """Normal to the yield surface. Computed automatically using forward AD on :func:`__call__`.
 
-        Parameters
-        ----------
-        sig: Tensor
-            Stress tensor.
-        args: tuple
-            Additional thermodynamic forces entering the yield surface definition.
+        Args:
+            sig: Stress tensor.
+            args: Additional thermodynamic forces entering the yield surface definition.
         """
         return jax.jacfwd(self.__call__, argnums=0)(sig, *args)
 
-
+    
 class vonMises(AbstractPlasticSurface):
     r"""von Mises yield surface
 

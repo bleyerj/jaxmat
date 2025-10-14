@@ -13,7 +13,6 @@ from .behavior import SmallStrainBehavior
 from .elasticity import LinearElasticIsotropic
 from .plastic_surfaces import vonMises, AbstractPlasticSurface
 from .viscoplastic_flows import (
-    VoceHardening,
     NortonFlow,
     AbstractKinematicHardening,
     ArmstrongFrederickHardening,
@@ -24,8 +23,11 @@ class AFInternalState(SmallStrainState):
     """Internal state for the Armstrong-Frederick model"""
 
     p: float = eqx.field(converter=jnp.asarray, default=0.0)
+    """Cumulated plastic strain"""
     epsp: SymmetricTensor2 = eqx.field(default=SymmetricTensor2())
+    """Plastic strain tensor"""
     a: SymmetricTensor2 = eqx.field(default=make_batched(SymmetricTensor2(), 2))
+    """Backstress tensors"""
 
 
 class AmrstrongFrederickViscoplasticity(SmallStrainBehavior):
@@ -39,52 +41,37 @@ class AmrstrongFrederickViscoplasticity(SmallStrainBehavior):
     viscoplastic parts, and the evolution of the backstress follows the
     nonlinear Armstrong-Frederick law.
 
-    Fields
-    ----------
-    elastic_model : LinearElasticIsotropic
-        Linear isotropic elasticity defined by Young modulus and Poisson ratio.
+    .. note::
+        - The model is suitable for cyclic loading and ratcheting simulations.
+        - When the viscous exponent tends to infinity, the model approaches the
+          rate-independent limit.
+        - The formulation assumes small strains and isotropic material symmetry.
 
-    yield_stress : VoceHardening
-        Isotropic hardening law controlling the evolution of the yield surface size.
+    .. admonition:: References
+        :class: seealso
 
-    viscous_flow : NortonFlow
-        Viscoplastic flow rule following Norton (power-law) viscosity formulation.
-
-    kinematic_hardening : ArmstrongFrederickHardening
-        Kinematic hardening model defining the backstress evolution rate with
-        dynamic recovery (Armstrong-Frederick formulation).
-
-    plastic_surface : vonMises
-        J2-type yield (or loading) surface based on the deviatoric stress invariant.
-
-    internal : AFInternalState
-        Internal variables associated with the accumulated plastic strain and
-        backstress tensor.
-
-    Notes
-    -----
-    - The model is suitable for cyclic loading and ratcheting simulations.
-    - When the viscous exponent tends to infinity, the model approaches the
-      rate-independent limit.
-    - The formulation assumes small strains and isotropic material symmetry.
-
-    References
-    ----------
-    Armstrong, P. J., & Frederick, C. O. (1966).
-        "A Mathematical Representation of the Multiaxial Bauschinger Effect for
-        Hardening Materials." CEGB Report RD/B/N731.
-    Voce, E. (1955).
-        "A Practical Strain-Hardening Function." Metallurgia, 51, 219-226.
-    Norton, F. H. (1929).
-        "The Creep of Steel at High Temperatures." McGraw-Hill.
+        - Armstrong, P. J., & Frederick, C. O. (1966).
+            "A Mathematical Representation of the Multiaxial Bauschinger Effect for
+            Hardening Materials." CEGB Report RD/B/N731.
+        - Norton, F. H. (1929).
+            "The Creep of Steel at High Temperatures." McGraw-Hill.
     """
 
     elastic_model: LinearElasticIsotropic
-    yield_stress: VoceHardening
+    """Linear isotropic elasticity defined by Young modulus and Poisson ratio."""
+    yield_stress: eqx.Module
+    """Isotropic hardening law controlling the evolution of the yield surface size."""
     viscous_flow: NortonFlow
+    """Viscoplastic flow rule following Norton (power-law) viscosity formulation."""
     kinematic_hardening: ArmstrongFrederickHardening
+    """
+    Kinematic hardening model defining the backstress evolution rate with dynamic 
+    recovery (Armstrong-Frederick formulation).
+    """
     plastic_surface = vonMises()
+    """J2-type yield (or loading) surface based on the deviatoric stress invariant."""
     internal = AFInternalState()
+    """Internal variables associated with the accumulated plastic strain and backstress tensor."""
 
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)
@@ -128,22 +115,39 @@ class AmrstrongFrederickViscoplasticity(SmallStrainBehavior):
 
 
 class GenericInternalState(SmallStrainState):
-    p: float = eqx.field(default_factory=lambda: jnp.float64(0.0))
-    epsp: SymmetricTensor2 = SymmetricTensor2()
+    """Internal state for the generic elastoviscoplastic model."""
+
+    p: float = eqx.field(converter=jnp.asarray, default=0.0)
+    """Cumulated plastic strain"""
+    epsp: SymmetricTensor2 = eqx.field(default=SymmetricTensor2())
+    """Plastic strain tensor"""
     nX: int = eqx.field(static=True, default=1)
+    """Number of kinematic hardening mechanisms."""
     X: SymmetricTensor2 = eqx.field(init=False)
+    """Backstress tensors"""
 
     def __post_init__(self):
         self.X = make_batched(SymmetricTensor2(), self.nX)
 
 
 class GenericViscoplasticity(SmallStrainBehavior):
+    """
+    Small-strain viscoplastic constitutive model with generic yield surface, isotropic
+    and kinematic hardening and viscoplastic flow rule.
+    """
+
     elastic_model: LinearElasticIsotropic
+    """Linear isotropic elasticity defined by Young modulus and Poisson ratio."""
     plastic_surface: AbstractPlasticSurface
+    """A generic plastic yield surface."""
     yield_stress: eqx.Module
+    """Isotropic hardening law controlling the evolution of the yield surface size."""
     viscous_flow: eqx.Module
+    """A generic viscoplastic flow rule."""
     kinematic_hardening: AbstractKinematicHardening
+    """A generic kinematic hardening law."""
     internal: AbstractState = eqx.field(init=False)
+    """Internal variables associated with the accumulated plastic strain and backstress tensors."""
 
     def __post_init__(self):
         self.internal = GenericInternalState(nX=self.kinematic_hardening.nvars)
