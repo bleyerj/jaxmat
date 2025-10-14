@@ -48,15 +48,20 @@ parse:
     - "smartquotes"
     - "substitution"
     - "attrs_inline"
+    - "fieldlist"
+    - "deflist"
 
 # Sphinx configuration for custom theme
 sphinx:
   extra_extensions:
   - 'sphinx_math_dollar'
+  - 'sphinx.ext.apidoc'
   - 'sphinx.ext.autodoc'
   - 'sphinx.ext.napoleon'
   - 'sphinx.ext.viewcode'
   - 'sphinx.ext.autosummary'
+  - 'sphinx_autodoc_typehints'
+  - 'autodoc2'
   # - 'docs.remove_docstring' # remove module docstring
     
   config:
@@ -67,9 +72,14 @@ sphinx:
     autodoc_class_signature: "separated"
     autodoc_default_options:
       members: true
-      undoc-members: false
+      undoc-members: true
       show-inheritance: true
-      exclude-members: "__init__,__repr__,__eq__"
+      exclude-members: "__init__,__repr__,__eq__, __len__"
+    autodoc2_packages: ["../jaxmat"]
+    apidoc_separate_modules: True
+    napoleon_use_admonition_for_examples: True
+    napoleon_use_admonition_for_notes: True
+    napoleon_use_admonition_for_references: True
     bibtex_reference_style: author_year
     html_theme: sphinx_book_theme
     html_show_copyright: false
