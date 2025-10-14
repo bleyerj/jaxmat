@@ -71,7 +71,7 @@ Next, we initialize the state for all stochastic material points and apply a sim
 
 ```{code-cell} ipython3
 state = batched_material.init_state()
-gamma_list = jnp.linspace(0, 1e-2, 50)
+gamma_list = jnp.linspace(0.0, 1e-2, 50)
 tau = jnp.zeros((N, len(gamma_list)))
 
 for i, gamma in enumerate(gamma_list):

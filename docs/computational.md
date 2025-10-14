@@ -63,9 +63,9 @@ into a batched version:
 batched_constitutive_update(material, strain_batch, state_batch, dt)
 ```
 
-that operates efficiently across a whole array of strains or states. For more details, see the [](demos/batched_computation.md) demo.
+that operates efficiently across a whole array of strains or states. For more details, see the [](demos/quickstart/batched_computation) demo.
 
-It is also possible to batch through a set of material parameters sharing a common PyTree, see this other demo: [](demos/material_parameters_batching.md).
+It is also possible to batch through a set of material parameters sharing a common PyTree, see this other demo: [](demos/quickstart/material_parameters_batching).
 
 ## On Automatic Differentiation
 
