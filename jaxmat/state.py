@@ -4,12 +4,6 @@ import jax.numpy as jnp
 from jaxmat.tensors import Tensor2, SymmetricTensor2
 
 
-def default_array(value, dtype=jnp.float64, **kwargs):
-    return eqx.field(
-        converter=lambda x: jnp.asarray(x, dtype=dtype), default=value, **kwargs
-    )
-
-
 class AbstractState(eqx.Module):
     def _resolve_aliases(self, changes):
         alias_map = getattr(self, "__alias_targets__", {})

@@ -2,6 +2,7 @@ import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
 import lineax as lx
+from jaxmat.utils import default_value
 from jaxmat.state import AbstractState
 from jaxmat.tensors import SymmetricTensor2, dev
 from jaxmat.tensors.linear_algebra import det33 as det
@@ -12,7 +13,7 @@ from jaxmat.tensors.utils import FischerBurmeister as FB
 
 
 class InternalState(AbstractState):
-    p: float = eqx.field(default_factory=lambda: jnp.float64(0.0))
+    p: float = default_value(0.0)
     be_bar: SymmetricTensor2 = SymmetricTensor2.identity()
 
 

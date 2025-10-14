@@ -2,7 +2,8 @@ import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
 from optax.tree_utils import tree_add, tree_zeros_like
-from jaxmat.state import AbstractState, default_array
+from jaxmat.utils import default_value
+from jaxmat.state import AbstractState
 from jaxmat.tensors import SymmetricTensor2, dev
 from .behavior import SmallStrainBehavior
 from .elasticity import LinearElasticIsotropic
@@ -17,7 +18,7 @@ import jax
 class InternalState(AbstractState):
     """Internal state for hardening plasticity"""
 
-    p: jax.Array = default_array(0.0)
+    p: jax.Array = default_value(0.0)
     epsp: SymmetricTensor2 = eqx.field(default_factory=lambda: SymmetricTensor2())
 
 

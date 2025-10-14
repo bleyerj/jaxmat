@@ -10,7 +10,7 @@ class VoceHardening(eqx.Module):
     Voce hardening model for stress-strain behavior.
 
     $$
-    \sigma_Y(p)=\sigma_0 + (\sigma_\text{u}-\sigma_0)\exp(-bp)
+    \sigma_Y(p)=\sigma_0 + (\sigma_\text{u}-\sigma_0)(1-\exp(-bp))
     $$
 
     .. admonition:: References
@@ -19,11 +19,11 @@ class VoceHardening(eqx.Module):
         - Voce, E. (1955). "A Practical Strain-Hardening Function." Metallurgia, 51, 219-226.
     """
 
-    sig0: float
+    sig0: float = eqx.field(converter=jnp.asarray)
     r"""Initial yield stress $\sigma_0$."""
-    sigu: float
+    sigu: float = eqx.field(converter=jnp.asarray)
     r"""Saturation stress at large strains $\sigma_\text{u}$."""
-    b: float
+    b: float = eqx.field(converter=jnp.asarray)
     r"""Rate of hardedning $b$."""
 
     def __call__(self, p):
@@ -39,9 +39,9 @@ class NortonFlow(eqx.Module):
     where $f(\bsig)-\sigma_y$ is the overstress, $\langle \cdot\rangle_+$ is the positive part.
     """
 
-    K: float
+    K: float = eqx.field(converter=jnp.asarray)
     """Characteristic stress $K$ of the Norton flow."""
-    m: float
+    m: float = eqx.field(converter=jnp.asarray)
     """Norton power-law exponent"""
 
     def __call__(self, overstress):
@@ -70,7 +70,9 @@ class LinearKinematicHardening(eqx.Module):
 
     $$\dot{\bX} = \dfrac{2}{3}H\dot{\bepsp}$$
 
-    .. reference::
+    .. admonition:: References
+        :class: seealso
+
         Prager, W. (1956). A new method of analyzing stresses and strains in work-hardening plastic solids.
     """
 
@@ -94,15 +96,17 @@ class ArmstrongFrederickHardening(AbstractKinematicHardening):
 
     Kinematic variables are $\ba$ such that $X_i=\frac{2}{3}C a_i$.
 
-    .. references::
+    .. admonition:: References
+        :class: seealso
+
          - Armstrong, P. J., & Frederick, C. O. (1966).
             "A Mathematical Representation of the Multiaxial Bauschinger Effect for
             Hardening Materials." CEGB Report RD/B/N731.
     """
 
-    C: jax.Array
+    C: jax.Array = eqx.field(converter=jnp.asarray)
     """Kinematic hardening modulus"""
-    g: jax.Array
+    g: jax.Array = eqx.field(converter=jnp.asarray)
     """Nonlinear recall modulus"""
     nvars = 2
 

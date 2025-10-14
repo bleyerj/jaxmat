@@ -3,6 +3,7 @@ import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
 from optax.tree_utils import tree_add, tree_zeros_like
+from jaxmat.utils import default_value
 from jaxmat.state import (
     AbstractState,
     SmallStrainState,
@@ -22,11 +23,13 @@ from .viscoplastic_flows import (
 class AFInternalState(SmallStrainState):
     """Internal state for the Armstrong-Frederick model"""
 
-    p: float = eqx.field(converter=jnp.asarray, default=0.0)
+    p: float = default_value(0.0)
     """Cumulated plastic strain"""
-    epsp: SymmetricTensor2 = eqx.field(default=SymmetricTensor2())
+    epsp: SymmetricTensor2 = eqx.field(default_factory=lambda: SymmetricTensor2())
     """Plastic strain tensor"""
-    a: SymmetricTensor2 = eqx.field(default=make_batched(SymmetricTensor2(), 2))
+    a: SymmetricTensor2 = eqx.field(
+        default_factory=lambda: make_batched(SymmetricTensor2(), 2)
+    )
     """Backstress tensors"""
 
 
@@ -117,9 +120,9 @@ class AmrstrongFrederickViscoplasticity(SmallStrainBehavior):
 class GenericInternalState(SmallStrainState):
     """Internal state for the generic elastoviscoplastic model."""
 
-    p: float = eqx.field(converter=jnp.asarray, default=0.0)
+    p: float = default_value(0.0)
     """Cumulated plastic strain"""
-    epsp: SymmetricTensor2 = eqx.field(default=SymmetricTensor2())
+    epsp: SymmetricTensor2 = eqx.field(default_factory=lambda: SymmetricTensor2())
     """Plastic strain tensor"""
     nX: int = eqx.field(static=True, default=1)
     """Number of kinematic hardening mechanisms."""

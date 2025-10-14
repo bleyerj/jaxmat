@@ -2,6 +2,7 @@ from abc import abstractmethod
 import jax
 import jax.numpy as jnp
 import equinox as eqx
+from jaxmat.utils import default_value
 from jaxmat.tensors import eigenvalues, dev, SymmetricTensor2
 from jaxmat.tensors.utils import safe_norm, safe_sqrt
 
@@ -46,7 +47,7 @@ class AbstractPlasticSurface(eqx.Module):
         """
         return jax.jacfwd(self.__call__, argnums=0)(sig, *args)
 
-    
+
 class vonMises(AbstractPlasticSurface):
     r"""von Mises yield surface
 
@@ -103,7 +104,7 @@ class Hosford(AbstractPlasticSurface):
         Hosford shape parameter
     """
 
-    a: float = eqx.field(converter=jnp.asarray, default=2.0)
+    a: float = default_value(2.0)
 
     @safe_zero
     def __call__(self, sig):
