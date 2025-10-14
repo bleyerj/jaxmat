@@ -31,7 +31,6 @@ exclude_patterns: [
     README.md,
     demos/*.md,
     demos/**/*.md,
-    demos/identification,
     /**/*.py,
     ]
 
@@ -61,7 +60,6 @@ sphinx:
   - 'sphinx.ext.viewcode'
   - 'sphinx.ext.autosummary'
   - 'sphinx_autodoc_typehints'
-  - 'autodoc2'
   # - 'docs.remove_docstring' # remove module docstring
     
   config:
@@ -75,7 +73,6 @@ sphinx:
       undoc-members: true
       show-inheritance: true
       exclude-members: "__init__,__repr__,__eq__, __len__"
-    autodoc2_packages: ["../jaxmat"]
     apidoc_separate_modules: True
     napoleon_use_admonition_for_examples: True
     napoleon_use_admonition_for_notes: True

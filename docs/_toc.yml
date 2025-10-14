@@ -23,6 +23,9 @@ parts:
     - file: ml_models.md
       sections:
         - file: demos/neural_network_models/hyperelastic_PANN.ipynb
+    - file: identification.md
+      sections:
+        - file: demos/identification/hardening_rule.ipynb
   - caption: General resources 
     chapters:
       - file: concepts.md
