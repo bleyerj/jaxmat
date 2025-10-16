@@ -94,32 +94,37 @@ class ArmstrongFrederickHardening(AbstractKinematicHardening):
     r"""
     Armstrong-Frederick kinematic hardening model.
 
-    Kinematic variables are $\ba$ such that $X_i=\frac{2}{3}C a_i$.
-
     .. admonition:: References
         :class: seealso
 
          - Armstrong, P. J., & Frederick, C. O. (1966).
             "A Mathematical Representation of the Multiaxial Bauschinger Effect for
             Hardening Materials." CEGB Report RD/B/N731.
+        - Chaboche, J. L. (1991). On some modifications of kinematic hardening to
+            improve the description of ratchetting effects. International journal
+            of plasticity, 7(7), 661-678.
     """
 
     C: jax.Array = eqx.field(converter=jnp.asarray)
     """Kinematic hardening modulus"""
-    g: jax.Array = eqx.field(converter=jnp.asarray)
+    gamma: jax.Array = eqx.field(converter=jnp.asarray)
     """Nonlinear recall modulus"""
     nvars = 2
 
-    def __call__(self, a, p_dot, epsp_dot):
-        r"""Returns the backstress variables (in this formulation $\ba$) rate $\dot{\ba}$:
+    def __call__(self, X, p_dot, epsp_dot):
+        r"""Returns the backstress variables  $\dot{\bX}$:
 
-        $$\dot{\ba} = \dot{\bepsp} - g \dot{p}$$
+        $$\dot{\bX}_i = 2/3C_i\dot{\bepsp} - \gamma_i X_i \dot{p}$$
         """
-        return make_batched(epsp_dot, self.nvars) - jnp.dot(self.g, a) * p_dot
 
-    def sig_eff(self, sig, a):
+        def evolution(X, C, gamma):
+            return 2 / 3 * C * epsp_dot - gamma * X * p_dot
+
+        return jax.vmap(evolution)(X, self.C, self.gamma)
+
+    def sig_eff(self, sig, X):
         r"""Effective stress is here:
 
         $$\bsig-\frac{2}{3}C\sum_{i=1}^\text{nvars}a_i$$
         """
-        return sig - 2 / 3 * jnp.sum(jnp.dot(self.C, a), axis=0)
+        return sig - jnp.sum(X, axis=0)

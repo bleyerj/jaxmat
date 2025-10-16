@@ -27,7 +27,7 @@ class AFInternalState(SmallStrainState):
     """Cumulated plastic strain"""
     epsp: SymmetricTensor2 = eqx.field(default_factory=lambda: SymmetricTensor2())
     """Plastic strain tensor"""
-    a: SymmetricTensor2 = eqx.field(
+    X: SymmetricTensor2 = eqx.field(
         default_factory=lambda: make_batched(SymmetricTensor2(), 2)
     )
     """Backstress tensors"""
@@ -92,13 +92,13 @@ class AmrstrongFrederickViscoplasticity(SmallStrainBehavior):
             def residual(dy, args):
                 y = tree_add(y_old, dy)
                 sig = eval_stress(deps, dy)
-                sig_eff = self.kinematic_hardening.sig_eff(sig, y.a)
+                sig_eff = self.kinematic_hardening.sig_eff(sig, y.X)
                 yield_criterion = sig_eq(sig_eff) - self.yield_stress(y.p)
                 n = self.plastic_surface.normal(sig_eff)
                 res = (
                     dy.p - dt * self.viscous_flow(yield_criterion),
                     dy.epsp - n * dy.p,
-                    dy.a - self.kinematic_hardening(y.a, dy.p, dy.epsp),
+                    dy.X - self.kinematic_hardening(y.X, dy.p, dy.epsp),
                 )
                 return res, y
 
