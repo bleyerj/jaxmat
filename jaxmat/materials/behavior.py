@@ -20,10 +20,43 @@ class AbstractBehavior(eqx.Module):
     adjoint: optx.AbstractAdjoint = eqx.field(
         static=True, init=False, default=DEFAULT_SOLVERS[1]
     )
-    _batch_size: jax.Array = eqx.field(default=0.0, init=False, converter=jnp.asarray)
+    _batch_size: jax.Array = eqx.field(default=0, init=False, converter=jnp.asarray)
 
     @abstractmethod
     def constitutive_update(self, eps, state, dt):
+        """
+        Perform the constitutive update for a given strain increment.
+
+        This abstract method defines the interface for advancing the material
+        state over a time increment based on the provided strain tensor.
+        Implementations should return the updated stress tensor and internal
+        variables, along with any auxiliary information required for consistent
+        tangent computation or subsequent analysis.
+
+        Parameters
+        ----------
+        eps : array_like
+            Strain tensor at the current integration point.
+            Shape and convention depend on the model implementation (e.g., small
+            strain vector form or finite strain tensor form).
+        state : PyTree
+            PyTree containing the current state variables (stress, strain and internal) of the
+            material.
+        dt : float
+            Time increment over which the update is performed.
+
+        Returns
+        -------
+        stress : array_like
+            Updated Cauchy or Kirchhoff stress tensor corresponding to `eps`.
+        new_state : PyTree
+            Updated state variables after the constitutive update.
+
+        Notes
+        -----
+        This method should be implemented by subclasses defining specific
+        constitutive behaviors (elastic, plastic, viscoplastic, etc.).
+        """
         pass
 
     def batched_constitutive_update(self, eps, state, dt):
