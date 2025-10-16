@@ -1,0 +1,748 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>jaxmat package &#8212; jaxmat</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/jaxmat';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/jaxmat_logo.svg" class="logo__image only-light" alt="jaxmat - Home"/>
+    <img src="../_static/jaxmat_logo.svg" class="logo__image only-dark pst-js-only" alt="jaxmat - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Documentation
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quickstart tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../demos/quickstart/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">jaxmat</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demos/quickstart/batched_computation.html">Batching across material points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demos/quickstart/material_parameters_batching.html">Batching across material parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pytrees.html">Composable and differentiable material models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../pheno_models.html">Phenomenological models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../demos/phenomenological_models/Green_viscoplasticity.html">Norton viscoplastic model with a Green yield surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../demos/phenomenological_models/CamClay.html">Modified Cam-Clay</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../demos/phenomenological_models/multisurface_plasticity.html">Multi-surface plasticity model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../identification.html">Identification of material models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">General resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Nonlinear constitutive behaviors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computational.html">Computational aspects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tensors.html">Conventions for representing tensors</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Material models gallery</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../models.html">Material models gallery</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="jaxmat.loader.html">jaxmat.loader module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="jaxmat.materials.html">jaxmat.materials package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.damage.html">jaxmat.materials.damage module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="jaxmat.solvers.html">jaxmat.solvers package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.custom_newton.html">jaxmat.solvers.custom_newton module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.gauss_newton_ls.html">jaxmat.solvers.gauss_newton_ls module</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="jaxmat.state.html">jaxmat.state module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="jaxmat.tensors.html">jaxmat.tensors package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html">jaxmat.tensors.generic_tensors module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html">jaxmat.tensors.linear_algebra module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html">jaxmat.tensors.tensor_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.utils.html">jaxmat.tensors.utils module</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/bleyerj/jaxmat" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/bleyerj/jaxmat/edit/main/api/jaxmat.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>jaxmat package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-jaxmat">Module contents</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.get_path"><code class="docutils literal notranslate"><span class="pre">get_path()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="jaxmat-package">
+<h1>jaxmat package<a class="headerlink" href="#jaxmat-package" title="Link to this heading">#</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="jaxmat.materials.html">jaxmat.materials package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.html#behaviors">Behaviors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.behavior.html#jaxmat.materials.behavior.AbstractBehavior"><code class="docutils literal notranslate"><span class="pre">AbstractBehavior</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.behavior.html#jaxmat.materials.behavior.FiniteStrainBehavior"><code class="docutils literal notranslate"><span class="pre">FiniteStrainBehavior</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.behavior.html#jaxmat.materials.behavior.SmallStrainBehavior"><code class="docutils literal notranslate"><span class="pre">SmallStrainBehavior</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.damage.html">jaxmat.materials.damage module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.damage.html#jaxmat.materials.damage.Damage"><code class="docutils literal notranslate"><span class="pre">Damage</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.damage.html#jaxmat.materials.damage.DamageThreshold"><code class="docutils literal notranslate"><span class="pre">DamageThreshold</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.damage.html#jaxmat.materials.damage.InternalState"><code class="docutils literal notranslate"><span class="pre">InternalState</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.damage.html#jaxmat.materials.damage.IsotropicDegradation"><code class="docutils literal notranslate"><span class="pre">IsotropicDegradation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.ElasticBehavior"><code class="docutils literal notranslate"><span class="pre">ElasticBehavior</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic"><code class="docutils literal notranslate"><span class="pre">LinearElasticIsotropic</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening"><code class="docutils literal notranslate"><span class="pre">GeneralIsotropicHardening</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.InternalState"><code class="docutils literal notranslate"><span class="pre">InternalState</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.vonMisesIsotropicHardening"><code class="docutils literal notranslate"><span class="pre">vonMisesIsotropicHardening</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html#jaxmat.materials.fe_fp_elastoplasticity.FeFpJ2Plasticity"><code class="docutils literal notranslate"><span class="pre">FeFpJ2Plasticity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html#jaxmat.materials.fe_fp_elastoplasticity.InternalState"><code class="docutils literal notranslate"><span class="pre">InternalState</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin"><code class="docutils literal notranslate"><span class="pre">CompressibleMooneyRivlin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleNeoHookean"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleOgden"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.Hyperelasticity"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.SquaredVolumetric"><code class="docutils literal notranslate"><span class="pre">SquaredVolumetric</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.VolumetricPart"><code class="docutils literal notranslate"><span class="pre">VolumetricPart</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface"><code class="docutils literal notranslate"><span class="pre">AbstractPlasticSurface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.DruckerPrager"><code class="docutils literal notranslate"><span class="pre">DruckerPrager</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.Hosford"><code class="docutils literal notranslate"><span class="pre">Hosford</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.Tresca"><code class="docutils literal notranslate"><span class="pre">Tresca</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.safe_zero"><code class="docutils literal notranslate"><span class="pre">safe_zero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.vonMises"><code class="docutils literal notranslate"><span class="pre">vonMises</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.AbstractKinematicHardening"><code class="docutils literal notranslate"><span class="pre">AbstractKinematicHardening</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening"><code class="docutils literal notranslate"><span class="pre">LinearKinematicHardening</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.NortonFlow"><code class="docutils literal notranslate"><span class="pre">NortonFlow</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.VoceHardening"><code class="docutils literal notranslate"><span class="pre">VoceHardening</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.AFInternalState"><code class="docutils literal notranslate"><span class="pre">AFInternalState</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.GenericInternalState"><code class="docutils literal notranslate"><span class="pre">GenericInternalState</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.GenericViscoplasticity"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.html#models">Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.ElasticBehavior"><code class="docutils literal notranslate"><span class="pre">ElasticBehavior</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic"><code class="docutils literal notranslate"><span class="pre">LinearElasticIsotropic</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin"><code class="docutils literal notranslate"><span class="pre">CompressibleMooneyRivlin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleNeoHookean"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleOgden"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.Hyperelasticity"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.SquaredVolumetric"><code class="docutils literal notranslate"><span class="pre">SquaredVolumetric</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.VolumetricPart"><code class="docutils literal notranslate"><span class="pre">VolumetricPart</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface"><code class="docutils literal notranslate"><span class="pre">AbstractPlasticSurface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.DruckerPrager"><code class="docutils literal notranslate"><span class="pre">DruckerPrager</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.Hosford"><code class="docutils literal notranslate"><span class="pre">Hosford</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.Tresca"><code class="docutils literal notranslate"><span class="pre">Tresca</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.safe_zero"><code class="docutils literal notranslate"><span class="pre">safe_zero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.vonMises"><code class="docutils literal notranslate"><span class="pre">vonMises</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.AbstractKinematicHardening"><code class="docutils literal notranslate"><span class="pre">AbstractKinematicHardening</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening"><code class="docutils literal notranslate"><span class="pre">LinearKinematicHardening</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.NortonFlow"><code class="docutils literal notranslate"><span class="pre">NortonFlow</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.VoceHardening"><code class="docutils literal notranslate"><span class="pre">VoceHardening</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.html#module-jaxmat.materials">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jaxmat.solvers.html">jaxmat.solvers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.solvers.custom_newton.html">jaxmat.solvers.custom_newton module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.solvers.custom_newton.html#jaxmat.solvers.custom_newton.newton_solve_jittable"><code class="docutils literal notranslate"><span class="pre">newton_solve_jittable()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.solvers.gauss_newton_ls.html">jaxmat.solvers.gauss_newton_ls module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.solvers.gauss_newton_ls.html#jaxmat.solvers.gauss_newton_ls.GaussNewtonLineSearch"><code class="docutils literal notranslate"><span class="pre">GaussNewtonLineSearch</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.html#module-jaxmat.solvers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jaxmat.tensors.html">jaxmat.tensors package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html">jaxmat.tensors.generic_tensors module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2"><code class="docutils literal notranslate"><span class="pre">Tensor2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.symmetric_kelvin_mandel_index_map"><code class="docutils literal notranslate"><span class="pre">symmetric_kelvin_mandel_index_map()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html">jaxmat.tensors.linear_algebra module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.det33"><code class="docutils literal notranslate"><span class="pre">det33()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.dev"><code class="docutils literal notranslate"><span class="pre">dev()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.dim"><code class="docutils literal notranslate"><span class="pre">dim()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.eig33"><code class="docutils literal notranslate"><span class="pre">eig33()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.expm"><code class="docutils literal notranslate"><span class="pre">expm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.inv33"><code class="docutils literal notranslate"><span class="pre">inv33()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.inv_sqrtm"><code class="docutils literal notranslate"><span class="pre">inv_sqrtm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.invariants_main"><code class="docutils literal notranslate"><span class="pre">invariants_main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.invariants_principal"><code class="docutils literal notranslate"><span class="pre">invariants_principal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.isotropic_function"><code class="docutils literal notranslate"><span class="pre">isotropic_function()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.logm"><code class="docutils literal notranslate"><span class="pre">logm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.powm"><code class="docutils literal notranslate"><span class="pre">powm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.pq_invariants"><code class="docutils literal notranslate"><span class="pre">pq_invariants()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.sqrtm"><code class="docutils literal notranslate"><span class="pre">sqrtm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.tr"><code class="docutils literal notranslate"><span class="pre">tr()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html">jaxmat.tensors.tensor_utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.axl"><code class="docutils literal notranslate"><span class="pre">axl()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.dev"><code class="docutils literal notranslate"><span class="pre">dev()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.dev_vect"><code class="docutils literal notranslate"><span class="pre">dev_vect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.eigenvalues_jvp"><code class="docutils literal notranslate"><span class="pre">eigenvalues_jvp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.polar"><code class="docutils literal notranslate"><span class="pre">polar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.skew"><code class="docutils literal notranslate"><span class="pre">skew()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.stretch_tensor"><code class="docutils literal notranslate"><span class="pre">stretch_tensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.sym"><code class="docutils literal notranslate"><span class="pre">sym()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.tr"><code class="docutils literal notranslate"><span class="pre">tr()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.utils.html">jaxmat.tensors.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.utils.html#jaxmat.tensors.utils.FischerBurmeister"><code class="docutils literal notranslate"><span class="pre">FischerBurmeister()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.utils.html#jaxmat.tensors.utils.safe_norm"><code class="docutils literal notranslate"><span class="pre">safe_norm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.tensors.utils.html#jaxmat.tensors.utils.safe_sqrt"><code class="docutils literal notranslate"><span class="pre">safe_sqrt()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.html#module-jaxmat.tensors">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="jaxmat.loader.html">jaxmat.loader module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.loader.html#jaxmat.loader.ImposedLoading"><code class="docutils literal notranslate"><span class="pre">ImposedLoading</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.loader.html#jaxmat.loader.ImposedLoading.eps_vals"><code class="docutils literal notranslate"><span class="pre">ImposedLoading.eps_vals</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.loader.html#jaxmat.loader.ImposedLoading.sig_vals"><code class="docutils literal notranslate"><span class="pre">ImposedLoading.sig_vals</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.loader.html#jaxmat.loader.ImposedLoading.strain_mask"><code class="docutils literal notranslate"><span class="pre">ImposedLoading.strain_mask</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.loader.html#jaxmat.loader.global_solve"><code class="docutils literal notranslate"><span class="pre">global_solve()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.loader.html#jaxmat.loader.residual"><code class="docutils literal notranslate"><span class="pre">residual()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.loader.html#jaxmat.loader.solve_mechanical_state"><code class="docutils literal notranslate"><span class="pre">solve_mechanical_state()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.loader.html#jaxmat.loader.stack_loadings"><code class="docutils literal notranslate"><span class="pre">stack_loadings()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jaxmat.state.html">jaxmat.state module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState"><code class="docutils literal notranslate"><span class="pre">AbstractState</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState.add"><code class="docutils literal notranslate"><span class="pre">AbstractState.add()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState.update"><code class="docutils literal notranslate"><span class="pre">AbstractState.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.FiniteStrainState"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.FiniteStrainState.Cauchy"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.Cauchy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.FiniteStrainState.F"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.F</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.FiniteStrainState.PK1"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.PK1</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.FiniteStrainState.PK2"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.PK2</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.FiniteStrainState.internal"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.internal</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.FiniteStrainState.sig"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.sig</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.FiniteStrainState.strain"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.strain</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.FiniteStrainState.stress"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.stress</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.PK1_to_Cauchy"><code class="docutils literal notranslate"><span class="pre">PK1_to_Cauchy()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.PK1_to_PK2"><code class="docutils literal notranslate"><span class="pre">PK1_to_PK2()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.SmallStrainState"><code class="docutils literal notranslate"><span class="pre">SmallStrainState</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.SmallStrainState.eps"><code class="docutils literal notranslate"><span class="pre">SmallStrainState.eps</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.SmallStrainState.internal"><code class="docutils literal notranslate"><span class="pre">SmallStrainState.internal</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.SmallStrainState.sig"><code class="docutils literal notranslate"><span class="pre">SmallStrainState.sig</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.SmallStrainState.strain"><code class="docutils literal notranslate"><span class="pre">SmallStrainState.strain</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.SmallStrainState.stress"><code class="docutils literal notranslate"><span class="pre">SmallStrainState.stress</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.state.html#jaxmat.state.make_batched"><code class="docutils literal notranslate"><span class="pre">make_batched()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-jaxmat">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-jaxmat" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxmat.get_path">
+<span class="sig-name descname"><span class="pre">get_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notebook_fallback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat.html#get_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.get_path" title="Link to this definition">#</a></dt>
+<dd><p>Return the directory of the current demo.
+- In scripts: based on __file__
+- In notebooks: fallback to Path.cwd() or a provided path</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>notebook_fallback</strong> (<em>str</em><em> | </em><em>None</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./api"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-jaxmat">Module contents</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.get_path"><code class="docutils literal notranslate"><span class="pre">get_path()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jeremy Bleyer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,980 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>&lt;no title&gt; &#8212; jaxmat</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'demos/identification/hardening_rule _elastoplasticity';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/jaxmat_logo.svg" class="logo__image only-light" alt="jaxmat - Home"/>
+    <img src="../../_static/jaxmat_logo.svg" class="logo__image only-dark pst-js-only" alt="jaxmat - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Documentation
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quickstart tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">jaxmat</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/batched_computation.html">Batching across material points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/material_parameters_batching.html">Batching across material parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pytrees.html">Composable and differentiable material models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../pheno_models.html">Phenomenological models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../phenomenological_models/Green_viscoplasticity.html">Norton viscoplastic model with a Green yield surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../phenomenological_models/CamClay.html">Modified Cam-Clay</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../phenomenological_models/multisurface_plasticity.html">Multi-surface plasticity model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../identification.html">Identification of material models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">General resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../concepts.html">Nonlinear constitutive behaviors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../computational.html">Computational aspects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tensors.html">Conventions for representing tensors</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Material models gallery</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Material models gallery</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../api/jaxmat.loader.html">jaxmat.loader module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/jaxmat.materials.html">jaxmat.materials package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.damage.html">jaxmat.materials.damage module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/jaxmat.solvers.html">jaxmat.solvers package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.solvers.custom_newton.html">jaxmat.solvers.custom_newton module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.solvers.gauss_newton_ls.html">jaxmat.solvers.gauss_newton_ls module</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/jaxmat.state.html">jaxmat.state module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/jaxmat.tensors.html">jaxmat.tensors package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.tensors.generic_tensors.html">jaxmat.tensors.generic_tensors module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.tensors.linear_algebra.html">jaxmat.tensors.linear_algebra module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.tensors.tensor_utils.html">jaxmat.tensors.tensor_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.tensors.utils.html">jaxmat.tensors.utils module</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/bleyerj/jaxmat" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/bleyerj/jaxmat/edit/main/demos/identification/hardening_rule _elastoplasticity.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><no title></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+
+<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_platform_name&quot;</span><span class="p">,</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_disable_jit&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">equinox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">eqx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optax.tree_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_scale</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">ImposedLoading</span><span class="p">,</span> <span class="n">global_solve</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.tensors</span><span class="w"> </span><span class="kn">import</span> <span class="n">SymmetricTensor2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jaxmat.materials</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jm</span>
+
+
+<span class="n">current_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+
+
+<span class="c1"># @eqx.filter_jit</span>
+<span class="c1"># def compute_elastoplasticity(material, loading, state):</span>
+<span class="c1">#     Eps = state.strain</span>
+
+<span class="c1">#     eps_dot = 8e-2</span>
+<span class="c1">#     imposed_eps = 0</span>
+
+<span class="c1">#     Nsteps = 21</span>
+<span class="c1">#     # times = jnp.concatenate((jnp.linspace(0, 0.04, 11), jnp.linspace(0.04, 1.0, Nsteps)[1:]))</span>
+<span class="c1">#     times = jnp.linspace(0, 0.04, 20)</span>
+<span class="c1">#     t = 0</span>
+<span class="c1">#     results = jnp.zeros((len(times), 2))</span>
+<span class="c1">#     for i, dt in enumerate(jnp.diff(times)):</span>
+<span class="c1">#         t += dt</span>
+<span class="c1">#         imposed_eps += eps_dot * dt</span>
+
+<span class="c1">#         # FIXME: need to start with non zero Eps</span>
+<span class="c1">#         def setxx(Eps):</span>
+<span class="c1">#             return SymmetricTensor2(tensor=Eps.tensor.at[0, 0].set(imposed_eps))</span>
+
+<span class="c1">#         Eps = setxx(Eps)</span>
+<span class="c1">#         loading = eqx.tree_at(</span>
+<span class="c1">#             lambda l: l.eps_vals, loading, replace_fn=lambda x: x.at[0].set(imposed_eps)</span>
+<span class="c1">#         )</span>
+
+<span class="c1">#         Eps, state, _ = global_solve(Eps, state, loading, material, dt, in_axes=None)</span>
+<span class="c1">#         # print(state.stress)</span>
+
+<span class="c1">#         sig = state.stress</span>
+<span class="c1">#         p = state.internal.p</span>
+<span class="c1">#         results = results.at[i + 1, :].set(jnp.array([p, sig[0, 0]]))</span>
+<span class="c1">#     return results</span>
+<span class="c1"># @eqx.filter_jit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_elastoplasticity</span><span class="p">(</span><span class="n">material</span><span class="p">,</span> <span class="n">loading</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="n">Eps</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">strain</span>
+    <span class="n">eps_dot</span> <span class="o">=</span> <span class="mf">8e-2</span>
+    <span class="n">imposed_eps0</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="n">Nsteps_p</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">times</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.04</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">Nsteps_p</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]))</span>
+    <span class="n">dts</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
+    <span class="n">Nsteps</span> <span class="o">=</span> <span class="n">dts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">results_init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">Nsteps</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step_fn</span><span class="p">(</span><span class="n">carry</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+        <span class="n">imposed_eps</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">carry</span>
+
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="n">dt</span>
+        <span class="n">imposed_eps</span> <span class="o">=</span> <span class="n">imposed_eps</span> <span class="o">+</span> <span class="n">eps_dot</span> <span class="o">*</span> <span class="n">dt</span>
+
+        <span class="c1"># Update Eps[0, 0]</span>
+        <span class="c1"># new_tensor = Eps.tensor.at[0, 0].set(imposed_eps)</span>
+        <span class="c1"># new_tensor = new_tensor.at[1, 1].set(-imposed_eps/2)</span>
+        <span class="c1"># new_tensor = new_tensor.at[2, 2].set(-imposed_eps/2)</span>
+        <span class="c1"># new_tensor = jnp.diag(jnp.array([imposed_eps, -imposed_eps/2, -imposed_eps/2]))</span>
+        <span class="c1"># Eps = SymmetricTensor2(tensor=new_tensor)</span>
+
+        <span class="c1"># Sig, state = material.constitutive_update(Eps, state, dt)</span>
+
+        <span class="c1"># Update loading.eps_vals[0]</span>
+        <span class="n">loading_updated</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">tree_at</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="o">.</span><span class="n">eps_vals</span><span class="p">,</span> <span class="n">loading</span><span class="p">,</span>
+            <span class="n">replace_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">imposed_eps</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">Eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">global_solve</span><span class="p">(</span><span class="n">Eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">loading_updated</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">sig</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">stress</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">p</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p</span><span class="p">,</span> <span class="n">sig</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]))</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">imposed_eps</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="kc">None</span>
+
+    <span class="n">carry_init</span> <span class="o">=</span> <span class="p">(</span><span class="n">imposed_eps0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">Eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">results_init</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="p">(</span><span class="n">imposed_eps</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">results_final</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="n">_</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">step_fn</span><span class="p">,</span> <span class="n">carry_init</span><span class="p">,</span> <span class="n">dts</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">results_final</span>
+
+<span class="n">E</span><span class="p">,</span> <span class="n">nu</span> <span class="o">=</span> <span class="mf">200e3</span><span class="p">,</span> <span class="mf">0.3</span>
+<span class="n">elastic_model</span> <span class="o">=</span> <span class="n">jm</span><span class="o">.</span><span class="n">LinearElasticIsotropic</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">nu</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">YieldStress</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="n">sig0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">sigu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">b</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sig0</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigu</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">sig0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">*</span> <span class="n">p</span><span class="p">))</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">YieldStress2</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="n">sig0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">dsigu</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span>
+    <span class="n">b</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span>
+    <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">static</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">sig0</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dsigu</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">*</span> <span class="n">p</span><span class="p">)))</span>
+    
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">current_path</span> <span class="o">/</span> <span class="s2">&quot;X100.csv&quot;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">interpolate_data</span><span class="p">(</span><span class="n">epsp</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">epsp</span><span class="p">,</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+
+
+<span class="c1"># ys =  YieldStress(sig0=450.0, sigu=900.0, b=100.0)</span>
+<span class="c1"># ys = YieldStress2(sig0=5.0, dsigu=jnp.asarray([4.5,2.0,0.0]), b=jnp.asarray([1.0, 0.1, 10.0]), scale=100.0)</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="n">YieldStress2</span><span class="p">(</span><span class="n">sig0</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">dsigu</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mf">4.5</span><span class="p">]),</span> <span class="n">b</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mf">1.0</span><span class="p">]),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">100.0</span><span class="p">)</span>
+<span class="n">material</span> <span class="o">=</span> <span class="n">jm</span><span class="o">.</span><span class="n">vonMisesIsotropicHardening</span><span class="p">(</span><span class="n">elastic_model</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+
+<span class="n">material</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">material</span><span class="p">)</span> <span class="c1"># force strong type for optax</span>
+
+<span class="n">loading</span> <span class="o">=</span> <span class="n">ImposedLoading</span><span class="p">(</span><span class="n">epsxx</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="c1"># state = material.get_state()</span>
+
+<span class="c1"># results = compute_elastoplasticity(material, loading, state)</span>
+
+<span class="c1"># def eval_loss(results, data):</span>
+<span class="c1">#     epsp = results[:, 0]</span>
+<span class="c1">#     sig = results[:, 1]</span>
+<span class="c1">#     data_interp = interpolate_data(epsp)</span>
+<span class="c1">#     return jnp.mean(jnp.square(sig - data_interp))</span>
+
+<span class="c1"># def compute_loss(material, loading, state):</span>
+<span class="c1">#     results = compute_elastoplasticity(material, loading, state)</span>
+<span class="c1">#     loss = eval_loss(results,data)</span>
+<span class="c1">#     return loss, results</span>
+
+<span class="c1"># loss_grad = jax.grad(compute_loss, argnums=0, has_aux=True)</span>
+
+<span class="c1"># dloss, results = loss_grad(material, loading, state)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># from timeit import timeit</span>
+<span class="c1"># duration = timeit(lambda: compute_elastoplasticity(material, loading, state),number=1)</span>
+<span class="c1"># print(&quot;Compilation time&quot;, duration)</span>
+<span class="c1"># duration = timeit(lambda: compute_elastoplasticity(material, loading, state),number=1)</span>
+<span class="c1"># print(&quot;Execution time&quot;, duration)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_results</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
+    <span class="n">epsp</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epsp</span><span class="p">,</span> <span class="n">sig</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;-k&quot;</span><span class="p">)</span>
+<span class="c1"># plot_results(ax, results)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">3e-2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 0.03)
+</pre></div>
+</div>
+<img alt="../../_images/56374424f84b14b74bb5892b208d472fea3b9642d11c4f7477e59a6268af870b.png" src="../../_images/56374424f84b14b74bb5892b208d472fea3b9642d11c4f7477e59a6268af870b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="n">YieldStress2</span><span class="p">(</span><span class="n">sig0</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">dsigu</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">lognormal</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,)),</span> <span class="n">b</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">lognormal</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,)),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">100.0</span><span class="p">)</span>
+<span class="n">material</span> <span class="o">=</span> <span class="n">jm</span><span class="o">.</span><span class="n">vonMisesIsotropicHardening</span><span class="p">(</span><span class="n">elastic_model</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+
+<span class="n">material</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">material</span><span class="p">)</span> <span class="c1"># force strong type for optax</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">optimistix</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lineax</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">lx</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">optx</span><span class="o">.</span><span class="n">LevenbergMarquardt</span><span class="p">(</span><span class="n">rtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">linear_solver</span><span class="o">=</span><span class="n">lx</span><span class="o">.</span><span class="n">AutoLinearSolver</span><span class="p">(</span><span class="n">well_posed</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">verbose</span><span class="o">=</span><span class="nb">frozenset</span><span class="p">({</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span> <span class="s2">&quot;step_size&quot;</span><span class="p">}))</span>
+
+<span class="nd">@eqx</span><span class="o">.</span><span class="n">filter_jit</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">loss</span><span class="p">(</span><span class="n">material</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="n">loading</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">args</span>
+    <span class="c1"># material = jax.tree.map(lambda x: jnp.maximum(0, x), material)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">compute_elastoplasticity</span><span class="p">(</span><span class="n">material</span><span class="p">,</span> <span class="n">loading</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+    <span class="n">epsp</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">data_interp</span> <span class="o">=</span> <span class="n">interpolate_data</span><span class="p">(</span><span class="n">epsp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">sig</span><span class="o">-</span><span class="n">data_interp</span><span class="p">)</span><span class="o">/</span><span class="n">jnp</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data_interp</span><span class="p">),</span> <span class="n">results</span>
+
+<span class="c1"># loss_grad = jax.jacrev(loss, argnums=0, has_aux=True)</span>
+
+
+<span class="n">new_material</span> <span class="o">=</span> <span class="n">tree_scale</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">material</span><span class="p">)</span>
+<span class="n">state</span><span class="o">=</span><span class="n">material</span><span class="o">.</span><span class="n">init_state</span><span class="p">()</span>
+<span class="c1"># dloss, results = loss_grad(new_material, (loading, state))</span>
+<span class="c1"># print(dloss.elastic_model.E)</span>
+<span class="c1"># print(dloss.elastic_model.nu)</span>
+<span class="c1"># print(dloss.yield_stress.b)</span>
+<span class="c1"># print(dloss.yield_stress.sig0)</span>
+<span class="c1"># print(dloss.yield_stress.dsigu)</span>
+<span class="c1"># print(dloss.yield_stress.b)</span>
+<span class="c1"># # (loss, results), dloss = loss_grad(new_material, (loading, state))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># epsp = results[:, 0]</span>
+<span class="c1"># sig = results[:, 1]</span>
+<span class="c1"># data_interp = interpolate_data(epsp)</span>
+<span class="c1"># (sig-data_interp)/jnp.linalg.norm(data_interp,ord=jnp.inf)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sol</span> <span class="o">=</span> <span class="n">optx</span><span class="o">.</span><span class="n">least_squares</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">new_material</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">loading</span><span class="p">,</span> <span class="n">state</span><span class="p">),</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">throw</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_steps</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;jac&quot;</span><span class="p">:</span> <span class="s2">&quot;bwd&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loss on this step: 1.4151063486179947, Step size: 1.0
+Loss on this step: 0.7397076599431058, Step size: 3.5
+Loss on this step: 0.586406285252702, Step size: 12.25
+Loss on this step: 0.5551129916726617, Step size: 12.25
+Loss on this step: 0.5454903269852338, Step size: 12.25
+Loss on this step: 0.5417133319995435, Step size: 42.875
+Loss on this step: 0.5351440620005304, Step size: 150.0625
+Loss on this step: 0.5338988472137041, Step size: 150.0625
+Loss on this step: 0.5298280824938675, Step size: 150.0625
+Loss on this step: 0.5298149143833668, Step size: 150.0625
+Loss on this step: 0.5289966274531984, Step size: 150.0625
+Loss on this step: 0.5287110742702134, Step size: 150.0625
+Loss on this step: 0.5285793008961971, Step size: 150.0625
+Loss on this step: 0.5285377897157594, Step size: 150.0625
+Loss on this step: 0.5285145274838404, Step size: 525.21875
+Loss on this step: 0.5284724823164761, Step size: 1838.265625
+Loss on this step: 0.5284269581346093, Step size: 1838.265625
+Loss on this step: 0.5283980073633457, Step size: 1838.265625
+Loss on this step: 0.5283777732887089, Step size: 1838.265625
+Loss on this step: 0.5283679092048881, Step size: 6433.9296875
+Loss on this step: 0.5283577957179709, Step size: 6433.9296875
+Loss on this step: 0.5283536906460577, Step size: 22518.75390625
+Loss on this step: 0.5283498307904295, Step size: 22518.75390625
+Loss on this step: 0.5283470507436112, Step size: 22518.75390625
+Loss on this step: 0.5283439118290246, Step size: 22518.75390625
+Loss on this step: 0.5283413798057447, Step size: 22518.75390625
+Loss on this step: 0.528339125136592, Step size: 22518.75390625
+Loss on this step: 0.5283377785414073, Step size: 22518.75390625
+Loss on this step: 0.5283368666246108, Step size: 22518.75390625
+Loss on this step: 0.5283359427072799, Step size: 22518.75390625
+Loss on this step: 0.5283350932026251, Step size: 78815.638671875
+Loss on this step: 0.5283336610477216, Step size: 78815.638671875
+Loss on this step: 0.5283315573768188, Step size: 78815.638671875
+Loss on this step: 0.5283301316643854, Step size: 78815.638671875
+Loss on this step: 0.5283503459068433, Step size: 19703.90966796875
+Loss on this step: 0.5283295686394923, Step size: 19703.90966796875
+Loss on this step: 0.5283291374685052, Step size: 68963.68383789062
+Loss on this step: 0.5283280106121602, Step size: 241372.8934326172
+Loss on this step: 0.5283250414725696, Step size: 241372.8934326172
+Loss on this step: 0.5283442953458685, Step size: 60343.2233581543
+Loss on this step: 0.5283240466242672, Step size: 60343.2233581543
+Loss on this step: 0.5283221903599047, Step size: 211201.28175354004
+Loss on this step: 0.5496185450868947, Step size: 52800.32043838501
+Loss on this step: 0.5282714548413776, Step size: 52800.32043838501
+Loss on this step: 0.5282607368915003, Step size: 52800.32043838501
+Loss on this step: 0.5284711067714651, Step size: 13200.080109596252
+Loss on this step: 0.5282555706448189, Step size: 13200.080109596252
+Loss on this step: 0.5282527622972227, Step size: 46200.28038358688
+Loss on this step: 0.5282482472174713, Step size: 161700.9813425541
+Loss on this step: 0.5282401938651814, Step size: 161700.9813425541
+Loss on this step: 0.5282327984044245, Step size: 565953.4346989393
+Loss on this step: 0.5503377001504816, Step size: 141488.35867473483
+Loss on this step: 0.5287650282492727, Step size: 35372.08966868371
+Loss on this step: 0.5282351216097487, Step size: 8843.022417170927
+Loss on this step: 0.5282321952847899, Step size: 8843.022417170927
+Loss on this step: 0.5282318691048038, Step size: 30950.578460098244
+Loss on this step: 0.5282309272846387, Step size: 108327.02461034385
+Loss on this step: 0.5282286075243916, Step size: 108327.02461034385
+Loss on this step: 0.5282428786930136, Step size: 27081.756152585964
+Loss on this step: 0.528228094083602, Step size: 27081.756152585964
+Loss on this step: 0.5282277865923928, Step size: 27081.756152585964
+Loss on this step: 0.528227670546673, Step size: 27081.756152585964
+Loss on this step: 0.5282276435405506, Step size: 27081.756152585964
+Loss on this step: 0.528227472030633, Step size: 27081.756152585964
+Loss on this step: 0.528227007448264, Step size: 27081.756152585964
+Loss on this step: 0.5282263582403941, Step size: 27081.756152585964
+Loss on this step: 0.5282257464158187, Step size: 27081.756152585964
+Loss on this step: 0.5282252971028811, Step size: 27081.756152585964
+Loss on this step: 0.5282249892718623, Step size: 27081.756152585964
+Loss on this step: 0.5282247527490841, Step size: 27081.756152585964
+Loss on this step: 0.5282245440063473, Step size: 94786.14653405087
+Loss on this step: 0.5282239147309876, Step size: 331751.5128691781
+Loss on this step: 0.5282261075413692, Step size: 82937.87821729452
+Loss on this step: 0.5282234606390408, Step size: 82937.87821729452
+Loss on this step: 0.5282237425437297, Step size: 20734.46955432363
+Loss on this step: 0.5282233022650834, Step size: 20734.46955432363
+Loss on this step: 0.5282231799951295, Step size: 72570.6434401327
+Loss on this step: 0.5282227863095497, Step size: 253997.25204046443
+Loss on this step: 0.528221502374509, Step size: 888990.3821416255
+Loss on this step: 0.5282262227085455, Step size: 222247.59553540638
+Loss on this step: 0.5282204726490037, Step size: 222247.59553540638
+Loss on this step: 0.5282281604025235, Step size: 55561.898883851594
+Loss on this step: 0.5282202009932374, Step size: 55561.898883851594
+Loss on this step: 0.5282198738414645, Step size: 194466.64609348058
+Loss on this step: 0.5282189350576373, Step size: 680633.2613271821
+Loss on this step: 0.5282163301746728, Step size: 680633.2613271821
+Loss on this step: 0.5294641619202338, Step size: 170158.31533179551
+Loss on this step: 0.5282337330438336, Step size: 42539.57883294888
+Loss on this step: 0.5282156333155235, Step size: 42539.57883294888
+Loss on this step: 0.5282152548054239, Step size: 148888.52591532108
+Loss on this step: 0.52821453918192, Step size: 521109.8407036238
+Loss on this step: 0.5282121264100624, Step size: 521109.8407036238
+Loss on this step: 0.5285083213353615, Step size: 130277.46017590594
+Loss on this step: 0.5282132532487955, Step size: 32569.365043976486
+Loss on this step: 0.52821189129024, Step size: 32569.365043976486
+Loss on this step: 0.5282117254158236, Step size: 113992.7776539177
+Loss on this step: 0.5282111786648531, Step size: 398974.72178871196
+Loss on this step: 0.5282094390746204, Step size: 398974.72178871196
+Loss on this step: 0.5284026377891119, Step size: 99743.68044717799
+Loss on this step: 0.5282100863275716, Step size: 24935.920111794498
+Loss on this step: 0.5282091527087147, Step size: 24935.920111794498
+Loss on this step: 0.5282090256556383, Step size: 87275.72039128075
+Loss on this step: 0.5282086098402723, Step size: 305465.0213694826
+Loss on this step: 0.5282073647094687, Step size: 305465.0213694826
+Loss on this step: 0.5282988889940595, Step size: 76366.25534237066
+Loss on this step: 0.528207378907333, Step size: 19091.563835592664
+Loss on this step: 0.5282070548506818, Step size: 19091.563835592664
+Loss on this step: 0.5282069594718727, Step size: 66820.47342457433
+Loss on this step: 0.5282066448030964, Step size: 66820.47342457433
+Loss on this step: 0.5282063183313398, Step size: 233871.65698601014
+Loss on this step: 0.5282051987266012, Step size: 818550.7994510354
+Loss on this step: 0.5282646421014819, Step size: 204637.69986275886
+Loss on this step: 0.5282044524135471, Step size: 204637.69986275886
+Loss on this step: 0.5282253579879512, Step size: 51159.424965689715
+Loss on this step: 0.5282040997341537, Step size: 51159.424965689715
+Loss on this step: 0.5282037262368271, Step size: 179057.987379914
+Loss on this step: 0.5282028683918276, Step size: 626702.955829699
+Loss on this step: 0.5281999192550436, Step size: 626702.955829699
+Loss on this step: 0.5291662988171169, Step size: 156675.73895742476
+Loss on this step: 0.528204425244036, Step size: 39168.93473935619
+Loss on this step: 0.5281997052218157, Step size: 39168.93473935619
+Loss on this step: 0.5281994922744302, Step size: 137091.27158774668
+Loss on this step: 0.5281988360145063, Step size: 479819.4505571134
+Loss on this step: 0.5281965399667093, Step size: 1679368.0769498968
+Loss on this step: 0.5282304172241984, Step size: 419842.0192374742
+Loss on this step: 0.5281946697905218, Step size: 419842.0192374742
+Loss on this step: 0.5287019182948556, Step size: 104960.50480936855
+Loss on this step: 0.5281972030581754, Step size: 26240.126202342137
+Loss on this step: 0.5281944233700228, Step size: 26240.126202342137
+Loss on this step: 0.5281942809113479, Step size: 91840.44170819748
+Loss on this step: 0.5281938419222, Step size: 321441.5459786912
+Loss on this step: 0.5281925297710818, Step size: 321441.5459786912
+Loss on this step: 0.5284641418801934, Step size: 80360.3864946728
+Loss on this step: 0.5281936952405006, Step size: 20090.0966236682
+Loss on this step: 0.5281922194802854, Step size: 20090.0966236682
+Loss on this step: 0.5281921131205307, Step size: 70315.33818283869
+Loss on this step: 0.5281917802414556, Step size: 70315.33818283869
+Loss on this step: 0.5281914420701035, Step size: 246103.68363993542
+Loss on this step: 0.5281904010544011, Step size: 246103.68363993542
+Loss on this step: 0.5282614127223573, Step size: 61525.920909983855
+Loss on this step: 0.5281903663050493, Step size: 61525.920909983855
+Loss on this step: 0.5281897229886638, Step size: 61525.920909983855
+Loss on this step: 0.5281893904397336, Step size: 61525.920909983855
+Loss on this step: 0.5281890895211353, Step size: 215340.7231849435
+Loss on this step: 0.5281880998685872, Step size: 215340.7231849435
+Loss on this step: 0.5282033194331242, Step size: 53835.18079623587
+Loss on this step: 0.5281878774085574, Step size: 53835.18079623587
+Loss on this step: 0.5281875477332952, Step size: 188423.13278682556
+Loss on this step: 0.5281866658443263, Step size: 188423.13278682556
+Loss on this step: 0.5281907517361129, Step size: 47105.78319670639
+Loss on this step: 0.5281864417782691, Step size: 47105.78319670639
+Loss on this step: 0.5281861952415943, Step size: 164870.24118847237
+Loss on this step: 0.5281854080872926, Step size: 577045.8441596533
+Loss on this step: 0.5281863233230737, Step size: 144261.46103991332
+Loss on this step: 0.5281847335948069, Step size: 144261.46103991332
+Loss on this step: 0.5281850378393838, Step size: 36065.36525997833
+Loss on this step: 0.5281845511142443, Step size: 36065.36525997833
+Loss on this step: 0.5281843747322928, Step size: 126228.77840992415
+Loss on this step: 0.5281837721601997, Step size: 441800.72443473455
+Loss on this step: 0.5281816636598274, Step size: 1546302.535521571
+Loss on this step: 0.5281742894056274, Step size: 5412058.874325499
+Loss on this step: 0.5281608392927583, Step size: 5412058.874325499
+Loss on this step: 1.1343469261326071, Step size: 1353014.7185813747
+Loss on this step: 0.5649921750037892, Step size: 338253.6796453437
+Loss on this step: 0.5299288473386741, Step size: 84563.41991133592
+Loss on this step: 0.5282053358622566, Step size: 21140.85497783398
+Loss on this step: 0.5281497334810309, Step size: 21140.85497783398
+Loss on this step: 0.5281484006692941, Step size: 21140.85497783398
+Loss on this step: 0.5281482151669856, Step size: 73992.99242241893
+Loss on this step: 0.5281478631403396, Step size: 258975.47347846627
+Loss on this step: 0.5281473071439899, Step size: 258975.47347846627
+Loss on this step: 0.5287208674832808, Step size: 64743.86836961657
+Loss on this step: 0.528150851413952, Step size: 16185.967092404142
+Loss on this step: 0.5281465856405343, Step size: 16185.967092404142
+Loss on this step: 0.5281464767937736, Step size: 16185.967092404142
+Loss on this step: 0.5281463980394174, Step size: 56650.8848234145
+Loss on this step: 0.5281461288622685, Step size: 198278.09688195074
+Loss on this step: 0.5281452236601973, Step size: 198278.09688195074
+Loss on this step: 0.5281679102392568, Step size: 49569.524220487685
+Loss on this step: 0.5281450580011522, Step size: 49569.524220487685
+Loss on this step: 0.5281447241985213, Step size: 49569.524220487685
+Loss on this step: 0.5281444783068858, Step size: 173493.3347717069
+Loss on this step: 0.5281436779520473, Step size: 173493.3347717069
+Loss on this step: 0.5281519473122935, Step size: 43373.333692926724
+Loss on this step: 0.5281434851793464, Step size: 43373.333692926724
+Loss on this step: 0.5281432392199633, Step size: 151806.66792524353
+Loss on this step: 0.528142519465249, Step size: 531323.3377383524
+Loss on this step: 0.5282331630695211, Step size: 132830.8344345881
+Loss on this step: 0.5281422669591685, Step size: 132830.8344345881
+Loss on this step: 0.5281674235218131, Step size: 33207.70860864702
+Loss on this step: 0.5281418759118126, Step size: 33207.70860864702
+Loss on this step: 0.5281415678698734, Step size: 116226.98013026458
+Loss on this step: 0.5281410148185733, Step size: 406794.43045592605
+Loss on this step: 0.5281390794111107, Step size: 1423780.5065957413
+Loss on this step: 0.5283047745581987, Step size: 355945.1266489353
+Loss on this step: 0.5281380439856604, Step size: 355945.1266489353
+Loss on this step: 0.5300069866520627, Step size: 88986.28166223383
+Loss on this step: 0.5281526211320771, Step size: 22246.570415558457
+Loss on this step: 0.5281373898012921, Step size: 22246.570415558457
+Loss on this step: 0.5281371752684376, Step size: 77862.9964544546
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">aux</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;-k&quot;</span><span class="p">)</span>
+<span class="n">epsp</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">sig</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epsp</span><span class="p">,</span> <span class="n">sig</span><span class="p">,</span> <span class="s2">&quot;-oC3&quot;</span><span class="p">,)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">8e-2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 0.08)
+</pre></div>
+</div>
+<img alt="../../_images/9185a016327aa172d1d0719f42c8052031a53fd2435e57286c5c714685708165.png" src="../../_images/9185a016327aa172d1d0719f42c8052031a53fd2435e57286c5c714685708165.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sol</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">plastic_surface</span><span class="o">.</span><span class="n">tol</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1e-08
+</pre></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./demos/identification"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jeremy Bleyer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

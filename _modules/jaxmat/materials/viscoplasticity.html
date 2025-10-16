@@ -1,0 +1,623 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jaxmat.materials.viscoplasticity &#8212; jaxmat</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/jaxmat/materials/viscoplasticity';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/jaxmat_logo.svg" class="logo__image only-light" alt="jaxmat - Home"/>
+    <img src="../../../_static/jaxmat_logo.svg" class="logo__image only-dark pst-js-only" alt="jaxmat - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    Documentation
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quickstart tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../demos/quickstart/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">jaxmat</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../demos/quickstart/batched_computation.html">Batching across material points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../demos/quickstart/material_parameters_batching.html">Batching across material parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytrees.html">Composable and differentiable material models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pheno_models.html">Phenomenological models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/phenomenological_models/Green_viscoplasticity.html">Norton viscoplastic model with a Green yield surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/phenomenological_models/CamClay.html">Modified Cam-Clay</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/phenomenological_models/multisurface_plasticity.html">Multi-surface plasticity model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">General resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../concepts.html">Nonlinear constitutive behaviors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../computational.html">Computational aspects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tensors.html">Conventions for representing tensors</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Material models gallery</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../models.html">Material models gallery</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../api/jaxmat.loader.html">jaxmat.loader module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/jaxmat.materials.html">jaxmat.materials package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.damage.html">jaxmat.materials.damage module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.generalized_standard.html">jaxmat.materials.generalized_standard module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/jaxmat.solvers.html">jaxmat.solvers package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.solvers.custom_newton.html">jaxmat.solvers.custom_newton module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.solvers.gauss_newton_ls.html">jaxmat.solvers.gauss_newton_ls module</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/jaxmat.state.html">jaxmat.state module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/jaxmat.tensors.html">jaxmat.tensors package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.tensors.generic_tensors.html">jaxmat.tensors.generic_tensors module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.tensors.linear_algebra.html">jaxmat.tensors.linear_algebra module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.tensors.tensor_utils.html">jaxmat.tensors.tensor_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.tensors.utils.html">jaxmat.tensors.utils module</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/bleyerj/jaxmat" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for jaxmat.materials.viscoplasticity</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">equinox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">eqx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">optimistix</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optax.tree_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_add</span><span class="p">,</span> <span class="n">tree_zeros_like</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_value</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.state</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AbstractState</span><span class="p">,</span>
+    <span class="n">SmallStrainState</span><span class="p">,</span>
+    <span class="n">make_batched</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.tensors</span><span class="w"> </span><span class="kn">import</span> <span class="n">SymmetricTensor2</span><span class="p">,</span> <span class="n">dev</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.behavior</span><span class="w"> </span><span class="kn">import</span> <span class="n">SmallStrainBehavior</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.elasticity</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearElasticIsotropic</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.plastic_surfaces</span><span class="w"> </span><span class="kn">import</span> <span class="n">vonMises</span><span class="p">,</span> <span class="n">AbstractPlasticSurface</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.viscoplastic_flows</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">NortonFlow</span><span class="p">,</span>
+    <span class="n">AbstractKinematicHardening</span><span class="p">,</span>
+    <span class="n">ArmstrongFrederickHardening</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="AFInternalState">
+<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.AFInternalState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AFInternalState</span><span class="p">(</span><span class="n">SmallStrainState</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Internal state for the Armstrong-Frederick model&quot;&quot;&quot;</span>
+
+    <span class="n">p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">default_value</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cumulated plastic strain&quot;&quot;&quot;</span>
+    <span class="n">epsp</span><span class="p">:</span> <span class="n">SymmetricTensor2</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">SymmetricTensor2</span><span class="p">())</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plastic strain tensor&quot;&quot;&quot;</span>
+    <span class="n">a</span><span class="p">:</span> <span class="n">SymmetricTensor2</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">make_batched</span><span class="p">(</span><span class="n">SymmetricTensor2</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Backstress tensors&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AmrstrongFrederickViscoplasticity">
+<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AmrstrongFrederickViscoplasticity</span><span class="p">(</span><span class="n">SmallStrainBehavior</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Small-strain viscoplastic constitutive model with Armstrong-Frederick</span>
+<span class="sd">    kinematic hardening, Voce isotropic hardening, and Norton-type viscous flow.</span>
+
+<span class="sd">    This model represents a rate-dependent J2 (von Mises) viscoplastic material</span>
+<span class="sd">    combining isotropic and kinematic hardening mechanisms under small strain</span>
+<span class="sd">    assumptions. The total strain is additively decomposed into elastic and</span>
+<span class="sd">    viscoplastic parts, and the evolution of the backstress follows the</span>
+<span class="sd">    nonlinear Armstrong-Frederick law.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        - The model is suitable for cyclic loading and ratcheting simulations.</span>
+<span class="sd">        - When the viscous exponent tends to infinity, the model approaches the</span>
+<span class="sd">          rate-independent limit.</span>
+<span class="sd">        - The formulation assumes small strains and isotropic material symmetry.</span>
+
+<span class="sd">    .. admonition:: References</span>
+<span class="sd">        :class: seealso</span>
+
+<span class="sd">        - Armstrong, P. J., &amp; Frederick, C. O. (1966).</span>
+<span class="sd">            &quot;A Mathematical Representation of the Multiaxial Bauschinger Effect for</span>
+<span class="sd">            Hardening Materials.&quot; CEGB Report RD/B/N731.</span>
+<span class="sd">        - Norton, F. H. (1929).</span>
+<span class="sd">            &quot;The Creep of Steel at High Temperatures.&quot; McGraw-Hill.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">elastic_model</span><span class="p">:</span> <span class="n">LinearElasticIsotropic</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Linear isotropic elasticity defined by Young modulus and Poisson ratio.&quot;&quot;&quot;</span>
+    <span class="n">yield_stress</span><span class="p">:</span> <span class="n">eqx</span><span class="o">.</span><span class="n">Module</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Isotropic hardening law controlling the evolution of the yield surface size.&quot;&quot;&quot;</span>
+    <span class="n">viscous_flow</span><span class="p">:</span> <span class="n">NortonFlow</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Viscoplastic flow rule following Norton (power-law) viscosity formulation.&quot;&quot;&quot;</span>
+    <span class="n">kinematic_hardening</span><span class="p">:</span> <span class="n">ArmstrongFrederickHardening</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Kinematic hardening model defining the backstress evolution rate with dynamic </span>
+<span class="sd">    recovery (Armstrong-Frederick formulation).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">plastic_surface</span> <span class="o">=</span> <span class="n">vonMises</span><span class="p">()</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;J2-type yield (or loading) surface based on the deviatoric stress invariant.&quot;&quot;&quot;</span>
+    <span class="n">internal</span> <span class="o">=</span> <span class="n">AFInternalState</span><span class="p">()</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Internal variables associated with the accumulated plastic strain and backstress tensor.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AmrstrongFrederickViscoplasticity.constitutive_update">
+<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.constitutive_update">[docs]</a>
+    <span class="nd">@eqx</span><span class="o">.</span><span class="n">filter_jit</span>
+    <span class="nd">@eqx</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">assert_max_traces</span><span class="p">(</span><span class="n">max_traces</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">constitutive_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+        <span class="n">eps_old</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">strain</span>
+        <span class="n">deps</span> <span class="o">=</span> <span class="n">eps</span> <span class="o">-</span> <span class="n">eps_old</span>
+        <span class="n">isv_old</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">internal</span>
+        <span class="n">sig_old</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">stress</span>
+        <span class="n">sig_eq</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">sig</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">plastic_surface</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">eval_stress</span><span class="p">(</span><span class="n">deps</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">sig_old</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_model</span><span class="o">.</span><span class="n">C</span> <span class="o">@</span> <span class="p">(</span><span class="n">deps</span> <span class="o">-</span> <span class="n">dev</span><span class="p">(</span><span class="n">dy</span><span class="o">.</span><span class="n">epsp</span><span class="p">))</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">solve_state</span><span class="p">(</span><span class="n">deps</span><span class="p">,</span> <span class="n">y_old</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">residual</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">y_old</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+                <span class="n">sig</span> <span class="o">=</span> <span class="n">eval_stress</span><span class="p">(</span><span class="n">deps</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+                <span class="n">sig_eff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kinematic_hardening</span><span class="o">.</span><span class="n">sig_eff</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
+                <span class="n">yield_criterion</span> <span class="o">=</span> <span class="n">sig_eq</span><span class="p">(</span><span class="n">sig_eff</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">yield_stress</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plastic_surface</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">sig_eff</span><span class="p">)</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">dy</span><span class="o">.</span><span class="n">p</span> <span class="o">-</span> <span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">viscous_flow</span><span class="p">(</span><span class="n">yield_criterion</span><span class="p">),</span>
+                    <span class="n">dy</span><span class="o">.</span><span class="n">epsp</span> <span class="o">-</span> <span class="n">n</span> <span class="o">*</span> <span class="n">dy</span><span class="o">.</span><span class="n">p</span><span class="p">,</span>
+                    <span class="n">dy</span><span class="o">.</span><span class="n">a</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">kinematic_hardening</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">dy</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="n">dy</span><span class="o">.</span><span class="n">epsp</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">res</span><span class="p">,</span> <span class="n">y</span>
+
+            <span class="n">dy0</span> <span class="o">=</span> <span class="n">tree_zeros_like</span><span class="p">(</span><span class="n">isv_old</span><span class="p">)</span>
+            <span class="n">sol</span> <span class="o">=</span> <span class="n">optx</span><span class="o">.</span><span class="n">root_find</span><span class="p">(</span>
+                <span class="n">residual</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="p">,</span> <span class="n">dy0</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">adjoint</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">adjoint</span>
+            <span class="p">)</span>
+            <span class="n">dy</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">aux</span>
+            <span class="n">sig</span> <span class="o">=</span> <span class="n">eval_stress</span><span class="p">(</span><span class="n">deps</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">sig</span><span class="p">,</span> <span class="n">y</span>
+
+        <span class="n">sig</span><span class="p">,</span> <span class="n">isv</span> <span class="o">=</span> <span class="n">solve_state</span><span class="p">(</span><span class="n">deps</span><span class="p">,</span> <span class="n">isv_old</span><span class="p">)</span>
+
+        <span class="n">new_state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strain</span><span class="o">=</span><span class="n">eps</span><span class="p">,</span> <span class="n">stress</span><span class="o">=</span><span class="n">sig</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="n">isv</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sig</span><span class="p">,</span> <span class="n">new_state</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="GenericInternalState">
+<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.GenericInternalState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GenericInternalState</span><span class="p">(</span><span class="n">SmallStrainState</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Internal state for the generic elastoviscoplastic model.&quot;&quot;&quot;</span>
+
+    <span class="n">p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">default_value</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cumulated plastic strain&quot;&quot;&quot;</span>
+    <span class="n">epsp</span><span class="p">:</span> <span class="n">SymmetricTensor2</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">SymmetricTensor2</span><span class="p">())</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plastic strain tensor&quot;&quot;&quot;</span>
+    <span class="n">nX</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">static</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Number of kinematic hardening mechanisms.&quot;&quot;&quot;</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">SymmetricTensor2</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Backstress tensors&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="GenericInternalState.__post_init__">
+<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.GenericInternalState.__post_init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">make_batched</span><span class="p">(</span><span class="n">SymmetricTensor2</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">nX</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="GenericViscoplasticity">
+<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.GenericViscoplasticity">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GenericViscoplasticity</span><span class="p">(</span><span class="n">SmallStrainBehavior</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Small-strain viscoplastic constitutive model with generic yield surface, isotropic</span>
+<span class="sd">    and kinematic hardening and viscoplastic flow rule.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">elastic_model</span><span class="p">:</span> <span class="n">LinearElasticIsotropic</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Linear isotropic elasticity defined by Young modulus and Poisson ratio.&quot;&quot;&quot;</span>
+    <span class="n">plastic_surface</span><span class="p">:</span> <span class="n">AbstractPlasticSurface</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A generic plastic yield surface.&quot;&quot;&quot;</span>
+    <span class="n">yield_stress</span><span class="p">:</span> <span class="n">eqx</span><span class="o">.</span><span class="n">Module</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Isotropic hardening law controlling the evolution of the yield surface size.&quot;&quot;&quot;</span>
+    <span class="n">viscous_flow</span><span class="p">:</span> <span class="n">eqx</span><span class="o">.</span><span class="n">Module</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A generic viscoplastic flow rule.&quot;&quot;&quot;</span>
+    <span class="n">kinematic_hardening</span><span class="p">:</span> <span class="n">AbstractKinematicHardening</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A generic kinematic hardening law.&quot;&quot;&quot;</span>
+    <span class="n">internal</span><span class="p">:</span> <span class="n">AbstractState</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Internal variables associated with the accumulated plastic strain and backstress tensors.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="GenericViscoplasticity.__post_init__">
+<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.GenericViscoplasticity.__post_init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">internal</span> <span class="o">=</span> <span class="n">GenericInternalState</span><span class="p">(</span><span class="n">nX</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kinematic_hardening</span><span class="o">.</span><span class="n">nvars</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GenericViscoplasticity.constitutive_update">
+<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.GenericViscoplasticity.constitutive_update">[docs]</a>
+    <span class="nd">@eqx</span><span class="o">.</span><span class="n">filter_jit</span>
+    <span class="nd">@eqx</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">assert_max_traces</span><span class="p">(</span><span class="n">max_traces</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">constitutive_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+        <span class="n">eps_old</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">strain</span>
+        <span class="n">deps</span> <span class="o">=</span> <span class="n">eps</span> <span class="o">-</span> <span class="n">eps_old</span>
+        <span class="n">isv_old</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">internal</span>
+        <span class="n">sig_old</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">stress</span>
+        <span class="n">sig_eq</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">sig</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">plastic_surface</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">eval_stress</span><span class="p">(</span><span class="n">deps</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">sig_old</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_model</span><span class="o">.</span><span class="n">C</span> <span class="o">@</span> <span class="p">(</span><span class="n">deps</span> <span class="o">-</span> <span class="n">dev</span><span class="p">(</span><span class="n">dy</span><span class="o">.</span><span class="n">epsp</span><span class="p">))</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">solve_state</span><span class="p">(</span><span class="n">deps</span><span class="p">,</span> <span class="n">y_old</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">residual</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">y_old</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+                <span class="n">sig</span> <span class="o">=</span> <span class="n">eval_stress</span><span class="p">(</span><span class="n">deps</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+                <span class="n">sig_eff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kinematic_hardening</span><span class="o">.</span><span class="n">sig_eff</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+                <span class="n">yield_criterion</span> <span class="o">=</span> <span class="n">sig_eq</span><span class="p">(</span><span class="n">sig_eff</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">yield_stress</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plastic_surface</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">sig_eff</span><span class="p">)</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">dy</span><span class="o">.</span><span class="n">p</span> <span class="o">-</span> <span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">viscous_flow</span><span class="p">(</span><span class="n">yield_criterion</span><span class="p">),</span>
+                    <span class="n">dy</span><span class="o">.</span><span class="n">epsp</span> <span class="o">-</span> <span class="n">n</span> <span class="o">*</span> <span class="n">dy</span><span class="o">.</span><span class="n">p</span><span class="p">,</span>
+                    <span class="n">dy</span><span class="o">.</span><span class="n">X</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">kinematic_hardening</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">dy</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="n">dy</span><span class="o">.</span><span class="n">epsp</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">res</span><span class="p">,</span> <span class="n">y</span>
+
+            <span class="n">dy0</span> <span class="o">=</span> <span class="n">tree_zeros_like</span><span class="p">(</span><span class="n">isv_old</span><span class="p">)</span>
+            <span class="n">sol</span> <span class="o">=</span> <span class="n">optx</span><span class="o">.</span><span class="n">root_find</span><span class="p">(</span>
+                <span class="n">residual</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="p">,</span> <span class="n">dy0</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">adjoint</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">adjoint</span>
+            <span class="p">)</span>
+            <span class="n">dy</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">aux</span>
+            <span class="n">sig</span> <span class="o">=</span> <span class="n">eval_stress</span><span class="p">(</span><span class="n">deps</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">sig</span><span class="p">,</span> <span class="n">y</span>
+
+        <span class="n">sig</span><span class="p">,</span> <span class="n">isv</span> <span class="o">=</span> <span class="n">solve_state</span><span class="p">(</span><span class="n">deps</span><span class="p">,</span> <span class="n">isv_old</span><span class="p">)</span>
+
+        <span class="n">new_state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strain</span><span class="o">=</span><span class="n">eps</span><span class="p">,</span> <span class="n">stress</span><span class="o">=</span><span class="n">sig</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="n">isv</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sig</span><span class="p">,</span> <span class="n">new_state</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jeremy Bleyer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
