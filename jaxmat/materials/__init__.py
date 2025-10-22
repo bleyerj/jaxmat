@@ -9,7 +9,12 @@ from .hyperelasticity import (
     CompressibleGhentMooneyRivlin,
     CompressibleOgden,
 )
-from .elastoplasticity import vonMisesIsotropicHardening, GeneralIsotropicHardening
+from .elastoplasticity import (
+    vonMisesIsotropicHardening,
+    GeneralIsotropicHardening,
+    GeneralHardening,
+    GeneralPlasticity,
+)
 from .fe_fp_elastoplasticity import FeFpJ2Plasticity
 from .viscoplasticity import AmrstrongFrederickViscoplasticity, GenericViscoplasticity
 from .plastic_surfaces import (
@@ -25,9 +30,4 @@ from .viscoplastic_flows import (
     NortonFlow,
     ArmstrongFrederickHardening,
     AbstractKinematicHardening,
-)
-from .generalized_standard import (
-    FreeEnergy,
-    DissipationPotential,
-    GeneralizedStandardMaterial,
 )
