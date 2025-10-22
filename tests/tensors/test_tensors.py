@@ -185,3 +185,14 @@ def test_batch_tensors(cls):
     assert jnp.allclose(A + A, jnp.broadcast_to(2 * val, (Nbatch, 3, 3)))
     assert type(A @ A) is cls if cls == Tensor2 else Tensor2
     assert jnp.allclose(A @ A, jnp.broadcast_to(val @ val, (Nbatch, 3, 3)))
+
+
+# FIXME: should better handle views and array operations on tensors,
+# see https://github.com/bleyerj/jaxmat/issues/16
+def test_symmetry_preserving():
+    N = 3
+    sig = make_batched(SymmetricTensor2.identity(), N)
+    sig2 = SymmetricTensor2()
+    assert type(sig2 + jnp.sum(sig, axis=0)) == SymmetricTensor2
+    assert type(jnp.sum(sig, axis=0)) == SymmetricTensor2
+    assert type(sig[0] + sig[1] + sig[2]) == SymmetricTensor2
