@@ -37,7 +37,7 @@ class LinearElasticIsotropic(eqx.Module):
 
         $$\lambda = \dfrac{E\nu}{(1+\nu)(1-2\nu)}$$
         """
-        return self.E / (2 * (1 + self.nu))
+        return self.E * self.nu / (1 + self.nu) / (1 - 2 * self.nu)
 
     @property
     def C(self):
