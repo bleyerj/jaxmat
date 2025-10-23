@@ -2,8 +2,8 @@ import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
 from optax.tree_utils import tree_add, tree_zeros_like
-from jaxmat.utils import default_value
-from jaxmat.state import AbstractState
+from jaxmat.utils import default_value, enforce_dtype
+from jaxmat.state import AbstractState, make_batched
 from jaxmat.tensors import SymmetricTensor2, dev
 from .behavior import SmallStrainBehavior
 from .elasticity import LinearElasticIsotropic
@@ -101,6 +101,77 @@ class GeneralIsotropicHardening(SmallStrainBehavior):
             dy0 = tree_zeros_like(isv_old)
             sol = optx.root_find(
                 residual, self.solver, dy0, has_aux=True, adjoint=self.adjoint
+            )
+            dy = sol.value
+            y = sol.aux
+            sig = eval_stress(deps, dy)
+            return sig, y
+
+        sig, isv = solve_state(deps, isv_old)
+        new_state = state.update(strain=eps, stress=sig, internal=isv)
+        return sig, new_state
+
+
+class GeneralHardeningInternalState(AbstractState):
+    p: float = default_value(0.0)
+    epsp: SymmetricTensor2 = eqx.field(default_factory=lambda: SymmetricTensor2())
+    alpha: SymmetricTensor2 = eqx.field(init=False)
+    nvar: int = eqx.field(static=True, default=1)
+
+    def __post_init__(self):
+        self.alpha = make_batched(SymmetricTensor2(), self.nvar)
+
+
+class GeneralHardening(SmallStrainBehavior):
+    elastic_model: LinearElasticIsotropic
+    yield_stress: float = enforce_dtype()
+    plastic_surface: AbstractPlasticSurface
+    combined_hardening: eqx.Module
+    nvar: int = eqx.field(static=True, default=1)
+    internal: AbstractState = eqx.field(init=False)
+
+    def __post_init__(self):
+        self.internal = GeneralHardeningInternalState(nvar=self.nvar)
+
+    @eqx.filter_jit
+    @eqx.debug.assert_max_traces(max_traces=1)
+    def constitutive_update(self, eps, state, dt):
+        eps_old = state.strain
+        deps = eps - eps_old
+        isv_old = state.internal
+        sig_old = state.stress
+
+        def eval_stress(deps, dy):
+            return sig_old + self.elastic_model.C @ (deps - dy.epsp)
+
+        def solve_state(deps, y_old):
+            def residual(dy, args):
+                dp, depsp, dalpha = dy.p, dy.epsp, dy.alpha
+                y = tree_add(y_old, dy)
+                p, alpha = y.p, y.alpha
+                sig = eval_stress(deps, dy)
+                X = self.combined_hardening.dalpha(alpha, p)
+                yield_criterion = (
+                    self.plastic_surface(sig, X)
+                    - self.combined_hardening.dp(alpha, p)
+                    - self.yield_stress
+                )
+                n = self.plastic_surface.normal(sig, X)
+                res = (
+                    FB(-yield_criterion / self.elastic_model.E, dp),
+                    depsp - n * dp,
+                    dalpha + self.plastic_surface.dX(sig, X) * dp,
+                )
+                return (res, y)
+
+            dy0 = tree_zeros_like(isv_old)
+            sol = optx.root_find(
+                residual,
+                self.solver,
+                dy0,
+                has_aux=True,
+                adjoint=self.adjoint,
+                throw=False,
             )
             dy = sol.value
             y = sol.aux

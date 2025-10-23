@@ -83,9 +83,7 @@ class DruckerPrager(AbstractPlasticSurface):
     def __call__(self, sig):
         I1 = jnp.trace(sig)
         s = dev(sig)
-        sqrt_I2 = jnp.sqrt(1 / 2.0) * safe_sqrt(
-            jnp.vdot(s, s)
-        )  # norm(dev(sig), eps=1e-4)
+        sqrt_I2 = jnp.sqrt(1 / 2.0) * safe_sqrt(jnp.vdot(s, s))
         return self.alpha * I1 + sqrt_I2
 
 

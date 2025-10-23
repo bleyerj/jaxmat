@@ -26,6 +26,7 @@ parts:
     - file: identification.md
       sections:
         - file: demos/identification/hardening_rule.ipynb
+        - file: demos/identification/nonlinear_kinematic_hardening.ipynb
   - caption: General resources 
     chapters:
       - file: concepts.md
