@@ -2,6 +2,13 @@ import jax.numpy as jnp
 import optax
 
 
+def safe_fun(fun, x, norm=None, eps=1e-16):
+    if norm is None:
+        norm = lambda x: x
+    nonzero_x = jnp.where(norm(x) > eps, x, 0 * x)
+    return jnp.where(norm(x) > eps, fun(nonzero_x), 0)
+
+
 def safe_sqrt(x, eps=1e-16):
     nonzero_x = jnp.where(x > eps, x, eps)
     return jnp.where(x > eps, jnp.sqrt(nonzero_x), eps)

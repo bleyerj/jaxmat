@@ -20,3 +20,4 @@ from .linear_algebra import (
     invariants_main,
     pq_invariants,
 )  # FIXME: unify invariant names
+from .utils import safe_norm, safe_sqrt, safe_fun
