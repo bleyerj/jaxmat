@@ -184,8 +184,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../identification.html">Identification of material models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -351,6 +352,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">equinox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">eqx</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.state</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_batched</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">enforce_dtype</span>
 
 
 <div class="viewcode-block" id="VoceHardening">
@@ -369,11 +371,11 @@
 <span class="sd">        - Voce, E. (1955). &quot;A Practical Strain-Hardening Function.&quot; Metallurgia, 51, 219-226.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">sig0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">sig0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">enforce_dtype</span><span class="p">()</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Initial yield stress $\sigma_0$.&quot;&quot;&quot;</span>
-    <span class="n">sigu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">sigu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">enforce_dtype</span><span class="p">()</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Saturation stress at large strains $\sigma_\text{u}$.&quot;&quot;&quot;</span>
-    <span class="n">b</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">b</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">enforce_dtype</span><span class="p">()</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Rate of hardedning $b$.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
@@ -392,9 +394,9 @@
 <span class="sd">    where $f(\bsig)-\sigma_y$ is the overstress, $\langle \cdot\rangle_+$ is the positive part.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">K</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">K</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">enforce_dtype</span><span class="p">()</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Characteristic stress $K$ of the Norton flow.&quot;&quot;&quot;</span>
-    <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">enforce_dtype</span><span class="p">()</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Norton power-law exponent&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">overstress</span><span class="p">):</span>
@@ -438,7 +440,7 @@
 <span class="sd">        Prager, W. (1956). A new method of analyzing stresses and strains in work-hardening plastic solids.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">H</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">H</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">enforce_dtype</span><span class="p">()</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Linear kinematic hardening modulus&quot;&quot;&quot;</span>
     <span class="n">nvars</span> <span class="o">=</span> <span class="mi">1</span>
 
@@ -462,37 +464,42 @@
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Armstrong-Frederick kinematic hardening model.</span>
 
-<span class="sd">    Kinematic variables are $\ba$ such that $X_i=\frac{2}{3}C a_i$.</span>
-
 <span class="sd">    .. admonition:: References</span>
 <span class="sd">        :class: seealso</span>
 
 <span class="sd">         - Armstrong, P. J., &amp; Frederick, C. O. (1966).</span>
 <span class="sd">            &quot;A Mathematical Representation of the Multiaxial Bauschinger Effect for</span>
 <span class="sd">            Hardening Materials.&quot; CEGB Report RD/B/N731.</span>
+<span class="sd">        - Chaboche, J. L. (1991). On some modifications of kinematic hardening to</span>
+<span class="sd">            improve the description of ratchetting effects. International journal</span>
+<span class="sd">            of plasticity, 7(7), 661-678.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">C</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">C</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span> <span class="o">=</span> <span class="n">enforce_dtype</span><span class="p">()</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Kinematic hardening modulus&quot;&quot;&quot;</span>
-    <span class="n">g</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">gamma</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span> <span class="o">=</span> <span class="n">enforce_dtype</span><span class="p">()</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Nonlinear recall modulus&quot;&quot;&quot;</span>
     <span class="n">nvars</span> <span class="o">=</span> <span class="mi">2</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">p_dot</span><span class="p">,</span> <span class="n">epsp_dot</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the backstress variables (in this formulation $\ba$) rate $\dot{\ba}$:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">p_dot</span><span class="p">,</span> <span class="n">epsp_dot</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the backstress variables  $\dot{\bX}$:</span>
 
-<span class="sd">        $$\dot{\ba} = \dot{\bepsp} - g \dot{p}$$</span>
+<span class="sd">        $$\dot{\bX}_i = 2/3C_i\dot{\bepsp} - \gamma_i X_i \dot{p}$$</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">make_batched</span><span class="p">(</span><span class="n">epsp_dot</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nvars</span><span class="p">)</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">p_dot</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">evolution</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">C</span> <span class="o">*</span> <span class="n">epsp_dot</span> <span class="o">-</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">X</span> <span class="o">*</span> <span class="n">p_dot</span>
+
+        <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">evolution</span><span class="p">)(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ArmstrongFrederickHardening.sig_eff">
 <a class="viewcode-back" href="../../../api/jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.sig_eff">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">sig_eff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sig_eff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Effective stress is here:</span>
 
 <span class="sd">        $$\bsig-\frac{2}{3}C\sum_{i=1}^\text{nvars}a_i$$</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">sig</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="p">,</span> <span class="n">a</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">sig</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

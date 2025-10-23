@@ -51,14 +51,14 @@ For advanced manipulation, see the [Equinox documentation](https://docs.kidger.s
    ```
 
    This ensures the input (float, list, or NumPy array) is converted to a JAX-compatible array.
-   
+
    ```{attention}
    Beware of the differences between weakly and strongly typed objects in JAX i.e. `jnp.asarray(0.0)` is a `weak_f64` whereas `jnp.asarray(0.0, dtype=jnp.float64)` is a `f64`.
    ```
 
 2. **Declarative defaults**  
 
-    Default attribute values can be defined directly:
+   Default attribute values can be defined directly:
 
    ```python
    p: Tensor2 = eqx.field(default=jnp.float64(0.0))
@@ -73,12 +73,12 @@ For advanced manipulation, see the [Equinox documentation](https://docs.kidger.s
    This avoids writing explicit `__init__` methods while keeping the model declarative.
 
    ```{attention}
-   The use of `default` results in unmutable default arguments stored as class attributed. As a result, the object is shared among different instances. Use `default_factory` instead to have mutable default arguments, e.g.:  
-   
+   The use of `default` results in immutable default arguments stored as class attributed. As a result, the object is shared among different instances. Use `default_factory` instead to have mutable default arguments, e.g.:  
+
    ```python
    F: Tensor2 = eqx.field(default_factory=lambda: Tensor2.identity())
    ```
-   
+
 3. **Safe JIT compilation with `eqx.filter_jit`**  
    We frequently wrap key methods (e.g. constitutive updates) with:
 

@@ -185,7 +185,7 @@
 <li class="toctree-l2"><a class="reference internal" href="demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="identification.html">Identification of material models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
 </ul>
 </details></li>
@@ -433,7 +433,7 @@ For advanced manipulation of these data structures, see the [Equinox documentati
 In <code class="docutils literal notranslate"><span class="pre">jaxmat</span></code>, this means we typically JIT the <strong>constitutive update function</strong>, or a batched wrapper around it.</p>
 <p>When JIT-tracing, concrete values are replaced by <em>tracers</em>, and operations must remain compatible with JAX’s functional semantics. Care must be taken when writing implementations involving conditionals or loops to ensure that the traced code remains valid.</p>
 <p>As in JAX, <code class="docutils literal notranslate"><span class="pre">jaxmat</span></code> supports device-portable batched constitutive updates; users may run the same code on CPU or GPU.
-The observed performance will strongly depends on the hardware device, the used batch size  and the computational intensity of the material model, see the <a class="reference internal" href="#./demos/performance.md"><code class="xref myst docutils literal notranslate"><span class="pre">./demos/performance.md</span></code></a> demo for more details.</p>
+The observed performance will strongly depends on the hardware device, the used batch size  and the computational intensity of the material model, see the <a class="reference internal" href="#demos/performance.md"><code class="xref myst docutils literal notranslate"><span class="pre">demos/performance.md</span></code></a> demo for more details.</p>
 </section>
 <section id="on-automatic-vectorization">
 <h2>On Automatic Vectorization<a class="headerlink" href="#on-automatic-vectorization" title="Link to this heading">#</a></h2>

@@ -184,6 +184,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+</ul>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">General resources</span></p>
 <ul class="nav bd-sidenav">
@@ -204,11 +208,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.generalized_standard.html">jaxmat.materials.generalized_standard module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/jaxmat.solvers.html">jaxmat.solvers package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -349,7 +356,7 @@
 
 
 <div class="viewcode-block" id="safe_zero">
-<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.safe_zero">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.safe_zero">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">safe_zero</span><span class="p">(</span><span class="n">method</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorator for yield surfaces to avoid NaNs for zero stress in both fwd and bwd AD.&quot;&quot;&quot;</span>
 
@@ -363,12 +370,10 @@
 
 
 <div class="viewcode-block" id="AbstractPlasticSurface">
-<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AbstractPlasticSurface</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract plastic surface class.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="AbstractPlasticSurface.__call__">
-<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface.__call__">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="n">SymmetricTensor2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Yield surface expression.</span>
@@ -384,11 +389,10 @@
 <span class="sd">        args:</span>
 <span class="sd">            Additional thermodynamic forces entering the yield surface definition.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
-
+        <span class="k">pass</span>
 
 <div class="viewcode-block" id="AbstractPlasticSurface.normal">
-<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface.normal">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface.normal">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">normal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="n">SymmetricTensor2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Normal to the yield surface. Computed automatically using forward AD on :func:`__call__`.</span>
 
@@ -402,7 +406,7 @@
 
 
 <div class="viewcode-block" id="vonMises">
-<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.vonMises">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.vonMises">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">vonMises</span><span class="p">(</span><span class="n">AbstractPlasticSurface</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;von Mises yield surface</span>
 
@@ -410,17 +414,14 @@
 
 <span class="sd">    where $\bs = \dev(\bsig)$&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="vonMises.__call__">
-<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.vonMises.__call__">[docs]</a>
     <span class="nd">@safe_zero</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">safe_norm</span><span class="p">(</span><span class="n">dev</span><span class="p">(</span><span class="n">sig</span><span class="p">))</span></div>
-</div>
 
 
 
 <div class="viewcode-block" id="DruckerPrager">
-<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.DruckerPrager">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.DruckerPrager">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DruckerPrager</span><span class="p">(</span><span class="n">AbstractPlasticSurface</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Drucker-Prager yield surface</span>
 
@@ -440,22 +441,17 @@
 
     <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DruckerPrager.__call__">
-<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.DruckerPrager.__call__">[docs]</a>
     <span class="nd">@safe_zero</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">):</span>
         <span class="n">I1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">dev</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span>
-        <span class="n">sqrt_I2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">safe_sqrt</span><span class="p">(</span>
-            <span class="n">jnp</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
-        <span class="p">)</span>  <span class="c1"># norm(dev(sig), eps=1e-4)</span>
+        <span class="n">sqrt_I2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">safe_sqrt</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">I1</span> <span class="o">+</span> <span class="n">sqrt_I2</span></div>
-</div>
 
 
 
 <div class="viewcode-block" id="Hosford">
-<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.Hosford">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.Hosford">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Hosford</span><span class="p">(</span><span class="n">AbstractPlasticSurface</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Hosford yield surface</span>
 
@@ -473,8 +469,6 @@
 
     <span class="n">a</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">default_value</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Hosford.__call__">
-<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.Hosford.__call__">[docs]</a>
     <span class="nd">@safe_zero</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">):</span>
         <span class="n">sI</span> <span class="o">=</span> <span class="n">eigenvalues</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span>
@@ -487,12 +481,11 @@
                 <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sI</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">sI</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span>
             <span class="p">)</span>
         <span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">)</span></div>
-</div>
 
 
 
 <div class="viewcode-block" id="Tresca">
-<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.Tresca">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.Tresca">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Tresca</span><span class="p">(</span><span class="n">AbstractPlasticSurface</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Tresca yield surface</span>
 
@@ -501,8 +494,6 @@
 <span class="sd">    with $\sigma_\text{I}$ being the stress principal values.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Tresca.__call__">
-<a class="viewcode-back" href="../../../apidocs/jaxmat/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.Tresca.__call__">[docs]</a>
     <span class="nd">@safe_zero</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">):</span>
         <span class="n">sI</span> <span class="o">=</span> <span class="n">eigenvalues</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span>
@@ -511,7 +502,6 @@
             <span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sI</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">sI</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
             <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sI</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">sI</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sI</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">sI</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span>
         <span class="p">)</span></div>
-</div>
 
 </pre></div>
 

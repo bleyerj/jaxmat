@@ -185,8 +185,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../identification.html">Identification of material models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -376,6 +377,23 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening"><code class="docutils literal notranslate"><span class="pre">GeneralHardening</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.combined_hardening"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.combined_hardening</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.constitutive_update"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.constitutive_update()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.elastic_model"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.elastic_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.internal"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.internal</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.nvar"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.nvar</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.plastic_surface"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.plastic_surface</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.yield_stress"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.yield_stress</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState"><code class="docutils literal notranslate"><span class="pre">GeneralHardeningInternalState</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.alpha"><code class="docutils literal notranslate"><span class="pre">GeneralHardeningInternalState.alpha</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.epsp"><code class="docutils literal notranslate"><span class="pre">GeneralHardeningInternalState.epsp</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.nvar"><code class="docutils literal notranslate"><span class="pre">GeneralHardeningInternalState.nvar</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.p"><code class="docutils literal notranslate"><span class="pre">GeneralHardeningInternalState.p</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening"><code class="docutils literal notranslate"><span class="pre">GeneralIsotropicHardening</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening.constitutive_update"><code class="docutils literal notranslate"><span class="pre">GeneralIsotropicHardening.constitutive_update()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening.elastic_model"><code class="docutils literal notranslate"><span class="pre">GeneralIsotropicHardening.elastic_model</span></code></a></li>
@@ -384,9 +402,26 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening.yield_stress"><code class="docutils literal notranslate"><span class="pre">GeneralIsotropicHardening.yield_stress</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.combined_hardening"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.combined_hardening</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.constitutive_update"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.constitutive_update()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.elastic_model"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.elastic_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.internal"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.internal</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.n_surf"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.n_surf</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.plastic_surfaces"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.plastic_surfaces</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.yield_stresses"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.yield_stresses</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.InternalState"><code class="docutils literal notranslate"><span class="pre">InternalState</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.InternalState.epsp"><code class="docutils literal notranslate"><span class="pre">InternalState.epsp</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.InternalState.p"><code class="docutils literal notranslate"><span class="pre">InternalState.p</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState"><code class="docutils literal notranslate"><span class="pre">MultiSurfaceInternalState</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.alpha"><code class="docutils literal notranslate"><span class="pre">MultiSurfaceInternalState.alpha</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.epsp"><code class="docutils literal notranslate"><span class="pre">MultiSurfaceInternalState.epsp</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.n_surf"><code class="docutils literal notranslate"><span class="pre">MultiSurfaceInternalState.n_surf</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.p"><code class="docutils literal notranslate"><span class="pre">MultiSurfaceInternalState.p</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.vonMisesIsotropicHardening"><code class="docutils literal notranslate"><span class="pre">vonMisesIsotropicHardening</span></code></a><ul class="visible nav section-nav flex-column">
@@ -411,6 +446,105 @@
   <section id="module-jaxmat.materials.elastoplasticity">
 <span id="jaxmat-materials-elastoplasticity-module"></span><h1>jaxmat.materials.elastoplasticity module<a class="headerlink" href="#module-jaxmat.materials.elastoplasticity" title="Link to this heading">#</a></h1>
 <dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralHardening">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GeneralHardening</span></span><a class="reference internal" href="../_modules/jaxmat/materials/elastoplasticity.html#GeneralHardening"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralHardening" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="jaxmat.materials.behavior.html#jaxmat.materials.behavior.SmallStrainBehavior" title="jaxmat.materials.behavior.SmallStrainBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">SmallStrainBehavior</span></code></a></p>
+<p>GeneralHardening(elastic_model: jaxmat.materials.elasticity.LinearElasticIsotropic, yield_stress: float, plastic_surface: jaxmat.materials.plastic_surfaces.AbstractPlasticSurface, combined_hardening: equinox._module.Module, nvar: int = 1)</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralHardening.combined_hardening">
+<span class="sig-name descname"><span class="pre">combined_hardening</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralHardening.combined_hardening" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralHardening.constitutive_update">
+<span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/elastoplasticity.html#GeneralHardening.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralHardening.constitutive_update" title="Link to this definition">#</a></dt>
+<dd><p>Perform the constitutive update for a given strain increment.</p>
+<p>This abstract method defines the interface for advancing the material
+state over a time increment based on the provided strain tensor.
+Implementations should return the updated stress tensor and internal
+variables, along with any auxiliary information required for consistent
+tangent computation or subsequent analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eps</strong> (<em>array_like</em>) – Strain tensor at the current integration point.
+Shape and convention depend on the model implementation (e.g., small
+strain vector form or finite strain tensor form).</p></li>
+<li><p><strong>state</strong> (<em>PyTree</em>) – PyTree containing the current state variables (stress, strain and internal) of the
+material.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Time increment over which the update is performed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>stress</strong> (<em>array_like</em>) – Updated Cauchy or Kirchhoff stress tensor corresponding to <cite>eps</cite>.</p></li>
+<li><p><strong>new_state</strong> (<em>PyTree</em>) – Updated state variables after the constitutive update.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>This method should be implemented by subclasses defining specific
+constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralHardening.elastic_model">
+<span class="sig-name descname"><span class="pre">elastic_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic" title="jaxmat.materials.elasticity.LinearElasticIsotropic"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearElasticIsotropic</span></code></a></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralHardening.elastic_model" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralHardening.internal">
+<span class="sig-name descname"><span class="pre">internal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState" title="jaxmat.state.AbstractState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractState</span></code></a></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralHardening.internal" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralHardening.nvar">
+<span class="sig-name descname"><span class="pre">nvar</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralHardening.nvar" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralHardening.plastic_surface">
+<span class="sig-name descname"><span class="pre">plastic_surface</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface" title="jaxmat.materials.plastic_surfaces.AbstractPlasticSurface"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlasticSurface</span></code></a></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralHardening.plastic_surface" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralHardening.yield_stress">
+<span class="sig-name descname"><span class="pre">yield_stress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralHardening.yield_stress" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralHardeningInternalState">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GeneralHardeningInternalState</span></span><a class="reference internal" href="../_modules/jaxmat/materials/elastoplasticity.html#GeneralHardeningInternalState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState" title="jaxmat.state.AbstractState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractState</span></code></a></p>
+<p>GeneralHardeningInternalState(p: float = 0.0, epsp: jaxmat.tensors.generic_tensors.SymmetricTensor2 = &lt;factory&gt;, nvar: int = 1)</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor2" title="jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.alpha" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.epsp">
+<span class="sig-name descname"><span class="pre">epsp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor2" title="jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.epsp" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.nvar">
+<span class="sig-name descname"><span class="pre">nvar</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.nvar" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.p">
+<span class="sig-name descname"><span class="pre">p</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.p" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralIsotropicHardening">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GeneralIsotropicHardening</span></span><a class="reference internal" href="../_modules/jaxmat/materials/elastoplasticity.html#GeneralIsotropicHardening"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="jaxmat.materials.behavior.html#jaxmat.materials.behavior.SmallStrainBehavior" title="jaxmat.materials.behavior.SmallStrainBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">SmallStrainBehavior</span></code></a></p>
@@ -418,7 +552,37 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralIsotropicHardening.constitutive_update">
 <span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/elastoplasticity.html#GeneralIsotropicHardening.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening.constitutive_update" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Perform the constitutive update for a given strain increment.</p>
+<p>This abstract method defines the interface for advancing the material
+state over a time increment based on the provided strain tensor.
+Implementations should return the updated stress tensor and internal
+variables, along with any auxiliary information required for consistent
+tangent computation or subsequent analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eps</strong> (<em>array_like</em>) – Strain tensor at the current integration point.
+Shape and convention depend on the model implementation (e.g., small
+strain vector form or finite strain tensor form).</p></li>
+<li><p><strong>state</strong> (<em>PyTree</em>) – PyTree containing the current state variables (stress, strain and internal) of the
+material.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Time increment over which the update is performed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>stress</strong> (<em>array_like</em>) – Updated Cauchy or Kirchhoff stress tensor corresponding to <cite>eps</cite>.</p></li>
+<li><p><strong>new_state</strong> (<em>PyTree</em>) – Updated state variables after the constitutive update.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>This method should be implemented by subclasses defining specific
+constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
+</div>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralIsotropicHardening.elastic_model">
@@ -443,6 +607,78 @@
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralPlasticity">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GeneralPlasticity</span></span><a class="reference internal" href="../_modules/jaxmat/materials/elastoplasticity.html#GeneralPlasticity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="jaxmat.materials.behavior.html#jaxmat.materials.behavior.SmallStrainBehavior" title="jaxmat.materials.behavior.SmallStrainBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">SmallStrainBehavior</span></code></a></p>
+<p>GeneralPlasticity(elastic_model: jaxmat.materials.elasticity.LinearElasticIsotropic, yield_stresses: list[equinox._module.Module], plastic_surfaces: list[jaxmat.materials.plastic_surfaces.AbstractPlasticSurface], combined_hardening: equinox._module.Module, n_surf: int = 1)</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralPlasticity.combined_hardening">
+<span class="sig-name descname"><span class="pre">combined_hardening</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.combined_hardening" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralPlasticity.constitutive_update">
+<span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/elastoplasticity.html#GeneralPlasticity.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.constitutive_update" title="Link to this definition">#</a></dt>
+<dd><p>Perform the constitutive update for a given strain increment.</p>
+<p>This abstract method defines the interface for advancing the material
+state over a time increment based on the provided strain tensor.
+Implementations should return the updated stress tensor and internal
+variables, along with any auxiliary information required for consistent
+tangent computation or subsequent analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eps</strong> (<em>array_like</em>) – Strain tensor at the current integration point.
+Shape and convention depend on the model implementation (e.g., small
+strain vector form or finite strain tensor form).</p></li>
+<li><p><strong>state</strong> (<em>PyTree</em>) – PyTree containing the current state variables (stress, strain and internal) of the
+material.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Time increment over which the update is performed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>stress</strong> (<em>array_like</em>) – Updated Cauchy or Kirchhoff stress tensor corresponding to <cite>eps</cite>.</p></li>
+<li><p><strong>new_state</strong> (<em>PyTree</em>) – Updated state variables after the constitutive update.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>This method should be implemented by subclasses defining specific
+constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralPlasticity.elastic_model">
+<span class="sig-name descname"><span class="pre">elastic_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic" title="jaxmat.materials.elasticity.LinearElasticIsotropic"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearElasticIsotropic</span></code></a></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.elastic_model" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralPlasticity.internal">
+<span class="sig-name descname"><span class="pre">internal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState" title="jaxmat.state.AbstractState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractState</span></code></a></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.internal" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralPlasticity.n_surf">
+<span class="sig-name descname"><span class="pre">n_surf</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.n_surf" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralPlasticity.plastic_surfaces">
+<span class="sig-name descname"><span class="pre">plastic_surfaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code><span class="pre">[</span><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface" title="jaxmat.materials.plastic_surfaces.AbstractPlasticSurface"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlasticSurface</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.plastic_surfaces" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.GeneralPlasticity.yield_stresses">
+<span class="sig-name descname"><span class="pre">yield_stresses</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code><span class="pre">]</span></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.yield_stresses" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.InternalState">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InternalState</span></span><a class="reference internal" href="../_modules/jaxmat/materials/elastoplasticity.html#InternalState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.elastoplasticity.InternalState" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState" title="jaxmat.state.AbstractState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractState</span></code></a></p>
@@ -460,6 +696,33 @@
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.MultiSurfaceInternalState">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultiSurfaceInternalState</span></span><a class="reference internal" href="../_modules/jaxmat/materials/elastoplasticity.html#MultiSurfaceInternalState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState" title="jaxmat.state.AbstractState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractState</span></code></a></p>
+<p>MultiSurfaceInternalState(epsp: jaxmat.tensors.generic_tensors.SymmetricTensor2 = &lt;factory&gt;, n_surf: int = 1)</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor2" title="jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.alpha" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.epsp">
+<span class="sig-name descname"><span class="pre">epsp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor2" title="jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.epsp" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.n_surf">
+<span class="sig-name descname"><span class="pre">n_surf</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.n_surf" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.p">
+<span class="sig-name descname"><span class="pre">p</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.p" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.vonMisesIsotropicHardening">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vonMisesIsotropicHardening</span></span><a class="reference internal" href="../_modules/jaxmat/materials/elastoplasticity.html#vonMisesIsotropicHardening"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.elastoplasticity.vonMisesIsotropicHardening" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="jaxmat.materials.behavior.html#jaxmat.materials.behavior.SmallStrainBehavior" title="jaxmat.materials.behavior.SmallStrainBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">SmallStrainBehavior</span></code></a></p>
@@ -467,7 +730,37 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.vonMisesIsotropicHardening.constitutive_update">
 <span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/elastoplasticity.html#vonMisesIsotropicHardening.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.elastoplasticity.vonMisesIsotropicHardening.constitutive_update" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Perform the constitutive update for a given strain increment.</p>
+<p>This abstract method defines the interface for advancing the material
+state over a time increment based on the provided strain tensor.
+Implementations should return the updated stress tensor and internal
+variables, along with any auxiliary information required for consistent
+tangent computation or subsequent analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eps</strong> (<em>array_like</em>) – Strain tensor at the current integration point.
+Shape and convention depend on the model implementation (e.g., small
+strain vector form or finite strain tensor form).</p></li>
+<li><p><strong>state</strong> (<em>PyTree</em>) – PyTree containing the current state variables (stress, strain and internal) of the
+material.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Time increment over which the update is performed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>stress</strong> (<em>array_like</em>) – Updated Cauchy or Kirchhoff stress tensor corresponding to <cite>eps</cite>.</p></li>
+<li><p><strong>new_state</strong> (<em>PyTree</em>) – Updated state variables after the constitutive update.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>This method should be implemented by subclasses defining specific
+constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
+</div>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxmat.materials.elastoplasticity.vonMisesIsotropicHardening.elastic_model">
@@ -558,6 +851,23 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening"><code class="docutils literal notranslate"><span class="pre">GeneralHardening</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.combined_hardening"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.combined_hardening</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.constitutive_update"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.constitutive_update()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.elastic_model"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.elastic_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.internal"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.internal</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.nvar"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.nvar</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.plastic_surface"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.plastic_surface</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardening.yield_stress"><code class="docutils literal notranslate"><span class="pre">GeneralHardening.yield_stress</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState"><code class="docutils literal notranslate"><span class="pre">GeneralHardeningInternalState</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.alpha"><code class="docutils literal notranslate"><span class="pre">GeneralHardeningInternalState.alpha</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.epsp"><code class="docutils literal notranslate"><span class="pre">GeneralHardeningInternalState.epsp</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.nvar"><code class="docutils literal notranslate"><span class="pre">GeneralHardeningInternalState.nvar</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.p"><code class="docutils literal notranslate"><span class="pre">GeneralHardeningInternalState.p</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening"><code class="docutils literal notranslate"><span class="pre">GeneralIsotropicHardening</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening.constitutive_update"><code class="docutils literal notranslate"><span class="pre">GeneralIsotropicHardening.constitutive_update()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening.elastic_model"><code class="docutils literal notranslate"><span class="pre">GeneralIsotropicHardening.elastic_model</span></code></a></li>
@@ -566,9 +876,26 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening.yield_stress"><code class="docutils literal notranslate"><span class="pre">GeneralIsotropicHardening.yield_stress</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.combined_hardening"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.combined_hardening</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.constitutive_update"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.constitutive_update()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.elastic_model"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.elastic_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.internal"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.internal</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.n_surf"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.n_surf</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.plastic_surfaces"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.plastic_surfaces</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.GeneralPlasticity.yield_stresses"><code class="docutils literal notranslate"><span class="pre">GeneralPlasticity.yield_stresses</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.InternalState"><code class="docutils literal notranslate"><span class="pre">InternalState</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.InternalState.epsp"><code class="docutils literal notranslate"><span class="pre">InternalState.epsp</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.InternalState.p"><code class="docutils literal notranslate"><span class="pre">InternalState.p</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState"><code class="docutils literal notranslate"><span class="pre">MultiSurfaceInternalState</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.alpha"><code class="docutils literal notranslate"><span class="pre">MultiSurfaceInternalState.alpha</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.epsp"><code class="docutils literal notranslate"><span class="pre">MultiSurfaceInternalState.epsp</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.n_surf"><code class="docutils literal notranslate"><span class="pre">MultiSurfaceInternalState.n_surf</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.MultiSurfaceInternalState.p"><code class="docutils literal notranslate"><span class="pre">MultiSurfaceInternalState.p</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.elastoplasticity.vonMisesIsotropicHardening"><code class="docutils literal notranslate"><span class="pre">vonMisesIsotropicHardening</span></code></a><ul class="visible nav section-nav flex-column">

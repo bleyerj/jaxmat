@@ -185,8 +185,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../identification.html">Identification of material models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -377,7 +378,7 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AFInternalState"><code class="docutils literal notranslate"><span class="pre">AFInternalState</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AFInternalState.a"><code class="docutils literal notranslate"><span class="pre">AFInternalState.a</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AFInternalState.X"><code class="docutils literal notranslate"><span class="pre">AFInternalState.X</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AFInternalState.epsp"><code class="docutils literal notranslate"><span class="pre">AFInternalState.epsp</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AFInternalState.p"><code class="docutils literal notranslate"><span class="pre">AFInternalState.p</span></code></a></li>
 </ul>
@@ -428,8 +429,8 @@
 <dd><p>Bases: <a class="reference internal" href="jaxmat.state.html#jaxmat.state.SmallStrainState" title="jaxmat.state.SmallStrainState"><code class="xref py py-class docutils literal notranslate"><span class="pre">SmallStrainState</span></code></a></p>
 <p>Internal state for the Armstrong-Frederick model</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplasticity.AFInternalState.a">
-<span class="sig-name descname"><span class="pre">a</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor2" title="jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a></em><a class="headerlink" href="#jaxmat.materials.viscoplasticity.AFInternalState.a" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplasticity.AFInternalState.X">
+<span class="sig-name descname"><span class="pre">X</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor2" title="jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a></em><a class="headerlink" href="#jaxmat.materials.viscoplasticity.AFInternalState.X" title="Link to this definition">#</a></dt>
 <dd><p>Backstress tensors</p>
 </dd></dl>
 
@@ -486,7 +487,37 @@ Hardening Materials.” CEGB Report RD/B/N731.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.constitutive_update">
 <span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplasticity.html#AmrstrongFrederickViscoplasticity.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.constitutive_update" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Perform the constitutive update for a given strain increment.</p>
+<p>This abstract method defines the interface for advancing the material
+state over a time increment based on the provided strain tensor.
+Implementations should return the updated stress tensor and internal
+variables, along with any auxiliary information required for consistent
+tangent computation or subsequent analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eps</strong> (<em>array_like</em>) – Strain tensor at the current integration point.
+Shape and convention depend on the model implementation (e.g., small
+strain vector form or finite strain tensor form).</p></li>
+<li><p><strong>state</strong> (<em>PyTree</em>) – PyTree containing the current state variables (stress, strain and internal) of the
+material.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Time increment over which the update is performed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>stress</strong> (<em>array_like</em>) – Updated Cauchy or Kirchhoff stress tensor corresponding to <cite>eps</cite>.</p></li>
+<li><p><strong>new_state</strong> (<em>PyTree</em>) – Updated state variables after the constitutive update.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>This method should be implemented by subclasses defining specific
+constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
+</div>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.elastic_model">
@@ -496,7 +527,7 @@ Hardening Materials.” CEGB Report RD/B/N731.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.internal">
-<span class="sig-name descname"><span class="pre">internal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractVar</span></code><span class="pre">[</span><a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState" title="jaxmat.state.AbstractState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractState</span></code></a><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">AFInternalState(</span>&#160;&#160; <span class="pre">p=f64[],</span>&#160;&#160; <span class="pre">epsp=SymmetricTensor2(dim=3,</span> <span class="pre">rank=2,</span> <span class="pre">_tensor=f64[3,3]),</span>&#160;&#160; <span class="pre">a=SymmetricTensor2(dim=3,</span> <span class="pre">rank=2,</span> <span class="pre">_tensor=f64[2,3,3])</span> <span class="pre">)</span></em><a class="headerlink" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.internal" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">internal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractVar</span></code><span class="pre">[</span><a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState" title="jaxmat.state.AbstractState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractState</span></code></a><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">AFInternalState(</span>&#160;&#160; <span class="pre">p=f64[],</span>&#160;&#160; <span class="pre">epsp=SymmetricTensor2(dim=3,</span> <span class="pre">rank=2,</span> <span class="pre">_tensor=f64[3,3]),</span>&#160;&#160; <span class="pre">X=SymmetricTensor2(dim=3,</span> <span class="pre">rank=2,</span> <span class="pre">_tensor=f64[2,3,3])</span> <span class="pre">)</span></em><a class="headerlink" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.internal" title="Link to this definition">#</a></dt>
 <dd><p>Internal variables associated with the accumulated plastic strain and backstress tensor.</p>
 </dd></dl>
 
@@ -567,7 +598,37 @@ and kinematic hardening and viscoplastic flow rule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxmat.materials.viscoplasticity.GenericViscoplasticity.constitutive_update">
 <span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplasticity.html#GenericViscoplasticity.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.constitutive_update" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Perform the constitutive update for a given strain increment.</p>
+<p>This abstract method defines the interface for advancing the material
+state over a time increment based on the provided strain tensor.
+Implementations should return the updated stress tensor and internal
+variables, along with any auxiliary information required for consistent
+tangent computation or subsequent analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eps</strong> (<em>array_like</em>) – Strain tensor at the current integration point.
+Shape and convention depend on the model implementation (e.g., small
+strain vector form or finite strain tensor form).</p></li>
+<li><p><strong>state</strong> (<em>PyTree</em>) – PyTree containing the current state variables (stress, strain and internal) of the
+material.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Time increment over which the update is performed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>stress</strong> (<em>array_like</em>) – Updated Cauchy or Kirchhoff stress tensor corresponding to <cite>eps</cite>.</p></li>
+<li><p><strong>new_state</strong> (<em>PyTree</em>) – Updated state variables after the constitutive update.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>This method should be implemented by subclasses defining specific
+constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
+</div>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxmat.materials.viscoplasticity.GenericViscoplasticity.elastic_model">
@@ -675,7 +736,7 @@ and kinematic hardening and viscoplastic flow rule.</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AFInternalState"><code class="docutils literal notranslate"><span class="pre">AFInternalState</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AFInternalState.a"><code class="docutils literal notranslate"><span class="pre">AFInternalState.a</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AFInternalState.X"><code class="docutils literal notranslate"><span class="pre">AFInternalState.X</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AFInternalState.epsp"><code class="docutils literal notranslate"><span class="pre">AFInternalState.epsp</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AFInternalState.p"><code class="docutils literal notranslate"><span class="pre">AFInternalState.p</span></code></a></li>
 </ul>
