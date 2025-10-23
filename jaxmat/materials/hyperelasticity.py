@@ -41,7 +41,7 @@ class VolumetricPart(eqx.Module):
 
 class SquaredVolumetric(eqx.Module):
     def __call__(self, J):
-        return (J - 1) ** 2
+        return (J - 1) ** 2 / 2
 
 
 class CompressibleNeoHookean(HyperelasticPotential):
@@ -53,7 +53,9 @@ class CompressibleNeoHookean(HyperelasticPotential):
         C = F.T @ F
         I1, _, I3 = invariants_principal(C)
         J = jnp.sqrt(I3)
-        return self.mu / 2 * (I1 - 3 - 2 * jnp.log(J)) + self.kappa * self.volumetric(J)
+        return self.mu / 2 * (J ** (-2.0 / 3) * I1 - 3) + self.kappa * self.volumetric(
+            J
+        )
 
 
 class CompressibleMooneyRivlin(HyperelasticPotential):
