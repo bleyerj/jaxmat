@@ -75,7 +75,7 @@ class ICNN(eqx.Module):
         z = jnp.atleast_1d(x)
         for W, b in zip(self.Ws, self.bs):
             W_pos = positive_param(W)
-            z = jax.nn.squareplus(z @ W_pos.T + b)
+            z = jax.nn.softplus(z @ W_pos.T + b)
         return z @ positive_param(self.final_W).T
 
 
@@ -145,9 +145,37 @@ class ICNNSkip(eqx.Module):
 
         for W, U, b in zip(self.Ws, self.Us, self.bs):
             W_pos = positive_param(W)
-            z = jax.nn.squareplus(
+            z = jax.nn.softplus(
                 z @ W_pos.T + x @ U.T + b
             )  # convex, monotone nondecreasing activation
 
         out = z @ positive_param(self.final_W).T + x @ self.final_U.T
         return out.squeeze()
+
+
+class HomogeneousICNN(eqx.Module):
+    """ICNN constrained to represent a convex, 1-homogeneous gauge function."""
+
+    Ws: List[jnp.ndarray]  # hidden-to-hidden (constrained nonneg)
+    Us: List[jnp.ndarray]  # input-to-hidden skip matrices (can be any real)
+    final_W: jnp.ndarray
+
+    def __init__(self, in_dim, hidden_dims, key, scale=1.0):
+        keys = jax.random.split(key, len(hidden_dims) + 1)
+        self.Ws = []
+        self.Us = []
+        prev = in_dim
+        for i, h in enumerate(hidden_dims):
+            W = jax.random.normal(keys[i], (h, prev)) * scale
+            U = jax.random.normal(keys[i], (h, in_dim)) * scale
+            self.Ws.append(W)
+            self.Us.append(U)
+            prev = h
+        self.final_W = jax.random.normal(keys[-1], (prev,)) * scale
+
+    def __call__(self, x):
+        z = x
+        for W, U in zip(self.Ws, self.Us):
+            W_pos = positive_param(W)  # enforce W_z >= 0 for convexity
+            z = jax.nn.relu(z @ W_pos.T + x @ U.T)  # no biases, ReLU is 1-homog
+        return jnp.dot(z, positive_param(self.final_W))
