@@ -1,15 +1,16 @@
 import jax.numpy as jnp
 import equinox as eqx
 from jaxmat.tensors import IsotropicTensor4
+from jaxmat.utils import enforce_dtype
 from .behavior import SmallStrainBehavior
 
 
 class LinearElasticIsotropic(eqx.Module):
     """An isotropic linear elastic model."""
 
-    E: float = eqx.field(converter=jnp.asarray)
+    E: float = enforce_dtype()
     r"""Young modulus $E$"""
-    nu: float = eqx.field(converter=jnp.asarray)
+    nu: float = enforce_dtype()
     r"""Poisson ratio $\nu$"""
 
     @property

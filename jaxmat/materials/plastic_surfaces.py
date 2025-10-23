@@ -2,7 +2,7 @@ from abc import abstractmethod
 import jax
 import jax.numpy as jnp
 import equinox as eqx
-from jaxmat.utils import default_value
+from jaxmat.utils import default_value, enforce_dtype
 from jaxmat.tensors import eigenvalues, dev, SymmetricTensor2
 from jaxmat.tensors.utils import safe_norm, safe_sqrt
 
@@ -77,7 +77,7 @@ class DruckerPrager(AbstractPlasticSurface):
         Pressure sensitivity parameter
     """
 
-    alpha: float = eqx.field(converter=jnp.asarray)
+    alpha: float = enforce_dtype()
 
     @safe_zero
     def __call__(self, sig):

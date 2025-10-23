@@ -98,7 +98,8 @@ class AmrstrongFrederickViscoplasticity(SmallStrainBehavior):
                 res = (
                     dy.p - dt * self.viscous_flow(yield_criterion),
                     dy.epsp - n * dy.p,
-                    dy.X - self.kinematic_hardening(y.X, dy.p, dy.epsp),
+                    (dy.X - self.kinematic_hardening(y.X, dy.p, dy.epsp))
+                    / jnp.sum(self.kinematic_hardening.C),
                 )
                 return res, y
 

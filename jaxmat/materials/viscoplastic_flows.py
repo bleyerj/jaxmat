@@ -2,7 +2,7 @@ from abc import abstractmethod
 import jax
 import jax.numpy as jnp
 import equinox as eqx
-from jaxmat.state import make_batched
+from jaxmat.utils import enforce_dtype
 
 
 class VoceHardening(eqx.Module):
@@ -19,11 +19,11 @@ class VoceHardening(eqx.Module):
         - Voce, E. (1955). "A Practical Strain-Hardening Function." Metallurgia, 51, 219-226.
     """
 
-    sig0: float = eqx.field(converter=jnp.asarray)
+    sig0: float = enforce_dtype()
     r"""Initial yield stress $\sigma_0$."""
-    sigu: float = eqx.field(converter=jnp.asarray)
+    sigu: float = enforce_dtype()
     r"""Saturation stress at large strains $\sigma_\text{u}$."""
-    b: float = eqx.field(converter=jnp.asarray)
+    b: float = enforce_dtype()
     r"""Rate of hardedning $b$."""
 
     def __call__(self, p):
@@ -39,9 +39,9 @@ class NortonFlow(eqx.Module):
     where $f(\bsig)-\sigma_y$ is the overstress, $\langle \cdot\rangle_+$ is the positive part.
     """
 
-    K: float = eqx.field(converter=jnp.asarray)
+    K: float = enforce_dtype()
     """Characteristic stress $K$ of the Norton flow."""
-    m: float = eqx.field(converter=jnp.asarray)
+    m: float = enforce_dtype()
     """Norton power-law exponent"""
 
     def __call__(self, overstress):
@@ -76,7 +76,7 @@ class LinearKinematicHardening(eqx.Module):
         Prager, W. (1956). A new method of analyzing stresses and strains in work-hardening plastic solids.
     """
 
-    H: float = eqx.field(converter=jnp.asarray)
+    H: float = enforce_dtype()
     """Linear kinematic hardening modulus"""
     nvars = 1
 
@@ -105,9 +105,9 @@ class ArmstrongFrederickHardening(AbstractKinematicHardening):
             of plasticity, 7(7), 661-678.
     """
 
-    C: jax.Array = eqx.field(converter=jnp.asarray)
+    C: jax.Array = enforce_dtype()
     """Kinematic hardening modulus"""
-    gamma: jax.Array = eqx.field(converter=jnp.asarray)
+    gamma: jax.Array = enforce_dtype()
     """Nonlinear recall modulus"""
     nvars = 2
 
