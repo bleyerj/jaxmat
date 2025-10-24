@@ -210,3 +210,6 @@ __marimo__/
 sandbox/
 biblio/
 **/*.ipynb
+notes/
+docs/latex_macros.yml
+docs/demos
