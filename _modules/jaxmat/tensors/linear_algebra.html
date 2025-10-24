@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -44,7 +44,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
@@ -57,8 +57,6 @@
     <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/jaxmat/tensors/linear_algebra';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -169,9 +167,10 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quickstart tutorials</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../../demos/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">jaxmat</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../demos/batched_computation.html">Batching across material points</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../demos/material_parameters_batching.html">Batching across material parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../demos/quickstart/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">jaxmat</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../demos/quickstart/batched_computation.html">Batching across material points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../demos/quickstart/material_parameters_batching.html">Batching across material parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytrees.html">Composable and differentiable material models</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="nav bd-sidenav">
@@ -183,6 +182,11 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -198,9 +202,34 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/materials.html"><code class="docutils literal notranslate"><span class="pre">materials</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/elasticity.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">elasticity</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/plastic_surfaces.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">plastic_surfaces</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/jaxmat.loader.html">jaxmat.loader module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/jaxmat.materials.html">jaxmat.materials package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.damage.html">jaxmat.materials.damage module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/jaxmat.solvers.html">jaxmat.solvers package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.solvers.custom_newton.html">jaxmat.solvers.custom_newton module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.solvers.gauss_newton_ls.html">jaxmat.solvers.gauss_newton_ls module</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/jaxmat.state.html">jaxmat.state module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/jaxmat.tensors.html">jaxmat.tensors package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.tensors.generic_tensors.html">jaxmat.tensors.generic_tensors module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.tensors.linear_algebra.html">jaxmat.tensors.linear_algebra module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.tensors.tensor_utils.html">jaxmat.tensors.tensor_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.tensors.utils.html">jaxmat.tensors.utils module</a></li>
 </ul>
 </details></li>
 </ul>
@@ -326,32 +355,41 @@
 
 
 <div class="viewcode-block" id="dim">
-<a class="viewcode-back" href="../../../api/tensors.html#jaxmat.tensors.linear_algebra.dim">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.dim">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">dim</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dimension of a n-rank tensor, assuming shape=(dim, dim, ..., dim).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Dimension ``dim`` of a n-rank matrix $\bA$, assuming ``shape=(dim, dim, ..., dim)``.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
 
 
 <div class="viewcode-block" id="tr">
-<a class="viewcode-back" href="../../../api/tensors.html#jaxmat.tensors.linear_algebra.tr">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.tr">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">tr</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Trace of a n-dim 2nd-rank tensor.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Trace of a matrix $\bA$.</span>
+<span class="sd">    $$\tr(\bA)=A_{ii}$$</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="dev">
-<a class="viewcode-back" href="../../../api/tensors.html#jaxmat.tensors.linear_algebra.dev">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.dev">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">dev</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deviatoric part of a n-dim 2nd-rank tensor.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deviatoric part of a $d\times d$ matrix $\bA$.</span>
+<span class="sd">    $$\dev(\bA) = \bA - \dfrac{1}{d}\bI$$</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">dim</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
     <span class="n">Id</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">A</span> <span class="o">-</span> <span class="n">tr</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">/</span> <span class="n">d</span> <span class="o">*</span> <span class="n">Id</span></div>
 
 
 
+<div class="viewcode-block" id="det33">
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.det33">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">det33</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Determinant $\det(\bA)$ of a 3x3 matrix $\bA$, computed using explicit formula.&quot;&quot;&quot;</span>
     <span class="n">a11</span><span class="p">,</span> <span class="n">a12</span><span class="p">,</span> <span class="n">a13</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
     <span class="n">a21</span><span class="p">,</span> <span class="n">a22</span><span class="p">,</span> <span class="n">a23</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
     <span class="n">a31</span><span class="p">,</span> <span class="n">a32</span><span class="p">,</span> <span class="n">a33</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
@@ -359,13 +397,14 @@
         <span class="n">a11</span> <span class="o">*</span> <span class="p">(</span><span class="n">a22</span> <span class="o">*</span> <span class="n">a33</span> <span class="o">-</span> <span class="n">a23</span> <span class="o">*</span> <span class="n">a32</span><span class="p">)</span>
         <span class="o">-</span> <span class="n">a12</span> <span class="o">*</span> <span class="p">(</span><span class="n">a21</span> <span class="o">*</span> <span class="n">a33</span> <span class="o">-</span> <span class="n">a23</span> <span class="o">*</span> <span class="n">a31</span><span class="p">)</span>
         <span class="o">+</span> <span class="n">a13</span> <span class="o">*</span> <span class="p">(</span><span class="n">a21</span> <span class="o">*</span> <span class="n">a32</span> <span class="o">-</span> <span class="n">a22</span> <span class="o">*</span> <span class="n">a31</span><span class="p">)</span>
-    <span class="p">)</span>
+    <span class="p">)</span></div>
+
 
 
 <div class="viewcode-block" id="inv33">
-<a class="viewcode-back" href="../../../api/tensors.html#jaxmat.tensors.linear_algebra.inv33">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.inv33">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">inv33</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Explicit inverse of a 3x3 matrix A using cofactor formula.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Inverse $\bA^{-1}$ of a 3x3 matrix $\bA$, explicitly computed using cofactor formula.&quot;&quot;&quot;</span>
     <span class="c1"># Minors and cofactors</span>
     <span class="n">a11</span><span class="p">,</span> <span class="n">a12</span><span class="p">,</span> <span class="n">a13</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
     <span class="n">a21</span><span class="p">,</span> <span class="n">a22</span><span class="p">,</span> <span class="n">a23</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
@@ -391,10 +430,17 @@
 
 
 
-<div class="viewcode-block" id="invariants_principal">
-<a class="viewcode-back" href="../../../api/tensors.html#jaxmat.tensors.linear_algebra.invariants_principal">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">invariants_principal</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Principal invariants of a real 3x3 tensor A.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="principal_invariants">
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.principal_invariants">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">principal_invariants</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Principal invariants of a 3x3 matrix $\bA$.</span>
+<span class="sd">    $$\begin{align*}</span>
+<span class="sd">    I_1 &amp;= \tr(\bA)\\</span>
+<span class="sd">    I_2 &amp;= \frac{1}{2}(\tr(\bA)^2-\tr(\bA^2))\\</span>
+<span class="sd">    I_3 &amp;= \det(\bA)</span>
+<span class="sd">    \end{align*}$$</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">i1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
     <span class="n">i2</span> <span class="o">=</span> <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">A</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span>
     <span class="n">i3</span> <span class="o">=</span> <span class="n">det33</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
@@ -402,10 +448,13 @@
 
 
 
-<div class="viewcode-block" id="invariants_main">
-<a class="viewcode-back" href="../../../api/tensors.html#jaxmat.tensors.linear_algebra.invariants_main">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">invariants_main</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;J-invariants: trace(A), trace(A^2), trace(A^3).&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="main_invariants">
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.main_invariants">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main_invariants</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main invariants of a 3x3 matrix $\bA$:</span>
+<span class="sd">    $$\tr(\bA),\: \tr(\bA^2),\: \tr(\bA^3)$$.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">j1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
     <span class="n">j2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
     <span class="n">j3</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
@@ -414,7 +463,7 @@
 
 
 <div class="viewcode-block" id="pq_invariants">
-<a class="viewcode-back" href="../../../api/tensors.html#jaxmat.tensors.linear_algebra.pq_invariants">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.pq_invariants">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">pq_invariants</span><span class="p">(</span><span class="n">sig</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Hydrostatic/deviatoric equivalent stresses $(p,q)$. Typically used in soil mechanics.</span>
 
@@ -428,8 +477,53 @@
 
 
 
+<div class="viewcode-block" id="eig33">
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.eig33">[docs]</a>
 <span class="nd">@partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">eig33</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-16</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the eigenvalues and eigenvalue derivatives of a 3 x 3 real symmetric matrix.</span>
+
+<span class="sd">    This function implements a numerically stable eigendecomposition for 3 x 3 symmetric</span>
+<span class="sd">    matrices based on the method by Harari &amp; Albocher (2023)</span>
+
+<span class="sd">    The implementation avoids catastrophic cancellation and loss of precision in</span>
+<span class="sd">    cases where two or more eigenvalues are nearly equal.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    A : array_like of shape (3, 3)</span>
+<span class="sd">        Real symmetric matrix whose eigenvalues (and optionally eigenvalue dyads)</span>
+<span class="sd">        are to be computed.</span>
+<span class="sd">    rtol : float, optional</span>
+<span class="sd">        Relative tolerance used to determine near-isotropic or nearly repeated</span>
+<span class="sd">        eigenvalue cases. Default is `1e-16`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    eigvals : jax.Array of shape (3,)</span>
+<span class="sd">        Eigenvalues of ``A\`, ordered in a consistent but unspecified order.</span>
+<span class="sd">    eigendyads : jax.Array of shape (3, 3, 3)</span>
+<span class="sd">        Derivatives of the eigenvalues with respect to the components of ``A\`,</span>
+<span class="sd">        obtained via forward-mode automatic differentiation (`jax.jacfwd`).</span>
+
+
+<span class="sd">    .. note::</span>
+<span class="sd">    - The method distinguishes three cases:</span>
+<span class="sd">        1. Near-isotropic case (``s &lt; rtol * ||A||``): all eigenvalues are nearly equal.</span>
+<span class="sd">        2. Two nearly equal eigenvalues: handled by a special branch to ensure stability.</span>
+<span class="sd">        3. Three distinct eigenvalues: computed via trigonometric relations.</span>
+<span class="sd">    - The implementation uses ``safe_norm`` and ``safe_sqrt`` for numerical safety.</span>
+<span class="sd">    - Input ``A`` must be symmetric; asymmetry may lead to inaccurate results.</span>
+
+<span class="sd">    .. admonition:: References</span>
+<span class="sd">        :class: seealso</span>
+
+<span class="sd">        Harari, I., &amp; Albocher, U. (2023). Computation of eigenvalues of a real,</span>
+<span class="sd">        symmetric 3 x 3 matrix with particular reference to the pernicious case of</span>
+<span class="sd">        two nearly equal eigenvalues. *International Journal for Numerical Methods in</span>
+<span class="sd">        Engineering*, 124(5), 1089-1110.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># def dyad_3_distinct(A, lamb):</span>
     <span class="c1">#     &quot;&quot;&quot;</span>
     <span class="c1">#     Hartmann, S. (2019) “Computational Aspects of the Symmetric Eigenvalue Problem of Second Order Tensors”,</span>
@@ -450,10 +544,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_eigvals_HarariAlbocher</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Eigendecomposition of 3x3 symmetric matrix based on</span>
-<span class="sd">        Harari, I., &amp; Albocher, U. (2023). Computation of eigenvalues of a real,</span>
-<span class="sd">        symmetric 3× 3 matrix with particular reference to the pernicious case of two nearly equal eigenvalues.</span>
-<span class="sd">        International Journal for Numerical Methods in Engineering, 124(5), 1089-1110.</span>
+<span class="sd">        Eigendecomposition of 3x3 symmetric matrix based on Harari, I., &amp; Albocher, U. (2023)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">A</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
         <span class="n">norm</span> <span class="o">=</span> <span class="n">safe_norm</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
@@ -505,13 +596,14 @@
 
     <span class="n">eigendyads</span><span class="p">,</span> <span class="n">eigvals</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacfwd</span><span class="p">(</span><span class="n">compute_eigvals_HarariAlbocher</span><span class="p">,</span> <span class="n">has_aux</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">A</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigendyads</span>
+    <span class="k">return</span> <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigendyads</span></div>
+
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_sqrtm</span><span class="p">(</span><span class="n">C</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Unified expression for sqrt and inverse sqrt of a symmetric matrix $\bC$,</span>
-<span class="sd">    see Simo &amp; Hugues, Computational Inelasticity, p.244</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Unified expression for sqrt and inverse sqrt of a symmetric matrix $\bC$</span>
+<span class="sd">    Simo, J. C., &amp; Hughes, T. J. (1998). Computational inelasticity., p.244</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">Id</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
     <span class="n">C2</span> <span class="o">=</span> <span class="n">C</span> <span class="o">@</span> <span class="n">C</span>
@@ -527,37 +619,58 @@
 
 
 <div class="viewcode-block" id="sqrtm">
-<a class="viewcode-back" href="../../../api/tensors.html#jaxmat.tensors.linear_algebra.sqrtm">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.sqrtm">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">sqrtm</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Matrix square-root of a symmetric 3x3 matrix.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Matrix square-root $\bA^{1/2}$ of a symmetric 3x3 matrix $\bA$.</span>
+<span class="sd">    Computed using the unified square root and inverse square root</span>
+<span class="sd">    formula, see Simo &amp; Hughes, 1998.</span>
+
+<span class="sd">    .. admonition:: References</span>
+<span class="sd">        :class: seealso</span>
+
+<span class="sd">        Simo, J. C., &amp; Hughes, T. J. (1998). Computational inelasticity., p.244</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_sqrtm</span><span class="p">(</span><span class="n">A</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
 
 
 
 <div class="viewcode-block" id="inv_sqrtm">
-<a class="viewcode-back" href="../../../api/tensors.html#jaxmat.tensors.linear_algebra.inv_sqrtm">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.inv_sqrtm">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">inv_sqrtm</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Matrix inverse square-root of a symmetric 3x3 matrix.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Matrix inverse square-root $\bA^{-1/2}$ of a symmetric 3x3 matrix $\bA$.</span>
+
+<span class="sd">    Computed using the unified square root and inverse square root</span>
+<span class="sd">    formula, see Simo &amp; Hughes, 1998.</span>
+
+<span class="sd">    .. admonition:: References</span>
+<span class="sd">        :class: seealso</span>
+
+<span class="sd">        Simo, J. C., &amp; Hughes, T. J. (1998). Computational inelasticity., p.244</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_sqrtm</span><span class="p">(</span><span class="n">A</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
 
 
 
 <div class="viewcode-block" id="isotropic_function">
-<a class="viewcode-back" href="../../../api/tensors.html#jaxmat.tensors.linear_algebra.isotropic_function">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.isotropic_function">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">isotropic_function</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Computes an isotropic function of a symmetric 3x3 matrix.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Computes an isotropic function of a symmetric 3x3 matrix $\bA$.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    fun : callable</span>
-<span class="sd">        A scalar function f(x)</span>
+<span class="sd">        A scalar function $f(x)$</span>
 <span class="sd">    A : jax.Array</span>
 <span class="sd">        A symmetric 3x3 matrix</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    jax.Array</span>
-<span class="sd">        A new 3x3 matrix such that `f_A = sum_i f(\lambda_i) n_i \times n_i`</span>
+<span class="sd">        A new 3x3 matrix $f_{\bA}$ such that</span>
+<span class="sd">        $$f_{\bA} = \sum_{i=1}^3 f(\lambda_i) \bn_i \otimes \bn_i$$</span>
+<span class="sd">        where $\lambda_i$ and $\bn_i$ are the eigenvalues and eigenvectors of $\bA$.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigendyads</span> <span class="o">=</span> <span class="n">eig33</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">eigvals</span><span class="p">)</span>
@@ -566,25 +679,25 @@
 
 
 <div class="viewcode-block" id="expm">
-<a class="viewcode-back" href="../../../api/tensors.html#jaxmat.tensors.linear_algebra.expm">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.expm">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">expm</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Matrix exponential of a symmetric 3x3 matrix.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Matrix exponential $\exp(\bA)$ of a symmetric 3x3 matrix $\bA$.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">isotropic_function</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="logm">
-<a class="viewcode-back" href="../../../api/tensors.html#jaxmat.tensors.linear_algebra.logm">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.logm">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">logm</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Matrix logarithm of a symmetric 3x3 matrix.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Matrix logarithm $\log(\bA)$ of a symmetric 3x3 matrix $\bA$.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">isotropic_function</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="powm">
-<a class="viewcode-back" href="../../../api/tensors.html#jaxmat.tensors.linear_algebra.powm">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.powm">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">powm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Matrix power of exponent m of a symmetric 3x3 matrix.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Matrix power $\bA^m$ of exponent $m$ of a symmetric 3x3 matrix $\bA$.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">isotropic_function</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="n">A</span><span class="p">)</span></div>
 
 </pre></div>

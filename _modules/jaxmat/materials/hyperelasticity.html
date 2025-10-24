@@ -352,7 +352,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">equinox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">eqx</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.tensors</span><span class="w"> </span><span class="kn">import</span> <span class="n">eigenvalues</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.tensors.linear_algebra</span><span class="w"> </span><span class="kn">import</span> <span class="n">invariants_principal</span><span class="p">,</span> <span class="n">det33</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.tensors.linear_algebra</span><span class="w"> </span><span class="kn">import</span> <span class="n">principal_invariants</span><span class="p">,</span> <span class="n">det33</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.behavior</span><span class="w"> </span><span class="kn">import</span> <span class="n">FiniteStrainBehavior</span>
 
 
@@ -378,6 +378,7 @@
 <div class="viewcode-block" id="HyperelasticPotential.Cauchy">
 <a class="viewcode-back" href="../../../api/jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.HyperelasticPotential.Cauchy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">Cauchy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
+        <span class="c1"># Divide on the right rather than on the left to preserve Tensor object due to operator dispatch priority.</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">PK1</span><span class="p">(</span><span class="n">F</span><span class="p">)</span> <span class="o">@</span> <span class="n">F</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">sym</span> <span class="o">/</span> <span class="n">det33</span><span class="p">(</span><span class="n">F</span><span class="p">)</span></div>
 </div>
 
@@ -393,7 +394,7 @@
 <a class="viewcode-back" href="../../../api/jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.Hyperelasticity.constitutive_update">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">constitutive_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
         <span class="n">PK1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">PK1</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
-        <span class="n">new_state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">stress</span><span class="o">=</span><span class="n">PK1</span><span class="p">)</span>
+        <span class="n">new_state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">stress</span><span class="o">=</span><span class="n">PK1</span><span class="p">,</span> <span class="n">strain</span><span class="o">=</span><span class="n">F</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">PK1</span><span class="p">,</span> <span class="n">new_state</span></div>
 </div>
 
@@ -426,9 +427,11 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
         <span class="n">C</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">F</span>
-        <span class="n">I1</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">I3</span> <span class="o">=</span> <span class="n">invariants_principal</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+        <span class="n">I1</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">I3</span> <span class="o">=</span> <span class="n">principal_invariants</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
         <span class="n">J</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">I3</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">I1</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">J</span><span class="p">))</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">volumetric</span><span class="p">(</span><span class="n">J</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">J</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">2.0</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">I1</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">volumetric</span><span class="p">(</span>
+            <span class="n">J</span>
+        <span class="p">)</span></div>
 
 
 
@@ -442,7 +445,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
         <span class="n">C</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">F</span>
-        <span class="n">I1</span><span class="p">,</span> <span class="n">I2</span><span class="p">,</span> <span class="n">I3</span> <span class="o">=</span> <span class="n">invariants_principal</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+        <span class="n">I1</span><span class="p">,</span> <span class="n">I2</span><span class="p">,</span> <span class="n">I3</span> <span class="o">=</span> <span class="n">principal_invariants</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
         <span class="n">J</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">I3</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">c1</span> <span class="o">*</span> <span class="p">(</span><span class="n">I1</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">J</span><span class="p">))</span>
@@ -463,7 +466,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
         <span class="n">C</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">F</span>
-        <span class="n">I1</span><span class="p">,</span> <span class="n">I2</span><span class="p">,</span> <span class="n">I3</span> <span class="o">=</span> <span class="n">invariants_principal</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+        <span class="n">I1</span><span class="p">,</span> <span class="n">I2</span><span class="p">,</span> <span class="n">I3</span> <span class="o">=</span> <span class="n">principal_invariants</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
         <span class="n">J</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">I3</span><span class="p">)</span>
         <span class="n">arg</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">I1</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">J</span><span class="p">))</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Jm</span>
         <span class="k">return</span> <span class="p">(</span>

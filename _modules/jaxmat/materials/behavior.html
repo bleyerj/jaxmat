@@ -186,6 +186,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -363,23 +364,73 @@
 <div class="viewcode-block" id="AbstractBehavior">
 <a class="viewcode-back" href="../../../api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.AbstractBehavior">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AbstractBehavior</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract base class describing a mechanical behavior.&quot;&quot;&quot;</span>
+
     <span class="n">internal</span><span class="p">:</span> <span class="n">eqx</span><span class="o">.</span><span class="n">AbstractVar</span><span class="p">[</span><span class="n">AbstractState</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Internal variables state.&quot;&quot;&quot;</span>
     <span class="n">solver</span><span class="p">:</span> <span class="n">optx</span><span class="o">.</span><span class="n">AbstractRootFinder</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span>
         <span class="n">static</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">DEFAULT_SOLVERS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Implicit solver.&quot;&quot;&quot;</span>
     <span class="n">adjoint</span><span class="p">:</span> <span class="n">optx</span><span class="o">.</span><span class="n">AbstractAdjoint</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span>
         <span class="n">static</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">DEFAULT_SOLVERS</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="p">)</span>
-    <span class="n">_batch_size</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span>
-        <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">static</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span>
-    <span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adjoint solver.&quot;&quot;&quot;</span>
+    <span class="n">_batch_size</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">static</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AbstractBehavior.constitutive_update">
 <a class="viewcode-back" href="../../../api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.AbstractBehavior.constitutive_update">[docs]</a>
     <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">constitutive_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="AbstractBehavior.batched_constitutive_update">
+<a class="viewcode-back" href="../../../api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.AbstractBehavior.batched_constitutive_update">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">batched_constitutive_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Batched and jitted version of constitutive update along first axis of ``inputs`` and ``state``.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">eqx</span><span class="o">.</span><span class="n">filter_jit</span><span class="p">(</span>
+            <span class="n">eqx</span><span class="o">.</span><span class="n">filter_vmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constitutive_update</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="p">)(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">Nbatch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">internal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Nbatch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">internal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Handle the case where the material has already been batched</span>
+                <span class="c1"># we first batch cls without internals</span>
+                <span class="n">Nbatch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">make_batched</span><span class="p">(</span><span class="bp">cls</span><span class="p">(),</span> <span class="n">Nbatch</span><span class="p">)</span>
+                <span class="c1"># we reaffect the already batched internals</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">tree_at</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">internal</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">state</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">make_batched</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">Nbatch</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SmallStrainBehavior">
+<a class="viewcode-back" href="../../../api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.SmallStrainBehavior">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SmallStrainBehavior</span><span class="p">(</span><span class="n">AbstractBehavior</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract small strain behavior.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SmallStrainBehavior.init_state">
+<a class="viewcode-back" href="../../../api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.SmallStrainBehavior.init_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Nbatch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the mechanical small strain state.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_state</span><span class="p">(</span><span class="n">SmallStrainState</span><span class="p">,</span> <span class="n">Nbatch</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SmallStrainBehavior.constitutive_update">
+<a class="viewcode-back" href="../../../api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.SmallStrainBehavior.constitutive_update">[docs]</a>
+    <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">constitutive_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Perform the constitutive update for a given strain increment.</span>
+<span class="sd">        Perform the constitutive update for a given small strain increment</span>
+<span class="sd">        for a small-strain behavior.</span>
 
 <span class="sd">        This abstract method defines the interface for advancing the material</span>
 <span class="sd">        state over a time increment based on the provided strain tensor.</span>
@@ -390,9 +441,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        eps : array_like</span>
-<span class="sd">            Strain tensor at the current integration point.</span>
-<span class="sd">            Shape and convention depend on the model implementation (e.g., small</span>
-<span class="sd">            strain vector form or finite strain tensor form).</span>
+<span class="sd">            Small strain tensor at the current integration point.</span>
 <span class="sd">        state : PyTree</span>
 <span class="sd">            PyTree containing the current state variables (stress, strain and internal) of the</span>
 <span class="sd">            material.</span>
@@ -402,7 +451,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        stress : array_like</span>
-<span class="sd">            Updated Cauchy or Kirchhoff stress tensor corresponding to `eps`.</span>
+<span class="sd">            Updated Cauchy stress tensor.</span>
 <span class="sd">        new_state : PyTree</span>
 <span class="sd">            Updated state variables after the constitutive update.</span>
 
@@ -412,42 +461,6 @@
 <span class="sd">        constitutive behaviors (elastic, plastic, viscoplastic, etc.).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
-
-
-<div class="viewcode-block" id="AbstractBehavior.batched_constitutive_update">
-<a class="viewcode-back" href="../../../api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.AbstractBehavior.batched_constitutive_update">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">batched_constitutive_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">eqx</span><span class="o">.</span><span class="n">filter_jit</span><span class="p">(</span>
-            <span class="n">eqx</span><span class="o">.</span><span class="n">filter_vmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constitutive_update</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-        <span class="p">)(</span><span class="n">eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span></div>
-
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">Nbatch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">state</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">internal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">Nbatch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="p">(</span>
-                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
-            <span class="p">):</span>  <span class="c1"># Handle the case where the material has already been batched</span>
-                <span class="c1"># we first batch cls without internals</span>
-                <span class="n">Nbatch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="n">state</span> <span class="o">=</span> <span class="n">make_batched</span><span class="p">(</span><span class="bp">cls</span><span class="p">(),</span> <span class="n">Nbatch</span><span class="p">)</span>
-                <span class="c1"># we reaffect the already batched internals</span>
-                <span class="n">state</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">tree_at</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">internal</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">state</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">internal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">make_batched</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">Nbatch</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="SmallStrainBehavior">
-<a class="viewcode-back" href="../../../api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.SmallStrainBehavior">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">SmallStrainBehavior</span><span class="p">(</span><span class="n">AbstractBehavior</span><span class="p">):</span>
-<div class="viewcode-block" id="SmallStrainBehavior.init_state">
-<a class="viewcode-back" href="../../../api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.SmallStrainBehavior.init_state">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Nbatch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_state</span><span class="p">(</span><span class="n">SmallStrainState</span><span class="p">,</span> <span class="n">Nbatch</span><span class="p">)</span></div>
 </div>
 
 
@@ -455,10 +468,52 @@
 <div class="viewcode-block" id="FiniteStrainBehavior">
 <a class="viewcode-back" href="../../../api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.FiniteStrainBehavior">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FiniteStrainBehavior</span><span class="p">(</span><span class="n">AbstractBehavior</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract finite strain behavior.&quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="FiniteStrainBehavior.init_state">
 <a class="viewcode-back" href="../../../api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.FiniteStrainBehavior.init_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Nbatch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the mechanical finite strain state.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_state</span><span class="p">(</span><span class="n">FiniteStrainState</span><span class="p">,</span> <span class="n">Nbatch</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FiniteStrainBehavior.constitutive_update">
+<a class="viewcode-back" href="../../../api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.FiniteStrainBehavior.constitutive_update">[docs]</a>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">constitutive_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform the constitutive update for a given deformation gradient increment</span>
+<span class="sd">        for a finite-strain behavior.</span>
+
+<span class="sd">        This abstract method defines the interface for advancing the material</span>
+<span class="sd">        state over a time increment based on the provided strain tensor.</span>
+<span class="sd">        Implementations should return the updated stress tensor and internal</span>
+<span class="sd">        variables, along with any auxiliary information required for consistent</span>
+<span class="sd">        tangent computation or subsequent analysis.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        F : array_like</span>
+<span class="sd">            Deformation gradient tensor at the current integration point.</span>
+<span class="sd">        state : PyTree</span>
+<span class="sd">            PyTree containing the current state variables (stress, strain and internal) of the</span>
+<span class="sd">            material.</span>
+<span class="sd">        dt : float</span>
+<span class="sd">            Time increment over which the update is performed.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        PK1 : array_like</span>
+<span class="sd">            Updated first Piola-Kirchhoff stress tensor.</span>
+<span class="sd">        new_state : PyTree</span>
+<span class="sd">            Updated state variables after the constitutive update.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This method should be implemented by subclasses defining specific</span>
+<span class="sd">        constitutive behaviors (elastic, plastic, viscoplastic, etc.).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
 </div>
 
 </pre></div>

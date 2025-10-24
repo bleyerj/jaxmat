@@ -186,6 +186,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -350,7 +351,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">equinox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">eqx</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_value</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_value</span><span class="p">,</span> <span class="n">enforce_dtype</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.tensors</span><span class="w"> </span><span class="kn">import</span> <span class="n">eigenvalues</span><span class="p">,</span> <span class="n">dev</span><span class="p">,</span> <span class="n">SymmetricTensor2</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.tensors.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">safe_norm</span><span class="p">,</span> <span class="n">safe_sqrt</span>
 
@@ -439,7 +440,7 @@
 <span class="sd">        Pressure sensitivity parameter</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">enforce_dtype</span><span class="p">()</span>
 
     <span class="nd">@safe_zero</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">):</span>

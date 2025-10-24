@@ -386,12 +386,12 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.expm"><code class="docutils literal notranslate"><span class="pre">expm()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.inv33"><code class="docutils literal notranslate"><span class="pre">inv33()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.inv_sqrtm"><code class="docutils literal notranslate"><span class="pre">inv_sqrtm()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.invariants_main"><code class="docutils literal notranslate"><span class="pre">invariants_main()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.invariants_principal"><code class="docutils literal notranslate"><span class="pre">invariants_principal()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.isotropic_function"><code class="docutils literal notranslate"><span class="pre">isotropic_function()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.logm"><code class="docutils literal notranslate"><span class="pre">logm()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.main_invariants"><code class="docutils literal notranslate"><span class="pre">main_invariants()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.powm"><code class="docutils literal notranslate"><span class="pre">powm()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.pq_invariants"><code class="docutils literal notranslate"><span class="pre">pq_invariants()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.principal_invariants"><code class="docutils literal notranslate"><span class="pre">principal_invariants()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.sqrtm"><code class="docutils literal notranslate"><span class="pre">sqrtm()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.tr"><code class="docutils literal notranslate"><span class="pre">tr()</span></code></a></li>
 </ul>
@@ -410,68 +410,113 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.det33">
 <span class="sig-name descname"><span class="pre">det33</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#det33"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.det33" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Determinant <span class="math notranslate nohighlight">\(\det(\bA)\)</span> of a 3x3 matrix <span class="math notranslate nohighlight">\(\bA\)</span>, computed using explicit formula.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.dev">
 <span class="sig-name descname"><span class="pre">dev</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#dev"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.dev" title="Link to this definition">#</a></dt>
-<dd><p>Deviatoric part of a n-dim 2nd-rank tensor.</p>
+<dd><p>Deviatoric part of a <span class="math notranslate nohighlight">\(d\times d\)</span> matrix <span class="math notranslate nohighlight">\(\bA\)</span>.
+<div class="math notranslate nohighlight">
+\[\dev(\bA) = \bA - \dfrac{1}{d}\bI\]</div>
+</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.dim">
 <span class="sig-name descname"><span class="pre">dim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#dim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.dim" title="Link to this definition">#</a></dt>
-<dd><p>Dimension of a n-rank tensor, assuming shape=(dim, dim, …, dim).</p>
+<dd><p>Dimension <code class="docutils literal notranslate"><span class="pre">dim</span></code> of a n-rank matrix <span class="math notranslate nohighlight">\(\bA\)</span>, assuming <code class="docutils literal notranslate"><span class="pre">shape=(dim,</span> <span class="pre">dim,</span> <span class="pre">...,</span> <span class="pre">dim)</span></code>.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.eig33">
 <span class="sig-name descname"><span class="pre">eig33</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-16</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#eig33"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.eig33" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Computes the eigenvalues and eigenvalue derivatives of a 3 x 3 real symmetric matrix.</p>
+<p>This function implements a numerically stable eigendecomposition for 3 x 3 symmetric
+matrices based on the method by Harari &amp; Albocher (2023)</p>
+<p>The implementation avoids catastrophic cancellation and loss of precision in
+cases where two or more eigenvalues are nearly equal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>A</strong> (<em>array_like</em><em> of </em><em>shape</em><em> (</em><em>3</em><em>, </em><em>3</em><em>)</em>) – Real symmetric matrix whose eigenvalues (and optionally eigenvalue dyads)
+are to be computed.</p></li>
+<li><p><strong>rtol</strong> (<em>float</em><em>, </em><em>optional</em>) – Relative tolerance used to determine near-isotropic or nearly repeated
+eigenvalue cases. Default is <cite>1e-16</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>eigvals</strong> (<em>jax.Array of shape (3,)</em>) – Eigenvalues of <a href="#id1"><span class="problematic" id="id2">``</span></a>A`, ordered in a consistent but unspecified order.</p></li>
+<li><p><strong>eigendyads</strong> (<em>jax.Array of shape (3, 3, 3)</em>) – Derivatives of the eigenvalues with respect to the components of <a href="#id3"><span class="problematic" id="id4">``</span></a>A`,
+obtained via forward-mode automatic differentiation (<cite>jax.jacfwd</cite>).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><dl class="simple">
+<dt>The method distinguishes three cases:</dt><dd><ol class="arabic simple">
+<li><p>Near-isotropic case (<code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">&lt;</span> <span class="pre">rtol</span> <span class="pre">*</span> <span class="pre">||A||</span></code>): all eigenvalues are nearly equal.</p></li>
+<li><p>Two nearly equal eigenvalues: handled by a special branch to ensure stability.</p></li>
+<li><p>Three distinct eigenvalues: computed via trigonometric relations.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><p>The implementation uses <code class="docutils literal notranslate"><span class="pre">safe_norm</span></code> and <code class="docutils literal notranslate"><span class="pre">safe_sqrt</span></code> for numerical safety.</p></li>
+<li><p>Input <code class="docutils literal notranslate"><span class="pre">A</span></code> must be symmetric; asymmetry may lead to inaccurate results.</p></li>
+</ul>
+<div class="seealso admonition">
+<p class="admonition-title">References</p>
+<p>Harari, I., &amp; Albocher, U. (2023). Computation of eigenvalues of a real,
+symmetric 3 x 3 matrix with particular reference to the pernicious case of
+two nearly equal eigenvalues. <em>International Journal for Numerical Methods in
+Engineering</em>, 124(5), 1089-1110.</p>
+</div>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.expm">
 <span class="sig-name descname"><span class="pre">expm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#expm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.expm" title="Link to this definition">#</a></dt>
-<dd><p>Matrix exponential of a symmetric 3x3 matrix.</p>
+<dd><p>Matrix exponential <span class="math notranslate nohighlight">\(\exp(\bA)\)</span> of a symmetric 3x3 matrix <span class="math notranslate nohighlight">\(\bA\)</span>.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.inv33">
 <span class="sig-name descname"><span class="pre">inv33</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#inv33"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.inv33" title="Link to this definition">#</a></dt>
-<dd><p>Explicit inverse of a 3x3 matrix A using cofactor formula.</p>
+<dd><p>Inverse <span class="math notranslate nohighlight">\(\bA^{-1}\)</span> of a 3x3 matrix <span class="math notranslate nohighlight">\(\bA\)</span>, explicitly computed using cofactor formula.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.inv_sqrtm">
 <span class="sig-name descname"><span class="pre">inv_sqrtm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#inv_sqrtm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.inv_sqrtm" title="Link to this definition">#</a></dt>
-<dd><p>Matrix inverse square-root of a symmetric 3x3 matrix.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.invariants_main">
-<span class="sig-name descname"><span class="pre">invariants_main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#invariants_main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.invariants_main" title="Link to this definition">#</a></dt>
-<dd><p>J-invariants: trace(A), trace(A^2), trace(A^3).</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.invariants_principal">
-<span class="sig-name descname"><span class="pre">invariants_principal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#invariants_principal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.invariants_principal" title="Link to this definition">#</a></dt>
-<dd><p>Principal invariants of a real 3x3 tensor A.</p>
+<dd><p>Matrix inverse square-root <span class="math notranslate nohighlight">\(\bA^{-1/2}\)</span> of a symmetric 3x3 matrix <span class="math notranslate nohighlight">\(\bA\)</span>.</p>
+<p>Computed using the unified square root and inverse square root
+formula, see Simo &amp; Hughes, 1998.</p>
+<div class="seealso admonition">
+<p class="admonition-title">References</p>
+<p>Simo, J. C., &amp; Hughes, T. J. (1998). Computational inelasticity., p.244</p>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.isotropic_function">
 <span class="sig-name descname"><span class="pre">isotropic_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#isotropic_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.isotropic_function" title="Link to this definition">#</a></dt>
-<dd><p>Computes an isotropic function of a symmetric 3x3 matrix.</p>
+<dd><p>Computes an isotropic function of a symmetric 3x3 matrix <span class="math notranslate nohighlight">\(\bA\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fun</strong> (<em>callable</em>) – A scalar function f(x)</p></li>
+<li><p><strong>fun</strong> (<em>callable</em>) – A scalar function <span class="math notranslate nohighlight">\(f(x)\)</span></p></li>
 <li><p><strong>A</strong> (<em>jax.Array</em>) – A symmetric 3x3 matrix</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A new 3x3 matrix such that <cite>f_A = sum_i f(lambda_i) n_i times n_i</cite></p>
+<dd class="field-even"><p>A new 3x3 matrix <span class="math notranslate nohighlight">\(f_{\bA}\)</span> such that
+<div class="math notranslate nohighlight">
+\[f_{\bA} = \sum_{i=1}^3 f(\lambda_i) \bn_i \otimes \bn_i\]</div>
+
+where <span class="math notranslate nohighlight">\(\lambda_i\)</span> and <span class="math notranslate nohighlight">\(\bn_i\)</span> are the eigenvalues and eigenvectors of <span class="math notranslate nohighlight">\(\bA\)</span>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>jax.Array</p>
@@ -482,13 +527,22 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.logm">
 <span class="sig-name descname"><span class="pre">logm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#logm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.logm" title="Link to this definition">#</a></dt>
-<dd><p>Matrix logarithm of a symmetric 3x3 matrix.</p>
+<dd><p>Matrix logarithm <span class="math notranslate nohighlight">\(\log(\bA)\)</span> of a symmetric 3x3 matrix <span class="math notranslate nohighlight">\(\bA\)</span>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.main_invariants">
+<span class="sig-name descname"><span class="pre">main_invariants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#main_invariants"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.main_invariants" title="Link to this definition">#</a></dt>
+<dd><p>Main invariants of a 3x3 matrix <span class="math notranslate nohighlight">\(\bA\)</span>:
+<div class="math notranslate nohighlight">
+\[\tr(\bA),\: \tr(\bA^2),\: \tr(\bA^3)\]</div>
+.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.powm">
 <span class="sig-name descname"><span class="pre">powm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#powm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.powm" title="Link to this definition">#</a></dt>
-<dd><p>Matrix power of exponent m of a symmetric 3x3 matrix.</p>
+<dd><p>Matrix power <span class="math notranslate nohighlight">\(\bA^m\)</span> of exponent <span class="math notranslate nohighlight">\(m\)</span> of a symmetric 3x3 matrix <span class="math notranslate nohighlight">\(\bA\)</span>.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -504,15 +558,37 @@
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.principal_invariants">
+<span class="sig-name descname"><span class="pre">principal_invariants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#principal_invariants"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.principal_invariants" title="Link to this definition">#</a></dt>
+<dd><p>Principal invariants of a 3x3 matrix <span class="math notranslate nohighlight">\(\bA\)</span>.
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+I_1 &amp;= \tr(\bA)\\
+I_2 &amp;= \frac{1}{2}(\tr(\bA)^2-\tr(\bA^2))\\
+I_3 &amp;= \det(\bA)
+\end{align*}\end{split}\]</div>
+</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.sqrtm">
 <span class="sig-name descname"><span class="pre">sqrtm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#sqrtm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.sqrtm" title="Link to this definition">#</a></dt>
-<dd><p>Matrix square-root of a symmetric 3x3 matrix.</p>
+<dd><p>Matrix square-root <span class="math notranslate nohighlight">\(\bA^{1/2}\)</span> of a symmetric 3x3 matrix <span class="math notranslate nohighlight">\(\bA\)</span>.
+Computed using the unified square root and inverse square root
+formula, see Simo &amp; Hughes, 1998.</p>
+<div class="seealso admonition">
+<p class="admonition-title">References</p>
+<p>Simo, J. C., &amp; Hughes, T. J. (1998). Computational inelasticity., p.244</p>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.linear_algebra.tr">
 <span class="sig-name descname"><span class="pre">tr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/linear_algebra.html#tr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.linear_algebra.tr" title="Link to this definition">#</a></dt>
-<dd><p>Trace of a n-dim 2nd-rank tensor.</p>
+<dd><p>Trace of a matrix <span class="math notranslate nohighlight">\(\bA\)</span>.
+<div class="math notranslate nohighlight">
+\[\tr(\bA)=A_{ii}\]</div>
+</p>
 </dd></dl>
 
 </section>
@@ -589,12 +665,12 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.expm"><code class="docutils literal notranslate"><span class="pre">expm()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.inv33"><code class="docutils literal notranslate"><span class="pre">inv33()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.inv_sqrtm"><code class="docutils literal notranslate"><span class="pre">inv_sqrtm()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.invariants_main"><code class="docutils literal notranslate"><span class="pre">invariants_main()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.invariants_principal"><code class="docutils literal notranslate"><span class="pre">invariants_principal()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.isotropic_function"><code class="docutils literal notranslate"><span class="pre">isotropic_function()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.logm"><code class="docutils literal notranslate"><span class="pre">logm()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.main_invariants"><code class="docutils literal notranslate"><span class="pre">main_invariants()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.powm"><code class="docutils literal notranslate"><span class="pre">powm()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.pq_invariants"><code class="docutils literal notranslate"><span class="pre">pq_invariants()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.principal_invariants"><code class="docutils literal notranslate"><span class="pre">principal_invariants()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.sqrtm"><code class="docutils literal notranslate"><span class="pre">sqrtm()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.linear_algebra.tr"><code class="docutils literal notranslate"><span class="pre">tr()</span></code></a></li>
 </ul>

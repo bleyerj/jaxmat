@@ -187,6 +187,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -385,10 +386,12 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.behavior.FiniteStrainBehavior"><code class="docutils literal notranslate"><span class="pre">FiniteStrainBehavior</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.behavior.FiniteStrainBehavior.constitutive_update"><code class="docutils literal notranslate"><span class="pre">FiniteStrainBehavior.constitutive_update()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.behavior.FiniteStrainBehavior.init_state"><code class="docutils literal notranslate"><span class="pre">FiniteStrainBehavior.init_state()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.behavior.SmallStrainBehavior"><code class="docutils literal notranslate"><span class="pre">SmallStrainBehavior</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.behavior.SmallStrainBehavior.constitutive_update"><code class="docutils literal notranslate"><span class="pre">SmallStrainBehavior.constitutive_update()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.behavior.SmallStrainBehavior.init_state"><code class="docutils literal notranslate"><span class="pre">SmallStrainBehavior.init_state()</span></code></a></li>
 </ul>
 </li>
@@ -409,21 +412,48 @@
 <dt class="sig sig-object py" id="jaxmat.materials.behavior.AbstractBehavior">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AbstractBehavior</span></span><a class="reference internal" href="../_modules/jaxmat/materials/behavior.html#AbstractBehavior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.behavior.AbstractBehavior" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>AbstractBehavior()</p>
+<p>Abstract base class describing a mechanical behavior.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxmat.materials.behavior.AbstractBehavior.adjoint">
 <span class="sig-name descname"><span class="pre">adjoint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractAdjoint</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ImplicitAdjoint(linear_solver=AutoLinearSolver(well_posed=False))</span></em><a class="headerlink" href="#jaxmat.materials.behavior.AbstractBehavior.adjoint" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Adjoint solver.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxmat.materials.behavior.AbstractBehavior.batched_constitutive_update">
-<span class="sig-name descname"><span class="pre">batched_constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/behavior.html#AbstractBehavior.batched_constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.behavior.AbstractBehavior.batched_constitutive_update" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">batched_constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/behavior.html#AbstractBehavior.batched_constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.behavior.AbstractBehavior.batched_constitutive_update" title="Link to this definition">#</a></dt>
+<dd><p>Batched and jitted version of constitutive update along first axis of <code class="docutils literal notranslate"><span class="pre">inputs</span></code> and <code class="docutils literal notranslate"><span class="pre">state</span></code>.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxmat.materials.behavior.AbstractBehavior.constitutive_update">
-<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/behavior.html#AbstractBehavior.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.behavior.AbstractBehavior.constitutive_update" title="Link to this definition">#</a></dt>
-<dd><p>Perform the constitutive update for a given strain increment.</p>
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/behavior.html#AbstractBehavior.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.behavior.AbstractBehavior.constitutive_update" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.behavior.AbstractBehavior.internal">
+<span class="sig-name descname"><span class="pre">internal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractVar</span></code><span class="pre">[</span><a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState" title="jaxmat.state.AbstractState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractState</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#jaxmat.materials.behavior.AbstractBehavior.internal" title="Link to this definition">#</a></dt>
+<dd><p>Internal variables state.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.behavior.AbstractBehavior.solver">
+<span class="sig-name descname"><span class="pre">solver</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractRootFinder</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Newton(rtol=1e-08,</span> <span class="pre">atol=1e-08,</span> <span class="pre">linear_solver=AutoLinearSolver(well_posed=False))</span></em><a class="headerlink" href="#jaxmat.materials.behavior.AbstractBehavior.solver" title="Link to this definition">#</a></dt>
+<dd><p>Implicit solver.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.materials.behavior.FiniteStrainBehavior">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FiniteStrainBehavior</span></span><a class="reference internal" href="../_modules/jaxmat/materials/behavior.html#FiniteStrainBehavior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.behavior.FiniteStrainBehavior" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jaxmat.materials.behavior.AbstractBehavior" title="jaxmat.materials.behavior.AbstractBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractBehavior</span></code></a></p>
+<p>Abstract finite strain behavior.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxmat.materials.behavior.FiniteStrainBehavior.constitutive_update">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/behavior.html#FiniteStrainBehavior.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.behavior.FiniteStrainBehavior.constitutive_update" title="Link to this definition">#</a></dt>
+<dd><p>Perform the constitutive update for a given deformation gradient increment
+for a finite-strain behavior.</p>
 <p>This abstract method defines the interface for advancing the material
 state over a time increment based on the provided strain tensor.
 Implementations should return the updated stress tensor and internal
@@ -432,9 +462,7 @@ tangent computation or subsequent analysis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>eps</strong> (<em>array_like</em>) – Strain tensor at the current integration point.
-Shape and convention depend on the model implementation (e.g., small
-strain vector form or finite strain tensor form).</p></li>
+<li><p><strong>F</strong> (<em>array_like</em>) – Deformation gradient tensor at the current integration point.</p></li>
 <li><p><strong>state</strong> (<em>PyTree</em>) – PyTree containing the current state variables (stress, strain and internal) of the
 material.</p></li>
 <li><p><strong>dt</strong> (<em>float</em>) – Time increment over which the update is performed.</p></li>
@@ -442,7 +470,7 @@ material.</p></li>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>stress</strong> (<em>array_like</em>) – Updated Cauchy or Kirchhoff stress tensor corresponding to <cite>eps</cite>.</p></li>
+<li><p><strong>PK1</strong> (<em>array_like</em>) – Updated first Piola-Kirchhoff stress tensor.</p></li>
 <li><p><strong>new_state</strong> (<em>PyTree</em>) – Updated state variables after the constitutive update.</p></li>
 </ul>
 </p>
@@ -455,27 +483,11 @@ constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
 </div>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.behavior.AbstractBehavior.internal">
-<span class="sig-name descname"><span class="pre">internal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractVar</span></code><span class="pre">[</span><a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState" title="jaxmat.state.AbstractState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractState</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#jaxmat.materials.behavior.AbstractBehavior.internal" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.behavior.AbstractBehavior.solver">
-<span class="sig-name descname"><span class="pre">solver</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractRootFinder</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Newton(rtol=1e-08,</span> <span class="pre">atol=1e-08,</span> <span class="pre">linear_solver=AutoLinearSolver(well_posed=False))</span></em><a class="headerlink" href="#jaxmat.materials.behavior.AbstractBehavior.solver" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.behavior.FiniteStrainBehavior">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FiniteStrainBehavior</span></span><a class="reference internal" href="../_modules/jaxmat/materials/behavior.html#FiniteStrainBehavior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.behavior.FiniteStrainBehavior" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jaxmat.materials.behavior.AbstractBehavior" title="jaxmat.materials.behavior.AbstractBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractBehavior</span></code></a></p>
-<p>FiniteStrainBehavior()</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxmat.materials.behavior.FiniteStrainBehavior.init_state">
 <span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Nbatch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/behavior.html#FiniteStrainBehavior.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.behavior.FiniteStrainBehavior.init_state" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Initialize the mechanical finite strain state.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -483,11 +495,46 @@ constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
 <dt class="sig sig-object py" id="jaxmat.materials.behavior.SmallStrainBehavior">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SmallStrainBehavior</span></span><a class="reference internal" href="../_modules/jaxmat/materials/behavior.html#SmallStrainBehavior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.behavior.SmallStrainBehavior" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#jaxmat.materials.behavior.AbstractBehavior" title="jaxmat.materials.behavior.AbstractBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractBehavior</span></code></a></p>
-<p>SmallStrainBehavior()</p>
+<p>Abstract small strain behavior.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxmat.materials.behavior.SmallStrainBehavior.constitutive_update">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/behavior.html#SmallStrainBehavior.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.behavior.SmallStrainBehavior.constitutive_update" title="Link to this definition">#</a></dt>
+<dd><p>Perform the constitutive update for a given small strain increment
+for a small-strain behavior.</p>
+<p>This abstract method defines the interface for advancing the material
+state over a time increment based on the provided strain tensor.
+Implementations should return the updated stress tensor and internal
+variables, along with any auxiliary information required for consistent
+tangent computation or subsequent analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eps</strong> (<em>array_like</em>) – Small strain tensor at the current integration point.</p></li>
+<li><p><strong>state</strong> (<em>PyTree</em>) – PyTree containing the current state variables (stress, strain and internal) of the
+material.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Time increment over which the update is performed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>stress</strong> (<em>array_like</em>) – Updated Cauchy stress tensor.</p></li>
+<li><p><strong>new_state</strong> (<em>PyTree</em>) – Updated state variables after the constitutive update.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>This method should be implemented by subclasses defining specific
+constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
+</div>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxmat.materials.behavior.SmallStrainBehavior.init_state">
 <span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Nbatch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/behavior.html#SmallStrainBehavior.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.behavior.SmallStrainBehavior.init_state" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Initialize the mechanical small strain state.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -567,10 +614,12 @@ constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.behavior.FiniteStrainBehavior"><code class="docutils literal notranslate"><span class="pre">FiniteStrainBehavior</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.behavior.FiniteStrainBehavior.constitutive_update"><code class="docutils literal notranslate"><span class="pre">FiniteStrainBehavior.constitutive_update()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.behavior.FiniteStrainBehavior.init_state"><code class="docutils literal notranslate"><span class="pre">FiniteStrainBehavior.init_state()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.behavior.SmallStrainBehavior"><code class="docutils literal notranslate"><span class="pre">SmallStrainBehavior</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.behavior.SmallStrainBehavior.constitutive_update"><code class="docutils literal notranslate"><span class="pre">SmallStrainBehavior.constitutive_update()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.behavior.SmallStrainBehavior.init_state"><code class="docutils literal notranslate"><span class="pre">SmallStrainBehavior.init_state()</span></code></a></li>
 </ul>
 </li>

@@ -61,8 +61,6 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/jaxmat.materials.damage';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="jaxmat.materials.elasticity module" href="jaxmat.materials.elasticity.html" />
-    <link rel="prev" title="jaxmat.materials.behavior module" href="jaxmat.materials.behavior.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -113,6 +111,8 @@
     <div class="bd-container__inner bd-page-width">
       
       
+      
+        
       
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
@@ -202,17 +202,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../models.html">Material models gallery</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.loader.html">jaxmat.loader module</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="jaxmat.materials.html">jaxmat.materials package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="jaxmat.materials.html">jaxmat.materials package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">jaxmat.materials.damage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
@@ -354,9 +351,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -372,31 +367,6 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.Damage"><code class="docutils literal notranslate"><span class="pre">Damage</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.Damage.constitutive_update"><code class="docutils literal notranslate"><span class="pre">Damage.constitutive_update()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.Damage.damage_threshold"><code class="docutils literal notranslate"><span class="pre">Damage.damage_threshold</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.Damage.degradation"><code class="docutils literal notranslate"><span class="pre">Damage.degradation</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.Damage.elastic_model"><code class="docutils literal notranslate"><span class="pre">Damage.elastic_model</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.Damage.internal"><code class="docutils literal notranslate"><span class="pre">Damage.internal</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.DamageThreshold"><code class="docutils literal notranslate"><span class="pre">DamageThreshold</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.DamageThreshold.Y0"><code class="docutils literal notranslate"><span class="pre">DamageThreshold.Y0</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.DamageThreshold.alpha"><code class="docutils literal notranslate"><span class="pre">DamageThreshold.alpha</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.InternalState"><code class="docutils literal notranslate"><span class="pre">InternalState</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.InternalState.d"><code class="docutils literal notranslate"><span class="pre">InternalState.d</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.IsotropicDegradation"><code class="docutils literal notranslate"><span class="pre">IsotropicDegradation</span></code></a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -406,106 +376,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-jaxmat.materials.damage">
-<span id="jaxmat-materials-damage-module"></span><h1>jaxmat.materials.damage module<a class="headerlink" href="#module-jaxmat.materials.damage" title="Link to this heading">#</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.damage.Damage">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Damage</span></span><a class="reference internal" href="../_modules/jaxmat/materials/damage.html#Damage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.damage.Damage" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="jaxmat.materials.behavior.html#jaxmat.materials.behavior.SmallStrainBehavior" title="jaxmat.materials.behavior.SmallStrainBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">SmallStrainBehavior</span></code></a></p>
-<p>Damage(elastic_model: jaxmat.materials.elasticity.LinearElasticIsotropic, degradation: jaxmat.materials.damage.IsotropicDegradation, damage_threshold: jaxmat.materials.damage.DamageThreshold, internal: jaxmat.state.AbstractState = InternalState(d=f64[]))</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="jaxmat.materials.damage.Damage.constitutive_update">
-<span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/damage.html#Damage.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.damage.Damage.constitutive_update" title="Link to this definition">#</a></dt>
-<dd><p>Perform the constitutive update for a given strain increment.</p>
-<p>This abstract method defines the interface for advancing the material
-state over a time increment based on the provided strain tensor.
-Implementations should return the updated stress tensor and internal
-variables, along with any auxiliary information required for consistent
-tangent computation or subsequent analysis.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>eps</strong> (<em>array_like</em>) – Strain tensor at the current integration point.
-Shape and convention depend on the model implementation (e.g., small
-strain vector form or finite strain tensor form).</p></li>
-<li><p><strong>state</strong> (<em>PyTree</em>) – PyTree containing the current state variables (stress, strain and internal) of the
-material.</p></li>
-<li><p><strong>dt</strong> (<em>float</em>) – Time increment over which the update is performed.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>stress</strong> (<em>array_like</em>) – Updated Cauchy or Kirchhoff stress tensor corresponding to <cite>eps</cite>.</p></li>
-<li><p><strong>new_state</strong> (<em>PyTree</em>) – Updated state variables after the constitutive update.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<div class="admonition-notes admonition">
-<p class="admonition-title">Notes</p>
-<p>This method should be implemented by subclasses defining specific
-constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
-</div>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.damage.Damage.damage_threshold">
-<span class="sig-name descname"><span class="pre">damage_threshold</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#jaxmat.materials.damage.DamageThreshold" title="jaxmat.materials.damage.DamageThreshold"><code class="xref py py-class docutils literal notranslate"><span class="pre">DamageThreshold</span></code></a></em><a class="headerlink" href="#jaxmat.materials.damage.Damage.damage_threshold" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.damage.Damage.degradation">
-<span class="sig-name descname"><span class="pre">degradation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#jaxmat.materials.damage.IsotropicDegradation" title="jaxmat.materials.damage.IsotropicDegradation"><code class="xref py py-class docutils literal notranslate"><span class="pre">IsotropicDegradation</span></code></a></em><a class="headerlink" href="#jaxmat.materials.damage.Damage.degradation" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.damage.Damage.elastic_model">
-<span class="sig-name descname"><span class="pre">elastic_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic" title="jaxmat.materials.elasticity.LinearElasticIsotropic"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearElasticIsotropic</span></code></a></em><a class="headerlink" href="#jaxmat.materials.damage.Damage.elastic_model" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.damage.Damage.internal">
-<span class="sig-name descname"><span class="pre">internal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState" title="jaxmat.state.AbstractState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractState</span></code></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">InternalState(d=f64[])</span></em><a class="headerlink" href="#jaxmat.materials.damage.Damage.internal" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.damage.DamageThreshold">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DamageThreshold</span></span><a class="reference internal" href="../_modules/jaxmat/materials/damage.html#DamageThreshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.damage.DamageThreshold" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>DamageThreshold(Y0: float, alpha: float)</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.damage.DamageThreshold.Y0">
-<span class="sig-name descname"><span class="pre">Y0</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.damage.DamageThreshold.Y0" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.damage.DamageThreshold.alpha">
-<span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.damage.DamageThreshold.alpha" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.damage.InternalState">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InternalState</span></span><a class="reference internal" href="../_modules/jaxmat/materials/damage.html#InternalState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.damage.InternalState" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="jaxmat.state.html#jaxmat.state.AbstractState" title="jaxmat.state.AbstractState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractState</span></code></a></p>
-<p>InternalState(d: float = 0.0)</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.damage.InternalState.d">
-<span class="sig-name descname"><span class="pre">d</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#jaxmat.materials.damage.InternalState.d" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.damage.IsotropicDegradation">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IsotropicDegradation</span></span><a class="reference internal" href="../_modules/jaxmat/materials/damage.html#IsotropicDegradation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.damage.IsotropicDegradation" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>IsotropicDegradation()</p>
-</dd></dl>
-
+  <section id="jaxmat-materials-damage-module">
+<h1>jaxmat.materials.damage module<a class="headerlink" href="#jaxmat-materials-damage-module" title="Link to this heading">#</a></h1>
 </section>
 
     <script type="text/x-thebe-config">
@@ -538,63 +410,12 @@ constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="jaxmat.materials.behavior.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">jaxmat.materials.behavior module</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="jaxmat.materials.elasticity.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">jaxmat.materials.elasticity module</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.Damage"><code class="docutils literal notranslate"><span class="pre">Damage</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.Damage.constitutive_update"><code class="docutils literal notranslate"><span class="pre">Damage.constitutive_update()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.Damage.damage_threshold"><code class="docutils literal notranslate"><span class="pre">Damage.damage_threshold</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.Damage.degradation"><code class="docutils literal notranslate"><span class="pre">Damage.degradation</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.Damage.elastic_model"><code class="docutils literal notranslate"><span class="pre">Damage.elastic_model</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.Damage.internal"><code class="docutils literal notranslate"><span class="pre">Damage.internal</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.DamageThreshold"><code class="docutils literal notranslate"><span class="pre">DamageThreshold</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.DamageThreshold.Y0"><code class="docutils literal notranslate"><span class="pre">DamageThreshold.Y0</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.DamageThreshold.alpha"><code class="docutils literal notranslate"><span class="pre">DamageThreshold.alpha</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.InternalState"><code class="docutils literal notranslate"><span class="pre">InternalState</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.InternalState.d"><code class="docutils literal notranslate"><span class="pre">InternalState.d</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.damage.IsotropicDegradation"><code class="docutils literal notranslate"><span class="pre">IsotropicDegradation</span></code></a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

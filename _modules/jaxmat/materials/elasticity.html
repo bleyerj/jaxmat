@@ -186,6 +186,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -346,21 +347,67 @@
                 <article class="bd-article">
                   
   <h1>Source code for jaxmat.materials.elasticity</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">abstractmethod</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">equinox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">eqx</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.tensors</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsotropicTensor4</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">enforce_dtype</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.behavior</span><span class="w"> </span><span class="kn">import</span> <span class="n">SmallStrainBehavior</span>
+
+
+<div class="viewcode-block" id="AbstractLinearElastic">
+<a class="viewcode-back" href="../../../api/jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.AbstractLinearElastic">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AbstractLinearElastic</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Small-strain elastic model.&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">C</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">S</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;4th-rank isotropic compliance tensor</span>
+<span class="sd">        $$\mathbb{S}=\mathbb{C}^{-1}$$</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">inv</span>
+
+<div class="viewcode-block" id="AbstractLinearElastic.strain_energy">
+<a class="viewcode-back" href="../../../api/jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.AbstractLinearElastic.strain_energy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">strain_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eps</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Strain energy density</span>
+
+<span class="sd">        $$\psi(\beps)=\dfrac{1}{2}\beps:\mathbb{C}:\beps$$</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        eps: SymmetricTensor2</span>
+<span class="sd">            Strain tensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">eps</span> <span class="o">@</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="o">@</span> <span class="n">eps</span><span class="p">))</span></div>
+</div>
+
 
 
 <div class="viewcode-block" id="LinearElasticIsotropic">
 <a class="viewcode-back" href="../../../api/jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">LinearElasticIsotropic</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LinearElasticIsotropic</span><span class="p">(</span><span class="n">AbstractLinearElastic</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An isotropic linear elastic model.&quot;&quot;&quot;</span>
 
-    <span class="n">E</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">E</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">enforce_dtype</span><span class="p">()</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Young modulus $E$&quot;&quot;&quot;</span>
-    <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
+    <span class="n">nu</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">enforce_dtype</span><span class="p">()</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Poisson ratio $\nu$&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">C</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;4th-rank isotropic stiffness tensor</span>
+
+<span class="sd">        $$\mathbb{C}=3\kappa\mathbb{J}+2\mu\mathbb{K}$$</span>
+
+<span class="sd">        where $\mathbb{J}$ and $\mathbb{K}$ are the hydrostatic and deviatoric projectors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">IsotropicTensor4</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kappa</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">kappa</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -387,40 +434,7 @@
 
 <span class="sd">        $$\lambda = \dfrac{E\nu}{(1+\nu)(1-2\nu)}$$</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">C</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;4th-rank isotropic stiffness tensor</span>
-
-<span class="sd">        $$\mathbb{C}=3\kappa\mathbb{J}+2\mu\mathbb{K}$$</span>
-
-<span class="sd">        where $\mathbb{J}$ and $\mathbb{K}$ are the hydrostatic and deviatoric projectors.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">IsotropicTensor4</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kappa</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">)</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">S</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;4th-rank isotropic compliance tensor:</span>
-
-<span class="sd">        $$\mathbb{S}=\mathbb{C}^{-1} = \dfrac{1}{3\kappa}\mathbb{J}+\dfrac{1}{2\mu}\mathbb{K}$$</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">inv</span>
-
-<div class="viewcode-block" id="LinearElasticIsotropic.strain_energy">
-<a class="viewcode-back" href="../../../api/jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic.strain_energy">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">strain_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eps</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Strain energy density</span>
-
-<span class="sd">        $$\psi(\beps)=\dfrac{1}{2}\beps:\mathbb{C}:\beps$$</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        eps: SymmetricTensor2</span>
-<span class="sd">            Strain tensor</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">eps</span> <span class="o">@</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="o">@</span> <span class="n">eps</span><span class="p">))</span></div>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span></div>
 
 
 
@@ -431,6 +445,7 @@
 
     <span class="n">elasticity</span><span class="p">:</span> <span class="n">eqx</span><span class="o">.</span><span class="n">Module</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The corresponding linear elastic model.&quot;&quot;&quot;</span>
+    <span class="n">internal</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="ElasticBehavior.constitutive_update">
 <a class="viewcode-back" href="../../../api/jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.ElasticBehavior.constitutive_update">[docs]</a>

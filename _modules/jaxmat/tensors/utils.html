@@ -354,6 +354,32 @@
 <div class="viewcode-block" id="safe_fun">
 <a class="viewcode-back" href="../../../api/jaxmat.tensors.utils.html#jaxmat.tensors.utils.safe_fun">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">safe_fun</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-16</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Safely applies a function to an input, avoiding numerical issues near zero.</span>
+
+<span class="sd">    This function applies ``fun(x)`` only when the norm of ``x`` exceeds a small</span>
+<span class="sd">    tolerance ``eps``. Otherwise, it returns zero. This is useful for ensuring</span>
+<span class="sd">    numerical stability in cases where evaluating ``fun`` at or near zero could</span>
+<span class="sd">    result in undefined or unstable behavior (e.g., division by zero).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fun : Callable</span>
+<span class="sd">        The function to apply safely.</span>
+<span class="sd">    x : array-like</span>
+<span class="sd">        Input array or tensor.</span>
+<span class="sd">    norm : Callable, optional</span>
+<span class="sd">        A norm or magnitude function used to test whether ``x`` is sufficiently</span>
+<span class="sd">        large. Defaults to the identity function.</span>
+<span class="sd">    eps : float, optional</span>
+<span class="sd">        Small threshold to determine whether ``x`` is treated as nonzero.</span>
+<span class="sd">        Defaults to 1e-16.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array-like</span>
+<span class="sd">        ``fun(x)`` if ``norm(x) &gt; eps``, otherwise ``0`` (of the same shape as ``x``).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">norm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">norm</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span>
     <span class="n">nonzero_x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">eps</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
@@ -364,6 +390,25 @@
 <div class="viewcode-block" id="safe_sqrt">
 <a class="viewcode-back" href="../../../api/jaxmat.tensors.utils.html#jaxmat.tensors.utils.safe_sqrt">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">safe_sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-16</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes a numerically safe square root.</span>
+
+<span class="sd">    Ensures the argument to the square root is greater than `eps`</span>
+<span class="sd">    to avoid taking the square root of zero or negative values,</span>
+<span class="sd">    which could cause instability or NaNs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : array-like</span>
+<span class="sd">        Input array or tensor.</span>
+<span class="sd">    eps : float, optional</span>
+<span class="sd">        Minimum threshold for `x` before taking the square root. Defaults to 1e-16.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    --------</span>
+<span class="sd">    array-like</span>
+<span class="sd">        The square root of `x` for `x &gt; eps`, otherwise `eps`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nonzero_x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">eps</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">eps</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">eps</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">nonzero_x</span><span class="p">),</span> <span class="n">eps</span><span class="p">)</span></div>
 
@@ -372,6 +417,26 @@
 <div class="viewcode-block" id="safe_norm">
 <a class="viewcode-back" href="../../../api/jaxmat.tensors.utils.html#jaxmat.tensors.utils.safe_norm">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">safe_norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-16</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper around ``optax.safe_norm`` that computes a numerically stable norm.</span>
+
+<span class="sd">    This function prevents numerical instability when computing vector norms</span>
+<span class="sd">    for small magnitudes by internally applying a stability threshold.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : array-like</span>
+<span class="sd">        Input vector or tensor.</span>
+<span class="sd">    eps : float, optional</span>
+<span class="sd">        Small constant added for numerical stability. Defaults to ``1e-16``.</span>
+<span class="sd">    **kwargs:</span>
+<span class="sd">        Additional arguments passed to ``optax.safe_norm``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    array-like</span>
+<span class="sd">        The numerically stable norm of ``x``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">optax</span><span class="o">.</span><span class="n">safe_norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
@@ -379,7 +444,16 @@
 <div class="viewcode-block" id="FischerBurmeister">
 <a class="viewcode-back" href="../../../api/jaxmat.tensors.utils.html#jaxmat.tensors.utils.FischerBurmeister">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">FischerBurmeister</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Scalar Fischer-Burmeister function&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the scalar Fischer-Burmeister function.</span>
+
+<span class="sd">    The Fischer-Burmeister function is defined as:</span>
+<span class="sd">    $$\Phi(x, y) = x + y - \sqrt{x^2 + y^2}$$</span>
+
+<span class="sd">    and is commonly used in complementarity problem formulations to provide</span>
+<span class="sd">    a smooth reformulation of the complementarity conditions</span>
+<span class="sd">    $$x \geq 0, y \geq 0, xy = 0$$.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="n">safe_sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div>
 
 </pre></div>

@@ -11,13 +11,10 @@ These modules define various *material behaviors* and state update rules.
    :maxdepth: 2
 
    jaxmat.materials.behavior
-   jaxmat.materials.damage
    jaxmat.materials.elasticity
    jaxmat.materials.elastoplasticity
    jaxmat.materials.fe_fp_elastoplasticity
    jaxmat.materials.hyperelasticity
-   jaxmat.materials.plastic_surfaces
-   jaxmat.materials.viscoplastic_flows
    jaxmat.materials.viscoplasticity
 
 

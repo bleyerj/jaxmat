@@ -184,6 +184,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
+</ul>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">General resources</span></p>
 <ul class="nav bd-sidenav">
@@ -204,11 +209,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.generalized_standard.html">jaxmat.materials.generalized_standard module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/jaxmat.solvers.html">jaxmat.solvers package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -346,10 +354,10 @@
 
 
 <div class="viewcode-block" id="AbstractState">
-<a class="viewcode-back" href="../../apidocs/jaxmat/jaxmat.state.html#jaxmat.state.AbstractState">[docs]</a>
+<a class="viewcode-back" href="../../api/jaxmat.state.html#jaxmat.state.AbstractState">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AbstractState</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-<div class="viewcode-block" id="AbstractState._resolve_aliases">
-<a class="viewcode-back" href="../../apidocs/jaxmat/jaxmat.state.html#jaxmat.state.AbstractState._resolve_aliases">[docs]</a>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract base class representing mechanical states.&quot;&quot;&quot;</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_aliases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">changes</span><span class="p">):</span>
         <span class="n">alias_map</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;__alias_targets__&quot;</span><span class="p">,</span> <span class="p">{})</span>
         <span class="n">field_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span>
@@ -358,12 +366,12 @@
             <span class="n">field_name</span> <span class="o">=</span> <span class="n">alias_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">field_names</span><span class="p">:</span>
                 <span class="n">resolved</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
-        <span class="k">return</span> <span class="n">resolved</span></div>
-
+        <span class="k">return</span> <span class="n">resolved</span>
 
 <div class="viewcode-block" id="AbstractState.add">
-<a class="viewcode-back" href="../../apidocs/jaxmat/jaxmat.state.html#jaxmat.state.AbstractState.add">[docs]</a>
+<a class="viewcode-back" href="../../api/jaxmat.state.html#jaxmat.state.AbstractState.add">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">changes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Utility method to add values such as ``new_state = state.add(stress=dsig)``.&quot;&quot;&quot;</span>
         <span class="n">valid_changes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_aliases</span><span class="p">(</span><span class="n">changes</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">eqx</span><span class="o">.</span><span class="n">tree_at</span><span class="p">(</span>
             <span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">valid_changes</span><span class="p">],</span>
@@ -373,8 +381,9 @@
 
 
 <div class="viewcode-block" id="AbstractState.update">
-<a class="viewcode-back" href="../../apidocs/jaxmat/jaxmat.state.html#jaxmat.state.AbstractState.update">[docs]</a>
+<a class="viewcode-back" href="../../api/jaxmat.state.html#jaxmat.state.AbstractState.update">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">changes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Utility method to update values such as ``new_state = state.update(stress=sig)``.&quot;&quot;&quot;</span>
         <span class="n">valid_changes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_aliases</span><span class="p">(</span><span class="n">changes</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">eqx</span><span class="o">.</span><span class="n">tree_at</span><span class="p">(</span>
             <span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">valid_changes</span><span class="p">],</span>
@@ -386,8 +395,34 @@
 
 
 <div class="viewcode-block" id="SmallStrainState">
-<a class="viewcode-back" href="../../apidocs/jaxmat/jaxmat.state.html#jaxmat.state.SmallStrainState">[docs]</a>
+<a class="viewcode-back" href="../../api/jaxmat.state.html#jaxmat.state.SmallStrainState">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SmallStrainState</span><span class="p">(</span><span class="n">AbstractState</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    State representation for small-strain behaviors.</span>
+
+<span class="sd">    This class stores the current strain $\beps$ and stress $\bsig$ tensors under the assumption</span>
+<span class="sd">    of infinitesimal (small) deformations. It also supports internal state variables</span>
+<span class="sd">    such as plastic strain, damage, or other material history quantities through</span>
+<span class="sd">    the `internal` attribute.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    internal : :class:`AbstractState`, optional</span>
+<span class="sd">        Nested state object representing internal variables (e.g., plastic strain,</span>
+<span class="sd">        hardening variables, etc.). Defaults to None.</span>
+<span class="sd">    strain : :class:`SymmetricTensor2`</span>
+<span class="sd">        Symmetric second-order strain tensor $\beps$ (small-strain assumption).</span>
+<span class="sd">    stress : :class:`SymmetricTensor2`</span>
+<span class="sd">        Symmetric second-order Cauchy stress tensor $\bsig$.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    eps : :class:`SymmetricTensor2`</span>
+<span class="sd">        Alias for `strain`, allows accessing via `state.eps`.</span>
+<span class="sd">    sig : :class:`SymmetricTensor2`</span>
+<span class="sd">        Alias for `stress`, allows accessing via `state.sig`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">internal</span><span class="p">:</span> <span class="n">AbstractState</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">strain</span><span class="p">:</span> <span class="n">SymmetricTensor2</span> <span class="o">=</span> <span class="n">SymmetricTensor2</span><span class="p">()</span>
     <span class="n">stress</span><span class="p">:</span> <span class="n">SymmetricTensor2</span> <span class="o">=</span> <span class="n">SymmetricTensor2</span><span class="p">()</span>
@@ -397,31 +432,74 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">eps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for ``strain``.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">strain</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">sig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for ``stress``.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stress</span></div>
 
 
 
 <div class="viewcode-block" id="PK1_to_PK2">
-<a class="viewcode-back" href="../../apidocs/jaxmat/jaxmat.state.html#jaxmat.state.PK1_to_PK2">[docs]</a>
+<a class="viewcode-back" href="../../api/jaxmat.state.html#jaxmat.state.PK1_to_PK2">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">PK1_to_PK2</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">PK1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert the first Piola-Kirchhoff stress tensor (PK1) to the</span>
+<span class="sd">    second Piola-Kirchhoff stress tensor (PK2). Enforce symmetry explicitly.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">inv</span> <span class="o">@</span> <span class="n">PK1</span><span class="p">)</span><span class="o">.</span><span class="n">sym</span></div>
 
 
 
 <div class="viewcode-block" id="PK1_to_Cauchy">
-<a class="viewcode-back" href="../../apidocs/jaxmat/jaxmat.state.html#jaxmat.state.PK1_to_Cauchy">[docs]</a>
+<a class="viewcode-back" href="../../api/jaxmat.state.html#jaxmat.state.PK1_to_Cauchy">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">PK1_to_Cauchy</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">PK1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert the first Piola-Kirchhoff stress tensor (PK1) to the</span>
+<span class="sd">    Cauchy stress tensor. Enforce symmetry explicitly.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">PK1</span> <span class="o">@</span> <span class="n">F</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">sym</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">F</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="FiniteStrainState">
-<a class="viewcode-back" href="../../apidocs/jaxmat/jaxmat.state.html#jaxmat.state.FiniteStrainState">[docs]</a>
+<a class="viewcode-back" href="../../api/jaxmat.state.html#jaxmat.state.FiniteStrainState">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FiniteStrainState</span><span class="p">(</span><span class="n">AbstractState</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    State representation for finite-strain continuum mechanics.</span>
+
+<span class="sd">    This class encapsulates the deformation gradient $\bF$ (``F``) and first Piola-Kirchhoff</span>
+<span class="sd">    stress $\bP$ (``PK1``), along with optional internal variables. It provides convenience</span>
+<span class="sd">    properties for converting between common stress measures: second Piola-Kirchhoff</span>
+<span class="sd">    $\bS$ (``PK2``) and Cauchy $\bsig$ (``sig``) stresses.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    internal : AbstractState, optional</span>
+<span class="sd">        Nested internal state representing material history or additional</span>
+<span class="sd">        constitutive information. Defaults to None.</span>
+<span class="sd">    strain : :class:`Tensor2`</span>
+<span class="sd">        Deformation gradient $\bF$. Initialized as the identity tensor.</span>
+<span class="sd">    stress : :class:`Tensor2`</span>
+<span class="sd">        First Piola-Kirchhoff stress tensor $\bP$.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    F : :class:`Tensor2`</span>
+<span class="sd">        Alias for deformation gradient.</span>
+<span class="sd">    PK1 : :class:`Tensor2`</span>
+<span class="sd">        Alias for first Piola-Kirchhoff stress tensor.</span>
+<span class="sd">    PK2 : :class:`SymmetricTensor2`</span>
+<span class="sd">        Second Piola-Kirchhoff stress tensor $\bS$, computed via :func:`PK1_to_PK2`.</span>
+<span class="sd">    sig : :class:`SymmetricTensor2`</span>
+<span class="sd">        Cauchy stress tensor $\bsig$, computed via :func:`PK1_to_Cauchy`.</span>
+<span class="sd">    Cauchy : :class:`SymmetricTensor2`</span>
+<span class="sd">        Alias for ``sig``.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">internal</span><span class="p">:</span> <span class="n">AbstractState</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">strain</span><span class="p">:</span> <span class="n">Tensor2</span> <span class="o">=</span> <span class="n">Tensor2</span><span class="p">()</span><span class="o">.</span><span class="n">identity</span><span class="p">()</span>
     <span class="n">stress</span><span class="p">:</span> <span class="n">Tensor2</span> <span class="o">=</span> <span class="n">Tensor2</span><span class="p">()</span>
@@ -443,7 +521,6 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">sig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Divide on the right rather than on the left to preserve Tensor object due to operator dispatch priority.</span>
         <span class="k">return</span> <span class="n">eqx</span><span class="o">.</span><span class="n">filter_vmap</span><span class="p">(</span><span class="n">PK1_to_Cauchy</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">F</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PK1</span><span class="p">)</span>
 
     <span class="nd">@property</span>
@@ -453,7 +530,7 @@
 
 
 <div class="viewcode-block" id="make_batched">
-<a class="viewcode-back" href="../../apidocs/jaxmat/jaxmat.state.html#jaxmat.state.make_batched">[docs]</a>
+<a class="viewcode-back" href="../../api/jaxmat.state.html#jaxmat.state.make_batched">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">make_batched</span><span class="p">(</span><span class="n">module</span><span class="p">:</span> <span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">Nbatch</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Broadcasts all leaf arrays of a single unbatched module into a batched version.</span>
 
@@ -469,7 +546,17 @@
         <span class="n">x_</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="p">(</span><span class="n">Nbatch</span><span class="p">,)</span> <span class="o">+</span> <span class="n">x_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_broadcast</span><span class="p">,</span> <span class="n">module</span><span class="p">)</span></div>
+    <span class="n">batched_module</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_broadcast</span><span class="p">,</span> <span class="n">module</span><span class="p">)</span>
+
+    <span class="c1"># Update `_batch_size` if it exists and is static</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s2">&quot;_batch_size&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="n">_batch_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">batch_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">Nbatch</span><span class="p">,)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">batch_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">Nbatch</span><span class="p">,)</span> <span class="o">+</span> <span class="n">module</span><span class="o">.</span><span class="n">_batch_size</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">batched_module</span><span class="p">,</span> <span class="s2">&quot;_batch_size&quot;</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">batched_module</span></div>
 
 </pre></div>
 

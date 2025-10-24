@@ -189,6 +189,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -207,13 +208,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../api/jaxmat.loader.html">jaxmat.loader module</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/jaxmat.materials.html">jaxmat.materials package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.damage.html">jaxmat.materials.damage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
@@ -452,11 +450,10 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>vonMisesIsotropicHardening(
-  _batch_size=weak_f64[],
-  elastic_model=LinearElasticIsotropic(E=weak_f64[], nu=weak_f64[]),
+  elastic_model=LinearElasticIsotropic(E=f64[], nu=f64[]),
   yield_stress=VoceHardening(sig0=350.0, sigu=500.0, b=1000.0)
 )
-{&#39;E&#39;: Array(200000., dtype=float64, weak_type=True), &#39;nu&#39;: Array(0.25, dtype=float64, weak_type=True)}
+{&#39;E&#39;: Array(200000., dtype=float64), &#39;nu&#39;: Array(0.25, dtype=float64)}
 {&#39;sig0&#39;: 350.0, &#39;sigu&#39;: 500.0, &#39;b&#39;: 1000.0}
 
 Shear modulus = 80.0 GPa
@@ -486,6 +483,7 @@ Shear modulus = 80.0 GPa
 <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Equivalent plastic strain $p$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Hardening modulus $H(p)=\sigma_Y&#39;(p)$ [GPa]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -507,17 +505,8 @@ Shear modulus = 80.0 GPa
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;internal&#39;: InternalState(p=f64[]), &#39;strain&#39;: SymmetricTensor2=
-[[0. 0. 0.]
- [0. 0. 0.]
- [0. 0. 0.]], &#39;stress&#39;: SymmetricTensor2=
-[[0. 0. 0.]
- [0. 0. 0.]
- [0. 0. 0.]]}
-{&#39;p&#39;: Array(0., dtype=float64), &#39;epsp&#39;: SymmetricTensor2=
-[[0. 0. 0.]
- [0. 0. 0.]
- [0. 0. 0.]]}
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;internal&#39;: InternalState(p=f64[], epsp=SymmetricTensor2(dim=3, rank=2, _tensor=f64[3,3])), &#39;strain&#39;: SymmetricTensor2(dim=3, rank=2, _tensor=f64[3,3]), &#39;stress&#39;: SymmetricTensor2(dim=3, rank=2, _tensor=f64[3,3])}
+{&#39;p&#39;: Array(0., dtype=float64), &#39;epsp&#39;: SymmetricTensor2(dim=3, rank=2, _tensor=f64[3,3])}
 </pre></div>
 </div>
 </div>
@@ -537,17 +526,8 @@ Shear modulus = 80.0 GPa
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SymmetricTensor2=
-[[ 0. 80.  0.]
- [80.  0.  0.]
- [ 0.  0.  0.]]
-{&#39;internal&#39;: InternalState(p=f64[], epsp=SymmetricTensor2(dim=3, rank=2, _tensor=f64[3,3])), &#39;strain&#39;: SymmetricTensor2=
-[[0.     0.0005 0.    ]
- [0.0005 0.     0.    ]
- [0.     0.     0.    ]], &#39;stress&#39;: SymmetricTensor2=
-[[ 0. 80.  0.]
- [80.  0.  0.]
- [ 0.  0.  0.]]}
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SymmetricTensor2(dim=3, rank=2, _tensor=f64[3,3])
+{&#39;internal&#39;: InternalState(p=f64[], epsp=SymmetricTensor2(dim=3, rank=2, _tensor=f64[3,3])), &#39;strain&#39;: SymmetricTensor2(dim=3, rank=2, _tensor=f64[3,3]), &#39;stress&#39;: SymmetricTensor2(dim=3, rank=2, _tensor=f64[3,3])}
 </pre></div>
 </div>
 </div>
@@ -573,6 +553,7 @@ Shear modulus = 80.0 GPa
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gamma_list</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="s2">&quot;-k&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Shear distorsion $\gamma$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Shear stress $\tau$ [MPa]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -628,6 +609,7 @@ $<span class="math notranslate nohighlight">\(
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Shear distorsion $\gamma$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Tangent shear modulus $\mu_\textrm</span><span class="si">{tang}</span><span class="s2">$ [GPa]&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

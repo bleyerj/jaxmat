@@ -487,7 +487,8 @@ Hardening Materials.” CEGB Report RD/B/N731.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.constitutive_update">
 <span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplasticity.html#AmrstrongFrederickViscoplasticity.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.constitutive_update" title="Link to this definition">#</a></dt>
-<dd><p>Perform the constitutive update for a given strain increment.</p>
+<dd><p>Perform the constitutive update for a given small strain increment
+for a small-strain behavior.</p>
 <p>This abstract method defines the interface for advancing the material
 state over a time increment based on the provided strain tensor.
 Implementations should return the updated stress tensor and internal
@@ -496,9 +497,7 @@ tangent computation or subsequent analysis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>eps</strong> (<em>array_like</em>) – Strain tensor at the current integration point.
-Shape and convention depend on the model implementation (e.g., small
-strain vector form or finite strain tensor form).</p></li>
+<li><p><strong>eps</strong> (<em>array_like</em>) – Small strain tensor at the current integration point.</p></li>
 <li><p><strong>state</strong> (<em>PyTree</em>) – PyTree containing the current state variables (stress, strain and internal) of the
 material.</p></li>
 <li><p><strong>dt</strong> (<em>float</em>) – Time increment over which the update is performed.</p></li>
@@ -506,7 +505,7 @@ material.</p></li>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>stress</strong> (<em>array_like</em>) – Updated Cauchy or Kirchhoff stress tensor corresponding to <cite>eps</cite>.</p></li>
+<li><p><strong>stress</strong> (<em>array_like</em>) – Updated Cauchy stress tensor.</p></li>
 <li><p><strong>new_state</strong> (<em>PyTree</em>) – Updated state variables after the constitutive update.</p></li>
 </ul>
 </p>
@@ -598,7 +597,8 @@ and kinematic hardening and viscoplastic flow rule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxmat.materials.viscoplasticity.GenericViscoplasticity.constitutive_update">
 <span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplasticity.html#GenericViscoplasticity.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.constitutive_update" title="Link to this definition">#</a></dt>
-<dd><p>Perform the constitutive update for a given strain increment.</p>
+<dd><p>Perform the constitutive update for a given small strain increment
+for a small-strain behavior.</p>
 <p>This abstract method defines the interface for advancing the material
 state over a time increment based on the provided strain tensor.
 Implementations should return the updated stress tensor and internal
@@ -607,9 +607,7 @@ tangent computation or subsequent analysis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>eps</strong> (<em>array_like</em>) – Strain tensor at the current integration point.
-Shape and convention depend on the model implementation (e.g., small
-strain vector form or finite strain tensor form).</p></li>
+<li><p><strong>eps</strong> (<em>array_like</em>) – Small strain tensor at the current integration point.</p></li>
 <li><p><strong>state</strong> (<em>PyTree</em>) – PyTree containing the current state variables (stress, strain and internal) of the
 material.</p></li>
 <li><p><strong>dt</strong> (<em>float</em>) – Time increment over which the update is performed.</p></li>
@@ -617,7 +615,7 @@ material.</p></li>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>stress</strong> (<em>array_like</em>) – Updated Cauchy or Kirchhoff stress tensor corresponding to <cite>eps</cite>.</p></li>
+<li><p><strong>stress</strong> (<em>array_like</em>) – Updated Cauchy stress tensor.</p></li>
 <li><p><strong>new_state</strong> (<em>PyTree</em>) – Updated state variables after the constitutive update.</p></li>
 </ul>
 </p>

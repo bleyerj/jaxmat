@@ -13,7 +13,7 @@ In effect, each material model is a structured container of differentiable param
 
 ```{note}
 State variables are also represented as `equinox.Module`. Other JAX-based packages like `diffrax` or `optimistix` also use them for representing solvers for instance.
----
+```
 
 ## Hierarchical model composition
 
@@ -28,7 +28,6 @@ For example:
 
 This modular structure promotes both clarity and reusability—complex constitutive models can be built from simple, well-defined components.
 
----
 
 ## Benefits of using Equinox PyTrees
 
@@ -38,7 +37,6 @@ This modular structure promotes both clarity and reusability—complex constitut
 
 For advanced manipulation, see the [Equinox documentation](https://docs.kidger.site/equinox/all-of-equinox/).
 
----
 
 ## Common Equinox patterns in `jaxmat`
 
