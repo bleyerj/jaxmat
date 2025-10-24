@@ -6,7 +6,7 @@ from jaxmat.utils import default_value, enforce_dtype
 from jaxmat.state import AbstractState, make_batched
 from jaxmat.tensors import SymmetricTensor2, dev
 from .behavior import SmallStrainBehavior
-from .elasticity import LinearElasticIsotropic
+from .elasticity import LinearElasticIsotropic, AbstractLinearElastic
 from .plastic_surfaces import (
     AbstractPlasticSurface,
     vonMises,
@@ -16,16 +16,31 @@ import jax
 
 
 class InternalState(AbstractState):
-    """Internal state for hardening plasticity"""
+    """
+    Internal state for hardening plasticity
+    (:class:`vonMisesIsotropicHardening`, :class:`GeneralIsotropicHardening`).
+    """
 
     p: jax.Array = default_value(0.0)
+    """Cumulated plastic strain"""
     epsp: SymmetricTensor2 = eqx.field(default_factory=lambda: SymmetricTensor2())
+    """Plastic strain tensor"""
 
 
 class vonMisesIsotropicHardening(SmallStrainBehavior):
+    r"""
+    Small-strain rate-independent elastoplastic constitutive model with isotropic hardening
+    and  J2 (von Mises) plastic surface. The model assumes isotropic elasticity.
+
+    Return-mapping only requires solving a scalar non-linear equation in terms of $p$.
+    """
+
     elastic_model: LinearElasticIsotropic
+    """Linear isotropic elasticity defined by Young modulus and Poisson ratio."""
     yield_stress: eqx.Module
+    """Isotropic hardening law controlling the evolution of the yield surface size."""
     plastic_surface: AbstractPlasticSurface = vonMises()
+    """von Mises plastic surface."""
     internal: AbstractState = InternalState()
 
     @eqx.filter_jit
@@ -65,9 +80,19 @@ class vonMisesIsotropicHardening(SmallStrainBehavior):
 
 
 class GeneralIsotropicHardening(SmallStrainBehavior):
-    elastic_model: LinearElasticIsotropic
+    r"""
+    Small-strain rate-independent elastoplastic constitutive model with isotropic hardening
+    and generic plastic surface. The model does not assume isotropic elasticity.
+
+    Return-mapping requires solving a non-linear system in terms of $p$ and $\bepsp$.
+    """
+
+    elastic_model: AbstractLinearElastic
+    """Linear elastic model."""
     yield_stress: eqx.Module
+    """Isotropic hardening law controlling the evolution of the yield surface size."""
     plastic_surface: AbstractPlasticSurface
+    """Generic plastic surface."""
     internal = InternalState()
 
     @eqx.filter_jit
@@ -113,20 +138,44 @@ class GeneralIsotropicHardening(SmallStrainBehavior):
 
 
 class GeneralHardeningInternalState(AbstractState):
+    """Internal state for the :class:`GeneralHardening` model."""
+
     p: float = default_value(0.0)
+    """Cumulated plastic strain"""
     epsp: SymmetricTensor2 = eqx.field(default_factory=lambda: SymmetricTensor2())
+    """Plastic strain tensor"""
     alpha: SymmetricTensor2 = eqx.field(init=False)
+    r"""Kinematic hardening variables $\balpha_i$."""
     nvar: int = eqx.field(static=True, default=1)
+    """Number of kinematic hardening variables."""
 
     def __post_init__(self):
         self.alpha = make_batched(SymmetricTensor2(), self.nvar)
 
 
 class GeneralHardening(SmallStrainBehavior):
-    elastic_model: LinearElasticIsotropic
+    r"""
+    Small-strain rate-independent elastoplastic constitutive model with general
+    combined isotropic and kinematic hardening and generic plastic surface.
+    The model accounts for a single plastic surface but several kinematic hardening variables.
+
+    Return-mapping requires solving a non-linear system in terms of $p$, $\bepsp$ and the $\balpha_i$.
+    """
+
+    elastic_model: AbstractLinearElastic
+    """Linear elastic model."""
     yield_stress: float = enforce_dtype()
+    """Initial yield stress."""
     plastic_surface: AbstractPlasticSurface
+    """Generic plastic surface."""
     combined_hardening: eqx.Module
+    r"""
+    Combined hardening module representing a hardening potential $\psi_\textrm{h}(\balpha,p)$. 
+    Should provide two methods:
+
+    - ``combined_hardening.dalpha(alpha, p)`` returning $\dfrac{\partial \psi_\textrm{h}}{\partial \balpha}(\balpha,p)$
+    - ``combined_hardening.dp(alpha, p)`` returning $\dfrac{\partial \psi_\textrm{h}}{\partial p}(\balpha,p)$
+    """
     nvar: int = eqx.field(static=True, default=1)
     internal: AbstractState = eqx.field(init=False)
 
