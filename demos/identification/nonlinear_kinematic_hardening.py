@@ -80,6 +80,8 @@ key = jax.random.PRNGKey(15071988)
 #
 # This generic hardening behavior is implemented in the class `jaxmat.materials.GeneralHardening` which relies on an elastic model, a constant yield stress $(\sigma_0)$, a plastic surface and a combined hardening potential. The plastic surface extends `AbstractPlasticSurface` by implementing $f(\bsig,\bX)$ and also returning the plastic normal $\bn = \dfrac{\partial f}{\partial \bsig}$ and the hardening derivative $\partial_{\bX} f = \dfrac{\partial f}{\partial \bX}$. The combined hardening potential should provide the two methods `dalpha(alpha, p)` and `dp(alpha, p)`, returning respectively the two partial derivatives $\dfrac{\partial \psi_\text{h}}{\partial \balpha}$ and $\dfrac{\partial \psi_\text{h}}{\partial p}$.
 #
+# The system of evolution equations is discretized in time using a backward-Euler fully implicit scheme and the resulting system of nonlinear equations is solved using a Newton-Raphson method.
+#
 # ### Decoupled kinematic/isotropic hardening
 #
 # In the following, we particularize the behavior to decoupled hardening, assuming linear kinematic and nonlinear isotropic hardening, i.e.:
@@ -202,11 +204,11 @@ plt.ylabel(r"Shear stress $\tau$ [MPa]")
 plt.xlim(-0.02, 0.02)
 plt.ylim(-500.0, 500.0)
 plt.show()
+
+
 # -
 
-
 # For a given material model, we define the function `compute_evolution` allowing to compute the cyclic stress response as a function of a given shear strain time series. Starting from a initial state, we use `jax.lax.scan` to replace Python `for` loops and output the computed shear stress in the $x,y$ direction.
-
 
 @eqx.filter_jit
 def compute_evolution(material, gamma_list, dt=0.0):
@@ -260,8 +262,9 @@ plt.xlim(-0.025, 0.025)
 plt.ylim(-600.0, 600.0)
 plt.legend(ncol=2)
 plt.show()
-# -
 
+
+# -
 
 # ## Defining and minimizing the loss function
 #
@@ -281,7 +284,6 @@ plt.show()
 # Because the model involves variables with very different physical units (e.g. stresses in MPa, strains of order $10^{-3}$), we include a parameter-block RMS scaling (`optax.scale_by_param_block_rms`) step. This operation automatically normalizes gradient magnitudes across parameter groups, effectively preconditioning the optimization. It enables stable training while keeping all parameters expressed in interpretable physical units.
 #
 # The overall optimizer is built using `optax.chain`, where each transformation acts sequentially on the gradient:
-
 
 # +
 @eqx.filter_jit

@@ -121,4 +121,5 @@ for i, a in enumerate([2.0, 6.0, 10.0]):
     stress, new_state = batched_constitutive_update(material, eps, state, dt)
     scatter_pi_plane(stress, "x", color=f"C{i}", linewidth=0.5, label=rf"$a={int(a)}$")
 plt.legend()
+plt.show()
 ```

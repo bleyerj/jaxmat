@@ -91,6 +91,7 @@ plt.plot(p, 1e-3 * H(p), "-C3")
 plt.gca().set_ylim(bottom=0)
 plt.xlabel("Equivalent plastic strain $p$")
 plt.ylabel("Hardening modulus $H(p)=\sigma_Y'(p)$ [GPa]")
+plt.show()
 ```
 
 ## Mechanical states
@@ -133,6 +134,7 @@ for i, gamma in enumerate(gamma_list):
 plt.plot(gamma_list, tau, "-k")
 plt.xlabel(r"Shear distorsion $\gamma$")
 plt.ylabel(r"Shear stress $\tau$ [MPa]")
+plt.show()
 ```
 
 ```{code-cell} ipython3
@@ -178,4 +180,5 @@ plt.ylim(0, 90)
 plt.xlabel(r"Shear distorsion $\gamma$")
 plt.ylabel(r"Tangent shear modulus $\mu_\textrm{tang}$ [GPa]")
 plt.legend()
+plt.show()
 ```
