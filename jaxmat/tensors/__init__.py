@@ -16,8 +16,8 @@ from .tensor_utils import (
     eigenvalues,
 )
 from .linear_algebra import (
-    invariants_principal,
-    invariants_main,
+    principal_invariants,
+    main_invariants,
     pq_invariants,
-)  # FIXME: unify invariant names
+)
 from .utils import safe_norm, safe_sqrt, safe_fun

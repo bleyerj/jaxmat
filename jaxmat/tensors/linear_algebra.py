@@ -66,7 +66,7 @@ def inv33(A):
     return invA
 
 
-def invariants_principal(A):
+def principal_invariants(A):
     r"""
     Principal invariants of a 3x3 matrix $\bA$.
     $$\begin{align*}
@@ -81,7 +81,7 @@ def invariants_principal(A):
     return i1, i2, i3
 
 
-def invariants_main(A):
+def main_invariants(A):
     r"""
     Main invariants of a 3x3 matrix $\bA$:
     $$\tr(\bA),\: \tr(\bA^2),\: \tr(\bA^3)$$.

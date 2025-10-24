@@ -3,7 +3,7 @@ import jax
 import jax.numpy as jnp
 import equinox as eqx
 from jaxmat.tensors import eigenvalues
-from jaxmat.tensors.linear_algebra import invariants_principal, det33
+from jaxmat.tensors.linear_algebra import principal_invariants, det33
 from .behavior import FiniteStrainBehavior
 
 
@@ -51,7 +51,7 @@ class CompressibleNeoHookean(HyperelasticPotential):
 
     def __call__(self, F):
         C = F.T @ F
-        I1, _, I3 = invariants_principal(C)
+        I1, _, I3 = principal_invariants(C)
         J = jnp.sqrt(I3)
         return self.mu / 2 * (J ** (-2.0 / 3) * I1 - 3) + self.kappa * self.volumetric(
             J
@@ -66,7 +66,7 @@ class CompressibleMooneyRivlin(HyperelasticPotential):
 
     def __call__(self, F):
         C = F.T @ F
-        I1, I2, I3 = invariants_principal(C)
+        I1, I2, I3 = principal_invariants(C)
         J = jnp.sqrt(I3)
         return (
             0.5 * self.c1 * (I1 - 3 - 2 * jnp.log(J))
@@ -84,7 +84,7 @@ class CompressibleGhentMooneyRivlin(HyperelasticPotential):
 
     def __call__(self, F):
         C = F.T @ F
-        I1, I2, I3 = invariants_principal(C)
+        I1, I2, I3 = principal_invariants(C)
         J = jnp.sqrt(I3)
         arg = 1 - (I1 - 3 - 2 * jnp.log(J)) / self.Jm
         return (
