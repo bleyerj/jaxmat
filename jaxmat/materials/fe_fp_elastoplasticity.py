@@ -4,7 +4,7 @@ import optimistix as optx
 import lineax as lx
 from jaxmat.utils import default_value
 from jaxmat.state import AbstractState
-from jaxmat.tensors import SymmetricTensor2, dev
+from jaxmat.tensors import SymmetricTensor2, dev, safe_fun
 from jaxmat.tensors.linear_algebra import det33 as det
 from .behavior import FiniteStrainBehavior
 from .elasticity import LinearElasticIsotropic
@@ -13,16 +13,23 @@ from jaxmat.tensors.utils import FischerBurmeister as FB
 
 
 class InternalState(AbstractState):
+    """Internal state for :class:`FeFpJ2Plasticity`."""
+
     p: float = default_value(0.0)
+    """Cumulated plastic strain $p$."""
     be_bar: SymmetricTensor2 = SymmetricTensor2.identity()
+    r"""Isochoric elastic left Cauchy-Green strain $\bar{\bb}^\text{e}$."""
 
 
 class FeFpJ2Plasticity(FiniteStrainBehavior):
     """Material model based on https://onlinelibrary.wiley.com/doi/epdf/10.1002/nme.6843"""
 
     elastic_model: LinearElasticIsotropic
+    """Isotropic elastic model."""
     yield_stress: eqx.Module
+    """Isotropic hardening law controlling the evolution of the yield surface size."""
     plastic_surface: AbstractPlasticSurface = vonMises()
+    """von Mises plastic surface."""
     internal: AbstractState = InternalState()
     # use Levenberg-Marquardt to improve convergence robustness
     solver = optx.LevenbergMarquardt(
@@ -41,7 +48,7 @@ class FeFpJ2Plasticity(FiniteStrainBehavior):
         def solve_state(F):
             # relative strain and elastic predictor
             f = F @ F_old.inv
-            f_bar = f * jnp.clip(det(f), min=1e-6) ** (-1 / 3)
+            f_bar = f * safe_fun(lambda J: J ** (-1 / 3), det(f))
             be_bar_trial = f_bar.T @ be_bar_old @ f_bar
 
             def residual(dy, args):
