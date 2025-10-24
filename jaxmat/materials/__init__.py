@@ -13,7 +13,6 @@ from .elastoplasticity import (
     vonMisesIsotropicHardening,
     GeneralIsotropicHardening,
     GeneralHardening,
-    GeneralPlasticity,
 )
 from .fe_fp_elastoplasticity import FeFpJ2Plasticity
 from .viscoplasticity import AmrstrongFrederickViscoplasticity, GenericViscoplasticity
