@@ -102,4 +102,14 @@ def make_batched(module: eqx.Module, Nbatch: int) -> eqx.Module:
         x_ = jnp.asarray(x)
         return jnp.broadcast_to(x_, (Nbatch,) + x_.shape)
 
-    return jax.tree.map(_broadcast, module)
+    batched_module = jax.tree.map(_broadcast, module)
+
+    # Update `_batch_size` if it exists and is static
+    if hasattr(module, "_batch_size"):
+        if module._batch_size is None:
+            batch_size = (Nbatch,)
+        else:
+            batch_size = (Nbatch,) + module._batch_size
+        object.__setattr__(batched_module, "_batch_size", batch_size)
+
+    return batched_module

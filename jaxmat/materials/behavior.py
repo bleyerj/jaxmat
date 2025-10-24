@@ -20,7 +20,7 @@ class AbstractBehavior(eqx.Module):
     adjoint: optx.AbstractAdjoint = eqx.field(
         static=True, init=False, default=DEFAULT_SOLVERS[1]
     )
-    _batch_size: jax.Array = eqx.field(default=0, init=False, converter=jnp.asarray)
+    _batch_size: tuple = eqx.field(static=True, init=False, default=None)
 
     @abstractmethod
     def constitutive_update(self, eps, state, dt):
@@ -67,17 +67,16 @@ class AbstractBehavior(eqx.Module):
     def _init_state(self, cls, Nbatch=None):
         state = cls(internal=self.internal)
         if Nbatch is None:
-            if (
-                len(self._batch_size.shape) == 1
-            ):  # Handle the case where the material has already been batched
+            if self._batch_size is None:
+                return cls(internal=self.internal)
+            else:
+                # Handle the case where the material has already been batched
                 # we first batch cls without internals
-                Nbatch = self._batch_size.shape[0]
+                Nbatch = self._batch_size[0]
                 state = make_batched(cls(), Nbatch)
                 # we reaffect the already batched internals
                 state = eqx.tree_at(lambda s: s.internal, state, self.internal)
                 return state
-            else:
-                return cls(internal=self.internal)
         else:
             return make_batched(state, Nbatch)
 
