@@ -73,6 +73,7 @@ sphinx:
       undoc-members: true
       show-inheritance: true
       exclude-members: "__init__,__repr__,__eq__, __len__"
+    autodoc_member_order: "bysource"
     apidoc_separate_modules: True
     napoleon_use_admonition_for_examples: True
     napoleon_use_admonition_for_notes: True
