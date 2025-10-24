@@ -5,7 +5,7 @@ import pytest
 
 
 def test_small_strain():
-    material = jm.ElasticBehavior(jm.LinearElasticIsotropic(E=1e3, nu=0.3))
+    material = jm.ElasticBehavior(elasticity=jm.LinearElasticIsotropic(E=1e3, nu=0.3))
 
     loading1 = ImposedLoading("small_strain", epsxx=0.02, sigxy=5.0)
     loading2 = ImposedLoading("small_strain", sigxx=10.0)
@@ -39,13 +39,14 @@ def test_finite_strain():
     material = jm.Hyperelasticity(jm.CompressibleNeoHookean(mu=mu, kappa=kappa))
 
     lamb = 2.5
-    lamb_ = 1 / jnp.sqrt(lamb)  # 1.0
+    lamb_ = 1 / jnp.sqrt(lamb)
     C = jnp.asarray([lamb**2, lamb_**2, lamb_**2])
     iC = 1 / C
     J = jnp.sqrt(jnp.prod(C))
 
-    S = mu * (1 - iC)  # + kappa * (J - 1) * J * iC
-    sig = mu / J * (C - 1)  # + kappa * (J - 1)
+    I1 = jnp.sum(C)
+    S = mu * (1 - J ** (-2 / 3) * I1 / 3 * iC)
+    sig = mu / J * (C - J ** (-2 / 3) * I1 / 3)
 
     loading1 = ImposedLoading("finite_strain", FXX=lamb, FYY=lamb_, FZZ=lamb_)
     loading2 = ImposedLoading(

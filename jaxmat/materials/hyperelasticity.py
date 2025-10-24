@@ -19,6 +19,7 @@ class HyperelasticPotential(eqx.Module):
         return (F.inv @ self.PK1(F)).sym
 
     def Cauchy(self, F):
+        # Divide on the right rather than on the left to preserve Tensor object due to operator dispatch priority.
         return (self.PK1(F) @ F.T).sym / det33(F)
 
 
@@ -28,7 +29,7 @@ class Hyperelasticity(FiniteStrainBehavior):
 
     def constitutive_update(self, F, state, dt):
         PK1 = self.potential.PK1(F)
-        new_state = state.update(stress=PK1)
+        new_state = state.update(stress=PK1, strain=F)
         return PK1, new_state
 
 

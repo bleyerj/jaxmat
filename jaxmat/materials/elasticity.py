@@ -85,6 +85,7 @@ class ElasticBehavior(SmallStrainBehavior):
 
     elasticity: eqx.Module
     """The corresponding linear elastic model."""
+    internal = None
 
     def constitutive_update(self, eps, state, dt):
         sig = self.elasticity.C @ eps
