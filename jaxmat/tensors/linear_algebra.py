@@ -6,23 +6,30 @@ from .utils import safe_norm, safe_sqrt
 
 
 def dim(A):
-    """Dimension of a n-rank tensor, assuming shape=(dim, dim, ..., dim)."""
+    r"""Dimension ``dim`` of a n-rank matrix $\bA$, assuming ``shape=(dim, dim, ..., dim)``."""
     return A.shape[0]
 
 
 def tr(A):
-    """Trace of a n-dim 2nd-rank tensor."""
+    r"""
+    Trace of a matrix $\bA$.
+    $$\tr(\bA)=A_{ii}$$
+    """
     return jnp.trace(A)
 
 
 def dev(A):
-    """Deviatoric part of a n-dim 2nd-rank tensor."""
+    r"""
+    Deviatoric part of a $d\times d$ matrix $\bA$.
+    $$\dev(\bA) = \bA - \dfrac{1}{d}\bI$$
+    """
     d = dim(A)
     Id = jnp.eye(d)
     return A - tr(A) / d * Id
 
 
 def det33(A):
+    r"""Determinant $\det(\bA)$ of a 3x3 matrix $\bA$, computed using explicit formula."""
     a11, a12, a13 = A[0, 0], A[0, 1], A[0, 2]
     a21, a22, a23 = A[1, 0], A[1, 1], A[1, 2]
     a31, a32, a33 = A[2, 0], A[2, 1], A[2, 2]
@@ -34,7 +41,7 @@ def det33(A):
 
 
 def inv33(A):
-    """Explicit inverse of a 3x3 matrix A using cofactor formula."""
+    r"""Inverse $\bA^{-1}$ of a 3x3 matrix $\bA$, explicitly computed using cofactor formula."""
     # Minors and cofactors
     a11, a12, a13 = A[0, 0], A[0, 1], A[0, 2]
     a21, a22, a23 = A[1, 0], A[1, 1], A[1, 2]
@@ -60,7 +67,14 @@ def inv33(A):
 
 
 def invariants_principal(A):
-    """Principal invariants of a real 3x3 tensor A."""
+    r"""
+    Principal invariants of a 3x3 matrix $\bA$.
+    $$\begin{align*}
+    I_1 &= \tr(\bA)\\
+    I_2 &= \frac{1}{2}(\tr(\bA)^2-\tr(\bA^2))\\
+    I_3 &= \det(\bA)
+    \end{align*}$$
+    """
     i1 = jnp.trace(A)
     i2 = (jnp.trace(A) ** 2 - jnp.trace(A @ A)) / 2
     i3 = det33(A)
@@ -68,7 +82,10 @@ def invariants_principal(A):
 
 
 def invariants_main(A):
-    """J-invariants: trace(A), trace(A^2), trace(A^3)."""
+    r"""
+    Main invariants of a 3x3 matrix $\bA$:
+    $$\tr(\bA),\: \tr(\bA^2),\: \tr(\bA^3)$$.
+    """
     j1 = jnp.trace(A)
     j2 = jnp.trace(A.dot(A))
     j3 = jnp.trace(A.dot(A).dot(A))
@@ -89,6 +106,49 @@ def pq_invariants(sig):
 
 @partial(jax.jit, static_argnums=1)
 def eig33(A, rtol=1e-16):
+    """
+    Computes the eigenvalues and eigenvalue derivatives of a 3 x 3 real symmetric matrix.
+
+    This function implements a numerically stable eigendecomposition for 3 x 3 symmetric
+    matrices based on the method by Harari & Albocher (2023)
+
+    The implementation avoids catastrophic cancellation and loss of precision in
+    cases where two or more eigenvalues are nearly equal.
+
+    Parameters
+    ----------
+    A : array_like of shape (3, 3)
+        Real symmetric matrix whose eigenvalues (and optionally eigenvalue dyads)
+        are to be computed.
+    rtol : float, optional
+        Relative tolerance used to determine near-isotropic or nearly repeated
+        eigenvalue cases. Default is `1e-16`.
+
+    Returns
+    -------
+    eigvals : jax.Array of shape (3,)
+        Eigenvalues of ``A\`, ordered in a consistent but unspecified order.
+    eigendyads : jax.Array of shape (3, 3, 3)
+        Derivatives of the eigenvalues with respect to the components of ``A\`,
+        obtained via forward-mode automatic differentiation (`jax.jacfwd`).
+
+
+    .. note::
+    - The method distinguishes three cases:
+        1. Near-isotropic case (``s < rtol * ||A||``): all eigenvalues are nearly equal.
+        2. Two nearly equal eigenvalues: handled by a special branch to ensure stability.
+        3. Three distinct eigenvalues: computed via trigonometric relations.
+    - The implementation uses ``safe_norm`` and ``safe_sqrt`` for numerical safety.
+    - Input ``A`` must be symmetric; asymmetry may lead to inaccurate results.
+
+    .. admonition:: References
+        :class: seealso
+
+        Harari, I., & Albocher, U. (2023). Computation of eigenvalues of a real,
+        symmetric 3 x 3 matrix with particular reference to the pernicious case of
+        two nearly equal eigenvalues. *International Journal for Numerical Methods in
+        Engineering*, 124(5), 1089-1110.
+    """
     # def dyad_3_distinct(A, lamb):
     #     """
     #     Hartmann, S. (2019) “Computational Aspects of the Symmetric Eigenvalue Problem of Second Order Tensors”,
@@ -109,10 +169,7 @@ def eig33(A, rtol=1e-16):
 
     def compute_eigvals_HarariAlbocher(A):
         """
-        Eigendecomposition of 3x3 symmetric matrix based on
-        Harari, I., & Albocher, U. (2023). Computation of eigenvalues of a real,
-        symmetric 3× 3 matrix with particular reference to the pernicious case of two nearly equal eigenvalues.
-        International Journal for Numerical Methods in Engineering, 124(5), 1089-1110.
+        Eigendecomposition of 3x3 symmetric matrix based on Harari, I., & Albocher, U. (2023)
         """
         A = jnp.asarray(A)
         norm = safe_norm(A)
@@ -168,9 +225,9 @@ def eig33(A, rtol=1e-16):
 
 
 def _sqrtm(C):
-    """
-    Unified expression for sqrt and inverse sqrt of a symmetric matrix $\bC$,
-    see Simo & Hugues, Computational Inelasticity, p.244
+    r"""
+    Unified expression for sqrt and inverse sqrt of a symmetric matrix $\bC$
+    Simo, J. C., & Hughes, T. J. (1998). Computational inelasticity., p.244
     """
     Id = jnp.eye(3)
     C2 = C @ C
@@ -186,29 +243,50 @@ def _sqrtm(C):
 
 
 def sqrtm(A):
-    """Matrix square-root of a symmetric 3x3 matrix."""
+    r"""
+    Matrix square-root $\bA^{1/2}$ of a symmetric 3x3 matrix $\bA$.
+    Computed using the unified square root and inverse square root
+    formula, see Simo & Hughes, 1998.
+
+    .. admonition:: References
+        :class: seealso
+
+        Simo, J. C., & Hughes, T. J. (1998). Computational inelasticity., p.244
+    """
     return _sqrtm(A)[0]
 
 
 def inv_sqrtm(A):
-    """Matrix inverse square-root of a symmetric 3x3 matrix."""
+    r"""
+    Matrix inverse square-root $\bA^{-1/2}$ of a symmetric 3x3 matrix $\bA$.
+
+    Computed using the unified square root and inverse square root
+    formula, see Simo & Hughes, 1998.
+
+    .. admonition:: References
+        :class: seealso
+
+        Simo, J. C., & Hughes, T. J. (1998). Computational inelasticity., p.244
+    """
     return _sqrtm(A)[1]
 
 
 def isotropic_function(fun, A):
-    r"""Computes an isotropic function of a symmetric 3x3 matrix.
+    r"""Computes an isotropic function of a symmetric 3x3 matrix $\bA$.
 
     Parameters
     ----------
     fun : callable
-        A scalar function f(x)
+        A scalar function $f(x)$
     A : jax.Array
         A symmetric 3x3 matrix
 
     Returns
     -------
     jax.Array
-        A new 3x3 matrix such that `f_A = sum_i f(\lambda_i) n_i \times n_i`
+        A new 3x3 matrix $f_{\bA}$ such that
+        $$f_{\bA} = \sum_{i=1}^3 f(\lambda_i) \bn_i \otimes \bn_i$$
+        where $\lambda_i$ and $\bn_i$ are the eigenvalues and eigenvectors of $\bA$.
     """
     eigvals, eigendyads = eig33(A)
     f = fun(eigvals)
@@ -216,15 +294,15 @@ def isotropic_function(fun, A):
 
 
 def expm(A):
-    """Matrix exponential of a symmetric 3x3 matrix."""
+    r"""Matrix exponential $\exp(\bA)$ of a symmetric 3x3 matrix $\bA$."""
     return isotropic_function(jnp.exp, A)
 
 
 def logm(A):
-    """Matrix logarithm of a symmetric 3x3 matrix."""
+    r"""Matrix logarithm $\log(\bA)$ of a symmetric 3x3 matrix $\bA$."""
     return isotropic_function(jnp.log, A)
 
 
 def powm(A, m):
-    """Matrix power of exponent m of a symmetric 3x3 matrix."""
+    r"""Matrix power $\bA^m$ of exponent $m$ of a symmetric 3x3 matrix $\bA$."""
     return isotropic_function(lambda x: jnp.power(x, m), A)
