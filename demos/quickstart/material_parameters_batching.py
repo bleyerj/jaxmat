@@ -1,6 +1,7 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: md:myst,py,ipynb
 #     text_representation:
 #       extension: .py
 #       format_name: light
@@ -14,12 +15,13 @@
 
 # # Batching across material parameters
 #
-# In the previous section, we focused on batching over applied strain and internal state variables, assuming fixed material properties. Here, we extend this idea to batch across **material parameters** as well, which is useful when studying the effect of uncertainty or variability in material behavior.  
+# In the previous section, we focused on batching over applied strain and internal state variables, assuming fixed material properties. Here, we extend this idea to batch across **material parameters** as well, which is useful when studying the effect of uncertainty or variability in material behavior.
 #
 # We return to our initial elastoplastic material with Voce hardening. Our goal is to investigate how variations in the hardening parameters affect the response under a monotonous shear loading. In this example, we consider the response of a single physical point, but by sampling $N$ independent realizations of the material parameters, we effectively compute the response of a batch of $N$ stochastic material points.
 
 # +
 import jax
+
 jax.config.update("jax_platform_name", "cpu")
 import jax.numpy as jnp
 import equinox as eqx
@@ -28,17 +30,22 @@ import matplotlib.pyplot as plt
 from jaxmat.tensors import SymmetricTensor2
 from jaxmat.state import make_batched
 
+
 class VoceHardening(eqx.Module):
-    sig0: float
-    sigu: float
-    b: float
+    sig0: float = eqx.field(converter=jnp.asarray)
+    sigu: float = eqx.field(converter=jnp.asarray)
+    b: float = eqx.field(converter=jnp.asarray)
+
     def __call__(self, p):
         return self.sig0 + (self.sigu - self.sig0) * (1 - jnp.exp(-self.b * p))
 
-elasticity = jm.LinearElasticIsotropic(E=200e3, nu=0.25)
-hardening = VoceHardening(sig0=350., sigu=500.0, b=1e3)
 
-material = jm.vonMisesIsotropicHardening(elastic_model=elasticity, yield_stress=hardening)
+elasticity = jm.LinearElasticIsotropic(E=200e3, nu=0.25)
+hardening = VoceHardening(sig0=350.0, sigu=500.0, b=1e3)
+
+material = jm.vonMisesIsotropicHardening(
+    elastic_model=elasticity, yield_stress=hardening
+)
 
 print("A single material instance:", material)
 # -
@@ -47,7 +54,7 @@ print("A single material instance:", material)
 
 key = jax.random.PRNGKey(42)
 N = 100
-b_values = 10**(3 * jax.random.lognormal(key, sigma=0.05, shape=(N,)))
+b_values = 10 ** (3 * jax.random.lognormal(key, sigma=0.05, shape=(N,)))
 sorting = jnp.argsort(b_values)
 
 # Finally, we convert our single material instance into a batched material where `make_batched` replicates the material PyTree $N$ times along a new batch axis. `eqx.tree_at` updates the $b$ parameter in each instance with the sampled stochastic values.
@@ -61,22 +68,19 @@ print(f"A batch of {N} material instances:", batched_material)
 
 # +
 state = batched_material.init_state()
-gamma_list = jnp.linspace(0, 1e-2, 50)
+gamma_list = jnp.linspace(0.0, 1e-2, 50)
 tau = jnp.zeros((N, len(gamma_list)))
 
 for i, gamma in enumerate(gamma_list):
     # Define shear strain tensor
-    new_eps = jnp.array([[0, gamma/2, 0], 
-                         [gamma/2, 0, 0], 
-                         [0, 0, 0]])
+    new_eps = jnp.array([[0, gamma / 2, 0], [gamma / 2, 0, 0], [0, 0, 0]])
     new_eps = SymmetricTensor2(tensor=new_eps)
-    
+
     # Compute batch stress update
     new_stress, new_state = eqx.filter_vmap(
-        jm.vonMisesIsotropicHardening.constitutive_update,
-        in_axes=(0, None, 0, None)
+        jm.vonMisesIsotropicHardening.constitutive_update, in_axes=(0, None, 0, None)
     )(batched_material, new_eps, state, 0.0)
-    
+
     state = new_state
     tau = tau.at[:, i].set(new_stress[:, 0, 1])
 # -
@@ -94,7 +98,9 @@ colors = cmap(jnp.linspace(0, 1, N))
 for i, color in enumerate(colors):
     plt.plot(gamma_list, tau[sorting[i], :].T, linewidth=1.0, alpha=0.25, color=color)
 
-plt.errorbar(gamma_list, jnp.mean(tau, axis=0), jnp.std(tau, axis=0), color="k", alpha=0.5)
+plt.errorbar(
+    gamma_list, jnp.mean(tau, axis=0), jnp.std(tau, axis=0), color="k", alpha=0.5
+)
 plt.xlabel(r"Shear distortion $\gamma$")
 plt.ylabel(r"Shear stress $\tau$ [MPa]")
 plt.title("Batch response under material parameter variability")

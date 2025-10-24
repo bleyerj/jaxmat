@@ -1,6 +1,7 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: md:myst,py,ipynb
 #     text_representation:
 #       extension: .py
 #       format_name: light
@@ -12,283 +13,209 @@
 #     name: python3
 # ---
 
+# # Identification of a nonlinear isotropic hardening rule
+#
+# In this demo, we use stress/plastic strain data of a steel material to show how to identify a nonlinear isotropic hardening rule with `jaxmat`.
+#
+# ```{admonition} Objectives
+# :class: important
+#
+# In particular, this demo shows:
+#
+# - How to define a trainable hardening rule based on an extended phenomenological expression
+# - How to define a trainable hardening rule based on an Input-Convex Neural Network
+# - How to train both models on a subset of noisy data
+# - How to evaluate the models outside the training range
+# ```
+#
+# ## Loading and preprocessing experimental data
+#
+# We start by importing the necessary packages and loading experimental uniaxial stress–strain data from a steel sample. Data has been obtained from the X100 data used in [the MEALOR "Simulation of ductile fracture models" lab session](https://github.com/MEALORII/TP_MEALOR/blob/main/TP5_Ductile_fracture/TP5_GTN_model.ipynb), see also {cite:p}`besson2023mealor`. The data represent the evolution of the yield stress as a function of equivalent plastic strain $p$.
+#
+# To test the robustness of our identification procedure, we artificially add a small amount of Gaussian noise to both the stress and plastic strain values. The noisy data are then sorted and truncated to define a training subset limited to $p<5.10^{-2}$, leaving the rest for extrapolation.
+#
+# The plot below shows the ground-truth stress–strain curve and the noisy data used for training.
+
 # +
 import jax
 
 jax.config.update("jax_platform_name", "cpu")
-# jax.config.update("jax_disable_jit", True)
+import jax.numpy as jnp
 
 from pathlib import Path
-from time import time
 import matplotlib.pyplot as plt
 import numpy as np
 import equinox as eqx
-from optax.tree_utils import tree_scale
-import jax.numpy as jnp
-
-from jaxmat.loader import ImposedLoading, global_solve
-from jaxmat.tensors import SymmetricTensor2
-import jaxmat.materials as jm
-
+import optimistix as optx
+from jaxmat.nn.icnn import ICNN, ICNNSkip
 
 current_path = Path().resolve()
 
-
-# @eqx.filter_jit
-# def compute_elastoplasticity(material, loading, state):
-#     Eps = state.strain
-
-#     eps_dot = 8e-2
-#     imposed_eps = 0
-
-#     Nsteps = 21
-#     # times = jnp.concatenate((jnp.linspace(0, 0.04, 11), jnp.linspace(0.04, 1.0, Nsteps)[1:]))
-#     times = jnp.linspace(0, 0.04, 20)
-#     t = 0
-#     results = jnp.zeros((len(times), 2))
-#     for i, dt in enumerate(jnp.diff(times)):
-#         t += dt
-#         imposed_eps += eps_dot * dt
-
-#         # FIXME: need to start with non zero Eps
-#         def setxx(Eps):
-#             return SymmetricTensor2(tensor=Eps.tensor.at[0, 0].set(imposed_eps))
-
-#         Eps = setxx(Eps)
-#         loading = eqx.tree_at(
-#             lambda l: l.eps_vals, loading, replace_fn=lambda x: x.at[0].set(imposed_eps)
-#         )
-
-#         Eps, state, _ = global_solve(Eps, state, loading, material, dt, in_axes=None)
-#         # print(state.stress)
-
-
-#         sig = state.stress
-#         p = state.internal.p
-#         results = results.at[i + 1, :].set(jnp.array([p, sig[0, 0]]))
-#     return results
-# @eqx.filter_jit
-def compute_elastoplasticity(material, loading, state):
-    Eps = state.strain
-    eps_dot = 8e-2
-    imposed_eps0 = 0.0
-
-    Nsteps_p = 20
-    times = jnp.concatenate(
-        (jnp.linspace(0, 0.04, 11), jnp.linspace(0.04, 1.0, Nsteps_p)[1:])
-    )
-    dts = jnp.diff(times)
-    Nsteps = dts.shape[0] + 1
-
-    results_init = jnp.zeros((Nsteps, 2))
-
-    def step_fn(carry, dt):
-        imposed_eps, t, Eps, state, results, i = carry
-
-        t = t + dt
-        imposed_eps = imposed_eps + eps_dot * dt
-
-        # Update Eps[0, 0]
-        # new_tensor = Eps.tensor.at[0, 0].set(imposed_eps)
-        # new_tensor = new_tensor.at[1, 1].set(-imposed_eps/2)
-        # new_tensor = new_tensor.at[2, 2].set(-imposed_eps/2)
-        # new_tensor = jnp.diag(jnp.array([imposed_eps, -imposed_eps/2, -imposed_eps/2]))
-        # Eps = SymmetricTensor2(tensor=new_tensor)
-
-        # Sig, state = material.constitutive_update(Eps, state, dt)
-
-        # Update loading.eps_vals[0]
-        loading_updated = eqx.tree_at(
-            lambda l: l.eps_vals, loading, replace_fn=lambda x: x.at[0].set(imposed_eps)
-        )
-
-        Eps, state, _ = global_solve(
-            Eps, state, loading_updated, material, dt, in_axes=None
-        )
-
-        sig = state.stress
-        p = state.internal.p
-        results = results.at[i + 1].set(jnp.array([p, sig[0, 0]]))
-
-        return (imposed_eps, t, Eps, state, results, i + 1), None
-
-    carry_init = (imposed_eps0, 0.0, Eps, state, results_init, 0)
-
-    (imposed_eps, t, Eps, state, results_final, _), _ = jax.lax.scan(
-        step_fn, carry_init, dts
-    )
-
-    return results_final
-
-
-E, nu = 200e3, 0.3
-elastic_model = jm.LinearElasticIsotropic(E, nu)
-
-
-class YieldStress(eqx.Module):
-    sig0: float = eqx.field(converter=jnp.asarray)
-    sigu: float = eqx.field(converter=jnp.asarray)
-    b: float = eqx.field(converter=jnp.asarray)
-
-    def __call__(self, p):
-        return self.sig0 + (self.sigu - self.sig0) * (1 - jnp.exp(-self.b * p))
-
-
-class YieldStress2(eqx.Module):
-    sig0: float = eqx.field(converter=jnp.asarray)
-    dsigu: jax.Array
-    b: jax.Array
-    scale: float = eqx.field(static=True)
-
-    def __call__(self, p):
-        return self.scale * self.sig0 + jnp.sum(
-            self.scale * self.dsigu * (1 - jnp.exp(-self.scale * self.b * p))
-        )
-
-
 data = np.loadtxt(current_path / "X100.csv", skiprows=1, delimiter=",")
+epsp = data[:, 0]
+sig = data[:, 1]
+
+key = jax.random.key(42)
+key1, key2 = jax.random.split(key)
+
+noise_level = 0.01
+sig_noise = sig + noise_level * max(sig) * jax.random.normal(key1, shape=(len(sig),))
+epsp_noise = epsp + noise_level * max(epsp) * jax.random.normal(key2, shape=(len(sig),))
+
+# sort and extract training region
+indices = jnp.argsort(epsp_noise)[epsp_noise < 5e-2]
+epsp_noise = epsp_noise[indices]
+sig_noise = sig_noise[indices]
+
+plt.figure()
+plt.plot(epsp, sig, "-k", label="Ground truth")
+plt.plot(epsp_noise, sig_noise, "xC3", linewidth=1, label="Training data")
+plt.xlim(0, 8e-2)
+plt.xlabel("Equivalent plastic strain $p$")
+plt.ylabel("Yield stress $\sigma_Y$")
+plt.legend()
 
 
-def interpolate_data(epsp):
-    return jnp.interp(epsp, data[:, 0], data[:, 1])
+# -
 
-
-# ys =  YieldStress(sig0=450.0, sigu=900.0, b=100.0)
-# ys = YieldStress2(sig0=5.0, dsigu=jnp.asarray([4.5,2.0,0.0]), b=jnp.asarray([1.0, 0.1, 10.0]), scale=100.0)
-ys = YieldStress2(sig0=5.0, dsigu=jnp.asarray([4.5]), b=jnp.asarray([1.0]), scale=100.0)
-material = jm.vonMisesIsotropicHardening(elastic_model, ys)
-
-material = jax.tree.map(
-    lambda x: jnp.asarray(x, dtype=jnp.float64), material
-)  # force strong type for optax
-
-loading = ImposedLoading(epsxx=0.0)
-# state = material.init_state()
-
-# results = compute_elastoplasticity(material, loading, state)
-
-# def eval_loss(results, data):
-#     epsp = results[:, 0]
-#     sig = results[:, 1]
-#     data_interp = interpolate_data(epsp)
-#     return jnp.mean(jnp.square(sig - data_interp))
-
-# def compute_loss(material, loading, state):
-#     results = compute_elastoplasticity(material, loading, state)
-#     loss = eval_loss(results,data)
-#     return loss, results
-
-# loss_grad = jax.grad(compute_loss, argnums=0, has_aux=True)
-
-# dloss, results = loss_grad(material, loading, state)
-
-# +
-# from timeit import timeit
-# duration = timeit(lambda: compute_elastoplasticity(material, loading, state),number=1)
-# print("Compilation time", duration)
-# duration = timeit(lambda: compute_elastoplasticity(material, loading, state),number=1)
-# print("Execution time", duration)
-
-
-# +
-def plot_results(ax, results):
-    epsp = results[:, 0]
-    sig = results[:, 1]
-    ax.plot(epsp, sig, "-", alpha=0.5)
-
-
-fig, ax = plt.subplots()
-ax.plot(data[:, 0], data[:, 1], "-k")
-# plot_results(ax, results)
-ax.set_xlim(0, 3e-2)
+# ## Defining candidate hardening laws
+#
+# We now define two different models for the isotropic hardening law $\sigma_Y(p)$:
+#
+# - Phenomenological Sum-Exponential Model:
+#     We consider an extended version of the Voce hardening law, where the yield stress saturates exponentially with plastic strain. We consider here a sum of $N$ saturating exponentials written as:
+#
+#     $$\sigma_Y(p) = \sigma_0 + \sum_{i=1}^N \Delta\sigma_i \big(1 - \exp(-b_i p))$$
+#
+#     where the parameters $\sigma_0$, $\Delta\sigma_i$, and $b_i$ are learnable. Here $\sigma_0$ denotes the initial yield stress and $\sigma_0+\sum_i \Delta\sigma_i$ will correspond to the saturating stress.
+#
+# - Neural Network Model based on Input-Convex Neural Networks (ICNN):
+#     This model enforces convexity of the potential by construction, guaranteeing a monotonic hardening behavior. The yield stress is defined as the gradient of the convex potential output by the ICNN, see also [](../neural_network_models/hyperelastic_PANN).
+#
+# Both models are implemented as `equinox.Module`s, allowing them to be handled as JAX PyTrees and trained with differentiable solvers.
 
 # +
+class SumExpHardening(eqx.Module):
+    sig0: float = eqx.field(converter=jnp.asarray)
+    dsigu: jax.Array = eqx.field(converter=jnp.asarray)
+    b: jax.Array = eqx.field(converter=jnp.asarray)
+
+    def __call__(self, p):
+        return self.sig0 + jnp.sum(self.dsigu * (1 - jnp.exp(-self.b * p)))
 
 
-key = jax.random.PRNGKey(42)
-
-N = 4
-ys = YieldStress2(
-    sig0=4.0,
-    dsigu=jax.random.lognormal(key, shape=(N,)),
-    b=jax.random.lognormal(key, shape=(N,)),
-    scale=100.0,
+N = 20
+sumexp_hardening = SumExpHardening(
+    sig0=1000.0,
+    dsigu=jax.random.lognormal(key1, shape=(N,)),
+    b=jax.random.lognormal(key2, shape=(N,)),
 )
-material = jm.vonMisesIsotropicHardening(elastic_model, ys)
 
-material = jax.tree.map(
-    lambda x: jnp.asarray(x, dtype=jnp.float64), material
-)  # force strong type for optax
 
+class HardeningICNN(ICNN):
+    def __call__(self, p):
+        return jax.grad(super().__call__)(p)
+
+
+icnn_hardening = HardeningICNN(0, [N], key)
+
+
+# -
+
+# ## Defining the loss function
+#
+# The training process minimizes a loss function that measures the mean squared error between the predicted yield stress $\hat{\sigma}_Y(p)$ and the noisy data. To prevent overfitting and promote smoothness, we add an $L^1$ regularization term on the model parameters:
+#
+# $$
+# \mathcal{L}(\btheta) = \dfrac{1}{M}\sum_{k=1}^M (\hat\sigma_Y(p^{(k)};\btheta) - \sigma_Y^\text{data,(k)})^2 + \dfrac{\gamma}{n_{\btheta}} \|\btheta\|_1
+# $$
+#
+# where $M$ is the number of data points, $\gamma$ is a regularization coefficient and $n_{\btheta}$ denotes the total number of parameters in $\btheta$. Both the data loss and the regularization term are written in a fully JAX-compatible manner.
 
 # +
-import optimistix as optx
-import lineax as lx
+def loss(hardening, args):
+    epsp, sig = args
+    M = len(epsp)
+    sig_hat = jax.vmap(hardening)(epsp)
+    return jnp.sum((sig_hat - sig) ** 2) / M, sig_hat
 
-solver = optx.LevenbergMarquardt(
-    rtol=1e-8,
+
+def l1reg(hardening):
+    flat_params, _ = jax.flatten_util.ravel_pytree(eqx.filter(hardening, eqx.is_array))
+    return jnp.linalg.vector_norm(flat_params, ord=1) / len(flat_params)
+
+
+@eqx.filter_jit
+def total_loss(hardening, args):
+    data, gamma = args
+    data_loss, sig_hat = loss(hardening, data)
+    return data_loss + gamma * l1reg(hardening), sig_hat
+
+
+# -
+
+# ## Training procedure
+#
+# We use the quasi-Newton BFGS solver from the `optimistix` library to minimize the total loss. The BFGS algorithm is particularly well suited for small parameter sets and ensures fast convergence without the need for stochastic optimization.
+#
+# Each hardening model (phenomenological and ICNN-based) is trained independently on the same noisy dataset.
+#
+# During optimization, the solver adjusts the parameters to best reproduce the measured yield stress values. Thanks to JAX’s automatic differentiation, all gradients are computed exactly and efficiently.
+#
+# Note that $\gamma$ is a hyperparameter which must be tuned by chosen before hand by the user.
+
+# +
+gamma = 0.1
+solver = optx.BFGS(
+    rtol=1e-6,
     atol=1e-8,
-    linear_solver=lx.AutoLinearSolver(well_posed=False),
-    verbose=frozenset({"loss", "step_size"}),
+    #  verbose=frozenset({"loss", "step_size"})
 )
 
+training_data = (epsp_noise, sig_noise)
+for hardening in [sumexp_hardening, icnn_hardening]:
+    sol = optx.minimise(
+        total_loss,
+        solver,
+        hardening,
+        args=(training_data, gamma),
+        has_aux=True,
+        throw=False,
+        max_steps=1000,
+    )
+    trained_hardening = sol.value
+    sig_hat = sol.aux
 
-# @eqx.filter_jit
-def loss(material, args):
-    loading, state = args
-    material = jax.tree.map(lambda x: jnp.maximum(0, x), material)
-    results = compute_elastoplasticity(material, loading, state)
-    epsp = results[:, 0]
-    sig = results[:, 1]
-    data_interp = interpolate_data(epsp)
-    return (sig - data_interp) / jnp.max(data_interp), results
+    plt.figure()
+    plt.plot(epsp, sig, "-k", label="Ground truth")
+    plt.plot(epsp_noise, sig_hat, "-C3", alpha=0.75, label="Prediction")
 
-
-loss_grad = jax.jacrev(loss, argnums=0, has_aux=True)
-
-
-new_material = tree_scale(1.0, material)
-state = new_material.init_state()
-dloss, results = loss_grad(new_material, (loading, state))
-print(dloss.elastic_model.E)
-print(dloss.elastic_model.nu)
-print(dloss.yield_stress.b)
-print(dloss.yield_stress.sig0)
-print(dloss.yield_stress.dsigu)
-print(dloss.yield_stress.b)
-# (loss, results), dloss = loss_grad(new_material, (loading, state))
-
-# +
-# epsp = results[:, 0]
-# sig = results[:, 1]
-# data_interp = interpolate_data(epsp)
-# (sig-data_interp)/jnp.linalg.norm(data_interp,ord=jnp.inf)
+    epsp_extrap = jnp.linspace(5e-2, 14e-2, 100)
+    sig_extrap = jax.vmap(trained_hardening)(epsp_extrap)
+    plt.plot(
+        epsp_extrap, sig_extrap, "-C0", linewidth=4, alpha=0.5, label="Extrapolation"
+    )
+    plt.xlim(0, 14e-2)
+    plt.ylim(400, 1e3)
+    plt.xlabel("Equivalent plastic strain $p$")
+    plt.ylabel("Yield stress $\sigma_Y$")
+    plt.title(hardening.__class__.__name__)
+    plt.legend()
 # -
 
-sol = optx.least_squares(
-    loss,
-    solver,
-    new_material,
-    args=(loading, state),
-    has_aux=True,
-    throw=False,
-    max_steps=200,
-    options={"jac": "bwd"},
-)
-
-# +
-results = sol.aux
-
-fig, ax = plt.subplots()
-ax.plot(data[:, 0], data[:, 1], "-k")
-epsp = results[:, 0]
-sig = results[:, 1]
-ax.plot(
-    epsp,
-    sig,
-    "-oC3",
-)
-ax.set_xlim(0, 8e-2)
-# -
-
-sol.value.plastic_surface.tol
+# ## Results and extrapolation
+#
+# After training, we visualize the predicted hardening curves along with the experimental data. The solid black line shows the ground truth, red crosses the noisy training data,
+#
+# We also evaluate the models beyond the training range ($p > 5.10^{-2}$) in blue to test their extrapolation capability.
+# This is important for constitutive modeling since we often need to predict material behavior beyond the calibrated strain range.
+#
+# Typically, the phenomenological `SumExp` model performs well within the training range but may struggle when generalizing outside the training region. We can check that tuning the hyperparameter $\gamma$ or increasing the number of terms does not yield much better results. In this case, it is preferable to use a relatively small number $N$ of terms in the expansion.
+#
+# Conversely, the ICNN-based model can learn more flexible shapes while still guaranteeing monotonic hardening, thanks to its convexity constraint. As a result, it performs relatively well outside the training range in general.
+#
+# ## References
+#
+# ```{bibliography}
+# :filter: docname in docnames
+# ```

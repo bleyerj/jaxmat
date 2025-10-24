@@ -1,6 +1,7 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: md:myst,py,ipynb
 #     text_representation:
 #       extension: .py
 #       format_name: light
