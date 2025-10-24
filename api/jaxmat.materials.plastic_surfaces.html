@@ -64,7 +64,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="jaxmat.materials.viscoplastic_flows module" href="jaxmat.materials.viscoplastic_flows.html" />
-    <link rel="prev" title="jaxmat.materials.hyperelasticity module" href="jaxmat.materials.hyperelasticity.html" />
+    <link rel="prev" title="jaxmat.materials.viscoplasticity module" href="jaxmat.materials.viscoplasticity.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -208,13 +208,10 @@
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.loader.html">jaxmat.loader module</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="jaxmat.materials.html">jaxmat.materials package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.damage.html">jaxmat.materials.damage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">jaxmat.materials.plastic_surfaces module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
@@ -379,10 +376,12 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.safe_zero"><code class="docutils literal notranslate"><span class="pre">safe_zero()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface"><code class="docutils literal notranslate"><span class="pre">AbstractPlasticSurface</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface.normal"><code class="docutils literal notranslate"><span class="pre">AbstractPlasticSurface.normal()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.vonMises"><code class="docutils literal notranslate"><span class="pre">vonMises</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.DruckerPrager"><code class="docutils literal notranslate"><span class="pre">DruckerPrager</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.DruckerPrager.alpha"><code class="docutils literal notranslate"><span class="pre">DruckerPrager.alpha</span></code></a></li>
 </ul>
@@ -392,8 +391,6 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.Tresca"><code class="docutils literal notranslate"><span class="pre">Tresca</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.safe_zero"><code class="docutils literal notranslate"><span class="pre">safe_zero()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.vonMises"><code class="docutils literal notranslate"><span class="pre">vonMises</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -407,6 +404,12 @@
                   
   <section id="module-jaxmat.materials.plastic_surfaces">
 <span id="jaxmat-materials-plastic-surfaces-module"></span><h1>jaxmat.materials.plastic_surfaces module<a class="headerlink" href="#module-jaxmat.materials.plastic_surfaces" title="Link to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxmat.materials.plastic_surfaces.safe_zero">
+<span class="sig-name descname"><span class="pre">safe_zero</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/plastic_surfaces.html#safe_zero"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.plastic_surfaces.safe_zero" title="Link to this definition">#</a></dt>
+<dd><p>Decorator for yield surfaces to avoid NaNs for zero stress in both fwd and bwd AD.</p>
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxmat.materials.plastic_surfaces.AbstractPlasticSurface">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AbstractPlasticSurface</span></span><a class="reference internal" href="../_modules/jaxmat/materials/plastic_surfaces.html#AbstractPlasticSurface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface" title="Link to this definition">#</a></dt>
@@ -426,6 +429,17 @@
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.materials.plastic_surfaces.vonMises">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vonMises</span></span><a class="reference internal" href="../_modules/jaxmat/materials/plastic_surfaces.html#vonMises"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.plastic_surfaces.vonMises" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface" title="jaxmat.materials.plastic_surfaces.AbstractPlasticSurface"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlasticSurface</span></code></a></p>
+<p>von Mises yield surface</p>
+<p><div class="math notranslate nohighlight">
+\[\sqrt{\dfrac{3}{2}\bs:\bs}\]</div>
+</p>
+<p>where <span class="math notranslate nohighlight">\(\bs = \dev(\bsig)\)</span></p>
 </dd></dl>
 
 <dl class="py class">
@@ -486,23 +500,6 @@ yield surface (friction effects).</p>
 <p>with <span class="math notranslate nohighlight">\(\sigma_\text{I}\)</span> being the stress principal values.</p>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="jaxmat.materials.plastic_surfaces.safe_zero">
-<span class="sig-name descname"><span class="pre">safe_zero</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/plastic_surfaces.html#safe_zero"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.plastic_surfaces.safe_zero" title="Link to this definition">#</a></dt>
-<dd><p>Decorator for yield surfaces to avoid NaNs for zero stress in both fwd and bwd AD.</p>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.plastic_surfaces.vonMises">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vonMises</span></span><a class="reference internal" href="../_modules/jaxmat/materials/plastic_surfaces.html#vonMises"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.plastic_surfaces.vonMises" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface" title="jaxmat.materials.plastic_surfaces.AbstractPlasticSurface"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractPlasticSurface</span></code></a></p>
-<p>von Mises yield surface</p>
-<p><div class="math notranslate nohighlight">
-\[\sqrt{\dfrac{3}{2}\bs:\bs}\]</div>
-</p>
-<p>where <span class="math notranslate nohighlight">\(\bs = \dev(\bsig)\)</span></p>
-</dd></dl>
-
 </section>
 
     <script type="text/x-thebe-config">
@@ -536,12 +533,12 @@ yield surface (friction effects).</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="jaxmat.materials.hyperelasticity.html"
+       href="jaxmat.materials.viscoplasticity.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">jaxmat.materials.hyperelasticity module</p>
+        <p class="prev-next-title">jaxmat.materials.viscoplasticity module</p>
       </div>
     </a>
     <a class="right-next"
@@ -570,10 +567,12 @@ yield surface (friction effects).</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.safe_zero"><code class="docutils literal notranslate"><span class="pre">safe_zero()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface"><code class="docutils literal notranslate"><span class="pre">AbstractPlasticSurface</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface.normal"><code class="docutils literal notranslate"><span class="pre">AbstractPlasticSurface.normal()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.vonMises"><code class="docutils literal notranslate"><span class="pre">vonMises</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.DruckerPrager"><code class="docutils literal notranslate"><span class="pre">DruckerPrager</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.DruckerPrager.alpha"><code class="docutils literal notranslate"><span class="pre">DruckerPrager.alpha</span></code></a></li>
 </ul>
@@ -583,8 +582,6 @@ yield surface (friction effects).</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.Tresca"><code class="docutils literal notranslate"><span class="pre">Tresca</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.safe_zero"><code class="docutils literal notranslate"><span class="pre">safe_zero()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.plastic_surfaces.vonMises"><code class="docutils literal notranslate"><span class="pre">vonMises</span></code></a></li>
 </ul>
   </nav></div>
 

@@ -187,6 +187,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -205,13 +206,10 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">jaxmat.loader module</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="jaxmat.materials.html">jaxmat.materials package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.damage.html">jaxmat.materials.damage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
@@ -382,10 +380,10 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.ImposedLoading.strain_mask"><code class="docutils literal notranslate"><span class="pre">ImposedLoading.strain_mask</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.global_solve"><code class="docutils literal notranslate"><span class="pre">global_solve()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.residual"><code class="docutils literal notranslate"><span class="pre">residual()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.solve_mechanical_state"><code class="docutils literal notranslate"><span class="pre">solve_mechanical_state()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.stack_loadings"><code class="docutils literal notranslate"><span class="pre">stack_loadings()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.solve_mechanical_state"><code class="docutils literal notranslate"><span class="pre">solve_mechanical_state()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.global_solve"><code class="docutils literal notranslate"><span class="pre">global_solve()</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -422,11 +420,6 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jaxmat.loader.global_solve">
-<span class="sig-name descname"><span class="pre">global_solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Eps0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loading_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">None,</span> <span class="pre">None)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/loader.html#global_solve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.loader.global_solve" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.loader.residual">
 <span class="sig-name descname"><span class="pre">residual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/loader.html#residual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.loader.residual" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
@@ -442,6 +435,16 @@
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="jaxmat.loader.stack_loadings">
+<span class="sig-name descname"><span class="pre">stack_loadings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loadings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/loader.html#stack_loadings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.loader.stack_loadings" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>loadings</strong> (<em>list</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.loader.solve_mechanical_state">
 <span class="sig-name descname"><span class="pre">solve_mechanical_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loading_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/loader.html#solve_mechanical_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.loader.solve_mechanical_state" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
@@ -452,14 +455,9 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jaxmat.loader.stack_loadings">
-<span class="sig-name descname"><span class="pre">stack_loadings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loadings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/loader.html#stack_loadings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.loader.stack_loadings" title="Link to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>loadings</strong> (<em>list</em>)</p>
-</dd>
-</dl>
-</dd></dl>
+<dt class="sig sig-object py" id="jaxmat.loader.global_solve">
+<span class="sig-name descname"><span class="pre">global_solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Eps0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loading_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">None,</span> <span class="pre">None)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/loader.html#global_solve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.loader.global_solve" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 </section>
 
@@ -534,10 +532,10 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.ImposedLoading.strain_mask"><code class="docutils literal notranslate"><span class="pre">ImposedLoading.strain_mask</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.global_solve"><code class="docutils literal notranslate"><span class="pre">global_solve()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.residual"><code class="docutils literal notranslate"><span class="pre">residual()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.solve_mechanical_state"><code class="docutils literal notranslate"><span class="pre">solve_mechanical_state()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.stack_loadings"><code class="docutils literal notranslate"><span class="pre">stack_loadings()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.solve_mechanical_state"><code class="docutils literal notranslate"><span class="pre">solve_mechanical_state()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.loader.global_solve"><code class="docutils literal notranslate"><span class="pre">global_solve()</span></code></a></li>
 </ul>
   </nav></div>
 

@@ -206,13 +206,10 @@
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.loader.html">jaxmat.loader module</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="jaxmat.materials.html">jaxmat.materials package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.damage.html">jaxmat.materials.damage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
@@ -397,13 +394,24 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html">jaxmat.tensors.generic_tensors module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.basis"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.basis</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.coeffs"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.coeffs</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.eval"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.eval()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.inv"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.inv</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.kappa"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.kappa</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.mu"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.mu</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.dim"><code class="docutils literal notranslate"><span class="pre">Tensor.dim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.rank"><code class="docutils literal notranslate"><span class="pre">Tensor.rank</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.shape"><code class="docutils literal notranslate"><span class="pre">Tensor.shape</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.tensor"><code class="docutils literal notranslate"><span class="pre">Tensor.tensor</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.T"><code class="docutils literal notranslate"><span class="pre">Tensor.T</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.array"><code class="docutils literal notranslate"><span class="pre">Tensor.array</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.array_shape"><code class="docutils literal notranslate"><span class="pre">Tensor.array_shape</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2"><code class="docutils literal notranslate"><span class="pre">Tensor2</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.dim"><code class="docutils literal notranslate"><span class="pre">Tensor2.dim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.rank"><code class="docutils literal notranslate"><span class="pre">Tensor2.rank</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.identity"><code class="docutils literal notranslate"><span class="pre">Tensor2.identity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.sym"><code class="docutils literal notranslate"><span class="pre">Tensor2.sym</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.inv"><code class="docutils literal notranslate"><span class="pre">Tensor2.inv</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.eigenvalues"><code class="docutils literal notranslate"><span class="pre">Tensor2.eigenvalues</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.T"><code class="docutils literal notranslate"><span class="pre">Tensor2.T</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a><ul>
@@ -411,75 +419,64 @@
 <li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor2.is_symmetric"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor2.is_symmetric()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.symmetric_kelvin_mandel_index_map"><code class="docutils literal notranslate"><span class="pre">symmetric_kelvin_mandel_index_map()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4.dim"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.dim</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4.rank"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.rank</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4.identity"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.identity()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4.J"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.J()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4.K"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.K()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4.array_shape"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.array_shape</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4.dim"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.dim</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4.identity"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.identity()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4.inv"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.inv</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4.is_symmetric"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.is_symmetric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4.rank"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.rank</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor4.inv"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.inv</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.T"><code class="docutils literal notranslate"><span class="pre">Tensor.T</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.array"><code class="docutils literal notranslate"><span class="pre">Tensor.array</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.array_shape"><code class="docutils literal notranslate"><span class="pre">Tensor.array_shape</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.dim"><code class="docutils literal notranslate"><span class="pre">Tensor.dim</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.rank"><code class="docutils literal notranslate"><span class="pre">Tensor.rank</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.shape"><code class="docutils literal notranslate"><span class="pre">Tensor.shape</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.tensor"><code class="docutils literal notranslate"><span class="pre">Tensor.tensor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.kappa"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.kappa</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.mu"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.mu</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.basis"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.basis</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.coeffs"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.coeffs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.eval"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.eval()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.inv"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.inv</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2"><code class="docutils literal notranslate"><span class="pre">Tensor2</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.T"><code class="docutils literal notranslate"><span class="pre">Tensor2.T</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.dim"><code class="docutils literal notranslate"><span class="pre">Tensor2.dim</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.eigenvalues"><code class="docutils literal notranslate"><span class="pre">Tensor2.eigenvalues</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.identity"><code class="docutils literal notranslate"><span class="pre">Tensor2.identity()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.inv"><code class="docutils literal notranslate"><span class="pre">Tensor2.inv</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.rank"><code class="docutils literal notranslate"><span class="pre">Tensor2.rank</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2.sym"><code class="docutils literal notranslate"><span class="pre">Tensor2.sym</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.symmetric_kelvin_mandel_index_map"><code class="docutils literal notranslate"><span class="pre">symmetric_kelvin_mandel_index_map()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html">jaxmat.tensors.linear_algebra module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.det33"><code class="docutils literal notranslate"><span class="pre">det33()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.dev"><code class="docutils literal notranslate"><span class="pre">dev()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.dim"><code class="docutils literal notranslate"><span class="pre">dim()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.eig33"><code class="docutils literal notranslate"><span class="pre">eig33()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.expm"><code class="docutils literal notranslate"><span class="pre">expm()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.tr"><code class="docutils literal notranslate"><span class="pre">tr()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.dev"><code class="docutils literal notranslate"><span class="pre">dev()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.det33"><code class="docutils literal notranslate"><span class="pre">det33()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.inv33"><code class="docutils literal notranslate"><span class="pre">inv33()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.principal_invariants"><code class="docutils literal notranslate"><span class="pre">principal_invariants()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.main_invariants"><code class="docutils literal notranslate"><span class="pre">main_invariants()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.pq_invariants"><code class="docutils literal notranslate"><span class="pre">pq_invariants()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.eig33"><code class="docutils literal notranslate"><span class="pre">eig33()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.sqrtm"><code class="docutils literal notranslate"><span class="pre">sqrtm()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.inv_sqrtm"><code class="docutils literal notranslate"><span class="pre">inv_sqrtm()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.isotropic_function"><code class="docutils literal notranslate"><span class="pre">isotropic_function()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.expm"><code class="docutils literal notranslate"><span class="pre">expm()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.logm"><code class="docutils literal notranslate"><span class="pre">logm()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.main_invariants"><code class="docutils literal notranslate"><span class="pre">main_invariants()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.powm"><code class="docutils literal notranslate"><span class="pre">powm()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.pq_invariants"><code class="docutils literal notranslate"><span class="pre">pq_invariants()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.principal_invariants"><code class="docutils literal notranslate"><span class="pre">principal_invariants()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.sqrtm"><code class="docutils literal notranslate"><span class="pre">sqrtm()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.tr"><code class="docutils literal notranslate"><span class="pre">tr()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html">jaxmat.tensors.tensor_utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.polar"><code class="docutils literal notranslate"><span class="pre">polar()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.sym"><code class="docutils literal notranslate"><span class="pre">sym()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.skew"><code class="docutils literal notranslate"><span class="pre">skew()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.axl"><code class="docutils literal notranslate"><span class="pre">axl()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.tr"><code class="docutils literal notranslate"><span class="pre">tr()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.dev"><code class="docutils literal notranslate"><span class="pre">dev()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.dev_vect"><code class="docutils literal notranslate"><span class="pre">dev_vect()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.eigenvalues_jvp"><code class="docutils literal notranslate"><span class="pre">eigenvalues_jvp()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.polar"><code class="docutils literal notranslate"><span class="pre">polar()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.skew"><code class="docutils literal notranslate"><span class="pre">skew()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.stretch_tensor"><code class="docutils literal notranslate"><span class="pre">stretch_tensor()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.sym"><code class="docutils literal notranslate"><span class="pre">sym()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.tr"><code class="docutils literal notranslate"><span class="pre">tr()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.eigenvalues_jvp"><code class="docutils literal notranslate"><span class="pre">eigenvalues_jvp()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.tensors.utils.html">jaxmat.tensors.utils module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.utils.html#jaxmat.tensors.utils.FischerBurmeister"><code class="docutils literal notranslate"><span class="pre">FischerBurmeister()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.utils.html#jaxmat.tensors.utils.safe_fun"><code class="docutils literal notranslate"><span class="pre">safe_fun()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.utils.html#jaxmat.tensors.utils.safe_norm"><code class="docutils literal notranslate"><span class="pre">safe_norm()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.utils.html#jaxmat.tensors.utils.safe_sqrt"><code class="docutils literal notranslate"><span class="pre">safe_sqrt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.utils.html#jaxmat.tensors.utils.safe_norm"><code class="docutils literal notranslate"><span class="pre">safe_norm()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.tensors.utils.html#jaxmat.tensors.utils.FischerBurmeister"><code class="docutils literal notranslate"><span class="pre">FischerBurmeister()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -63,7 +63,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/jaxmat.materials.viscoplastic_flows';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="jaxmat.materials.viscoplasticity module" href="jaxmat.materials.viscoplasticity.html" />
+    <link rel="next" title="jaxmat.solvers package" href="jaxmat.solvers.html" />
     <link rel="prev" title="jaxmat.materials.plastic_surfaces module" href="jaxmat.materials.plastic_surfaces.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -208,13 +208,10 @@
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.loader.html">jaxmat.loader module</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="jaxmat.materials.html">jaxmat.materials package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.damage.html">jaxmat.materials.damage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">jaxmat.materials.viscoplastic_flows module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
@@ -379,16 +376,20 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening"><code class="docutils literal notranslate"><span class="pre">VoceHardening</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.sig0"><code class="docutils literal notranslate"><span class="pre">VoceHardening.sig0</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.sigu"><code class="docutils literal notranslate"><span class="pre">VoceHardening.sigu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.b"><code class="docutils literal notranslate"><span class="pre">VoceHardening.b</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.NortonFlow"><code class="docutils literal notranslate"><span class="pre">NortonFlow</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.NortonFlow.K"><code class="docutils literal notranslate"><span class="pre">NortonFlow.K</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.NortonFlow.m"><code class="docutils literal notranslate"><span class="pre">NortonFlow.m</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.AbstractKinematicHardening"><code class="docutils literal notranslate"><span class="pre">AbstractKinematicHardening</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.AbstractKinematicHardening.nvars"><code class="docutils literal notranslate"><span class="pre">AbstractKinematicHardening.nvars</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.AbstractKinematicHardening.sig_eff"><code class="docutils literal notranslate"><span class="pre">AbstractKinematicHardening.sig_eff()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.C"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.C</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.gamma"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.gamma</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.nvars"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.nvars</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.sig_eff"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.sig_eff()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening"><code class="docutils literal notranslate"><span class="pre">LinearKinematicHardening</span></code></a><ul class="visible nav section-nav flex-column">
@@ -397,15 +398,11 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.sig_eff"><code class="docutils literal notranslate"><span class="pre">LinearKinematicHardening.sig_eff()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.NortonFlow"><code class="docutils literal notranslate"><span class="pre">NortonFlow</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.NortonFlow.K"><code class="docutils literal notranslate"><span class="pre">NortonFlow.K</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.NortonFlow.m"><code class="docutils literal notranslate"><span class="pre">NortonFlow.m</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening"><code class="docutils literal notranslate"><span class="pre">VoceHardening</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.b"><code class="docutils literal notranslate"><span class="pre">VoceHardening.b</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.sig0"><code class="docutils literal notranslate"><span class="pre">VoceHardening.sig0</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.sigu"><code class="docutils literal notranslate"><span class="pre">VoceHardening.sigu</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.C"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.C</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.gamma"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.gamma</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.nvars"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.nvars</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.sig_eff"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.sig_eff()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -422,6 +419,65 @@
   <section id="module-jaxmat.materials.viscoplastic_flows">
 <span id="jaxmat-materials-viscoplastic-flows-module"></span><h1>jaxmat.materials.viscoplastic_flows module<a class="headerlink" href="#module-jaxmat.materials.viscoplastic_flows" title="Link to this heading">#</a></h1>
 <dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.VoceHardening">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VoceHardening</span></span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplastic_flows.html#VoceHardening"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.VoceHardening" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Voce hardening model for stress-strain behavior.</p>
+<p><div class="math notranslate nohighlight">
+\[
+\sigma_Y(p)=\sigma_0 + (\sigma_\text{u}-\sigma_0)(1-\exp(-bp))
+\]</div>
+</p>
+<div class="seealso admonition">
+<p class="admonition-title">References</p>
+<ul class="simple">
+<li><p>Voce, E. (1955). “A Practical Strain-Hardening Function.” Metallurgia, 51, 219-226.</p></li>
+</ul>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.VoceHardening.sig0">
+<span class="sig-name descname"><span class="pre">sig0</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.sig0" title="Link to this definition">#</a></dt>
+<dd><p>Initial yield stress <span class="math notranslate nohighlight">\(\sigma_0\)</span>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.VoceHardening.sigu">
+<span class="sig-name descname"><span class="pre">sigu</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.sigu" title="Link to this definition">#</a></dt>
+<dd><p>Saturation stress at large strains <span class="math notranslate nohighlight">\(\sigma_\text{u}\)</span>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.VoceHardening.b">
+<span class="sig-name descname"><span class="pre">b</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.b" title="Link to this definition">#</a></dt>
+<dd><p>Rate of hardedning <span class="math notranslate nohighlight">\(b\)</span>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.NortonFlow">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NortonFlow</span></span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplastic_flows.html#NortonFlow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.NortonFlow" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>A Norton viscoplastic flow with overstress.</p>
+<p><div class="math notranslate nohighlight">
+\[\dot{\beps}^\text{vp} = \left\langle\dfrac{f(\bsig) - \sigma_y}{K}\right\rangle_+^m\]</div>
+</p>
+<p>where <span class="math notranslate nohighlight">\(f(\bsig)-\sigma_y\)</span> is the overstress, <span class="math notranslate nohighlight">\(\langle \cdot\rangle_+\)</span> is the positive part.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.NortonFlow.K">
+<span class="sig-name descname"><span class="pre">K</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.NortonFlow.K" title="Link to this definition">#</a></dt>
+<dd><p>Characteristic stress <span class="math notranslate nohighlight">\(K\)</span> of the Norton flow.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.NortonFlow.m">
+<span class="sig-name descname"><span class="pre">m</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.NortonFlow.m" title="Link to this definition">#</a></dt>
+<dd><p>Norton power-law exponent</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.AbstractKinematicHardening">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AbstractKinematicHardening</span></span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplastic_flows.html#AbstractKinematicHardening"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.AbstractKinematicHardening" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
@@ -435,6 +491,37 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.AbstractKinematicHardening.sig_eff">
 <span class="sig-name descname"><span class="pre">sig_eff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplastic_flows.html#AbstractKinematicHardening.sig_eff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.AbstractKinematicHardening.sig_eff" title="Link to this definition">#</a></dt>
+<dd><p>Effective stress <span class="math notranslate nohighlight">\(\bsig-\sum_i \bX_i\)</span> where <span class="math notranslate nohighlight">\(\bX_i\)</span> is the <span class="math notranslate nohighlight">\(i\)</span>-th backstress.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.LinearKinematicHardening">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LinearKinematicHardening</span></span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplastic_flows.html#LinearKinematicHardening"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Linear kinematic hardening model.</p>
+<p><div class="math notranslate nohighlight">
+\[\dot{\bX} = \dfrac{2}{3}H\dot{\bepsp}\]</div>
+</p>
+<div class="seealso admonition">
+<p class="admonition-title">References</p>
+<p>Prager, W. (1956). A new method of analyzing stresses and strains in work-hardening plastic solids.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.H">
+<span class="sig-name descname"><span class="pre">H</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.H" title="Link to this definition">#</a></dt>
+<dd><p>Linear kinematic hardening modulus</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.nvars">
+<span class="sig-name descname"><span class="pre">nvars</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.nvars" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.sig_eff">
+<span class="sig-name descname"><span class="pre">sig_eff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplastic_flows.html#LinearKinematicHardening.sig_eff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.sig_eff" title="Link to this definition">#</a></dt>
 <dd><p>Effective stress <span class="math notranslate nohighlight">\(\bsig-\sum_i \bX_i\)</span> where <span class="math notranslate nohighlight">\(\bX_i\)</span> is the <span class="math notranslate nohighlight">\(i\)</span>-th backstress.</p>
 </dd></dl>
 
@@ -495,96 +582,6 @@ of plasticity, 7(7), 661-678.</p>
 
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.LinearKinematicHardening">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LinearKinematicHardening</span></span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplastic_flows.html#LinearKinematicHardening"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>Linear kinematic hardening model.</p>
-<p><div class="math notranslate nohighlight">
-\[\dot{\bX} = \dfrac{2}{3}H\dot{\bepsp}\]</div>
-</p>
-<div class="seealso admonition">
-<p class="admonition-title">References</p>
-<p>Prager, W. (1956). A new method of analyzing stresses and strains in work-hardening plastic solids.</p>
-</div>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.H">
-<span class="sig-name descname"><span class="pre">H</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.H" title="Link to this definition">#</a></dt>
-<dd><p>Linear kinematic hardening modulus</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.nvars">
-<span class="sig-name descname"><span class="pre">nvars</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.nvars" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.sig_eff">
-<span class="sig-name descname"><span class="pre">sig_eff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplastic_flows.html#LinearKinematicHardening.sig_eff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.sig_eff" title="Link to this definition">#</a></dt>
-<dd><p>Effective stress <span class="math notranslate nohighlight">\(\bsig-\sum_i \bX_i\)</span> where <span class="math notranslate nohighlight">\(\bX_i\)</span> is the <span class="math notranslate nohighlight">\(i\)</span>-th backstress.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.NortonFlow">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NortonFlow</span></span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplastic_flows.html#NortonFlow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.NortonFlow" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>A Norton viscoplastic flow with overstress.</p>
-<p><div class="math notranslate nohighlight">
-\[\dot{\beps}^\text{vp} = \left\langle\dfrac{f(\bsig) - \sigma_y}{K}\right\rangle_+^m\]</div>
-</p>
-<p>where <span class="math notranslate nohighlight">\(f(\bsig)-\sigma_y\)</span> is the overstress, <span class="math notranslate nohighlight">\(\langle \cdot\rangle_+\)</span> is the positive part.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.NortonFlow.K">
-<span class="sig-name descname"><span class="pre">K</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.NortonFlow.K" title="Link to this definition">#</a></dt>
-<dd><p>Characteristic stress <span class="math notranslate nohighlight">\(K\)</span> of the Norton flow.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.NortonFlow.m">
-<span class="sig-name descname"><span class="pre">m</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.NortonFlow.m" title="Link to this definition">#</a></dt>
-<dd><p>Norton power-law exponent</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.VoceHardening">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VoceHardening</span></span><a class="reference internal" href="../_modules/jaxmat/materials/viscoplastic_flows.html#VoceHardening"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.VoceHardening" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>Voce hardening model for stress-strain behavior.</p>
-<p><div class="math notranslate nohighlight">
-\[
-\sigma_Y(p)=\sigma_0 + (\sigma_\text{u}-\sigma_0)(1-\exp(-bp))
-\]</div>
-</p>
-<div class="seealso admonition">
-<p class="admonition-title">References</p>
-<ul class="simple">
-<li><p>Voce, E. (1955). “A Practical Strain-Hardening Function.” Metallurgia, 51, 219-226.</p></li>
-</ul>
-</div>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.VoceHardening.b">
-<span class="sig-name descname"><span class="pre">b</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.b" title="Link to this definition">#</a></dt>
-<dd><p>Rate of hardedning <span class="math notranslate nohighlight">\(b\)</span>.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.VoceHardening.sig0">
-<span class="sig-name descname"><span class="pre">sig0</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.sig0" title="Link to this definition">#</a></dt>
-<dd><p>Initial yield stress <span class="math notranslate nohighlight">\(\sigma_0\)</span>.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplastic_flows.VoceHardening.sigu">
-<span class="sig-name descname"><span class="pre">sigu</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.sigu" title="Link to this definition">#</a></dt>
-<dd><p>Saturation stress at large strains <span class="math notranslate nohighlight">\(\sigma_\text{u}\)</span>.</p>
-</dd></dl>
-
-</dd></dl>
-
 </section>
 
     <script type="text/x-thebe-config">
@@ -627,11 +624,11 @@ of plasticity, 7(7), 661-678.</p>
       </div>
     </a>
     <a class="right-next"
-       href="jaxmat.materials.viscoplasticity.html"
+       href="jaxmat.solvers.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">jaxmat.materials.viscoplasticity module</p>
+        <p class="prev-next-title">jaxmat.solvers package</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -652,16 +649,20 @@ of plasticity, 7(7), 661-678.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening"><code class="docutils literal notranslate"><span class="pre">VoceHardening</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.sig0"><code class="docutils literal notranslate"><span class="pre">VoceHardening.sig0</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.sigu"><code class="docutils literal notranslate"><span class="pre">VoceHardening.sigu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.b"><code class="docutils literal notranslate"><span class="pre">VoceHardening.b</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.NortonFlow"><code class="docutils literal notranslate"><span class="pre">NortonFlow</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.NortonFlow.K"><code class="docutils literal notranslate"><span class="pre">NortonFlow.K</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.NortonFlow.m"><code class="docutils literal notranslate"><span class="pre">NortonFlow.m</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.AbstractKinematicHardening"><code class="docutils literal notranslate"><span class="pre">AbstractKinematicHardening</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.AbstractKinematicHardening.nvars"><code class="docutils literal notranslate"><span class="pre">AbstractKinematicHardening.nvars</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.AbstractKinematicHardening.sig_eff"><code class="docutils literal notranslate"><span class="pre">AbstractKinematicHardening.sig_eff()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.C"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.C</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.gamma"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.gamma</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.nvars"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.nvars</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.sig_eff"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.sig_eff()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening"><code class="docutils literal notranslate"><span class="pre">LinearKinematicHardening</span></code></a><ul class="visible nav section-nav flex-column">
@@ -670,15 +671,11 @@ of plasticity, 7(7), 661-678.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening.sig_eff"><code class="docutils literal notranslate"><span class="pre">LinearKinematicHardening.sig_eff()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.NortonFlow"><code class="docutils literal notranslate"><span class="pre">NortonFlow</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.NortonFlow.K"><code class="docutils literal notranslate"><span class="pre">NortonFlow.K</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.NortonFlow.m"><code class="docutils literal notranslate"><span class="pre">NortonFlow.m</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening"><code class="docutils literal notranslate"><span class="pre">VoceHardening</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.b"><code class="docutils literal notranslate"><span class="pre">VoceHardening.b</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.sig0"><code class="docutils literal notranslate"><span class="pre">VoceHardening.sig0</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.VoceHardening.sigu"><code class="docutils literal notranslate"><span class="pre">VoceHardening.sigu</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.C"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.C</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.gamma"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.gamma</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.nvars"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.nvars</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.sig_eff"><code class="docutils literal notranslate"><span class="pre">ArmstrongFrederickHardening.sig_eff()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -187,6 +187,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -205,13 +206,10 @@
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.loader.html">jaxmat.loader module</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="jaxmat.materials.html">jaxmat.materials package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.damage.html">jaxmat.materials.damage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
@@ -376,13 +374,24 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.basis"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.basis</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.coeffs"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.coeffs</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.eval"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.eval()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.inv"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.inv</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.kappa"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.kappa</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.mu"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.mu</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.dim"><code class="docutils literal notranslate"><span class="pre">Tensor.dim</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.rank"><code class="docutils literal notranslate"><span class="pre">Tensor.rank</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.shape"><code class="docutils literal notranslate"><span class="pre">Tensor.shape</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.tensor"><code class="docutils literal notranslate"><span class="pre">Tensor.tensor</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.T"><code class="docutils literal notranslate"><span class="pre">Tensor.T</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.array"><code class="docutils literal notranslate"><span class="pre">Tensor.array</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.array_shape"><code class="docutils literal notranslate"><span class="pre">Tensor.array_shape</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2"><code class="docutils literal notranslate"><span class="pre">Tensor2</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.dim"><code class="docutils literal notranslate"><span class="pre">Tensor2.dim</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.rank"><code class="docutils literal notranslate"><span class="pre">Tensor2.rank</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.identity"><code class="docutils literal notranslate"><span class="pre">Tensor2.identity()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.sym"><code class="docutils literal notranslate"><span class="pre">Tensor2.sym</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.inv"><code class="docutils literal notranslate"><span class="pre">Tensor2.inv</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.eigenvalues"><code class="docutils literal notranslate"><span class="pre">Tensor2.eigenvalues</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.T"><code class="docutils literal notranslate"><span class="pre">Tensor2.T</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a><ul class="visible nav section-nav flex-column">
@@ -390,38 +399,27 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor2.is_symmetric"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor2.is_symmetric()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.symmetric_kelvin_mandel_index_map"><code class="docutils literal notranslate"><span class="pre">symmetric_kelvin_mandel_index_map()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.dim"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.dim</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.rank"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.rank</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.identity"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.identity()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.J"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.J()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.K"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.K()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.array_shape"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.array_shape</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.dim"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.dim</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.identity"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.identity()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.inv"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.inv</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.is_symmetric"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.is_symmetric()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.rank"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.rank</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.inv"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.inv</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.T"><code class="docutils literal notranslate"><span class="pre">Tensor.T</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.array"><code class="docutils literal notranslate"><span class="pre">Tensor.array</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.array_shape"><code class="docutils literal notranslate"><span class="pre">Tensor.array_shape</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.dim"><code class="docutils literal notranslate"><span class="pre">Tensor.dim</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.rank"><code class="docutils literal notranslate"><span class="pre">Tensor.rank</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.shape"><code class="docutils literal notranslate"><span class="pre">Tensor.shape</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.tensor"><code class="docutils literal notranslate"><span class="pre">Tensor.tensor</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.kappa"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.kappa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.mu"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.mu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.basis"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.basis</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.coeffs"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.coeffs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.eval"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.eval()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.inv"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.inv</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2"><code class="docutils literal notranslate"><span class="pre">Tensor2</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.T"><code class="docutils literal notranslate"><span class="pre">Tensor2.T</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.dim"><code class="docutils literal notranslate"><span class="pre">Tensor2.dim</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.eigenvalues"><code class="docutils literal notranslate"><span class="pre">Tensor2.eigenvalues</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.identity"><code class="docutils literal notranslate"><span class="pre">Tensor2.identity()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.inv"><code class="docutils literal notranslate"><span class="pre">Tensor2.inv</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.rank"><code class="docutils literal notranslate"><span class="pre">Tensor2.rank</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.sym"><code class="docutils literal notranslate"><span class="pre">Tensor2.sym</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.symmetric_kelvin_mandel_index_map"><code class="docutils literal notranslate"><span class="pre">symmetric_kelvin_mandel_index_map()</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -436,38 +434,85 @@
   <section id="module-jaxmat.tensors.generic_tensors">
 <span id="jaxmat-tensors-generic-tensors-module"></span><h1>jaxmat.tensors.generic_tensors module<a class="headerlink" href="#module-jaxmat.tensors.generic_tensors" title="Link to this heading">#</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IsotropicTensor4</span></span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#IsotropicTensor4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4" title="jaxmat.tensors.generic_tensors.SymmetricTensor4"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor4</span></code></a></p>
-<p>IsotropicTensor4(kappa, mu)</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4.basis">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">basis</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.basis" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Tensor</span></span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#Tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Tensor(tensor: Optional[jax.Array] = None, array: Optional[jax.Array] = None)</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.dim">
+<span class="sig-name descname"><span class="pre">dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.dim" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.rank">
+<span class="sig-name descname"><span class="pre">rank</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.rank" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4.coeffs">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">coeffs</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.coeffs" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.shape">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.shape" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.tensor">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tensor</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.tensor" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.T">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">T</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.T" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.array">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">array</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.array" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.array_shape">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">array_shape</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.array_shape" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Tensor2</span></span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#Tensor2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jaxmat.tensors.generic_tensors.Tensor" title="jaxmat.tensors.generic_tensors.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
+<p>Tensor2(tensor: Optional[jax.Array] = None, array: Optional[jax.Array] = None)</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.dim">
+<span class="sig-name descname"><span class="pre">dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.dim" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.rank">
+<span class="sig-name descname"><span class="pre">rank</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.rank" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4.eval">
-<span class="sig-name descname"><span class="pre">eval</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#IsotropicTensor4.eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.eval" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.identity">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#Tensor2.identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.identity" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4.inv">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inv</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.inv" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.sym">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sym</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.sym" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4.kappa">
-<span class="sig-name descname"><span class="pre">kappa</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.kappa" title="Link to this definition">#</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.inv">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inv</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.inv" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4.mu">
-<span class="sig-name descname"><span class="pre">mu</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.mu" title="Link to this definition">#</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.eigenvalues">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">eigenvalues</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.eigenvalues" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.T">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">T</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.T" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -489,137 +534,6 @@
 
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SymmetricTensor4</span></span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#SymmetricTensor4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jaxmat.tensors.generic_tensors.Tensor" title="jaxmat.tensors.generic_tensors.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
-<p>SymmetricTensor4(tensor: Optional[jax.Array] = None, array: Optional[jax.Array] = None)</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.J">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">J</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#SymmetricTensor4.J"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.J" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.K">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">K</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#SymmetricTensor4.K"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.K" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.array_shape">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">array_shape</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.array_shape" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.dim">
-<span class="sig-name descname"><span class="pre">dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.dim" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.identity">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#SymmetricTensor4.identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.identity" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.inv">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inv</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.inv" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.is_symmetric">
-<span class="sig-name descname"><span class="pre">is_symmetric</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#SymmetricTensor4.is_symmetric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.is_symmetric" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.rank">
-<span class="sig-name descname"><span class="pre">rank</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.rank" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Tensor</span></span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#Tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>Tensor(tensor: Optional[jax.Array] = None, array: Optional[jax.Array] = None)</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.T">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">T</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.T" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.array">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">array</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.array" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.array_shape">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">array_shape</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.array_shape" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.dim">
-<span class="sig-name descname"><span class="pre">dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.dim" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.rank">
-<span class="sig-name descname"><span class="pre">rank</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.rank" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.shape">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.shape" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor.tensor">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tensor</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor.tensor" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Tensor2</span></span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#Tensor2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jaxmat.tensors.generic_tensors.Tensor" title="jaxmat.tensors.generic_tensors.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
-<p>Tensor2(tensor: Optional[jax.Array] = None, array: Optional[jax.Array] = None)</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.T">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">T</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.T" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.dim">
-<span class="sig-name descname"><span class="pre">dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.dim" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.eigenvalues">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">eigenvalues</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.eigenvalues" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.identity">
-<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#Tensor2.identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.identity" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.inv">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inv</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.inv" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.rank">
-<span class="sig-name descname"><span class="pre">rank</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.rank" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.Tensor2.sym">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sym</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.Tensor2.sym" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.symmetric_kelvin_mandel_index_map">
 <span class="sig-name descname"><span class="pre">symmetric_kelvin_mandel_index_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#symmetric_kelvin_mandel_index_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.symmetric_kelvin_mandel_index_map" title="Link to this definition">#</a></dt>
@@ -635,6 +549,90 @@
 </p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SymmetricTensor4</span></span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#SymmetricTensor4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jaxmat.tensors.generic_tensors.Tensor" title="jaxmat.tensors.generic_tensors.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
+<p>SymmetricTensor4(tensor: Optional[jax.Array] = None, array: Optional[jax.Array] = None)</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.dim">
+<span class="sig-name descname"><span class="pre">dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.dim" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.rank">
+<span class="sig-name descname"><span class="pre">rank</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.rank" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.identity">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#SymmetricTensor4.identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.identity" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.J">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">J</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#SymmetricTensor4.J"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.J" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.K">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">K</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#SymmetricTensor4.K"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.K" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.array_shape">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">array_shape</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.array_shape" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.is_symmetric">
+<span class="sig-name descname"><span class="pre">is_symmetric</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#SymmetricTensor4.is_symmetric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.is_symmetric" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.SymmetricTensor4.inv">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inv</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.inv" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IsotropicTensor4</span></span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#IsotropicTensor4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4" title="jaxmat.tensors.generic_tensors.SymmetricTensor4"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor4</span></code></a></p>
+<p>IsotropicTensor4(kappa, mu)</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4.kappa">
+<span class="sig-name descname"><span class="pre">kappa</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.kappa" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4.mu">
+<span class="sig-name descname"><span class="pre">mu</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.mu" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4.basis">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">basis</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.basis" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4.coeffs">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">coeffs</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.coeffs" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4.eval">
+<span class="sig-name descname"><span class="pre">eval</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/generic_tensors.html#IsotropicTensor4.eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.eval" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jaxmat.tensors.generic_tensors.IsotropicTensor4.inv">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inv</span></span><a class="headerlink" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.inv" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
@@ -704,13 +702,24 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.basis"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.basis</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.coeffs"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.coeffs</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.eval"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.eval()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.inv"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.inv</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.kappa"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.kappa</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.mu"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.mu</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.dim"><code class="docutils literal notranslate"><span class="pre">Tensor.dim</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.rank"><code class="docutils literal notranslate"><span class="pre">Tensor.rank</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.shape"><code class="docutils literal notranslate"><span class="pre">Tensor.shape</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.tensor"><code class="docutils literal notranslate"><span class="pre">Tensor.tensor</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.T"><code class="docutils literal notranslate"><span class="pre">Tensor.T</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.array"><code class="docutils literal notranslate"><span class="pre">Tensor.array</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.array_shape"><code class="docutils literal notranslate"><span class="pre">Tensor.array_shape</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2"><code class="docutils literal notranslate"><span class="pre">Tensor2</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.dim"><code class="docutils literal notranslate"><span class="pre">Tensor2.dim</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.rank"><code class="docutils literal notranslate"><span class="pre">Tensor2.rank</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.identity"><code class="docutils literal notranslate"><span class="pre">Tensor2.identity()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.sym"><code class="docutils literal notranslate"><span class="pre">Tensor2.sym</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.inv"><code class="docutils literal notranslate"><span class="pre">Tensor2.inv</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.eigenvalues"><code class="docutils literal notranslate"><span class="pre">Tensor2.eigenvalues</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.T"><code class="docutils literal notranslate"><span class="pre">Tensor2.T</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a><ul class="visible nav section-nav flex-column">
@@ -718,38 +727,27 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor2.is_symmetric"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor2.is_symmetric()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.symmetric_kelvin_mandel_index_map"><code class="docutils literal notranslate"><span class="pre">symmetric_kelvin_mandel_index_map()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.dim"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.dim</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.rank"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.rank</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.identity"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.identity()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.J"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.J()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.K"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.K()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.array_shape"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.array_shape</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.dim"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.dim</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.identity"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.identity()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.inv"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.inv</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.is_symmetric"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.is_symmetric()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.rank"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.rank</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.SymmetricTensor4.inv"><code class="docutils literal notranslate"><span class="pre">SymmetricTensor4.inv</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.T"><code class="docutils literal notranslate"><span class="pre">Tensor.T</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.array"><code class="docutils literal notranslate"><span class="pre">Tensor.array</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.array_shape"><code class="docutils literal notranslate"><span class="pre">Tensor.array_shape</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.dim"><code class="docutils literal notranslate"><span class="pre">Tensor.dim</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.rank"><code class="docutils literal notranslate"><span class="pre">Tensor.rank</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.shape"><code class="docutils literal notranslate"><span class="pre">Tensor.shape</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor.tensor"><code class="docutils literal notranslate"><span class="pre">Tensor.tensor</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.kappa"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.kappa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.mu"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.mu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.basis"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.basis</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.coeffs"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.coeffs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.eval"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.eval()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.IsotropicTensor4.inv"><code class="docutils literal notranslate"><span class="pre">IsotropicTensor4.inv</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2"><code class="docutils literal notranslate"><span class="pre">Tensor2</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.T"><code class="docutils literal notranslate"><span class="pre">Tensor2.T</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.dim"><code class="docutils literal notranslate"><span class="pre">Tensor2.dim</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.eigenvalues"><code class="docutils literal notranslate"><span class="pre">Tensor2.eigenvalues</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.identity"><code class="docutils literal notranslate"><span class="pre">Tensor2.identity()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.inv"><code class="docutils literal notranslate"><span class="pre">Tensor2.inv</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.rank"><code class="docutils literal notranslate"><span class="pre">Tensor2.rank</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.Tensor2.sym"><code class="docutils literal notranslate"><span class="pre">Tensor2.sym</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.generic_tensors.symmetric_kelvin_mandel_index_map"><code class="docutils literal notranslate"><span class="pre">symmetric_kelvin_mandel_index_map()</span></code></a></li>
 </ul>
   </nav></div>
 

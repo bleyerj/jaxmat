@@ -206,13 +206,10 @@
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.loader.html">jaxmat.loader module</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="jaxmat.materials.html">jaxmat.materials package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.damage.html">jaxmat.materials.damage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
@@ -377,15 +374,15 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.polar"><code class="docutils literal notranslate"><span class="pre">polar()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.sym"><code class="docutils literal notranslate"><span class="pre">sym()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.skew"><code class="docutils literal notranslate"><span class="pre">skew()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.axl"><code class="docutils literal notranslate"><span class="pre">axl()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.tr"><code class="docutils literal notranslate"><span class="pre">tr()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.dev"><code class="docutils literal notranslate"><span class="pre">dev()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.dev_vect"><code class="docutils literal notranslate"><span class="pre">dev_vect()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.eigenvalues_jvp"><code class="docutils literal notranslate"><span class="pre">eigenvalues_jvp()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.polar"><code class="docutils literal notranslate"><span class="pre">polar()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.skew"><code class="docutils literal notranslate"><span class="pre">skew()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.stretch_tensor"><code class="docutils literal notranslate"><span class="pre">stretch_tensor()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.sym"><code class="docutils literal notranslate"><span class="pre">sym()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.tr"><code class="docutils literal notranslate"><span class="pre">tr()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.eigenvalues_jvp"><code class="docutils literal notranslate"><span class="pre">eigenvalues_jvp()</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -400,10 +397,34 @@
   <section id="module-jaxmat.tensors.tensor_utils">
 <span id="jaxmat-tensors-tensor-utils-module"></span><h1>jaxmat.tensors.tensor_utils module<a class="headerlink" href="#module-jaxmat.tensors.tensor_utils" title="Link to this heading">#</a></h1>
 <dl class="py function">
+<dt class="sig sig-object py" id="jaxmat.tensors.tensor_utils.polar">
+<span class="sig-name descname"><span class="pre">polar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'RU'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/tensor_utils.html#polar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.tensor_utils.polar" title="Link to this definition">#</a></dt>
+<dd><p>Computes the ‘RU’ or ‘VR’ polar decomposition of F.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxmat.tensors.tensor_utils.sym">
+<span class="sig-name descname"><span class="pre">sym</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/tensor_utils.html#sym"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.tensor_utils.sym" title="Link to this definition">#</a></dt>
+<dd><p>Computes the symmetric part of a tensor.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxmat.tensors.tensor_utils.skew">
+<span class="sig-name descname"><span class="pre">skew</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/tensor_utils.html#skew"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.tensor_utils.skew" title="Link to this definition">#</a></dt>
+<dd><p>Computes the skew part of a tensor.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.tensor_utils.axl">
 <span class="sig-name descname"><span class="pre">axl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/tensor_utils.html#axl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.tensor_utils.axl" title="Link to this definition">#</a></dt>
 <dd><p>Computes the axial part of a skew symmetric tensor.
 If not skew-symmetric, this function takes the skew-symmetric part first.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxmat.tensors.tensor_utils.tr">
+<span class="sig-name descname"><span class="pre">tr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/tensor_utils.html#tr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.tensor_utils.tr" title="Link to this definition">#</a></dt>
+<dd><p>Trace of a n-dim 2nd-rank tensor.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -417,39 +438,15 @@ If not skew-symmetric, this function takes the skew-symmetric part first.</p>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jaxmat.tensors.tensor_utils.eigenvalues_jvp">
-<span class="sig-name descname"><span class="pre">eigenvalues_jvp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">primals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tangents</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/tensor_utils.html#eigenvalues_jvp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.tensor_utils.eigenvalues_jvp" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jaxmat.tensors.tensor_utils.polar">
-<span class="sig-name descname"><span class="pre">polar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'RU'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/tensor_utils.html#polar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.tensor_utils.polar" title="Link to this definition">#</a></dt>
-<dd><p>Computes the ‘RU’ or ‘VR’ polar decomposition of F.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jaxmat.tensors.tensor_utils.skew">
-<span class="sig-name descname"><span class="pre">skew</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/tensor_utils.html#skew"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.tensor_utils.skew" title="Link to this definition">#</a></dt>
-<dd><p>Computes the skew part of a tensor.</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.tensor_utils.stretch_tensor">
 <span class="sig-name descname"><span class="pre">stretch_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/tensor_utils.html#stretch_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.tensor_utils.stretch_tensor" title="Link to this definition">#</a></dt>
 <dd><p>Computes the strech tensor U = sqrtm(F.T &#64; F).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jaxmat.tensors.tensor_utils.sym">
-<span class="sig-name descname"><span class="pre">sym</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/tensor_utils.html#sym"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.tensor_utils.sym" title="Link to this definition">#</a></dt>
-<dd><p>Computes the symmetric part of a tensor.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jaxmat.tensors.tensor_utils.tr">
-<span class="sig-name descname"><span class="pre">tr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/tensor_utils.html#tr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.tensor_utils.tr" title="Link to this definition">#</a></dt>
-<dd><p>Trace of a n-dim 2nd-rank tensor.</p>
-</dd></dl>
+<dt class="sig sig-object py" id="jaxmat.tensors.tensor_utils.eigenvalues_jvp">
+<span class="sig-name descname"><span class="pre">eigenvalues_jvp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">primals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tangents</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/tensor_utils.html#eigenvalues_jvp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.tensor_utils.eigenvalues_jvp" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 </section>
 
@@ -518,15 +515,15 @@ If not skew-symmetric, this function takes the skew-symmetric part first.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.polar"><code class="docutils literal notranslate"><span class="pre">polar()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.sym"><code class="docutils literal notranslate"><span class="pre">sym()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.skew"><code class="docutils literal notranslate"><span class="pre">skew()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.axl"><code class="docutils literal notranslate"><span class="pre">axl()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.tr"><code class="docutils literal notranslate"><span class="pre">tr()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.dev"><code class="docutils literal notranslate"><span class="pre">dev()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.dev_vect"><code class="docutils literal notranslate"><span class="pre">dev_vect()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.eigenvalues_jvp"><code class="docutils literal notranslate"><span class="pre">eigenvalues_jvp()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.polar"><code class="docutils literal notranslate"><span class="pre">polar()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.skew"><code class="docutils literal notranslate"><span class="pre">skew()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.stretch_tensor"><code class="docutils literal notranslate"><span class="pre">stretch_tensor()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.sym"><code class="docutils literal notranslate"><span class="pre">sym()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.tr"><code class="docutils literal notranslate"><span class="pre">tr()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.tensor_utils.eigenvalues_jvp"><code class="docutils literal notranslate"><span class="pre">eigenvalues_jvp()</span></code></a></li>
 </ul>
   </nav></div>
 

@@ -61,7 +61,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/jaxmat.materials.hyperelasticity';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="jaxmat.materials.plastic_surfaces module" href="jaxmat.materials.plastic_surfaces.html" />
+    <link rel="next" title="jaxmat.materials.viscoplasticity module" href="jaxmat.materials.viscoplasticity.html" />
     <link rel="prev" title="jaxmat.materials.fe_fp_elastoplasticity module" href="jaxmat.materials.fe_fp_elastoplasticity.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -206,13 +206,10 @@
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.loader.html">jaxmat.loader module</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="jaxmat.materials.html">jaxmat.materials package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.damage.html">jaxmat.materials.damage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">jaxmat.materials.hyperelasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">jaxmat.materials.hyperelasticity module</a></li>
@@ -377,12 +374,27 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.Jm"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.Jm</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c1"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.c1</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c2"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.c2</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.kappa"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.kappa</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.volumetric"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.volumetric</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.PK1"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential.PK1()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.PK2"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential.PK2()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.Cauchy"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential.Cauchy()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.potential"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity.potential</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.internal"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity.internal</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.constitutive_update"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity.constitutive_update()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.VolumetricPart"><code class="docutils literal notranslate"><span class="pre">VolumetricPart</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.VolumetricPart.beta"><code class="docutils literal notranslate"><span class="pre">VolumetricPart.beta</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.SquaredVolumetric"><code class="docutils literal notranslate"><span class="pre">SquaredVolumetric</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.mu"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean.mu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.kappa"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean.kappa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.volumetric"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean.volumetric</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin"><code class="docutils literal notranslate"><span class="pre">CompressibleMooneyRivlin</span></code></a><ul class="visible nav section-nav flex-column">
@@ -392,35 +404,20 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.volumetric"><code class="docutils literal notranslate"><span class="pre">CompressibleMooneyRivlin.volumetric</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.kappa"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean.kappa</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.mu"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean.mu</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.volumetric"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean.volumetric</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c1"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.c1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c2"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.c2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.Jm"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.Jm</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.kappa"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.kappa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.volumetric"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.volumetric</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.W_lamb"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.W_lamb()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.mu"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.mu</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.alpha"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.alpha</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.kappa"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.kappa</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.mu"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.mu</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.volumetric"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.volumetric</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.Cauchy"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential.Cauchy()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.PK1"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential.PK1()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.PK2"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential.PK2()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.constitutive_update"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity.constitutive_update()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.internal"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity.internal</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.potential"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity.potential</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.SquaredVolumetric"><code class="docutils literal notranslate"><span class="pre">SquaredVolumetric</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.VolumetricPart"><code class="docutils literal notranslate"><span class="pre">VolumetricPart</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.VolumetricPart.beta"><code class="docutils literal notranslate"><span class="pre">VolumetricPart.beta</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.W_lamb"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.W_lamb()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -437,128 +434,10 @@
   <section id="module-jaxmat.materials.hyperelasticity">
 <span id="jaxmat-materials-hyperelasticity-module"></span><h1>jaxmat.materials.hyperelasticity module<a class="headerlink" href="#module-jaxmat.materials.hyperelasticity" title="Link to this heading">#</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CompressibleGhentMooneyRivlin</span></span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#CompressibleGhentMooneyRivlin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential" title="jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="xref py py-class docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></p>
-<p>CompressibleGhentMooneyRivlin(c1: float, c2: float, Jm: float, kappa: float, volumetric: equinox._module.Module = VolumetricPart())</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.Jm">
-<span class="sig-name descname"><span class="pre">Jm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.Jm" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c1">
-<span class="sig-name descname"><span class="pre">c1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c1" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c2">
-<span class="sig-name descname"><span class="pre">c2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c2" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.kappa">
-<span class="sig-name descname"><span class="pre">kappa</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.kappa" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.volumetric">
-<span class="sig-name descname"><span class="pre">volumetric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">J</span></span></em><span class="sig-paren">)</span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">VolumetricPart()</span></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.volumetric" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CompressibleMooneyRivlin</span></span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#CompressibleMooneyRivlin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential" title="jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="xref py py-class docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></p>
-<p>CompressibleMooneyRivlin(c1: float, c2: float, kappa: float, volumetric: equinox._module.Module = VolumetricPart())</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.c1">
-<span class="sig-name descname"><span class="pre">c1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.c1" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.c2">
-<span class="sig-name descname"><span class="pre">c2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.c2" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.kappa">
-<span class="sig-name descname"><span class="pre">kappa</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.kappa" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.volumetric">
-<span class="sig-name descname"><span class="pre">volumetric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">J</span></span></em><span class="sig-paren">)</span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">VolumetricPart()</span></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.volumetric" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleNeoHookean">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CompressibleNeoHookean</span></span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#CompressibleNeoHookean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential" title="jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="xref py py-class docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></p>
-<p>CompressibleNeoHookean(mu: float, kappa: float, volumetric: equinox._module.Module = VolumetricPart())</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleNeoHookean.kappa">
-<span class="sig-name descname"><span class="pre">kappa</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.kappa" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleNeoHookean.mu">
-<span class="sig-name descname"><span class="pre">mu</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.mu" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleNeoHookean.volumetric">
-<span class="sig-name descname"><span class="pre">volumetric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">J</span></span></em><span class="sig-paren">)</span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">VolumetricPart()</span></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.volumetric" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleOgden">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CompressibleOgden</span></span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#CompressibleOgden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleOgden" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential" title="jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="xref py py-class docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></p>
-<p>CompressibleOgden(mu: jax.Array, alpha: jax.Array, kappa: float, volumetric: equinox._module.Module = VolumetricPart())</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleOgden.W_lamb">
-<span class="sig-name descname"><span class="pre">W_lamb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lambCb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#CompressibleOgden.W_lamb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.W_lamb" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleOgden.alpha">
-<span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.alpha" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleOgden.kappa">
-<span class="sig-name descname"><span class="pre">kappa</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.kappa" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleOgden.mu">
-<span class="sig-name descname"><span class="pre">mu</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.mu" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleOgden.volumetric">
-<span class="sig-name descname"><span class="pre">volumetric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">J</span></span></em><span class="sig-paren">)</span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">VolumetricPart()</span></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.volumetric" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.HyperelasticPotential">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HyperelasticPotential</span></span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#HyperelasticPotential"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
 <p>HyperelasticPotential()</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.HyperelasticPotential.Cauchy">
-<span class="sig-name descname"><span class="pre">Cauchy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#HyperelasticPotential.Cauchy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.Cauchy" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.HyperelasticPotential.PK1">
 <span class="sig-name descname"><span class="pre">PK1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#HyperelasticPotential.PK1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.PK1" title="Link to this definition">#</a></dt>
@@ -569,6 +448,11 @@
 <span class="sig-name descname"><span class="pre">PK2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#HyperelasticPotential.PK2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.PK2" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.HyperelasticPotential.Cauchy">
+<span class="sig-name descname"><span class="pre">Cauchy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#HyperelasticPotential.Cauchy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.Cauchy" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -576,6 +460,17 @@
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Hyperelasticity</span></span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#Hyperelasticity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.Hyperelasticity" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="jaxmat.materials.behavior.html#jaxmat.materials.behavior.FiniteStrainBehavior" title="jaxmat.materials.behavior.FiniteStrainBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">FiniteStrainBehavior</span></code></a></p>
 <p>Hyperelasticity(potential: jaxmat.materials.hyperelasticity.HyperelasticPotential)</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.Hyperelasticity.potential">
+<span class="sig-name descname"><span class="pre">potential</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential" title="jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="xref py py-class docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.potential" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.Hyperelasticity.internal">
+<span class="sig-name descname"><span class="pre">internal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">eqx.AbstractVar[AbstractState]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.internal" title="Link to this definition">#</a></dt>
+<dd><p>Internal variables state.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.Hyperelasticity.constitutive_update">
 <span class="sig-name descname"><span class="pre">constitutive_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#Hyperelasticity.constitutive_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.constitutive_update" title="Link to this definition">#</a></dt>
@@ -610,15 +505,16 @@ constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
 </div>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.Hyperelasticity.internal">
-<span class="sig-name descname"><span class="pre">internal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">eqx.AbstractVar[AbstractState]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.internal" title="Link to this definition">#</a></dt>
-<dd><p>Internal variables state.</p>
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.VolumetricPart">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VolumetricPart</span></span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#VolumetricPart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.VolumetricPart" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>VolumetricPart(beta: float = 2.0)</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.Hyperelasticity.potential">
-<span class="sig-name descname"><span class="pre">potential</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential" title="jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="xref py py-class docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.potential" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.VolumetricPart.beta">
+<span class="sig-name descname"><span class="pre">beta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2.0</span></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.VolumetricPart.beta" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -631,13 +527,114 @@ constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.VolumetricPart">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VolumetricPart</span></span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#VolumetricPart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.VolumetricPart" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>VolumetricPart(beta: float = 2.0)</p>
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleNeoHookean">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CompressibleNeoHookean</span></span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#CompressibleNeoHookean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential" title="jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="xref py py-class docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></p>
+<p>CompressibleNeoHookean(mu: float, kappa: float, volumetric: equinox._module.Module = VolumetricPart())</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.VolumetricPart.beta">
-<span class="sig-name descname"><span class="pre">beta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2.0</span></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.VolumetricPart.beta" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleNeoHookean.mu">
+<span class="sig-name descname"><span class="pre">mu</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.mu" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleNeoHookean.kappa">
+<span class="sig-name descname"><span class="pre">kappa</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.kappa" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleNeoHookean.volumetric">
+<span class="sig-name descname"><span class="pre">volumetric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">J</span></span></em><span class="sig-paren">)</span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">VolumetricPart()</span></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.volumetric" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CompressibleMooneyRivlin</span></span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#CompressibleMooneyRivlin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential" title="jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="xref py py-class docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></p>
+<p>CompressibleMooneyRivlin(c1: float, c2: float, kappa: float, volumetric: equinox._module.Module = VolumetricPart())</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.c1">
+<span class="sig-name descname"><span class="pre">c1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.c1" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.c2">
+<span class="sig-name descname"><span class="pre">c2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.c2" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.kappa">
+<span class="sig-name descname"><span class="pre">kappa</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.kappa" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.volumetric">
+<span class="sig-name descname"><span class="pre">volumetric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">J</span></span></em><span class="sig-paren">)</span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">VolumetricPart()</span></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.volumetric" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CompressibleGhentMooneyRivlin</span></span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#CompressibleGhentMooneyRivlin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential" title="jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="xref py py-class docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></p>
+<p>CompressibleGhentMooneyRivlin(c1: float, c2: float, Jm: float, kappa: float, volumetric: equinox._module.Module = VolumetricPart())</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c1">
+<span class="sig-name descname"><span class="pre">c1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c1" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c2">
+<span class="sig-name descname"><span class="pre">c2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c2" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.Jm">
+<span class="sig-name descname"><span class="pre">Jm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.Jm" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.kappa">
+<span class="sig-name descname"><span class="pre">kappa</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.kappa" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.volumetric">
+<span class="sig-name descname"><span class="pre">volumetric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">J</span></span></em><span class="sig-paren">)</span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">VolumetricPart()</span></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.volumetric" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleOgden">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CompressibleOgden</span></span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#CompressibleOgden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleOgden" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential" title="jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="xref py py-class docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></p>
+<p>CompressibleOgden(mu: jax.Array, alpha: jax.Array, kappa: float, volumetric: equinox._module.Module = VolumetricPart())</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleOgden.mu">
+<span class="sig-name descname"><span class="pre">mu</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.mu" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleOgden.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.alpha" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleOgden.kappa">
+<span class="sig-name descname"><span class="pre">kappa</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.kappa" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleOgden.volumetric">
+<span class="sig-name descname"><span class="pre">volumetric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">J</span></span></em><span class="sig-paren">)</span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">VolumetricPart()</span></em><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.volumetric" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxmat.materials.hyperelasticity.CompressibleOgden.W_lamb">
+<span class="sig-name descname"><span class="pre">W_lamb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lambCb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/materials/hyperelasticity.html#CompressibleOgden.W_lamb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.W_lamb" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -684,11 +681,11 @@ constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
       </div>
     </a>
     <a class="right-next"
-       href="jaxmat.materials.plastic_surfaces.html"
+       href="jaxmat.materials.viscoplasticity.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">jaxmat.materials.plastic_surfaces module</p>
+        <p class="prev-next-title">jaxmat.materials.viscoplasticity module</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -709,12 +706,27 @@ constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.Jm"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.Jm</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c1"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.c1</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c2"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.c2</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.kappa"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.kappa</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.volumetric"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.volumetric</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.PK1"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential.PK1()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.PK2"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential.PK2()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.Cauchy"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential.Cauchy()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.potential"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity.potential</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.internal"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity.internal</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.constitutive_update"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity.constitutive_update()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.VolumetricPart"><code class="docutils literal notranslate"><span class="pre">VolumetricPart</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.VolumetricPart.beta"><code class="docutils literal notranslate"><span class="pre">VolumetricPart.beta</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.SquaredVolumetric"><code class="docutils literal notranslate"><span class="pre">SquaredVolumetric</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.mu"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean.mu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.kappa"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean.kappa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.volumetric"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean.volumetric</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin"><code class="docutils literal notranslate"><span class="pre">CompressibleMooneyRivlin</span></code></a><ul class="visible nav section-nav flex-column">
@@ -724,35 +736,20 @@ constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin.volumetric"><code class="docutils literal notranslate"><span class="pre">CompressibleMooneyRivlin.volumetric</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.kappa"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean.kappa</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.mu"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean.mu</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleNeoHookean.volumetric"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean.volumetric</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c1"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.c1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.c2"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.c2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.Jm"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.Jm</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.kappa"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.kappa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin.volumetric"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin.volumetric</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.W_lamb"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.W_lamb()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.mu"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.mu</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.alpha"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.alpha</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.kappa"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.kappa</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.mu"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.mu</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.volumetric"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.volumetric</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.Cauchy"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential.Cauchy()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.PK1"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential.PK1()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.HyperelasticPotential.PK2"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential.PK2()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.constitutive_update"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity.constitutive_update()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.internal"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity.internal</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.Hyperelasticity.potential"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity.potential</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.SquaredVolumetric"><code class="docutils literal notranslate"><span class="pre">SquaredVolumetric</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.VolumetricPart"><code class="docutils literal notranslate"><span class="pre">VolumetricPart</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.VolumetricPart.beta"><code class="docutils literal notranslate"><span class="pre">VolumetricPart.beta</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.hyperelasticity.CompressibleOgden.W_lamb"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden.W_lamb()</span></code></a></li>
 </ul>
 </li>
 </ul>

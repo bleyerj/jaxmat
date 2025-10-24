@@ -207,13 +207,10 @@
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.loader.html">jaxmat.loader module</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="jaxmat.materials.html">jaxmat.materials package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.damage.html">jaxmat.materials.damage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
@@ -378,10 +375,10 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.utils.FischerBurmeister"><code class="docutils literal notranslate"><span class="pre">FischerBurmeister()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.utils.safe_fun"><code class="docutils literal notranslate"><span class="pre">safe_fun()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.utils.safe_norm"><code class="docutils literal notranslate"><span class="pre">safe_norm()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.utils.safe_sqrt"><code class="docutils literal notranslate"><span class="pre">safe_sqrt()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.utils.safe_norm"><code class="docutils literal notranslate"><span class="pre">safe_norm()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.utils.FischerBurmeister"><code class="docutils literal notranslate"><span class="pre">FischerBurmeister()</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -395,21 +392,6 @@
                   
   <section id="module-jaxmat.tensors.utils">
 <span id="jaxmat-tensors-utils-module"></span><h1>jaxmat.tensors.utils module<a class="headerlink" href="#module-jaxmat.tensors.utils" title="Link to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="jaxmat.tensors.utils.FischerBurmeister">
-<span class="sig-name descname"><span class="pre">FischerBurmeister</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/utils.html#FischerBurmeister"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.utils.FischerBurmeister" title="Link to this definition">#</a></dt>
-<dd><p>Computes the scalar Fischer-Burmeister function.</p>
-<p>The Fischer-Burmeister function is defined as:
-<div class="math notranslate nohighlight">
-\[\Phi(x, y) = x + y - \sqrt{x^2 + y^2}\]</div>
-</p>
-<p>and is commonly used in complementarity problem formulations to provide
-a smooth reformulation of the complementarity conditions
-<div class="math notranslate nohighlight">
-\[x \geq 0, y \geq 0, xy = 0\]</div>
-.</p>
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="jaxmat.tensors.utils.safe_fun">
 <span class="sig-name descname"><span class="pre">safe_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-16</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/utils.html#safe_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.utils.safe_fun" title="Link to this definition">#</a></dt>
@@ -431,6 +413,29 @@ Defaults to 1e-16.</p></li>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">fun(x)</span></code> if <code class="docutils literal notranslate"><span class="pre">norm(x)</span> <span class="pre">&gt;</span> <span class="pre">eps</span></code>, otherwise <code class="docutils literal notranslate"><span class="pre">0</span></code> (of the same shape as <code class="docutils literal notranslate"><span class="pre">x</span></code>).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array-like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jaxmat.tensors.utils.safe_sqrt">
+<span class="sig-name descname"><span class="pre">safe_sqrt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-16</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/utils.html#safe_sqrt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.utils.safe_sqrt" title="Link to this definition">#</a></dt>
+<dd><p>Computes a numerically safe square root.</p>
+<p>Ensures the argument to the square root is greater than <cite>eps</cite>
+to avoid taking the square root of zero or negative values,
+which could cause instability or NaNs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>array-like</em>) – Input array or tensor.</p></li>
+<li><p><strong>eps</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum threshold for <cite>x</cite> before taking the square root. Defaults to 1e-16.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The square root of <cite>x</cite> for <cite>x &gt; eps</cite>, otherwise <cite>eps</cite>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>array-like</p>
@@ -462,26 +467,18 @@ for small magnitudes by internally applying a stability threshold.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jaxmat.tensors.utils.safe_sqrt">
-<span class="sig-name descname"><span class="pre">safe_sqrt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-16</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/utils.html#safe_sqrt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.utils.safe_sqrt" title="Link to this definition">#</a></dt>
-<dd><p>Computes a numerically safe square root.</p>
-<p>Ensures the argument to the square root is greater than <cite>eps</cite>
-to avoid taking the square root of zero or negative values,
-which could cause instability or NaNs.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>array-like</em>) – Input array or tensor.</p></li>
-<li><p><strong>eps</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum threshold for <cite>x</cite> before taking the square root. Defaults to 1e-16.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The square root of <cite>x</cite> for <cite>x &gt; eps</cite>, otherwise <cite>eps</cite>.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>array-like</p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="jaxmat.tensors.utils.FischerBurmeister">
+<span class="sig-name descname"><span class="pre">FischerBurmeister</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jaxmat/tensors/utils.html#FischerBurmeister"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.tensors.utils.FischerBurmeister" title="Link to this definition">#</a></dt>
+<dd><p>Computes the scalar Fischer-Burmeister function.</p>
+<p>The Fischer-Burmeister function is defined as:
+<div class="math notranslate nohighlight">
+\[\Phi(x, y) = x + y - \sqrt{x^2 + y^2}\]</div>
+</p>
+<p>and is commonly used in complementarity problem formulations to provide
+a smooth reformulation of the complementarity conditions
+<div class="math notranslate nohighlight">
+\[x \geq 0, y \geq 0, xy = 0\]</div>
+.</p>
 </dd></dl>
 
 </section>
@@ -542,10 +539,10 @@ which could cause instability or NaNs.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.utils.FischerBurmeister"><code class="docutils literal notranslate"><span class="pre">FischerBurmeister()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.utils.safe_fun"><code class="docutils literal notranslate"><span class="pre">safe_fun()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.utils.safe_norm"><code class="docutils literal notranslate"><span class="pre">safe_norm()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.utils.safe_sqrt"><code class="docutils literal notranslate"><span class="pre">safe_sqrt()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.utils.safe_norm"><code class="docutils literal notranslate"><span class="pre">safe_norm()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.tensors.utils.FischerBurmeister"><code class="docutils literal notranslate"><span class="pre">FischerBurmeister()</span></code></a></li>
 </ul>
   </nav></div>
 
