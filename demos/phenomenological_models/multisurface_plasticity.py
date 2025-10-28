@@ -323,7 +323,7 @@ for i, eps_ in enumerate(eps_list):
 
     p, q = jax.vmap(pq_invariants)(stress)
 
-    plt.plot([-p_old, -p], [q_old, q], color=colors[i], linewidth=4, alpha=0.75)
+    ax.plot([-p_old, -p], [q_old, q], color=colors[i], linewidth=4, alpha=0.75)
     p_old, q_old = p, q
 plt.ioff()  # prevents Jupyter from displaying it automatically
 # -
