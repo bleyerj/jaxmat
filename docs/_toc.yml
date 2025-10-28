@@ -19,14 +19,16 @@ parts:
       sections:
         - file: demos/phenomenological_models/Green_viscoplasticity.ipynb
         - file: demos/phenomenological_models/CamClay.ipynb
-        - file: demos/phenomenological_models/multisurface_plasticity.ipynb
-    - file: ml_models.md
-      sections:
-        - file: demos/neural_network_models/hyperelastic_PANN.ipynb
-    - file: identification.md
+        - file: demos/phenomenological_models/multisurface_plasticity.ipynb    
+    - file: identification.md  
       sections:
         - file: demos/identification/hardening_rule.ipynb
         - file: demos/identification/nonlinear_kinematic_hardening.ipynb
+    - file: ml_models.md
+      sections:
+        - file: demos/neural_network_models/hyperelastic_PANN.ipynb
+        - file: demos/neural_network_models/neural_GSM.ipynb
+
   - caption: General resources 
     chapters:
       - file: concepts.md

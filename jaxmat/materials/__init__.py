@@ -31,3 +31,4 @@ from .viscoplastic_flows import (
     AbstractKinematicHardening,
 )
 from .viscoelasticity import StandardLinearSolid, GeneralizedMaxwell
+from .generalized_standard import GeneralizedStandardMaterial
