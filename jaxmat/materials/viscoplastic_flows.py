@@ -97,7 +97,7 @@ class ArmstrongFrederickHardening(AbstractKinematicHardening):
     .. admonition:: References
         :class: seealso
 
-         - Armstrong, P. J., & Frederick, C. O. (1966).
+        - Armstrong, P. J., & Frederick, C. O. (1966).
             "A Mathematical Representation of the Multiaxial Bauschinger Effect for
             Hardening Materials." CEGB Report RD/B/N731.
         - Chaboche, J. L. (1991). On some modifications of kinematic hardening to
