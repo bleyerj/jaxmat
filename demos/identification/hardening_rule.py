@@ -74,6 +74,7 @@ plt.xlim(0, 8e-2)
 plt.xlabel("Equivalent plastic strain $p$")
 plt.ylabel("Yield stress $\sigma_Y$")
 plt.legend()
+plt.show()
 
 
 # -
@@ -201,6 +202,7 @@ for hardening in [sumexp_hardening, icnn_hardening]:
     plt.ylabel("Yield stress $\sigma_Y$")
     plt.title(hardening.__class__.__name__)
     plt.legend()
+    plt.show()
 # -
 
 # ## Results and extrapolation

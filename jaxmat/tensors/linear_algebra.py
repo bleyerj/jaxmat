@@ -67,8 +67,7 @@ def inv33(A):
 
 
 def principal_invariants(A):
-    r"""
-    Principal invariants of a 3x3 matrix $\bA$.
+    r"""Principal invariants of a 3x3 matrix $\bA$.
     $$\begin{align*}
     I_1 &= \tr(\bA)\\
     I_2 &= \frac{1}{2}(\tr(\bA)^2-\tr(\bA^2))\\
@@ -82,8 +81,7 @@ def principal_invariants(A):
 
 
 def main_invariants(A):
-    r"""
-    Main invariants of a 3x3 matrix $\bA$:
+    r"""Main invariants of a 3x3 matrix $\bA$:
     $$\tr(\bA),\: \tr(\bA^2),\: \tr(\bA^3)$$.
     """
     j1 = jnp.trace(A)
@@ -133,13 +131,15 @@ def eig33(A, rtol=1e-16):
         obtained via forward-mode automatic differentiation (`jax.jacfwd`).
 
 
-    .. note::
+    Notes
+    -----
     - The method distinguishes three cases:
         1. Near-isotropic case (``s < rtol * ||A||``): all eigenvalues are nearly equal.
         2. Two nearly equal eigenvalues: handled by a special branch to ensure stability.
         3. Three distinct eigenvalues: computed via trigonometric relations.
     - The implementation uses ``safe_norm`` and ``safe_sqrt`` for numerical safety.
     - Input ``A`` must be symmetric; asymmetry may lead to inaccurate results.
+
 
     .. admonition:: References
         :class: seealso
