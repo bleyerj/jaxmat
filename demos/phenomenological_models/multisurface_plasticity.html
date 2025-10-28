@@ -63,7 +63,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'demos/phenomenological_models/multisurface_plasticity';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Machine-learning based models" href="../../ml_models.html" />
+    <link rel="next" title="Data-driven identification" href="../../identification.html" />
     <link rel="prev" title="Modified Cam-Clay" href="CamClay.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -183,13 +183,14 @@
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Multi-surface plasticity model</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
-</ul>
-</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../neural_network_models/neural_GSM.html">Neural Generalized Standard Material for viscoelasticity</a></li>
 </ul>
 </details></li>
 </ul>
@@ -199,10 +200,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../computational.html">Computational aspects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tensors.html">Conventions for representing tensors</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Material models gallery</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../models.html">Material models gallery</a></li>
-</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../api/jaxmat.loader.html">jaxmat.loader module</a></li>
@@ -211,9 +208,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoelasticity.html">jaxmat.materials.viscoelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.generalized_standard.html">jaxmat.materials.generalized_standard module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
@@ -221,7 +218,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/jaxmat.solvers.html">jaxmat.solvers package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.solvers.custom_newton.html">jaxmat.solvers.custom_newton module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.solvers.gauss_newton_ls.html">jaxmat.solvers.gauss_newton_ls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.solvers.custom_optimistix_solvers.html">jaxmat.solvers.custom_optimistix_solvers</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api/jaxmat.state.html">jaxmat.state module</a></li>
@@ -458,7 +455,7 @@ The <code class="docutils literal notranslate"><span class="pre">__post_init__</
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">jaxmat</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">jaxmat</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">equinox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">eqx</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">optimistix</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optx</span>
@@ -497,7 +494,7 @@ This ensures consistency and avoids manual setup when extending the model to mor
 <p>Finally, the <code class="docutils literal notranslate"><span class="pre">&#64;eqx.filter_jit</span></code> decorator enables JIT compilation for efficiency.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MultiSurfacePlasticity</span><span class="p">(</span><span class="n">SmallStrainBehavior</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MultiSurfacePlasticity</span><span class="p">(</span><span class="n">SmallStrainBehavior</span><span class="p">):</span>
     <span class="n">elastic_model</span><span class="p">:</span> <span class="n">LinearElasticIsotropic</span>
     <span class="n">yield_stresses</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">]</span>
     <span class="n">plastic_surfaces</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">AbstractPlasticSurface</span><span class="p">]</span>
@@ -568,7 +565,7 @@ This ensures consistency and avoids manual setup when extending the model to mor
 It simply returns a constant scalar value <span class="math notranslate nohighlight">\(\sigma_{0i}\)</span> independent of plastic strain.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">YieldStress</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">YieldStress</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="n">sig0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
@@ -588,7 +585,7 @@ f_\text{cap}(p,q) = \sqrt{(p-p_0)^2 + (q/M)^2} \leq \sigma_c
 <p>where <span class="math notranslate nohighlight">\(M\)</span> controls the ellipse aspect ratio, <span class="math notranslate nohighlight">\(p_0\)</span> its center along the hydrostatic axis and <span class="math notranslate nohighlight">\(\sigma_c\)</span> corresponds to the maximum compressive hydrostatic strength.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">EllipticCap</span><span class="p">(</span><span class="n">jm</span><span class="o">.</span><span class="n">AbstractPlasticSurface</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">EllipticCap</span><span class="p">(</span><span class="n">jm</span><span class="o">.</span><span class="n">AbstractPlasticSurface</span><span class="p">):</span>
     <span class="n">M</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">)</span>
     <span class="n">p0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
 
@@ -611,7 +608,7 @@ f_\text{t}(p) = \sigma_m = \tfrac{1}{3}\tr(\bsig) \leq \sigma_t
 <p>where <span class="math notranslate nohighlight">\(\sigma_t\)</span> is the tensile strength.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">HydrostaticTensionCutoff</span><span class="p">(</span><span class="n">jm</span><span class="o">.</span><span class="n">AbstractPlasticSurface</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">HydrostaticTensionCutoff</span><span class="p">(</span><span class="n">jm</span><span class="o">.</span><span class="n">AbstractPlasticSurface</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">):</span>
         <span class="n">sig_m</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
         <span class="k">return</span> <span class="n">sig_m</span>
@@ -632,7 +629,7 @@ f_\text{DP}(\bsig) = \alpha I_1 + \sqrt{J_2} \leq \tau_c
 We then select some numerical values and instantiate the final behavior. Its <code class="docutils literal notranslate"><span class="pre">constitutive_update</span></code> method is then vectorized using <code class="docutils literal notranslate"><span class="pre">jax.vmap</span></code> to allow evaluation of multiple strain paths in parallel.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sig0</span> <span class="o">=</span> <span class="mf">15.0</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sig0</span> <span class="o">=</span> <span class="mf">15.0</span>
 <span class="n">tauc</span> <span class="o">=</span> <span class="n">sig0</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">sigt</span> <span class="o">=</span> <span class="n">sig0</span> <span class="o">/</span> <span class="mi">10</span>
 <span class="n">sigc</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">sig0</span>
@@ -667,7 +664,7 @@ We then select some numerical values and instantiate the final behavior. Its <co
 <p>We define a series of strain directions covering the entire range of loading paths in the <span class="math notranslate nohighlight">\((p,q)\)</span> stress space — from pure compression to pure tension. This is done by parameterizing the strain directions with an angle <span class="math notranslate nohighlight">\(\theta \in [0, \pi]\)</span> and converting them into strain tensors consistent with these directions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">40</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">40</span>
 <span class="n">state</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">init_state</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
 
 <span class="n">theta</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
@@ -685,7 +682,7 @@ We then select some numerical values and instantiate the final behavior. Its <co
 This serves as a convenient reference point for the subsequent stress paths.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sig_init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sig_init</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="n">sig_init</span> <span class="o">=</span> <span class="n">sig_init</span><span class="o">.</span><span class="n">at</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span> <span class="o">*</span> <span class="n">sig0</span><span class="p">)</span>
 <span class="n">sig_init</span> <span class="o">=</span> <span class="n">sig_init</span><span class="o">.</span><span class="n">at</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span> <span class="o">*</span> <span class="n">sig0</span><span class="p">)</span>
 <span class="n">sig_init</span> <span class="o">=</span> <span class="n">sig_init</span><span class="o">.</span><span class="n">at</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span> <span class="o">*</span> <span class="n">sig0</span><span class="p">)</span>
@@ -701,7 +698,7 @@ This serves as a convenient reference point for the subsequent stress paths.</p>
 At each increment, the imposed strain tensor is updated and the nonlinear local problem is solved for each direction. The resulting stress is transformed to <span class="math notranslate nohighlight">\((p, q)\)</span> coordinates for plotting.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Nincr</span> <span class="o">=</span> <span class="mi">100</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Nincr</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">eps_list</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">4e-3</span><span class="p">,</span> <span class="n">Nincr</span><span class="p">)</span>
 <span class="n">dt</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -715,14 +712,14 @@ At each increment, the imposed strain tensor is updated and the nonlinear local 
 
     <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">pq_invariants</span><span class="p">)(</span><span class="n">stress</span><span class="p">)</span>
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="n">p_old</span><span class="p">,</span> <span class="o">-</span><span class="n">p</span><span class="p">],</span> <span class="p">[</span><span class="n">q_old</span><span class="p">,</span> <span class="n">q</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="n">p_old</span><span class="p">,</span> <span class="o">-</span><span class="n">p</span><span class="p">],</span> <span class="p">[</span><span class="n">q_old</span><span class="p">,</span> <span class="n">q</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
     <span class="n">p_old</span><span class="p">,</span> <span class="n">q_old</span> <span class="o">=</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>  <span class="c1"># prevents Jupyter from displaying it automatically</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;contextlib.ExitStack at 0x77b7021eec90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;contextlib.ExitStack at 0x7a91445e8a90&gt;
 </pre></div>
 </div>
 </div>
@@ -733,7 +730,7 @@ We also the reference yield surfaces (Drucker–Prager, elliptic cap, and tensio
 and that the model correctly reproduces the expected multi-surface plastic behavior of pressure-sensitive materials.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_DP</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sigc</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sigc</span><span class="p">,</span> <span class="n">Nincr</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p_DP</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sigc</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sigc</span><span class="p">,</span> <span class="n">Nincr</span><span class="p">)</span>
 <span class="n">q_DP</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">tauc</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">p_DP</span><span class="p">)</span>
 <span class="n">q_cap</span> <span class="o">=</span> <span class="n">M</span> <span class="o">*</span> <span class="n">sigc</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 <span class="n">p_cap</span> <span class="o">=</span> <span class="n">sigc</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
@@ -795,11 +792,11 @@ and that the model correctly reproduces the expected multi-surface plastic behav
       </div>
     </a>
     <a class="right-next"
-       href="../../ml_models.html"
+       href="../../identification.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Machine-learning based models</p>
+        <p class="prev-next-title">Data-driven identification</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

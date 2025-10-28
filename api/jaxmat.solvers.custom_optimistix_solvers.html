@@ -181,13 +181,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../demos/phenomenological_models/multisurface_plasticity.html">Multi-surface plasticity model</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
-</ul>
-</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../demos/neural_network_models/neural_GSM.html">Neural Generalized Standard Material for viscoelasticity</a></li>
 </ul>
 </details></li>
 </ul>
@@ -370,8 +371,8 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.GaussNewtonLineSearch"><code class="docutils literal notranslate"><span class="pre">GaussNewtonLineSearch</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.LevenbergMarquardtLineSearch"><code class="docutils literal notranslate"><span class="pre">LevenbergMarquardtLineSearch</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.GaussNewtonTrustRegion"><code class="docutils literal notranslate"><span class="pre">GaussNewtonTrustRegion</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.NewtonTrustRegion"><code class="docutils literal notranslate"><span class="pre">NewtonTrustRegion</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.rtol"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion.rtol</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.atol"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion.atol</span></code></a></li>
@@ -396,22 +397,10 @@
   <section id="module-jaxmat.solvers.custom_optimistix_solvers">
 <span id="jaxmat-solvers-custom-optimistix-solvers"></span><h1>jaxmat.solvers.custom_optimistix_solvers<a class="headerlink" href="#module-jaxmat.solvers.custom_optimistix_solvers" title="Link to this heading">#</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.solvers.custom_optimistix_solvers.GaussNewtonLineSearch">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GaussNewtonLineSearch</span></span><a class="reference internal" href="../_modules/jaxmat/solvers/custom_optimistix_solvers.html#GaussNewtonLineSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.solvers.custom_optimistix_solvers.GaussNewtonLineSearch" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="jaxmat.solvers.custom_optimistix_solvers.GaussNewtonTrustRegion">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GaussNewtonTrustRegion</span></span><a class="reference internal" href="../_modules/jaxmat/solvers/custom_optimistix_solvers.html#GaussNewtonTrustRegion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.solvers.custom_optimistix_solvers.GaussNewtonTrustRegion" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">GaussNewton</span></code></p>
-<p>Gauss-Newton algorithm, for solving nonlinear least-squares problems.</p>
-<p>Note that regularised approaches like [<cite>optimistix.LevenbergMarquardt</cite>][] are
-usually preferred instead.</p>
-<p>Supports the following <cite>options</cite>:</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt><cite>jac</cite>: whether to use forward- or reverse-mode autodifferentiation to compute the</dt><dd><p>Jacobian. Can be either <cite>“fwd”</cite> or <cite>“bwd”</cite>. Defaults to <cite>“fwd”</cite>, which is
-usually more efficient. Changing this can be useful when the target function has
-a <cite>jax.custom_vjp</cite>, and so does not support forward-mode autodifferentiation.</p>
-</dd>
-</dl>
-</li>
-</ul>
+<p>Gauss-Newton algorithm, for solving nonlinear least-squares problems with a trust region search.</p>
 <p><strong>Arguments:</strong></p>
 <ul class="simple">
 <li><p><cite>rtol</cite>: Relative tolerance for terminating the solve.</p></li>
@@ -435,20 +424,15 @@ entries are <cite>step</cite>, <cite>loss</cite>, <cite>accepted</cite>, <cite>s
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.solvers.custom_optimistix_solvers.LevenbergMarquardtLineSearch">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LevenbergMarquardtLineSearch</span></span><a class="reference internal" href="../_modules/jaxmat/solvers/custom_optimistix_solvers.html#LevenbergMarquardtLineSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.solvers.custom_optimistix_solvers.LevenbergMarquardtLineSearch" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="jaxmat.solvers.custom_optimistix_solvers.NewtonTrustRegion">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NewtonTrustRegion</span></span><a class="reference internal" href="../_modules/jaxmat/solvers/custom_optimistix_solvers.html#NewtonTrustRegion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.solvers.custom_optimistix_solvers.NewtonTrustRegion" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LevenbergMarquardt</span></code></p>
-<p>Levenberg-Marquardt algorithm, for solving nonlinear least-squares problems.</p>
-<p>Supports the following <cite>options</cite>:</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt><cite>jac</cite>: whether to use forward- or reverse-mode autodifferentiation to compute the</dt><dd><p>Jacobian. Can be either <cite>“fwd”</cite> or <cite>“bwd”</cite>. Defaults to <cite>“fwd”</cite>, which is
-usually more efficient. Changing this can be useful when the target function has
-a <cite>jax.custom_vjp</cite>, and so does not support forward-mode autodifferentiation.</p>
-</dd>
-</dl>
-</li>
-</ul>
+<p>Newton method for solving nonlinear problems with a trust region search.</p>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>This algorithm is derived from LevenbergMarquardt using a full Newton descent
+instead of a damped one.</p>
+</div>
 <p><strong>Arguments:</strong></p>
 <ul class="simple">
 <li><p><cite>rtol</cite>: Relative tolerance for terminating the solve.</p></li>
@@ -479,7 +463,7 @@ entries are <cite>step</cite>, <cite>loss</cite>, <cite>accepted</cite>, <cite>s
 <dt class="sig sig-object py" id="jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BFGSLinearTrustRegion</span></span><a class="reference internal" href="../_modules/jaxmat/solvers/custom_optimistix_solvers.html#BFGSLinearTrustRegion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractBFGS</span></code></p>
-<p>Standard BFGS + linear trust region update.</p>
+<p>Standard BFGS algorithm, for solving minimisation problems with a linear trust region search.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.rtol">
 <span class="sig-name descname"><span class="pre">rtol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.rtol" title="Link to this definition">#</a></dt>
@@ -513,7 +497,7 @@ vector <cite>(x_1, …, x_n)</cite>, then this computes <cite>max_i |x_i|</cite>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.search">
-<span class="sig-name descname"><span class="pre">search</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractSearch</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ClassicalTrustRegion()</span></em><a class="headerlink" href="#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.search" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">search</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractSearch</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">LinearTrustRegion()</span></em><a class="headerlink" href="#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.search" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -595,8 +579,8 @@ vector <cite>(x_1, …, x_n)</cite>, then this computes <cite>max_i |x_i|</cite>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.GaussNewtonLineSearch"><code class="docutils literal notranslate"><span class="pre">GaussNewtonLineSearch</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.LevenbergMarquardtLineSearch"><code class="docutils literal notranslate"><span class="pre">LevenbergMarquardtLineSearch</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.GaussNewtonTrustRegion"><code class="docutils literal notranslate"><span class="pre">GaussNewtonTrustRegion</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.NewtonTrustRegion"><code class="docutils literal notranslate"><span class="pre">NewtonTrustRegion</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.rtol"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion.rtol</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.atol"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion.atol</span></code></a></li>

@@ -180,13 +180,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../demos/phenomenological_models/multisurface_plasticity.html">Multi-surface plasticity model</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
-</ul>
-</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/neural_network_models/neural_GSM.html">Neural Generalized Standard Material for viscoelasticity</a></li>
 </ul>
 </details></li>
 </ul>
@@ -347,21 +348,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">optimistix</span><span class="w"> </span><span class="kn">import</span> <span class="n">max_norm</span>
 
 
-<div class="viewcode-block" id="GaussNewtonLineSearch">
-<a class="viewcode-back" href="../../../api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.GaussNewtonLineSearch">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">GaussNewtonLineSearch</span><span class="p">(</span><span class="n">optx</span><span class="o">.</span><span class="n">GaussNewton</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gauss-Newton algorithm, for solving nonlinear least-squares problems.</span>
-
-<span class="sd">    Note that regularised approaches like [`optimistix.LevenbergMarquardt`][] are</span>
-<span class="sd">    usually preferred instead.</span>
-
-<span class="sd">    Supports the following `options`:</span>
-
-<span class="sd">    - `jac`: whether to use forward- or reverse-mode autodifferentiation to compute the</span>
-<span class="sd">        Jacobian. Can be either `&quot;fwd&quot;` or `&quot;bwd&quot;`. Defaults to `&quot;fwd&quot;`, which is</span>
-<span class="sd">        usually more efficient. Changing this can be useful when the target function has</span>
-<span class="sd">        a `jax.custom_vjp`, and so does not support forward-mode autodifferentiation.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="GaussNewtonTrustRegion">
+<a class="viewcode-back" href="../../../api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.GaussNewtonTrustRegion">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GaussNewtonTrustRegion</span><span class="p">(</span><span class="n">optx</span><span class="o">.</span><span class="n">GaussNewton</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gauss-Newton algorithm, for solving nonlinear least-squares problems with a trust region search.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -380,18 +370,15 @@
 
 
 
-<div class="viewcode-block" id="LevenbergMarquardtLineSearch">
-<a class="viewcode-back" href="../../../api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.LevenbergMarquardtLineSearch">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">LevenbergMarquardtLineSearch</span><span class="p">(</span><span class="n">optx</span><span class="o">.</span><span class="n">LevenbergMarquardt</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Levenberg-Marquardt algorithm, for solving nonlinear least-squares problems.</span>
+<div class="viewcode-block" id="NewtonTrustRegion">
+<a class="viewcode-back" href="../../../api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.NewtonTrustRegion">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NewtonTrustRegion</span><span class="p">(</span><span class="n">optx</span><span class="o">.</span><span class="n">LevenbergMarquardt</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Newton method for solving nonlinear problems with a trust region search.</span>
 
-
-<span class="sd">    Supports the following `options`:</span>
-
-<span class="sd">    - `jac`: whether to use forward- or reverse-mode autodifferentiation to compute the</span>
-<span class="sd">        Jacobian. Can be either `&quot;fwd&quot;` or `&quot;bwd&quot;`. Defaults to `&quot;fwd&quot;`, which is</span>
-<span class="sd">        usually more efficient. Changing this can be useful when the target function has</span>
-<span class="sd">        a `jax.custom_vjp`, and so does not support forward-mode autodifferentiation.</span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This algorithm is derived from LevenbergMarquardt using a full Newton descent</span>
+<span class="sd">    instead of a damped one.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
@@ -414,13 +401,13 @@
 <div class="viewcode-block" id="BFGSLinearTrustRegion">
 <a class="viewcode-back" href="../../../api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">BFGSLinearTrustRegion</span><span class="p">(</span><span class="n">optx</span><span class="o">.</span><span class="n">AbstractBFGS</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Standard BFGS + linear trust region update.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Standard BFGS algorithm, for solving minimisation problems with a linear trust region search.&quot;&quot;&quot;</span>
 
     <span class="n">rtol</span><span class="p">:</span> <span class="nb">float</span>
     <span class="n">atol</span><span class="p">:</span> <span class="nb">float</span>
     <span class="n">norm</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">optx</span><span class="o">.</span><span class="n">max_norm</span>
     <span class="n">use_inverse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">search</span><span class="p">:</span> <span class="n">optx</span><span class="o">.</span><span class="n">AbstractSearch</span> <span class="o">=</span> <span class="n">optx</span><span class="o">.</span><span class="n">ClassicalTrustRegion</span><span class="p">()</span>
+    <span class="n">search</span><span class="p">:</span> <span class="n">optx</span><span class="o">.</span><span class="n">AbstractSearch</span> <span class="o">=</span> <span class="n">optx</span><span class="o">.</span><span class="n">LinearTrustRegion</span><span class="p">()</span>
     <span class="n">descent</span><span class="p">:</span> <span class="n">optx</span><span class="o">.</span><span class="n">AbstractDescent</span> <span class="o">=</span> <span class="n">optx</span><span class="o">.</span><span class="n">NewtonDescent</span><span class="p">()</span>
     <span class="n">verbose</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">()</span></div>
 
