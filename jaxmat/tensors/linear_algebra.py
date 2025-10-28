@@ -87,8 +87,8 @@ def main_invariants(A):
     $$\tr(\bA),\: \tr(\bA^2),\: \tr(\bA^3)$$.
     """
     j1 = jnp.trace(A)
-    j2 = jnp.trace(A.dot(A))
-    j3 = jnp.trace(A.dot(A).dot(A))
+    j2 = jnp.trace(A @ A)
+    j3 = jnp.trace(A @ A @ A)
     return j1, j2, j3
 
 
