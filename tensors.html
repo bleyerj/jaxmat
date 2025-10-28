@@ -63,7 +63,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'tensors';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Material models gallery" href="models.html" />
+    <link rel="next" title="jaxmat.loader module" href="api/jaxmat.loader.html" />
     <link rel="prev" title="Computational aspects" href="computational.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -183,13 +183,14 @@
 <li class="toctree-l2"><a class="reference internal" href="demos/phenomenological_models/multisurface_plasticity.html">Multi-surface plasticity model</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
-</ul>
-</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
 <li class="toctree-l2"><a class="reference internal" href="demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="demos/neural_network_models/neural_GSM.html">Neural Generalized Standard Material for viscoelasticity</a></li>
 </ul>
 </details></li>
 </ul>
@@ -199,10 +200,6 @@
 <li class="toctree-l1"><a class="reference internal" href="computational.html">Computational aspects</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Conventions for representing tensors</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Material models gallery</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="models.html">Material models gallery</a></li>
-</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="api/jaxmat.loader.html">jaxmat.loader module</a></li>
@@ -211,9 +208,9 @@
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.viscoelasticity.html">jaxmat.materials.viscoelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.generalized_standard.html">jaxmat.materials.generalized_standard module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
@@ -221,7 +218,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api/jaxmat.solvers.html">jaxmat.solvers package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.solvers.custom_newton.html">jaxmat.solvers.custom_newton module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/jaxmat.solvers.gauss_newton_ls.html">jaxmat.solvers.gauss_newton_ls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/jaxmat.solvers.custom_optimistix_solvers.html">jaxmat.solvers.custom_optimistix_solvers</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="api/jaxmat.state.html">jaxmat.state module</a></li>
@@ -470,11 +467,11 @@ C_{2211} &amp; C_{2222} &amp; \sqrt{2}C_{2212} \\
       </div>
     </a>
     <a class="right-next"
-       href="models.html"
+       href="api/jaxmat.loader.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Material models gallery</p>
+        <p class="prev-next-title">jaxmat.loader module</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
