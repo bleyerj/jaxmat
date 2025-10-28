@@ -3,9 +3,8 @@ import equinox as eqx
 import optimistix as optx
 from optax.tree_utils import tree_add, tree_zeros_like, tree_scale
 from jaxmat.state import AbstractState
-
+from jaxmat.solvers import NewtonTrustRegion
 import jaxmat.materials as jm
-from jaxmat.solvers import LevenbergMarquardtLineSearch
 import lineax as lx
 
 
@@ -28,8 +27,7 @@ class GeneralizedStandardMaterial(jm.SmallStrainBehavior):
 
     subject to the current strain $\beps_{n+1} = \beps_n+\Delta\beps$ and time increment $\Delta t$.
 
-    The minimization is performed numerically using a Levenberg-Marquardt line-search
-    solver from :mod:`optimistix`.
+    The minimization is performed numerically using a Newton line-search solver.
 
 
     Notes
@@ -54,7 +52,7 @@ class GeneralizedStandardMaterial(jm.SmallStrainBehavior):
     r"""Module defining the dissipation pseudo-potential $\Phi(\dot\balpha)$"""
     internal: AbstractState
     """Internal state variables (e.g. plastic strain, viscous strain)."""
-    minimisation_solver = LevenbergMarquardtLineSearch(
+    minimisation_solver = NewtonTrustRegion(
         rtol=1e-6, atol=1e-6, linear_solver=lx.AutoLinearSolver(well_posed=False)
     )
     """Minimisation solver used to minimize the incremental potential."""

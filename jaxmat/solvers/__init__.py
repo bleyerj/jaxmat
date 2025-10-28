@@ -1,9 +1,9 @@
 import optimistix as optx
 import lineax as lx
 from .custom_optimistix_solvers import (
-    GaussNewtonLineSearch,
-    LevenbergMarquardtLineSearch,
+    GaussNewtonTrustRegion,
     BFGSLinearTrustRegion,
+    NewtonTrustRegion,
 )
 
 linear_solver = lx.AutoLinearSolver(well_posed=False)

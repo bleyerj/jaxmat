@@ -5,19 +5,8 @@ import lineax as lx
 from optimistix import max_norm
 
 
-class GaussNewtonLineSearch(optx.GaussNewton):
-    """Gauss-Newton algorithm, for solving nonlinear least-squares problems.
-
-    Note that regularised approaches like [`optimistix.LevenbergMarquardt`][] are
-    usually preferred instead.
-
-    Supports the following `options`:
-
-    - `jac`: whether to use forward- or reverse-mode autodifferentiation to compute the
-        Jacobian. Can be either `"fwd"` or `"bwd"`. Defaults to `"fwd"`, which is
-        usually more efficient. Changing this can be useful when the target function has
-        a `jax.custom_vjp`, and so does not support forward-mode autodifferentiation.
-    """
+class GaussNewtonTrustRegion(optx.GaussNewton):
+    """Gauss-Newton algorithm, for solving nonlinear least-squares problems with a trust region search."""
 
     def __init__(
         self,
@@ -35,16 +24,13 @@ class GaussNewtonLineSearch(optx.GaussNewton):
         self.verbose = verbose
 
 
-class LevenbergMarquardtLineSearch(optx.LevenbergMarquardt):
-    """Levenberg-Marquardt algorithm, for solving nonlinear least-squares problems.
+class NewtonTrustRegion(optx.LevenbergMarquardt):
+    """Newton method for solving nonlinear problems with a trust region search.
 
-
-    Supports the following `options`:
-
-    - `jac`: whether to use forward- or reverse-mode autodifferentiation to compute the
-        Jacobian. Can be either `"fwd"` or `"bwd"`. Defaults to `"fwd"`, which is
-        usually more efficient. Changing this can be useful when the target function has
-        a `jax.custom_vjp`, and so does not support forward-mode autodifferentiation.
+    Notes
+    -----
+    This algorithm is derived from LevenbergMarquardt using a full Newton descent
+    instead of a damped one.
     """
 
     def __init__(
@@ -64,12 +50,12 @@ class LevenbergMarquardtLineSearch(optx.LevenbergMarquardt):
 
 
 class BFGSLinearTrustRegion(optx.AbstractBFGS):
-    """Standard BFGS + linear trust region update."""
+    """Standard BFGS algorithm, for solving minimisation problems with a linear trust region search."""
 
     rtol: float
     atol: float
     norm: Callable = optx.max_norm
     use_inverse: bool = True
-    search: optx.AbstractSearch = optx.ClassicalTrustRegion()
+    search: optx.AbstractSearch = optx.LinearTrustRegion()
     descent: optx.AbstractDescent = optx.NewtonDescent()
     verbose: frozenset[str] = frozenset()
