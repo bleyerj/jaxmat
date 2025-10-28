@@ -44,7 +44,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
@@ -57,8 +57,6 @@
     <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/jaxmat/materials/generalized_standard';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -172,6 +170,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../demos/quickstart/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">jaxmat</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../demos/quickstart/batched_computation.html">Batching across material points</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../demos/quickstart/material_parameters_batching.html">Batching across material parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytrees.html">Composable and differentiable material models</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul class="nav bd-sidenav">
@@ -183,6 +182,12 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/neural_network_models/neural_GSM.html">Neural Generalized Standard Material for viscoelasticity</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
 </ul>
 </details></li>
 </ul>
@@ -192,13 +197,35 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../computational.html">Computational aspects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tensors.html">Conventions for representing tensors</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Material models gallery</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../../models.html">Material models gallery</a></li>
-</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../../api2/jaxmat.materials.html">jaxmat.materials package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/jaxmat.loader.html">jaxmat.loader module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/jaxmat.materials.html">jaxmat.materials package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.viscoelasticity.html">jaxmat.materials.viscoelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.generalized_standard.html">jaxmat.materials.generalized_standard module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/jaxmat.solvers.html">jaxmat.solvers package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.solvers.custom_newton.html">jaxmat.solvers.custom_newton module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.solvers.custom_optimistix_solvers.html">jaxmat.solvers.custom_optimistix_solvers</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/jaxmat.state.html">jaxmat.state module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/jaxmat.tensors.html">jaxmat.tensors package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.tensors.generic_tensors.html">jaxmat.tensors.generic_tensors module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.tensors.linear_algebra.html">jaxmat.tensors.linear_algebra module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.tensors.tensor_utils.html">jaxmat.tensors.tensor_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/jaxmat.tensors.utils.html">jaxmat.tensors.utils module</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -315,121 +342,109 @@
                   
   <h1>Source code for jaxmat.materials.generalized_standard</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">equinox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">eqx</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">optimistix</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optx</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">optax.tree_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">tree_add</span><span class="p">,</span> <span class="n">tree_zeros_like</span><span class="p">,</span> <span class="n">tree_scale</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.state</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">AbstractState</span><span class="p">,</span>
-    <span class="n">SmallStrainState</span><span class="p">,</span>
-    <span class="n">make_batched</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.tensors</span><span class="w"> </span><span class="kn">import</span> <span class="n">SymmetricTensor2</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.behavior</span><span class="w"> </span><span class="kn">import</span> <span class="n">SmallStrainBehavior</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.elasticity</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearElasticIsotropic</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.state</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractState</span>
 
-
-<div class="viewcode-block" id="InternalState">
-<a class="viewcode-back" href="../../../api2/jaxmat.materials.html#jaxmat.materials.generalized_standard.InternalState">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">InternalState</span><span class="p">(</span><span class="n">AbstractState</span><span class="p">):</span>
-    <span class="c1"># p: float = eqx.field(default_factory=lambda: jnp.float64(0.0))</span>
-    <span class="n">epsv</span><span class="p">:</span> <span class="n">SymmetricTensor2</span> <span class="o">=</span> <span class="n">SymmetricTensor2</span><span class="p">()</span></div>
-
-
-
-<div class="viewcode-block" id="FreeEnergy">
-<a class="viewcode-back" href="../../../api2/jaxmat.materials.html#jaxmat.materials.generalized_standard.FreeEnergy">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">FreeEnergy</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="n">elastic_model</span><span class="p">:</span> <span class="n">LinearElasticIsotropic</span>
-    <span class="n">viscous_model</span><span class="p">:</span> <span class="n">LinearElasticIsotropic</span>
-    <span class="c1"># hardening_potential: eqx.Module</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">isv</span><span class="p">):</span>
-        <span class="n">eps_el</span> <span class="o">=</span> <span class="n">eps</span> <span class="o">-</span> <span class="n">isv</span><span class="o">.</span><span class="n">epsv</span>
-        <span class="n">psi_el</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">eps_el</span> <span class="o">@</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elastic_model</span><span class="o">.</span><span class="n">C</span> <span class="o">@</span> <span class="n">eps_el</span><span class="p">))</span>
-        <span class="n">psi_v</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">eps</span> <span class="o">@</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">viscous_model</span><span class="o">.</span><span class="n">C</span> <span class="o">@</span> <span class="n">eps</span><span class="p">))</span>
-        <span class="c1"># psi_h = self.hardening_potential(isv.p)</span>
-        <span class="k">return</span> <span class="n">psi_el</span> <span class="o">+</span> <span class="n">psi_v</span>  <span class="c1"># + psi_h</span></div>
-
-
-
-<div class="viewcode-block" id="DissipationPotential">
-<a class="viewcode-back" href="../../../api2/jaxmat.materials.html#jaxmat.materials.generalized_standard.DissipationPotential">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">DissipationPotential</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="n">eta</span><span class="p">:</span> <span class="nb">float</span>
-    <span class="c1"># plastic_dissipation: eqx.Module</span>
-    <span class="c1"># barrier_parameter: float</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">isv_dot</span><span class="p">):</span>
-        <span class="n">depsv</span> <span class="o">=</span> <span class="n">isv_dot</span><span class="o">.</span><span class="n">epsv</span>
-        <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">depsv</span> <span class="o">@</span> <span class="n">depsv</span><span class="p">)</span></div>
-
-        <span class="c1"># dp = isv_dot.p</span>
-        <span class="c1"># depsp = isv_dot.epsp</span>
-        <span class="c1"># jax.debug.print(&quot;dp = {}, depsp = {}&quot;, dp, depsp)</span>
-        <span class="c1"># return self.initial_yield_stress * dp - self.barrier_parameter * jnp.log(</span>
-        <span class="c1">#     dp - self.plastic_dissipation(depsp)</span>
-        <span class="c1"># )</span>
-
-
-<div class="viewcode-block" id="MyState">
-<a class="viewcode-back" href="../../../api2/jaxmat.materials.html#jaxmat.materials.generalized_standard.MyState">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">MyState</span><span class="p">(</span><span class="n">SmallStrainState</span><span class="p">):</span>
-    <span class="n">internal_old</span><span class="p">:</span> <span class="n">AbstractState</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">internal</span><span class="p">:</span> <span class="n">AbstractState</span> <span class="o">=</span> <span class="kc">None</span></div>
-
+<span class="kn">import</span><span class="w"> </span><span class="nn">jaxmat.materials</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxmat.solvers</span><span class="w"> </span><span class="kn">import</span> <span class="n">LevenbergMarquardtLineSearch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lineax</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">lx</span>
 
 
 <div class="viewcode-block" id="GeneralizedStandardMaterial">
-<a class="viewcode-back" href="../../../api2/jaxmat.materials.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">GeneralizedStandardMaterial</span><span class="p">(</span><span class="n">SmallStrainBehavior</span><span class="p">):</span>
+<a class="viewcode-back" href="../../../api/jaxmat.materials.generalized_standard.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GeneralizedStandardMaterial</span><span class="p">(</span><span class="n">jm</span><span class="o">.</span><span class="n">SmallStrainBehavior</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Generalized Standard Material (GSM) in small strain formulation.</span>
+
+<span class="sd">    The GSM framework provides a unified thermodynamic formulation for</span>
+<span class="sd">    viscoelastic, viscoplastic, and other dissipative material behaviors.</span>
+<span class="sd">    It is characterized by two potentials:</span>
+
+<span class="sd">    - A **free energy** $\Psi(\beps,\balpha)$ defining the</span>
+<span class="sd">      elastic (reversible) response.</span>
+<span class="sd">    - A **dissipation pseudo-potential** $\Phi(\dot{\balpha})$ defining the</span>
+<span class="sd">      evolution of the internal variables (irreversible processes).</span>
+
+<span class="sd">    The state variable evolution is obtained by minimizing the **incremental potential**:</span>
+
+<span class="sd">    $$\min_{\Delta \balpha} J(\Delta\balpha ;\beps_{n+1},\balpha_n) = \min_{\Delta \balpha} \Psi(\beps_{n+1}, \balpha_n + \Delta \balpha)</span>
+<span class="sd">    + \Delta t \Phi\left(\dfrac{\Delta \balpha}{\Delta t}\right)$$</span>
+
+<span class="sd">    subject to the current strain $\beps_{n+1} = \beps_n+\Delta\beps$ and time increment $\Delta t$.</span>
+
+<span class="sd">    The minimization is performed numerically using a Levenberg-Marquardt line-search</span>
+<span class="sd">    solver from :mod:`optimistix`.</span>
+
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The stress is automatically computed via</span>
+<span class="sd">        $$\bsig = \dfrac{\partial \Psi}{\partial \beps}$$</span>
+
+
+<span class="sd">    .. admonition:: References</span>
+<span class="sd">        :class: seealso</span>
+
+<span class="sd">        - Halphen, B., &amp; Nguyen, Q. S. (1975). Sur les matériaux standard généralisés.</span>
+<span class="sd">          Journal de mécanique, 14(1), 39-63.</span>
+<span class="sd">        - Ortiz, M., &amp; Stainier, L. (1999). The variational formulation of viscoplastic</span>
+<span class="sd">          constitutive updates. Computer methods in applied mechanics and engineering,</span>
+<span class="sd">          171(3-4), 419-444.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">free_energy</span><span class="p">:</span> <span class="n">eqx</span><span class="o">.</span><span class="n">Module</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Module defining the Helmholtz free energy $\Psi(\beps,\balpha)&quot;&quot;&quot;</span>
     <span class="n">dissipation_potential</span><span class="p">:</span> <span class="n">eqx</span><span class="o">.</span><span class="n">Module</span>
-    <span class="n">internal</span> <span class="o">=</span> <span class="n">InternalState</span><span class="p">()</span>
-    <span class="n">internal_old</span> <span class="o">=</span> <span class="n">InternalState</span><span class="p">()</span>
-    <span class="n">solver</span> <span class="o">=</span> <span class="n">optx</span><span class="o">.</span><span class="n">BFGS</span><span class="p">(</span><span class="n">rtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
-
-<div class="viewcode-block" id="GeneralizedStandardMaterial.init_state">
-<a class="viewcode-back" href="../../../api2/jaxmat.materials.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial.init_state">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Nbatch</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">make_batched</span><span class="p">(</span>
-            <span class="n">MyState</span><span class="p">(</span><span class="n">internal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="p">,</span> <span class="n">internal_old</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">internal_old</span><span class="p">),</span>
-            <span class="n">Nbatch</span><span class="p">,</span>
-        <span class="p">)</span></div>
-
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Module defining the dissipation pseudo-potential $\Phi(\dot\balpha)$&quot;&quot;&quot;</span>
+    <span class="n">internal</span><span class="p">:</span> <span class="n">AbstractState</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Internal state variables (e.g. plastic strain, viscous strain).&quot;&quot;&quot;</span>
+    <span class="n">minimisation_solver</span> <span class="o">=</span> <span class="n">LevenbergMarquardtLineSearch</span><span class="p">(</span>
+        <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">linear_solver</span><span class="o">=</span><span class="n">lx</span><span class="o">.</span><span class="n">AutoLinearSolver</span><span class="p">(</span><span class="n">well_posed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Minimisation solver used to minimize the incremental potential.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="GeneralizedStandardMaterial.incremental_potential">
-<a class="viewcode-back" href="../../../api2/jaxmat.materials.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial.incremental_potential">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.materials.generalized_standard.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial.incremental_potential">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">incremental_potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_isv</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the incremental potential for a given internal variable increment.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d_isv : PyTree</span>
+<span class="sd">            Increment of internal state variables $\Delta \balpha$.</span>
+<span class="sd">        args : tuple</span>
+<span class="sd">            Tuple containing ``(eps, state, dt)``:</span>
+<span class="sd">              - ``eps`` : total strain tensor.</span>
+<span class="sd">              - ``state`` : current material state.</span>
+<span class="sd">              - ``dt`` : time increment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">args</span>
         <span class="n">isv_old</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">internal</span>
-        <span class="n">isv</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">isv_old</span><span class="p">,</span> <span class="n">d_isv</span><span class="p">)</span>
-        <span class="n">isv_dot</span> <span class="o">=</span> <span class="n">tree_scale</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">dt</span><span class="p">,</span> <span class="n">d_isv</span><span class="p">)</span>
+        <span class="n">isv</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">isv_old</span><span class="p">,</span> <span class="n">d_isv</span><span class="p">)</span>  <span class="c1"># compute alpha_{n+1} = alpha_n + Delta alpha</span>
+        <span class="n">isv_dot</span> <span class="o">=</span> <span class="n">tree_scale</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">dt</span><span class="p">,</span> <span class="n">d_isv</span><span class="p">)</span>  <span class="c1"># compute \dot alpha = Delta alpha/Delta t</span>
         <span class="n">free_eng</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">free_energy</span><span class="p">(</span><span class="n">eps</span><span class="p">,</span> <span class="n">isv</span><span class="p">)</span>
         <span class="n">diss_eng</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dissipation_potential</span><span class="p">(</span><span class="n">isv_dot</span><span class="p">)</span>
-        <span class="c1"># incr_energy = self.free_energy(eps, isv) + self.dissipation_potential(isv_dot)</span>
-        <span class="c1"># jax.debug.print(&quot;free_energy = {} diss_energy = {}&quot;, free_eng, diss_eng)</span>
         <span class="k">return</span> <span class="n">free_eng</span> <span class="o">+</span> <span class="n">diss_eng</span></div>
 
 
 <div class="viewcode-block" id="GeneralizedStandardMaterial.constitutive_update">
-<a class="viewcode-back" href="../../../api2/jaxmat.materials.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial.constitutive_update">[docs]</a>
+<a class="viewcode-back" href="../../../api/jaxmat.materials.generalized_standard.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial.constitutive_update">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">constitutive_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
-        <span class="n">eps_old</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">strain</span>
-        <span class="n">deps</span> <span class="o">=</span> <span class="n">eps</span> <span class="o">-</span> <span class="n">eps_old</span>
         <span class="n">isv_old</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">internal</span>
         <span class="n">d_isv0</span> <span class="o">=</span> <span class="n">tree_zeros_like</span><span class="p">(</span><span class="n">isv_old</span><span class="p">)</span>
-        <span class="c1"># d_isv0 = tree_sub(isv_old, state.internal_old)</span>
-        <span class="c1"># d_isv0 = d_isv0.add(epsp=1e-6 * SymmetricTensor2.identity())</span>
-        <span class="c1"># d_isv0 = d_isv0.add(dp=3 * jnp.linalg.norm(d_isv0.epsp))</span>
-        <span class="n">args</span> <span class="o">=</span> <span class="n">deps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span>
-        <span class="n">sol</span> <span class="o">=</span> <span class="n">optx</span><span class="o">.</span><span class="n">minimise</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incremental_potential</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="p">,</span> <span class="n">d_isv0</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">dt</span>
+        <span class="n">sol</span> <span class="o">=</span> <span class="n">optx</span><span class="o">.</span><span class="n">minimise</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">incremental_potential</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">minimisation_solver</span><span class="p">,</span>
+            <span class="n">d_isv0</span><span class="p">,</span>
+            <span class="n">args</span><span class="p">,</span>
+            <span class="n">throw</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">d_isv</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">value</span>
         <span class="n">isv</span> <span class="o">=</span> <span class="n">tree_add</span><span class="p">(</span><span class="n">isv_old</span><span class="p">,</span> <span class="n">d_isv</span><span class="p">)</span>
         <span class="n">sig</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacfwd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">free_energy</span><span class="p">,</span> <span class="n">argnums</span><span class="o">=</span><span class="mi">0</span><span class="p">)(</span><span class="n">eps</span><span class="p">,</span> <span class="n">isv</span><span class="p">)</span>
-        <span class="c1"># jax.debug.print(&quot;depsv = {}&quot;, d_isv.epsv)</span>
-        <span class="c1"># sig = self.free_energy.elastic_model.C @ (eps - isv.epsp)</span>
-        <span class="n">new_state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">stress</span><span class="o">=</span><span class="n">sig</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="n">isv</span><span class="p">,</span> <span class="n">internal_old</span><span class="o">=</span><span class="n">isv_old</span><span class="p">)</span>
+        <span class="n">new_state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">stress</span><span class="o">=</span><span class="n">sig</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="n">isv</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">sig</span><span class="p">,</span> <span class="n">new_state</span></div>
 </div>
 

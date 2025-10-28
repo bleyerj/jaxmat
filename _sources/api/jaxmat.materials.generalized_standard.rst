@@ -1,5 +1,5 @@
-jaxmat.materials.generalized\_standard module
-=============================================
+jaxmat.materials.generalized_standard module
+============================================
 
 .. automodule:: jaxmat.materials.generalized_standard
    :members:

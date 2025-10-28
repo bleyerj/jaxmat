@@ -112,6 +112,8 @@
       
       
       
+        
+      
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
@@ -181,6 +183,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../demos/neural_network_models/neural_GSM.html">Neural Generalized Standard Material for viscoelasticity</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -195,10 +198,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../computational.html">Computational aspects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tensors.html">Conventions for representing tensors</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Material models gallery</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../models.html">Material models gallery</a></li>
-</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.loader.html">jaxmat.loader module</a></li>
@@ -207,9 +206,9 @@
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoelasticity.html">jaxmat.materials.viscoelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.generalized_standard.html">jaxmat.materials.generalized_standard module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
@@ -217,7 +216,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="jaxmat.solvers.html">jaxmat.solvers package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.custom_newton.html">jaxmat.solvers.custom_newton module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.gauss_newton_ls.html">jaxmat.solvers.gauss_newton_ls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html">jaxmat.solvers.custom_optimistix_solvers</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.state.html">jaxmat.state module</a></li>
@@ -422,17 +421,6 @@
 <li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html#jaxmat.materials.fe_fp_elastoplasticity.FeFpJ2Plasticity"><code class="docutils literal notranslate"><span class="pre">FeFpJ2Plasticity</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.Hyperelasticity"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.VolumetricPart"><code class="docutils literal notranslate"><span class="pre">VolumetricPart</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.SquaredVolumetric"><code class="docutils literal notranslate"><span class="pre">SquaredVolumetric</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleNeoHookean"><code class="docutils literal notranslate"><span class="pre">CompressibleNeoHookean</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin"><code class="docutils literal notranslate"><span class="pre">CompressibleMooneyRivlin</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleGhentMooneyRivlin"><code class="docutils literal notranslate"><span class="pre">CompressibleGhentMooneyRivlin</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleOgden"><code class="docutils literal notranslate"><span class="pre">CompressibleOgden</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.AFInternalState"><code class="docutils literal notranslate"><span class="pre">AFInternalState</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity</span></code></a></li>
@@ -440,15 +428,20 @@
 <li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.GenericViscoplasticity"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.viscoelasticity.html">jaxmat.materials.viscoelasticity module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.SLSState"><code class="docutils literal notranslate"><span class="pre">SLSState</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.StandardLinearSolid"><code class="docutils literal notranslate"><span class="pre">StandardLinearSolid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.GeneralizedMaxwellState"><code class="docutils literal notranslate"><span class="pre">GeneralizedMaxwellState</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.GeneralizedMaxwell"><code class="docutils literal notranslate"><span class="pre">GeneralizedMaxwell</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.generalized_standard.html">jaxmat.materials.generalized_standard module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.generalized_standard.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial"><code class="docutils literal notranslate"><span class="pre">GeneralizedStandardMaterial</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.html#models">Models</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.AbstractLinearElastic"><code class="docutils literal notranslate"><span class="pre">AbstractLinearElastic</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic"><code class="docutils literal notranslate"><span class="pre">LinearElasticIsotropic</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.ElasticBehavior"><code class="docutils literal notranslate"><span class="pre">ElasticBehavior</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.HyperelasticPotential"><code class="docutils literal notranslate"><span class="pre">HyperelasticPotential</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.Hyperelasticity"><code class="docutils literal notranslate"><span class="pre">Hyperelasticity</span></code></a></li>
@@ -488,8 +481,10 @@
 <li class="toctree-l4"><a class="reference internal" href="jaxmat.solvers.custom_newton.html#jaxmat.solvers.custom_newton.newton_solve_jittable"><code class="docutils literal notranslate"><span class="pre">newton_solve_jittable()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="jaxmat.solvers.gauss_newton_ls.html">jaxmat.solvers.gauss_newton_ls module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="jaxmat.solvers.gauss_newton_ls.html#jaxmat.solvers.gauss_newton_ls.GaussNewtonLineSearch"><code class="docutils literal notranslate"><span class="pre">GaussNewtonLineSearch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html">jaxmat.solvers.custom_optimistix_solvers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.GaussNewtonLineSearch"><code class="docutils literal notranslate"><span class="pre">GaussNewtonLineSearch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.LevenbergMarquardtLineSearch"><code class="docutils literal notranslate"><span class="pre">LevenbergMarquardtLineSearch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion</span></code></a></li>
 </ul>
 </li>
 </ul>

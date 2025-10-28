@@ -1,0 +1,771 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>optimistix._misc &#8212; jaxmat</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/optimistix/_misc';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/jaxmat_logo.svg" class="logo__image only-light" alt="jaxmat - Home"/>
+    <img src="../../_static/jaxmat_logo.svg" class="logo__image only-dark pst-js-only" alt="jaxmat - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Documentation
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quickstart tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../demos/quickstart/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">jaxmat</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../demos/quickstart/batched_computation.html">Batching across material points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../demos/quickstart/material_parameters_batching.html">Batching across material parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pytrees.html">Composable and differentiable material models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../pheno_models.html">Phenomenological models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../demos/phenomenological_models/Green_viscoplasticity.html">Norton viscoplastic model with a Green yield surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../demos/phenomenological_models/CamClay.html">Modified Cam-Clay</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../demos/phenomenological_models/multisurface_plasticity.html">Multi-surface plasticity model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">General resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../concepts.html">Nonlinear constitutive behaviors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../computational.html">Computational aspects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tensors.html">Conventions for representing tensors</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../api/jaxmat.loader.html">jaxmat.loader module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/jaxmat.materials.html">jaxmat.materials package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.behavior.html">jaxmat.materials.behavior module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoelasticity.html">jaxmat.materials.viscoelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.generalized_standard.html">jaxmat.materials.generalized_standard module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/jaxmat.solvers.html">jaxmat.solvers package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.solvers.custom_newton.html">jaxmat.solvers.custom_newton module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.solvers.custom_optimistix_solvers.html">jaxmat.solvers.custom_optimistix_solvers</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/jaxmat.state.html">jaxmat.state module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/jaxmat.tensors.html">jaxmat.tensors package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.tensors.generic_tensors.html">jaxmat.tensors.generic_tensors module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.tensors.linear_algebra.html">jaxmat.tensors.linear_algebra module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.tensors.tensor_utils.html">jaxmat.tensors.tensor_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/jaxmat.tensors.utils.html">jaxmat.tensors.utils module</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/bleyerj/jaxmat" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for optimistix._misc</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">overload</span><span class="p">,</span> <span class="n">TypeVar</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">equinox</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">eqx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">equinox.internal</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">eqxi</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.extend</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jex</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.flatten_util</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jfu</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.lax</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">lax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.tree_util</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jtu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">equinox.internal</span><span class="w"> </span><span class="kn">import</span> <span class="n">ω</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxtyping</span><span class="w"> </span><span class="kn">import</span> <span class="n">Array</span><span class="p">,</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">Bool</span><span class="p">,</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">Scalar</span><span class="p">,</span> <span class="n">ScalarLike</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lineax.internal</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">default_floating_dtype</span> <span class="k">as</span> <span class="n">_default_floating_dtype</span><span class="p">,</span>
+    <span class="n">max_norm</span> <span class="k">as</span> <span class="n">_max_norm</span><span class="p">,</span>
+    <span class="n">rms_norm</span> <span class="k">as</span> <span class="n">_rms_norm</span><span class="p">,</span>
+    <span class="n">sum_squares</span> <span class="k">as</span> <span class="n">_sum_squares</span><span class="p">,</span>
+    <span class="n">tree_dot</span> <span class="k">as</span> <span class="n">_tree_dot</span><span class="p">,</span>
+    <span class="n">two_norm</span> <span class="k">as</span> <span class="n">_two_norm</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">._custom_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">Y</span>
+
+
+<span class="c1"># Make the wrapped function a genuine member of this module.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_wrap</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="c1"># Not using `functools.wraps` as our docgen will chase that.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wrapped_fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">wrapped_fn</span><span class="o">.</span><span class="n">__signature__</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>  <span class="c1"># pyright: ignore[reportFunctionMemberAccess]</span>
+    <span class="n">wrapped_fn</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">wrapped_fn</span><span class="o">.</span><span class="vm">__qualname__</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="n">wrapped_fn</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">=</span> <span class="vm">__name__</span>
+    <span class="n">wrapped_fn</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="vm">__doc__</span>
+    <span class="k">return</span> <span class="n">wrapped_fn</span>
+
+
+<span class="n">default_floating_dtype</span> <span class="o">=</span> <span class="n">_wrap</span><span class="p">(</span><span class="n">_default_floating_dtype</span><span class="p">)</span>
+<span class="n">max_norm</span> <span class="o">=</span> <span class="n">_wrap</span><span class="p">(</span><span class="n">_max_norm</span><span class="p">)</span>
+<span class="n">rms_norm</span> <span class="o">=</span> <span class="n">_wrap</span><span class="p">(</span><span class="n">_rms_norm</span><span class="p">)</span>
+<span class="n">sum_squares</span> <span class="o">=</span> <span class="n">_wrap</span><span class="p">(</span><span class="n">_sum_squares</span><span class="p">)</span>
+<span class="n">tree_dot</span> <span class="o">=</span> <span class="n">_wrap</span><span class="p">(</span><span class="n">_tree_dot</span><span class="p">)</span>
+<span class="n">two_norm</span> <span class="o">=</span> <span class="n">_wrap</span><span class="p">(</span><span class="n">_two_norm</span><span class="p">)</span>
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tree_full_like</span><span class="p">(</span>
+    <span class="n">struct</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">Array</span> <span class="o">|</span> <span class="n">jax</span><span class="o">.</span><span class="n">ShapeDtypeStruct</span><span class="p">],</span>
+    <span class="n">fill_value</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span>
+    <span class="n">allow_static</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span> <span class="o">...</span>
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tree_full_like</span><span class="p">(</span>
+    <span class="n">struct</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">fill_value</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">allow_static</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="kc">True</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">):</span> <span class="o">...</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tree_full_like</span><span class="p">(</span><span class="n">struct</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">fill_value</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">allow_static</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a pytree with the same type and shape as the input with values</span>
+<span class="sd">    `fill_value`.</span>
+
+<span class="sd">    If `allow_static=True`, then any non-{array, struct}s are ignored and left alone.</span>
+<span class="sd">    If `allow_static=False` then any non-{array, struct}s will result in an error.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">fill_value</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fill_value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">fill_value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">fn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">fill_value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">fn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">allow_static</span><span class="p">:</span>
+        <span class="n">_fn</span> <span class="o">=</span> <span class="n">fn</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">eqx</span><span class="o">.</span><span class="n">is_array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">ShapeDtypeStruct</span><span class="p">)</span>
+            <span class="k">else</span> <span class="n">x</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">jtu</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">struct</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tree_where</span><span class="p">(</span>
+    <span class="n">pred</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span>
+    <span class="n">true</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">,</span> <span class="s2">&quot; T&quot;</span><span class="p">],</span>  <span class="c1"># pyright: ignore[reportUndefinedVariable]</span>
+    <span class="n">false</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">,</span> <span class="s2">&quot; T&quot;</span><span class="p">],</span>  <span class="c1"># pyright: ignore[reportUndefinedVariable]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">,</span> <span class="s2">&quot; T&quot;</span><span class="p">]:</span>  <span class="c1"># pyright: ignore[reportUndefinedVariable]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a pytree with values from `true` where `pred` is true, and `false` where</span>
+<span class="sd">    `pred` is false. `pred` can be any tree-prefix of `true` and `false`, but we do</span>
+<span class="sd">    assume that `true` and `false` share the same pytree structure.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jtu</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="n">jtu</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ti</span><span class="p">,</span> <span class="n">fi</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">ti</span><span class="p">,</span> <span class="n">fi</span><span class="p">),</span> <span class="n">t</span><span class="p">,</span> <span class="n">f</span><span class="p">),</span>
+        <span class="n">pred</span><span class="p">,</span>
+        <span class="n">true</span><span class="p">,</span>
+        <span class="n">false</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tree_dtype</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span> <span class="o">|</span> <span class="n">jax</span><span class="o">.</span><span class="n">ShapeDtypeStruct</span><span class="p">]):</span>
+    <span class="n">leaves</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">jtu</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">leaves</span><span class="o">.</span><span class="n">append</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default_floating_dtype</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">result_type</span><span class="p">(</span><span class="o">*</span><span class="n">leaves</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tree_clip</span><span class="p">(</span>
+    <span class="n">tree</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">],</span> <span class="n">lower</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">],</span> <span class="n">upper</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">Array</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Clip tree to values lower, upper. Note that we do not check that the lower bound</span>
+<span class="sd">    is actually less than the upper bound. If the upper bound is less than the lower</span>
+<span class="sd">    bound, then the values will be clipped to the upper bound, since this is what</span>
+<span class="sd">    `jnp.clip` does.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jtu</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="n">l</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="n">u</span><span class="p">),</span> <span class="n">tree</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tree_min</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Scalar</span><span class="p">:</span>
+    <span class="n">values</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">jfu</span><span class="o">.</span><span class="n">ravel_pytree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tree_max</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Scalar</span><span class="p">:</span>
+    <span class="n">values</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">jfu</span><span class="o">.</span><span class="n">ravel_pytree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">feasible_step_length</span><span class="p">(</span>
+    <span class="n">current</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">,</span> <span class="s2">&quot; T&quot;</span><span class="p">],</span>  <span class="c1"># pyright: ignore[reportUndefinedVariable]</span>
+    <span class="n">proposed_step</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">,</span> <span class="s2">&quot; T&quot;</span><span class="p">],</span>  <span class="c1"># pyright: ignore[reportUndefinedVariable]</span>
+    <span class="n">lower_bound</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">,</span> <span class="s2">&quot; T&quot;</span><span class="p">],</span>  <span class="c1"># pyright: ignore[reportUndefinedVariable]</span>
+    <span class="n">upper_bound</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">,</span> <span class="s2">&quot; T&quot;</span><span class="p">],</span>  <span class="c1"># pyright: ignore[reportUndefinedVariable]</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">offset</span><span class="p">:</span> <span class="n">ScalarLike</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.0</span><span class="p">),</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">,</span> <span class="s2">&quot; T&quot;</span><span class="p">]:</span>  <span class="c1"># pyright: ignore[reportUndefinedVariable]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the maximum feasible step length for any current value, its bounds, and a</span>
+<span class="sd">    proposed step, as a value for each element of the PyTree.</span>
+<span class="sd">    Where taking the full step does not result in a violation of the bounds, a value of</span>
+<span class="sd">    1.0 is returned, which corresponds to a full step.</span>
+
+<span class="sd">    If the proposed step has a positive sign, then it is limited by the distance to the</span>
+<span class="sd">    upper bound. If the proposed step has a negative sign, then it is limited by the</span>
+<span class="sd">    distance to the lower bound. When we&#39;re at the boundary or outside of it, steps that</span>
+<span class="sd">    improve upon this are allowed - e.g. when (upper - y) is negative, then we may take</span>
+<span class="sd">    a step in the direction of -y. Similarly, if (upper - y) is zero, steps in the</span>
+<span class="sd">    direction of -y are allowed.</span>
+<span class="sd">    As such, this utility function does not check whether the current value is within</span>
+<span class="sd">    the bounds and does not raise an error if it is not. It will, however, not make the</span>
+<span class="sd">    problem worse either. This means that it is up to the solvers how this case is</span>
+<span class="sd">    handled or prevented.</span>
+
+<span class="sd">    Optionally, an offset may be used to ensure that we remain in the strict interior of</span>
+<span class="sd">    the feasible set.</span>
+
+<span class="sd">    Note that this function can return a feasible step length of 0.0, and this case</span>
+<span class="sd">    should be handled where this function is used. Likewise, any desired reduction over</span>
+<span class="sd">    fields or the PyTree as a whole (to get the maximum feasible step length for all</span>
+<span class="sd">    iterates, or for primal and dual variables separately, for instance) should be</span>
+<span class="sd">    performed where this function is used. The maximum feasible step length for the</span>
+<span class="sd">    whole tree is then obtained as `tree_min(feasible_step_length(...))`.</span>
+
+<span class="sd">    **Arguments**:</span>
+
+<span class="sd">    - `current`: The current value of an optimisation variable, e.g. `y`.</span>
+<span class="sd">    - `proposed_step`: The proposed step - usually computed as the result of a linear</span>
+<span class="sd">        solve. Must have the same PyTree structure as `current`.</span>
+<span class="sd">    - `lower`: The lower bound. Must have the same PyTree structure as `current`.</span>
+<span class="sd">    - `upper`: The upper bound. Must have the same PyTree structure as `current`.</span>
+<span class="sd">    - `offset`: The offset from the boundary. If passed, then the distance to the bounds</span>
+<span class="sd">        is multiplied by (1 - offset), to ensure that we stay in the strict interior.</span>
+<span class="sd">        The value of this offset should be in [0, 1), but this is not checked. Values</span>
+<span class="sd">        used are typically on the order of 10^-2. Keyword-only argument.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">max_step</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
+        <span class="n">distance_to_lower</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">offset</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">lower</span><span class="p">)</span>
+        <span class="n">distance_to_upper</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">offset</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">upper</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
+
+        <span class="c1"># Scale by the distance to the bounds if we&#39;re moving towards them</span>
+        <span class="n">max_to_lower</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dx</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">distance_to_lower</span> <span class="o">/</span> <span class="n">dx</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">))</span>
+        <span class="n">max_to_upper</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dx</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">distance_to_upper</span> <span class="o">/</span> <span class="n">dx</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">))</span>
+
+        <span class="c1"># We do not allow negative step sizes. These can occur if we&#39;re already outside</span>
+        <span class="c1"># the feasible region, and allowing them would let us venture further where</span>
+        <span class="c1"># we do not want to go!</span>
+        <span class="c1"># We also do not propose taking more than a full step, and hence truncate to 1.</span>
+        <span class="n">max_to_lower</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">max_to_lower</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">max_to_upper</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">max_to_upper</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># The shorter of the two is now the constrained step length</span>
+        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">max_to_lower</span> <span class="o">&lt;</span> <span class="n">max_to_upper</span><span class="p">,</span> <span class="n">max_to_lower</span><span class="p">,</span> <span class="n">max_to_upper</span><span class="p">)</span>
+
+    <span class="n">max_steps</span> <span class="o">=</span> <span class="n">jtu</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">max_step</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">proposed_step</span><span class="p">,</span> <span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">max_steps</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">resolve_rcond</span><span class="p">(</span><span class="n">rcond</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">rcond</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">rcond</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span> <span class="n">rcond</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">NoneAux</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wrap a function `fn` so it returns a dummy aux value `None`</span>
+
+<span class="sd">    NoneAux is used to give a consistent API between functions which have an aux</span>
+<span class="sd">    and functions which do not, allowing us to avoid unnecessary aux handling.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span> <span class="kc">None</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">OutAsArray</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wrap a minimisation/root-find/etc. function so that its mathematical outputs are</span>
+<span class="sd">    all inexact arrays, and its auxiliary outputs are all arrays.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">out</span><span class="p">,</span> <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">jtu</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">inexact_asarray</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+        <span class="n">aux</span> <span class="o">=</span> <span class="n">jtu</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">asarray</span><span class="p">,</span> <span class="n">aux</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span><span class="p">,</span> <span class="n">aux</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">lin_to_grad</span><span class="p">(</span><span class="n">lin_fn</span><span class="p">,</span> <span class="n">y_eval</span><span class="p">,</span> <span class="n">autodiff_mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Only the shape and dtype of y_eval is evaluated, not the value itself. (lin_fn</span>
+    <span class="c1"># was linearized at y_eval, and the values were stored.)</span>
+    <span class="c1"># We convert to grad after linearising for efficiency:</span>
+    <span class="c1"># https://github.com/patrick-kidger/optimistix/issues/89#issuecomment-2447669714</span>
+    <span class="k">if</span> <span class="n">autodiff_mode</span> <span class="o">==</span> <span class="s2">&quot;bwd&quot;</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">grad</span><span class="p">,)</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">linear_transpose</span><span class="p">(</span><span class="n">lin_fn</span><span class="p">,</span> <span class="n">y_eval</span><span class="p">)(</span><span class="mf">1.0</span><span class="p">)</span>  <span class="c1"># (1.0 is a scaling factor)</span>
+        <span class="k">return</span> <span class="n">grad</span>
+    <span class="k">if</span> <span class="n">autodiff_mode</span> <span class="o">==</span> <span class="s2">&quot;fwd&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">jacfwd</span><span class="p">(</span><span class="n">lin_fn</span><span class="p">)(</span><span class="n">y_eval</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Only `autodiff_mode=&#39;fwd&#39;` or `autodiff_mode=&#39;bwd&#39;` are valid.&quot;</span>
+        <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_asarray</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+
+
+<span class="c1"># Work around JAX issue #15676</span>
+<span class="n">_asarray</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">custom_jvp</span><span class="p">(</span><span class="n">_asarray</span><span class="p">,</span> <span class="n">nondiff_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,))</span>
+
+
+<span class="nd">@_asarray</span><span class="o">.</span><span class="n">defjvp</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_asarray_jvp</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">tx</span><span class="p">):</span>
+    <span class="p">(</span><span class="n">x</span><span class="p">,)</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="p">(</span><span class="n">tx</span><span class="p">,)</span> <span class="o">=</span> <span class="n">tx</span>
+    <span class="k">return</span> <span class="n">_asarray</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">_asarray</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">tx</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">result_type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_asarray</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">inexact_asarray</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">result_type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">jnp</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">result_type</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">inexact</span><span class="p">):</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">default_floating_dtype</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">_asarray</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+
+<span class="n">_F</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;_F&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">cauchy_termination</span><span class="p">(</span>
+    <span class="n">rtol</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">atol</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">norm</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">PyTree</span><span class="p">],</span> <span class="n">Scalar</span><span class="p">],</span>
+    <span class="n">y</span><span class="p">:</span> <span class="n">Y</span><span class="p">,</span>
+    <span class="n">y_diff</span><span class="p">:</span> <span class="n">Y</span><span class="p">,</span>
+    <span class="n">f</span><span class="p">:</span> <span class="n">_F</span><span class="p">,</span>
+    <span class="n">f_diff</span><span class="p">:</span> <span class="n">_F</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Terminate if there is a small difference in both `y` space and `f` space, as</span>
+<span class="sd">    determined by `rtol` and `atol`.</span>
+
+<span class="sd">    Specifically, this checks that `y_diff &lt; atol + rtol * y` and</span>
+<span class="sd">    `f_diff &lt; atol + rtol * f_prev`, terminating if both of these are true.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">y_scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">atol</span> <span class="o">+</span> <span class="n">rtol</span> <span class="o">*</span> <span class="n">ω</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">))</span><span class="o">.</span><span class="n">ω</span>
+    <span class="n">f_scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">atol</span> <span class="o">+</span> <span class="n">rtol</span> <span class="o">*</span> <span class="n">ω</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">))</span><span class="o">.</span><span class="n">ω</span>
+    <span class="n">y_converged</span> <span class="o">=</span> <span class="n">norm</span><span class="p">((</span><span class="n">ω</span><span class="p">(</span><span class="n">y_diff</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">)</span> <span class="o">/</span> <span class="n">y_scale</span><span class="o">**</span><span class="n">ω</span><span class="p">)</span><span class="o">.</span><span class="n">ω</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span>
+    <span class="n">f_converged</span> <span class="o">=</span> <span class="n">norm</span><span class="p">((</span><span class="n">ω</span><span class="p">(</span><span class="n">f_diff</span><span class="p">)</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">)</span> <span class="o">/</span> <span class="n">f_scale</span><span class="o">**</span><span class="n">ω</span><span class="p">)</span><span class="o">.</span><span class="n">ω</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">y_converged</span> <span class="o">&amp;</span> <span class="n">f_converged</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_JaxprEqual</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jaxpr</span><span class="p">:</span> <span class="n">jex</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Jaxpr</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jaxpr</span> <span class="o">=</span> <span class="n">jaxpr</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="c1"># Could also implement actual checks here.</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_wrap_jaxpr_leaf</span><span class="p">(</span><span class="n">leaf</span><span class="p">):</span>
+    <span class="c1"># But not jex.core.ClosedJaxpr, which contains constants that should be handled in</span>
+    <span class="c1"># pytree style.</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">jex</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Jaxpr</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_JaxprEqual</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">leaf</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">wrap_jaxpr</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">jtu</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">_wrap_jaxpr_leaf</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_unwrap_jaxpr_leaf</span><span class="p">(</span><span class="n">leaf</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_JaxprEqual</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">leaf</span><span class="o">.</span><span class="n">jaxpr</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">leaf</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">unwrap_jaxpr</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">jtu</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="n">_unwrap_jaxpr_leaf</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_cond</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">true_fun</span><span class="p">,</span> <span class="n">false_fun</span><span class="p">,</span> <span class="o">*</span><span class="n">operands</span><span class="p">):</span>
+    <span class="n">dynamic</span><span class="p">,</span> <span class="n">static</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">operands</span><span class="p">,</span> <span class="n">eqx</span><span class="o">.</span><span class="n">is_array</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_true_fun</span><span class="p">(</span><span class="n">_dynamic</span><span class="p">):</span>
+        <span class="n">_operands</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">_dynamic</span><span class="p">,</span> <span class="n">static</span><span class="p">)</span>
+        <span class="n">_out</span> <span class="o">=</span> <span class="n">true_fun</span><span class="p">(</span><span class="o">*</span><span class="n">_operands</span><span class="p">)</span>
+        <span class="n">_dynamic_out</span><span class="p">,</span> <span class="n">_static_out</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">_out</span><span class="p">,</span> <span class="n">eqx</span><span class="o">.</span><span class="n">is_array</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_dynamic_out</span><span class="p">,</span> <span class="n">eqxi</span><span class="o">.</span><span class="n">Static</span><span class="p">(</span><span class="n">_static_out</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_false_fun</span><span class="p">(</span><span class="n">_dynamic</span><span class="p">):</span>
+        <span class="n">_operands</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">_dynamic</span><span class="p">,</span> <span class="n">static</span><span class="p">)</span>
+        <span class="n">_out</span> <span class="o">=</span> <span class="n">false_fun</span><span class="p">(</span><span class="o">*</span><span class="n">_operands</span><span class="p">)</span>
+        <span class="n">_dynamic_out</span><span class="p">,</span> <span class="n">_static_out</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">_out</span><span class="p">,</span> <span class="n">eqx</span><span class="o">.</span><span class="n">is_array</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_dynamic_out</span><span class="p">,</span> <span class="n">eqxi</span><span class="o">.</span><span class="n">Static</span><span class="p">(</span><span class="n">_static_out</span><span class="p">)</span>
+
+    <span class="n">dynamic_out</span><span class="p">,</span> <span class="n">static_out</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">_true_fun</span><span class="p">,</span> <span class="n">_false_fun</span><span class="p">,</span> <span class="n">dynamic</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">eqx</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">dynamic_out</span><span class="p">,</span> <span class="n">static_out</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">verbose_print</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">string_pieces</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">arg_pieces</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">display</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">display</span><span class="p">:</span>
+            <span class="n">string_pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">arg_pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">string_pieces</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">string_pieces</span><span class="p">)</span>
+        <span class="n">jax</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="o">*</span><span class="n">arg_pieces</span><span class="p">)</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jeremy Bleyer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

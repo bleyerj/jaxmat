@@ -197,10 +197,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../computational.html">Computational aspects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tensors.html">Conventions for representing tensors</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Material models gallery</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../models.html">Material models gallery</a></li>
-</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.loader.html">jaxmat.loader module</a></li>
@@ -209,9 +205,9 @@
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoelasticity.html">jaxmat.materials.viscoelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.generalized_standard.html">jaxmat.materials.generalized_standard module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
@@ -351,9 +347,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -369,14 +363,6 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.gauss_newton_ls.GaussNewtonLineSearch"><code class="docutils literal notranslate"><span class="pre">GaussNewtonLineSearch</span></code></a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -386,47 +372,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-jaxmat.solvers.gauss_newton_ls">
-<span id="jaxmat-solvers-gauss-newton-ls-module"></span><h1>jaxmat.solvers.gauss_newton_ls module<a class="headerlink" href="#module-jaxmat.solvers.gauss_newton_ls" title="Link to this heading">#</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="jaxmat.solvers.gauss_newton_ls.GaussNewtonLineSearch">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GaussNewtonLineSearch</span></span><a class="reference internal" href="../_modules/jaxmat/solvers/gauss_newton_ls.html#GaussNewtonLineSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.solvers.gauss_newton_ls.GaussNewtonLineSearch" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">GaussNewton</span></code></p>
-<p>Gauss-Newton algorithm, for solving nonlinear least-squares problems.</p>
-<p>Note that regularised approaches like [<cite>optimistix.LevenbergMarquardt</cite>][] are
-usually preferred instead.</p>
-<p>Supports the following <cite>options</cite>:</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt><cite>jac</cite>: whether to use forward- or reverse-mode autodifferentiation to compute the</dt><dd><p>Jacobian. Can be either <cite>“fwd”</cite> or <cite>“bwd”</cite>. Defaults to <cite>“fwd”</cite>, which is
-usually more efficient. Changing this can be useful when the target function has
-a <cite>jax.custom_vjp</cite>, and so does not support forward-mode autodifferentiation.</p>
-</dd>
-</dl>
-</li>
-</ul>
-<p><strong>Arguments:</strong></p>
-<ul class="simple">
-<li><p><cite>rtol</cite>: Relative tolerance for terminating the solve.</p></li>
-<li><p><cite>atol</cite>: Absolute tolerance for terminating the solve.</p></li>
-<li><dl class="simple">
-<dt><cite>norm</cite>: The norm used to determine the difference between two iterates in the</dt><dd><p>convergence criteria. Should be any function <cite>PyTree -&gt; Scalar</cite>. Optimistix
-includes three built-in norms: [<cite>optimistix.max_norm</cite>][],
-[<cite>optimistix.rms_norm</cite>][], and [<cite>optimistix.two_norm</cite>][].</p>
-</dd>
-</dl>
-</li>
-<li><p><cite>linear_solver</cite>: The linear solver used to compute the Newton step.</p></li>
-<li><dl class="simple">
-<dt><cite>verbose</cite>: Whether to print out extra information about how the solve is proceeding.</dt><dd><p>Should be a frozenset of strings, specifying what information to print out. Valid
-entries are <cite>step</cite>, <cite>loss</cite>, <cite>accepted</cite>, <cite>step_size</cite>, <cite>y</cite>. For example
-<cite>verbose=frozenset({“loss”, “step_size”})</cite>.</p>
-</dd>
-</dl>
-</li>
-</ul>
-</dd></dl>
-
+  <section id="jaxmat-solvers-gauss-newton-ls-module">
+<h1>jaxmat.solvers.gauss_newton_ls module<a class="headerlink" href="#jaxmat-solvers-gauss-newton-ls-module" title="Link to this heading">#</a></h1>
 </section>
 
     <script type="text/x-thebe-config">
@@ -483,22 +430,6 @@ entries are <cite>step</cite>, <cite>loss</cite>, <cite>accepted</cite>, <cite>s
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.solvers.gauss_newton_ls.GaussNewtonLineSearch"><code class="docutils literal notranslate"><span class="pre">GaussNewtonLineSearch</span></code></a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

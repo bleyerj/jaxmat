@@ -180,13 +180,14 @@
 <li class="toctree-l2"><a class="reference internal" href="demos/phenomenological_models/multisurface_plasticity.html">Multi-surface plasticity model</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
-</ul>
-</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="identification.html">Data-driven identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="demos/identification/hardening_rule.html">Identification of a nonlinear isotropic hardening rule</a></li>
 <li class="toctree-l2"><a class="reference internal" href="demos/identification/nonlinear_kinematic_hardening.html">Identification of a nonlinear hardening model from cyclic data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ml_models.html">Machine-learning based models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="demos/neural_network_models/hyperelastic_PANN.html">Physics-Augmented Neural Networks for data-driven hyperelasticity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="demos/neural_network_models/neural_GSM.html">Neural Generalized Standard Material for viscoelasticity</a></li>
 </ul>
 </details></li>
 </ul>
@@ -196,10 +197,6 @@
 <li class="toctree-l1"><a class="reference internal" href="computational.html">Computational aspects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tensors.html">Conventions for representing tensors</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Material models gallery</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="models.html">Material models gallery</a></li>
-</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="api/jaxmat.loader.html">jaxmat.loader module</a></li>
@@ -208,9 +205,9 @@
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.viscoelasticity.html">jaxmat.materials.viscoelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.generalized_standard.html">jaxmat.materials.generalized_standard module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
@@ -218,7 +215,7 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api/jaxmat.solvers.html">jaxmat.solvers package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/jaxmat.solvers.custom_newton.html">jaxmat.solvers.custom_newton module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/jaxmat.solvers.gauss_newton_ls.html">jaxmat.solvers.gauss_newton_ls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/jaxmat.solvers.custom_optimistix_solvers.html">jaxmat.solvers.custom_optimistix_solvers</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="api/jaxmat.state.html">jaxmat.state module</a></li>
@@ -393,8 +390,6 @@
 </li>
       <li><a href="api/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.AFInternalState">AFInternalState (class in jaxmat.materials.viscoplasticity)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleOgden.alpha">alpha (CompressibleOgden attribute)</a>
 
       <ul>
@@ -403,6 +398,8 @@
         <li><a href="api/jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.alpha">(GeneralHardeningInternalState attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity">AmrstrongFrederickViscoplasticity (class in jaxmat.materials.viscoplasticity)</a>
 </li>
       <li><a href="api/jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening">ArmstrongFrederickHardening (class in jaxmat.materials.viscoplastic_flows)</a>
@@ -417,6 +414,8 @@
         <li><a href="api/jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.array_shape">(Tensor property)</a>
 </li>
       </ul></li>
+      <li><a href="api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.atol">atol (BFGSLinearTrustRegion attribute)</a>
+</li>
       <li><a href="api/jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.axl">axl() (in module jaxmat.tensors.tensor_utils)</a>
 </li>
   </ul></td>
@@ -429,13 +428,15 @@
 </li>
       <li><a href="api/jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.basis">basis (IsotropicTensor4 property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.AbstractBehavior.batched_constitutive_update">batched_constitutive_update() (AbstractBehavior method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/jaxmat.materials.fe_fp_elastoplasticity.html#jaxmat.materials.fe_fp_elastoplasticity.InternalState.be_bar">be_bar (InternalState attribute)</a>
 </li>
       <li><a href="api/jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.VolumetricPart.beta">beta (VolumetricPart attribute)</a>
+</li>
+      <li><a href="api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion">BFGSLinearTrustRegion (class in jaxmat.solvers.custom_optimistix_solvers)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -475,10 +476,10 @@
 </li>
       <li><a href="api/jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleMooneyRivlin">CompressibleMooneyRivlin (class in jaxmat.materials.hyperelasticity)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleNeoHookean">CompressibleNeoHookean (class in jaxmat.materials.hyperelasticity)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.CompressibleOgden">CompressibleOgden (class in jaxmat.materials.hyperelasticity)</a>
 </li>
       <li><a href="api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.AbstractBehavior.constitutive_update">constitutive_update() (AbstractBehavior method)</a>
@@ -496,11 +497,17 @@
 </li>
         <li><a href="api/jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening.constitutive_update">(GeneralIsotropicHardening method)</a>
 </li>
+        <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.GeneralizedMaxwell.constitutive_update">(GeneralizedMaxwell method)</a>
+</li>
+        <li><a href="api/jaxmat.materials.generalized_standard.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial.constitutive_update">(GeneralizedStandardMaterial method)</a>
+</li>
         <li><a href="api/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.GenericViscoplasticity.constitutive_update">(GenericViscoplasticity method)</a>
 </li>
         <li><a href="api/jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.Hyperelasticity.constitutive_update">(Hyperelasticity method)</a>
 </li>
         <li><a href="api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.SmallStrainBehavior.constitutive_update">(SmallStrainBehavior method)</a>
+</li>
+        <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.StandardLinearSolid.constitutive_update">(StandardLinearSolid method)</a>
 </li>
         <li><a href="api/jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.vonMisesIsotropicHardening.constitutive_update">(vonMisesIsotropicHardening method)</a>
 </li>
@@ -511,6 +518,8 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.descent">descent (BFGSLinearTrustRegion attribute)</a>
+</li>
       <li><a href="api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.det33">det33() (in module jaxmat.tensors.linear_algebra)</a>
 </li>
       <li><a href="api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.dev">dev() (in module jaxmat.tensors.linear_algebra)</a>
@@ -532,6 +541,8 @@
 </li>
       </ul></li>
       <li><a href="api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.dim">dim() (in module jaxmat.tensors.linear_algebra)</a>
+</li>
+      <li><a href="api/jaxmat.materials.generalized_standard.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial.dissipation_potential">dissipation_potential (GeneralizedStandardMaterial attribute)</a>
 </li>
       <li><a href="api/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.DruckerPrager">DruckerPrager (class in jaxmat.materials.plastic_surfaces)</a>
 </li>
@@ -563,12 +574,18 @@
         <li><a href="api/jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.vonMisesIsotropicHardening.elastic_model">(vonMisesIsotropicHardening attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.ElasticBehavior">ElasticBehavior (class in jaxmat.materials.elasticity)</a>
 </li>
       <li><a href="api/jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.ElasticBehavior.elasticity">elasticity (ElasticBehavior attribute)</a>
+
+      <ul>
+        <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.GeneralizedMaxwell.elasticity">(GeneralizedMaxwell attribute)</a>
 </li>
+        <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.StandardLinearSolid.elasticity">(StandardLinearSolid attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/jaxmat.state.html#jaxmat.state.SmallStrainState.eps">eps (SmallStrainState property)</a>
 </li>
       <li><a href="api/jaxmat.loader.html#jaxmat.loader.ImposedLoading.eps_vals">eps_vals (ImposedLoading attribute)</a>
@@ -581,6 +598,12 @@
         <li><a href="api/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.GenericInternalState.epsp">(GenericInternalState attribute)</a>
 </li>
         <li><a href="api/jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.InternalState.epsp">(InternalState attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.GeneralizedMaxwellState.epsv">epsv (GeneralizedMaxwellState attribute)</a>
+
+      <ul>
+        <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.SLSState.epsv">(SLSState attribute)</a>
 </li>
       </ul></li>
       <li><a href="api/jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.IsotropicTensor4.eval">eval() (IsotropicTensor4 method)</a>
@@ -597,13 +620,15 @@
 </li>
       <li><a href="api/jaxmat.materials.fe_fp_elastoplasticity.html#jaxmat.materials.fe_fp_elastoplasticity.FeFpJ2Plasticity">FeFpJ2Plasticity (class in jaxmat.materials.fe_fp_elastoplasticity)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.FiniteStrainBehavior">FiniteStrainBehavior (class in jaxmat.materials.behavior)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/jaxmat.state.html#jaxmat.state.FiniteStrainState">FiniteStrainState (class in jaxmat.state)</a>
 </li>
       <li><a href="api/jaxmat.tensors.utils.html#jaxmat.tensors.utils.FischerBurmeister">FischerBurmeister() (in module jaxmat.tensors.utils)</a>
+</li>
+      <li><a href="api/jaxmat.materials.generalized_standard.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial.free_energy">free_energy (GeneralizedStandardMaterial attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -613,15 +638,21 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.ArmstrongFrederickHardening.gamma">gamma (ArmstrongFrederickHardening attribute)</a>
 </li>
-      <li><a href="api/jaxmat.solvers.gauss_newton_ls.html#jaxmat.solvers.gauss_newton_ls.GaussNewtonLineSearch">GaussNewtonLineSearch (class in jaxmat.solvers.gauss_newton_ls)</a>
+      <li><a href="api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.GaussNewtonLineSearch">GaussNewtonLineSearch (class in jaxmat.solvers.custom_optimistix_solvers)</a>
 </li>
       <li><a href="api/jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.GeneralHardening">GeneralHardening (class in jaxmat.materials.elastoplasticity)</a>
 </li>
       <li><a href="api/jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState">GeneralHardeningInternalState (class in jaxmat.materials.elastoplasticity)</a>
 </li>
+      <li><a href="api/jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening">GeneralIsotropicHardening (class in jaxmat.materials.elastoplasticity)</a>
+</li>
+      <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.GeneralizedMaxwell">GeneralizedMaxwell (class in jaxmat.materials.viscoelasticity)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening">GeneralIsotropicHardening (class in jaxmat.materials.elastoplasticity)</a>
+      <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.GeneralizedMaxwellState">GeneralizedMaxwellState (class in jaxmat.materials.viscoelasticity)</a>
+</li>
+      <li><a href="api/jaxmat.materials.generalized_standard.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial">GeneralizedStandardMaterial (class in jaxmat.materials.generalized_standard)</a>
 </li>
       <li><a href="api/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.GenericInternalState">GenericInternalState (class in jaxmat.materials.viscoplasticity)</a>
 </li>
@@ -661,6 +692,8 @@
       </ul></li>
       <li><a href="api/jaxmat.loader.html#jaxmat.loader.ImposedLoading">ImposedLoading (class in jaxmat.loader)</a>
 </li>
+      <li><a href="api/jaxmat.materials.generalized_standard.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial.incremental_potential">incremental_potential() (GeneralizedStandardMaterial method)</a>
+</li>
       <li><a href="api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.FiniteStrainBehavior.init_state">init_state() (FiniteStrainBehavior method)</a>
 
       <ul>
@@ -682,11 +715,17 @@
 </li>
         <li><a href="api/jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.GeneralIsotropicHardening.internal">(GeneralIsotropicHardening attribute)</a>
 </li>
+        <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.GeneralizedMaxwell.internal">(GeneralizedMaxwell attribute)</a>
+</li>
+        <li><a href="api/jaxmat.materials.generalized_standard.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial.internal">(GeneralizedStandardMaterial attribute)</a>
+</li>
         <li><a href="api/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.GenericViscoplasticity.internal">(GenericViscoplasticity attribute)</a>
 </li>
         <li><a href="api/jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.Hyperelasticity.internal">(Hyperelasticity attribute)</a>
 </li>
         <li><a href="api/jaxmat.state.html#id0">(SmallStrainState attribute)</a>, <a href="api/jaxmat.state.html#jaxmat.state.SmallStrainState.internal">[1]</a>
+</li>
+        <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.StandardLinearSolid.internal">(StandardLinearSolid attribute)</a>
 </li>
         <li><a href="api/jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.vonMisesIsotropicHardening.internal">(vonMisesIsotropicHardening attribute)</a>
 </li>
@@ -779,6 +818,13 @@
 </li>
       </ul></li>
       <li>
+    jaxmat.materials.generalized_standard
+
+      <ul>
+        <li><a href="api/jaxmat.materials.generalized_standard.html#module-jaxmat.materials.generalized_standard">module</a>
+</li>
+      </ul></li>
+      <li>
     jaxmat.materials.hyperelasticity
 
       <ul>
@@ -793,14 +839,21 @@
 </li>
       </ul></li>
       <li>
+    jaxmat.materials.viscoelasticity
+
+      <ul>
+        <li><a href="api/jaxmat.materials.viscoelasticity.html#module-jaxmat.materials.viscoelasticity">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
     jaxmat.materials.viscoplastic_flows
 
       <ul>
         <li><a href="api/jaxmat.materials.viscoplastic_flows.html#module-jaxmat.materials.viscoplastic_flows">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     jaxmat.materials.viscoplasticity
 
@@ -823,10 +876,10 @@
 </li>
       </ul></li>
       <li>
-    jaxmat.solvers.gauss_newton_ls
+    jaxmat.solvers.custom_optimistix_solvers
 
       <ul>
-        <li><a href="api/jaxmat.solvers.gauss_newton_ls.html#module-jaxmat.solvers.gauss_newton_ls">module</a>
+        <li><a href="api/jaxmat.solvers.custom_optimistix_solvers.html#module-jaxmat.solvers.custom_optimistix_solvers">module</a>
 </li>
       </ul></li>
       <li>
@@ -911,12 +964,14 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic">LinearElasticIsotropic (class in jaxmat.materials.elasticity)</a>
+      <li><a href="api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.LevenbergMarquardtLineSearch">LevenbergMarquardtLineSearch (class in jaxmat.solvers.custom_optimistix_solvers)</a>
 </li>
-      <li><a href="api/jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening">LinearKinematicHardening (class in jaxmat.materials.viscoplastic_flows)</a>
+      <li><a href="api/jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic">LinearElasticIsotropic (class in jaxmat.materials.elasticity)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.LinearKinematicHardening">LinearKinematicHardening (class in jaxmat.materials.viscoplastic_flows)</a>
+</li>
       <li><a href="api/jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic.lmbda">lmbda (LinearElasticIsotropic property)</a>
 </li>
       <li><a href="api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.logm">logm() (in module jaxmat.tensors.linear_algebra)</a>
@@ -932,6 +987,12 @@
       <li><a href="api/jaxmat.tensors.linear_algebra.html#jaxmat.tensors.linear_algebra.main_invariants">main_invariants() (in module jaxmat.tensors.linear_algebra)</a>
 </li>
       <li><a href="api/jaxmat.state.html#jaxmat.state.make_batched">make_batched() (in module jaxmat.state)</a>
+</li>
+      <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.StandardLinearSolid.maxwell_stiffness">maxwell_stiffness (StandardLinearSolid attribute)</a>
+</li>
+      <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.StandardLinearSolid.maxwell_viscosity">maxwell_viscosity (StandardLinearSolid attribute)</a>
+</li>
+      <li><a href="api/jaxmat.materials.generalized_standard.html#jaxmat.materials.generalized_standard.GeneralizedStandardMaterial.minimisation_solver">minimisation_solver (GeneralizedStandardMaterial attribute)</a>
 </li>
       <li>
     module
@@ -951,9 +1012,13 @@
 </li>
         <li><a href="api/jaxmat.materials.fe_fp_elastoplasticity.html#module-jaxmat.materials.fe_fp_elastoplasticity">jaxmat.materials.fe_fp_elastoplasticity</a>
 </li>
+        <li><a href="api/jaxmat.materials.generalized_standard.html#module-jaxmat.materials.generalized_standard">jaxmat.materials.generalized_standard</a>
+</li>
         <li><a href="api/jaxmat.materials.hyperelasticity.html#module-jaxmat.materials.hyperelasticity">jaxmat.materials.hyperelasticity</a>
 </li>
         <li><a href="api/jaxmat.materials.plastic_surfaces.html#module-jaxmat.materials.plastic_surfaces">jaxmat.materials.plastic_surfaces</a>
+</li>
+        <li><a href="api/jaxmat.materials.viscoelasticity.html#module-jaxmat.materials.viscoelasticity">jaxmat.materials.viscoelasticity</a>
 </li>
         <li><a href="api/jaxmat.materials.viscoplastic_flows.html#module-jaxmat.materials.viscoplastic_flows">jaxmat.materials.viscoplastic_flows</a>
 </li>
@@ -963,7 +1028,7 @@
 </li>
         <li><a href="api/jaxmat.solvers.custom_newton.html#module-jaxmat.solvers.custom_newton">jaxmat.solvers.custom_newton</a>
 </li>
-        <li><a href="api/jaxmat.solvers.gauss_newton_ls.html#module-jaxmat.solvers.gauss_newton_ls">jaxmat.solvers.gauss_newton_ls</a>
+        <li><a href="api/jaxmat.solvers.custom_optimistix_solvers.html#module-jaxmat.solvers.custom_optimistix_solvers">jaxmat.solvers.custom_optimistix_solvers</a>
 </li>
         <li><a href="api/jaxmat.state.html#module-jaxmat.state">jaxmat.state</a>
 </li>
@@ -996,7 +1061,11 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.GeneralizedMaxwellState.Nbranch">Nbranch (GeneralizedMaxwellState attribute)</a>
+</li>
       <li><a href="api/jaxmat.solvers.custom_newton.html#jaxmat.solvers.custom_newton.newton_solve_jittable">newton_solve_jittable() (in module jaxmat.solvers.custom_newton)</a>
+</li>
+      <li><a href="api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.norm">norm() (BFGSLinearTrustRegion method)</a>
 </li>
       <li><a href="api/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.AbstractPlasticSurface.normal">normal() (AbstractPlasticSurface method)</a>
 </li>
@@ -1004,14 +1073,14 @@
 </li>
       <li><a href="api/jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic.nu">nu (LinearElasticIsotropic attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.GeneralHardening.nvar">nvar (GeneralHardening attribute)</a>
 
       <ul>
         <li><a href="api/jaxmat.materials.elastoplasticity.html#jaxmat.materials.elastoplasticity.GeneralHardeningInternalState.nvar">(GeneralHardeningInternalState attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.AbstractKinematicHardening.nvars">nvars (AbstractKinematicHardening attribute)</a>
 
       <ul>
@@ -1092,7 +1161,11 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.GeneralizedMaxwell.relaxation_times">relaxation_times (GeneralizedMaxwell attribute)</a>
+</li>
       <li><a href="api/jaxmat.loader.html#jaxmat.loader.residual">residual() (in module jaxmat.loader)</a>
+</li>
+      <li><a href="api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.rtol">rtol (BFGSLinearTrustRegion attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1109,6 +1182,8 @@
       <li><a href="api/jaxmat.tensors.utils.html#jaxmat.tensors.utils.safe_sqrt">safe_sqrt() (in module jaxmat.tensors.utils)</a>
 </li>
       <li><a href="api/jaxmat.materials.plastic_surfaces.html#jaxmat.materials.plastic_surfaces.safe_zero">safe_zero() (in module jaxmat.materials.plastic_surfaces)</a>
+</li>
+      <li><a href="api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.search">search (BFGSLinearTrustRegion attribute)</a>
 </li>
       <li><a href="api/jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor.shape">shape (Tensor property)</a>
 </li>
@@ -1132,14 +1207,18 @@
 </li>
       <li><a href="api/jaxmat.materials.viscoplastic_flows.html#jaxmat.materials.viscoplastic_flows.VoceHardening.sigu">sigu (VoceHardening attribute)</a>
 </li>
+      <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.GeneralizedMaxwellState.sigv">sigv (GeneralizedMaxwellState attribute)</a>
+</li>
       <li><a href="api/jaxmat.tensors.tensor_utils.html#jaxmat.tensors.tensor_utils.skew">skew() (in module jaxmat.tensors.tensor_utils)</a>
+</li>
+      <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.SLSState">SLSState (class in jaxmat.materials.viscoelasticity)</a>
 </li>
       <li><a href="api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.SmallStrainBehavior">SmallStrainBehavior (class in jaxmat.materials.behavior)</a>
 </li>
-      <li><a href="api/jaxmat.state.html#jaxmat.state.SmallStrainState">SmallStrainState (class in jaxmat.state)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/jaxmat.state.html#jaxmat.state.SmallStrainState">SmallStrainState (class in jaxmat.state)</a>
+</li>
       <li><a href="api/jaxmat.loader.html#jaxmat.loader.solve_mechanical_state">solve_mechanical_state() (in module jaxmat.loader)</a>
 </li>
       <li><a href="api/jaxmat.materials.behavior.html#jaxmat.materials.behavior.AbstractBehavior.solver">solver (AbstractBehavior attribute)</a>
@@ -1153,6 +1232,8 @@
       <li><a href="api/jaxmat.materials.hyperelasticity.html#jaxmat.materials.hyperelasticity.SquaredVolumetric">SquaredVolumetric (class in jaxmat.materials.hyperelasticity)</a>
 </li>
       <li><a href="api/jaxmat.loader.html#jaxmat.loader.stack_loadings">stack_loadings() (in module jaxmat.loader)</a>
+</li>
+      <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.StandardLinearSolid">StandardLinearSolid (class in jaxmat.materials.viscoelasticity)</a>
 </li>
       <li><a href="api/jaxmat.state.html#id4">strain (FiniteStrainState attribute)</a>, <a href="api/jaxmat.state.html#jaxmat.state.FiniteStrainState.strain">[1]</a>
 
@@ -1219,11 +1300,19 @@
       <li><a href="api/jaxmat.state.html#jaxmat.state.AbstractState.update">update() (AbstractState method)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.use_inverse">use_inverse (BFGSLinearTrustRegion attribute)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.verbose">verbose (BFGSLinearTrustRegion attribute)</a>
+</li>
+      <li><a href="api/jaxmat.materials.viscoelasticity.html#jaxmat.materials.viscoelasticity.GeneralizedMaxwell.viscous_branches">viscous_branches (GeneralizedMaxwell attribute)</a>
+</li>
       <li><a href="api/jaxmat.materials.viscoplasticity.html#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.viscous_flow">viscous_flow (AmrstrongFrederickViscoplasticity attribute)</a>
 
       <ul>

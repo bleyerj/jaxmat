@@ -197,10 +197,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../computational.html">Computational aspects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tensors.html">Conventions for representing tensors</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Material models gallery</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../models.html">Material models gallery</a></li>
-</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.loader.html">jaxmat.loader module</a></li>
@@ -209,9 +205,9 @@
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elastoplasticity.html">jaxmat.materials.elastoplasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.fe_fp_elastoplasticity.html">jaxmat.materials.fe_fp_elastoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplasticity.html">jaxmat.materials.viscoplasticity module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.elasticity.html">jaxmat.materials.elasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoelasticity.html">jaxmat.materials.viscoelasticity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.generalized_standard.html">jaxmat.materials.generalized_standard module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.hyperelasticity.html">jaxmat.materials.hyperelasticity module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.plastic_surfaces.html">jaxmat.materials.plastic_surfaces module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.materials.viscoplastic_flows.html">jaxmat.materials.viscoplastic_flows module</a></li>
@@ -219,7 +215,7 @@
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">jaxmat.solvers package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.custom_newton.html">jaxmat.solvers.custom_newton module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.gauss_newton_ls.html">jaxmat.solvers.gauss_newton_ls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html">jaxmat.solvers.custom_optimistix_solvers</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="jaxmat.state.html">jaxmat.state module</a></li>
@@ -397,8 +393,19 @@
 <li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.custom_newton.html#jaxmat.solvers.custom_newton.newton_solve_jittable"><code class="docutils literal notranslate"><span class="pre">newton_solve_jittable()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="jaxmat.solvers.gauss_newton_ls.html">jaxmat.solvers.gauss_newton_ls module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.gauss_newton_ls.html#jaxmat.solvers.gauss_newton_ls.GaussNewtonLineSearch"><code class="docutils literal notranslate"><span class="pre">GaussNewtonLineSearch</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html">jaxmat.solvers.custom_optimistix_solvers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.GaussNewtonLineSearch"><code class="docutils literal notranslate"><span class="pre">GaussNewtonLineSearch</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.LevenbergMarquardtLineSearch"><code class="docutils literal notranslate"><span class="pre">LevenbergMarquardtLineSearch</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.rtol"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion.rtol</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.atol"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion.atol</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.norm"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion.norm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.use_inverse"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion.use_inverse</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.search"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion.search</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.descent"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion.descent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxmat.solvers.custom_optimistix_solvers.html#jaxmat.solvers.custom_optimistix_solvers.BFGSLinearTrustRegion.verbose"><code class="docutils literal notranslate"><span class="pre">BFGSLinearTrustRegion.verbose</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

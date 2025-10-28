@@ -8,7 +8,7 @@ Submodules
    :maxdepth: 4
 
    jaxmat.solvers.custom_newton
-   jaxmat.solvers.gauss_newton_ls
+   jaxmat.solvers.custom_optimistix_solvers
 
 Module contents
 ---------------

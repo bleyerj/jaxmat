@@ -14,8 +14,9 @@ These modules define various *material behaviors* and state update rules.
    jaxmat.materials.elasticity
    jaxmat.materials.elastoplasticity
    jaxmat.materials.fe_fp_elastoplasticity
-   jaxmat.materials.hyperelasticity
    jaxmat.materials.viscoplasticity
+   jaxmat.materials.viscoelasticity
+   jaxmat.materials.generalized_standard
 
 
 Models
@@ -27,7 +28,6 @@ used in behaviors (e.g., elasticity laws, plastic surfaces, or damage laws).
 .. toctree::
    :maxdepth: 2
 
-   jaxmat.materials.elasticity
    jaxmat.materials.hyperelasticity
    jaxmat.materials.plastic_surfaces
    jaxmat.materials.viscoplastic_flows
