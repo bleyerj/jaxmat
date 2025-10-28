@@ -145,11 +145,14 @@ class ICNNSkip(eqx.Module):
 
         for W, U, b in zip(self.Ws, self.Us, self.bs):
             W_pos = positive_param(W)
+            U_pos = positive_param(U)
             z = jax.nn.softplus(
-                z @ W_pos.T + x @ U.T + b
+                z @ W_pos.T + x @ U_pos.T + b
             )  # convex, monotone nondecreasing activation
 
-        out = z @ positive_param(self.final_W).T + x @ self.final_U.T
+        Wf_pos = positive_param(self.final_W)
+        Uf_pos = positive_param(self.final_U)
+        out = z @ Wf_pos.T + x @ Uf_pos.T
         return out.squeeze()
 
 
