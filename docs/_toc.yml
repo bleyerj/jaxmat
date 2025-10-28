@@ -32,9 +32,6 @@ parts:
       - file: concepts.md
       - file: computational.md
       - file: tensors.md
-  - caption: Material models gallery
-    chapters:
-      - file: models.md
   - caption: API
     chapters:
       - file: api/jaxmat.loader.rst

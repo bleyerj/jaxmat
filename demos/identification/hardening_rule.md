@@ -35,7 +35,7 @@ To test the robustness of our identification procedure, we artificially add a sm
 
 The plot below shows the ground-truth stress–strain curve and the noisy data used for training.
 
-```{code-cell}
+```{code-cell} ipython3
 import jax
 
 jax.config.update("jax_platform_name", "cpu")
@@ -91,7 +91,7 @@ We now define two different models for the isotropic hardening law $\sigma_Y(p)$
 
 Both models are implemented as `equinox.Module`s, allowing them to be handled as JAX PyTrees and trained with differentiable solvers.
 
-```{code-cell}
+```{code-cell} ipython3
 class SumExpHardening(eqx.Module):
     sig0: float = eqx.field(converter=jnp.asarray)
     dsigu: jax.Array = eqx.field(converter=jnp.asarray)
@@ -127,7 +127,7 @@ $$
 
 where $M$ is the number of data points, $\gamma$ is a regularization coefficient and $n_{\btheta}$ denotes the total number of parameters in $\btheta$. Both the data loss and the regularization term are written in a fully JAX-compatible manner.
 
-```{code-cell}
+```{code-cell} ipython3
 def loss(hardening, args):
     epsp, sig = args
     M = len(epsp)
@@ -157,7 +157,7 @@ During optimization, the solver adjusts the parameters to best reproduce the mea
 
 Note that $\gamma$ is a hyperparameter which must be tuned by chosen before hand by the user.
 
-```{code-cell}
+```{code-cell} ipython3
 gamma = 0.1
 solver = optx.BFGS(
     rtol=1e-6,
