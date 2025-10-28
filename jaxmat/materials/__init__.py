@@ -1,5 +1,5 @@
 from .behavior import SmallStrainBehavior, FiniteStrainBehavior
-from .elasticity import LinearElasticIsotropic, ElasticBehavior
+from .elasticity import AbstractLinearElastic, LinearElasticIsotropic, ElasticBehavior
 from .hyperelasticity import (
     Hyperelasticity,
     HyperelasticPotential,
@@ -30,3 +30,4 @@ from .viscoplastic_flows import (
     ArmstrongFrederickHardening,
     AbstractKinematicHardening,
 )
+from .viscoelasticity import StandardLinearSolid, GeneralizedMaxwell
