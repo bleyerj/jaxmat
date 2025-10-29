@@ -35,7 +35,7 @@ class vonMisesIsotropicHardening(SmallStrainBehavior):
     Return-mapping only requires solving a scalar non-linear equation in terms of $p$.
     """
 
-    elastic_model: LinearElasticIsotropic
+    elasticity: LinearElasticIsotropic
     """Linear isotropic elasticity defined by Young modulus and Poisson ratio."""
     yield_stress: eqx.Module
     """Isotropic hardening law controlling the evolution of the yield surface size."""
@@ -52,8 +52,8 @@ class vonMisesIsotropicHardening(SmallStrainBehavior):
         sig_old = state.stress
 
         def solve_state(deps, isv_old):
-            mu = self.elastic_model.mu
-            sig_el = sig_old + self.elastic_model.C @ deps
+            mu = self.elasticity.mu
+            sig_el = sig_old + self.elasticity.C @ deps
             sig_eq_el = self.plastic_surface(sig_el)
             n_el = self.plastic_surface.normal(sig_el)
             p_old = isv_old.p
@@ -61,7 +61,7 @@ class vonMisesIsotropicHardening(SmallStrainBehavior):
             def residual(dp, args):
                 p = p_old + dp
                 yield_criterion = sig_eq_el - 3 * mu * dp - self.yield_stress(p)
-                res = FB(-yield_criterion / self.elastic_model.E, dp)
+                res = FB(-yield_criterion / self.elasticity.E, dp)
                 return res
 
             dy0 = jnp.array(0.0)
@@ -69,7 +69,7 @@ class vonMisesIsotropicHardening(SmallStrainBehavior):
             dp = sol.value
 
             depsp = n_el * dp
-            sig = sig_old + self.elastic_model.C @ (deps - dev(depsp))
+            sig = sig_old + self.elasticity.C @ (deps - dev(depsp))
             isv = isv_old.add(p=dp, epsp=depsp)
             return sig, isv
 
@@ -87,7 +87,7 @@ class GeneralIsotropicHardening(SmallStrainBehavior):
     Return-mapping requires solving a non-linear system in terms of $p$ and $\bepsp$.
     """
 
-    elastic_model: AbstractLinearElastic
+    elasticity: AbstractLinearElastic
     """Linear elastic model."""
     yield_stress: eqx.Module
     """Isotropic hardening law controlling the evolution of the yield surface size."""
@@ -104,7 +104,7 @@ class GeneralIsotropicHardening(SmallStrainBehavior):
         sig_old = state.stress
 
         def eval_stress(deps, dy):
-            return sig_old + self.elastic_model.C @ (deps - dy.epsp)
+            return sig_old + self.elasticity.C @ (deps - dy.epsp)
 
         def solve_state(deps, y_old):
             p_old = y_old.p
@@ -117,7 +117,7 @@ class GeneralIsotropicHardening(SmallStrainBehavior):
                 )
                 n = self.plastic_surface.normal(sig)
                 res = (
-                    FB(-yield_criterion / self.elastic_model.E, dp),
+                    FB(-yield_criterion / self.elasticity.E, dp),
                     depsp - n * dp,
                 )
                 y = tree_add(y_old, dy)
@@ -162,7 +162,7 @@ class GeneralHardening(SmallStrainBehavior):
     Return-mapping requires solving a non-linear system in terms of $p$, $\bepsp$ and the $\balpha_i$.
     """
 
-    elastic_model: AbstractLinearElastic
+    elasticity: AbstractLinearElastic
     """Linear elastic model."""
     yield_stress: float = enforce_dtype()
     """Initial yield stress."""
@@ -191,7 +191,7 @@ class GeneralHardening(SmallStrainBehavior):
         sig_old = state.stress
 
         def eval_stress(deps, dy):
-            return sig_old + self.elastic_model.C @ (deps - dy.epsp)
+            return sig_old + self.elasticity.C @ (deps - dy.epsp)
 
         def solve_state(deps, y_old):
             def residual(dy, args):
@@ -207,7 +207,7 @@ class GeneralHardening(SmallStrainBehavior):
                 )
                 n = self.plastic_surface.normal(sig, X)
                 res = (
-                    FB(-yield_criterion / self.elastic_model.E, dp),
+                    FB(-yield_criterion / self.elasticity.E, dp),
                     depsp - n * dp,
                     dalpha + self.plastic_surface.dX(sig, X) * dp,
                 )

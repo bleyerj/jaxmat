@@ -154,7 +154,7 @@ We solve the nonlinear system with `optimistix.root_find`, using automatic diffe
 
 ```{code-cell} ipython3
 class ModifiedCamClay(jm.SmallStrainBehavior):
-    elastic_model: jm.LinearElasticIsotropic
+    elasticity: jm.LinearElasticIsotropic
     plastic_surface: CamClaySurface
     hardening: Hardening
     internal: InternalState = eqx.field(default_factory=InternalState, init=False)
@@ -169,7 +169,7 @@ class ModifiedCamClay(jm.SmallStrainBehavior):
         sig_old = state.stress
 
         def eval_stress(deps, depsp):
-            return sig_old + self.elastic_model.C @ (deps - depsp)
+            return sig_old + self.elasticity.C @ (deps - depsp)
 
         def solve_state(deps, epsp_old):
 
@@ -207,12 +207,12 @@ class ModifiedCamClay(jm.SmallStrainBehavior):
 We instantiate below the MCC material by choosing $M=0.9$ and $\beta=30$, corresponding to typical clay parameters. The initial critical pressure is chosen here to be $p_{c0}=1\text{ MPa}$.
 
 ```{code-cell} ipython3
-elastic_model = jm.LinearElasticIsotropic(E=248.28, nu=0.241)
+elasticity = jm.LinearElasticIsotropic(E=248.28, nu=0.241)
 cc_surface = CamClaySurface(M=0.9)
 pc0 = 1.0
 hardening = Hardening(pc0=pc0, beta=30.0)
 material = ModifiedCamClay(
-    elastic_model=elastic_model, hardening=hardening, plastic_surface=cc_surface
+    elasticity=elasticity, hardening=hardening, plastic_surface=cc_surface
 )
 ```
 
@@ -244,7 +244,7 @@ t_cons = 0.2
 times = jnp.linspace(0, 1.2, Nsteps)
 
 t = 0
-imposed_eps = p0_vals / 3 / elastic_model.kappa
+imposed_eps = p0_vals / 3 / elasticity.kappa
 p, q = jax.vmap(compute_pq)(state.stress)
 
 results = jnp.zeros((Nsteps, Nbatch, 5))

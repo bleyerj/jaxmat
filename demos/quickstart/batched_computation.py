@@ -69,7 +69,7 @@ class YieldStress(eqx.Module):
 
 
 material = jm.GeneralIsotropicHardening(
-    elastic_model=jm.LinearElasticIsotropic(E=200e3, nu=0),
+    elasticity=jm.LinearElasticIsotropic(E=200e3, nu=0),
     yield_stress=YieldStress(sig0=sig0),
     plastic_surface=jm.Hosford(),
 )
@@ -91,6 +91,7 @@ batched_constitutive_update = jax.vmap(
 # ```
 #
 # Next, we iterate over different values of the Hosford parameter $a$. Using equinox.tree_at, we update the material PyTree to define a new material instance, then evaluate the batched constitutive update for the batch of strains and states. The resulting batched stress tensors are then plotted on the deviatoric $\pi$-plane.
+
 
 # + tags=["hide-input"]
 def scatter_pi_plane(stress, marker="o", **kwargs):

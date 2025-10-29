@@ -32,7 +32,7 @@
 # ```
 #
 # To simplify the exposition, we focus exclusively on a viscoelastic material.
-# The reference (“ground truth”) data is produced using a Generalized Maxwell model with 6 branches, with randomly generated viscoelastic properties. 
+# The reference (“ground truth”) data is produced using a Generalized Maxwell model with 6 branches, with randomly generated viscoelastic properties.
 #
 # The training objective is to identify a neural GSM model with a reduced number of internal state variables, denoted $N_\text{var}$, while retaining the correct stress relaxation behavior. of internal state variables. The long-term elastic response is assumed to be known.
 #
@@ -90,6 +90,7 @@
 
 # +
 import jax
+
 jax.config.update("jax_platform_name", "cpu")
 
 import equinox as eqx
@@ -104,17 +105,17 @@ import optimistix as optx
 import optax
 
 E0, nu = 70e3, 0.3
-elastic_model = jm.LinearElasticIsotropic(E0, nu)
+elasticity = jm.LinearElasticIsotropic(E0, nu)
 
 key = jax.random.PRNGKey(42)
 key1, key2, key3 = jax.random.split(key, num=3)
 
 tau = jnp.asarray([0.005, 0.1, 0.05, 0.2, 2, 10])
-E1 = jax.random.lognormal(key1, shape=(len(tau),))*10e3
+E1 = jax.random.lognormal(key1, shape=(len(tau),)) * 10e3
 viscous_model = jm.LinearElasticIsotropic(E1, jnp.full_like(E1, fill_value=nu))
 
 material = jm.GeneralizedMaxwell(
-    elasticity=elastic_model,
+    elasticity=elasticity,
     viscous_branches=viscous_model,
     relaxation_times=tau,
 )
@@ -130,6 +131,7 @@ gamma = jnp.full_like(jnp.diff(times), fill_value=gamma_r)
 
 # We define a general-purpose function `compute_evolution` that integrates the constitutive equations over time for a given strain path.
 # Starting from the initial state, the model is updated incrementally at each time step using the internal solver provided by `jaxmat` and returns the full stress history. By using `jax.lax.scan`, the loop over time increments is efficiently compiled by JAX, ensuring high performance and differentiability.
+
 
 def compute_evolution(material, gamma_list, times):
     # Initial material state
@@ -165,6 +167,7 @@ def compute_evolution(material, gamma_list, times):
 #
 # We first define the internal state PyTree as a batch of symmetric strain tensors $\balpha_i$ representing the $N_\text{var}$ viscous strains in each Maxwell-like branch.
 
+
 class InternalState(AbstractState):
     alpha: SymmetricTensor2 = eqx.field(init=False)
     """Viscoelastic strains."""
@@ -177,14 +180,15 @@ class InternalState(AbstractState):
 
 # The free energy is implemented as a sum of quadratic elastic contributions in the form of an `equinox.Module`. The free energy `__call__` function takes as arguments the total strain $\beps$ (`eps`) and the PyTree (`isv`) of internal state variables $(\balpha_i)$.
 
+
 class FreeEnergy(eqx.Module):
-    elastic_model: jm.AbstractLinearElastic
+    elasticity: jm.AbstractLinearElastic
     viscous_model: list[jm.AbstractLinearElastic]
 
     def __call__(self, eps, isv):
 
         alpha = isv.alpha
-        psi_el = 0.5 * jnp.trace(eps @ (self.elastic_model.C @ eps))
+        psi_el = 0.5 * jnp.trace(eps @ (self.elasticity.C @ eps))
 
         def viscous_free_energy(viscous_model, alpha):
             eps_el = eps - alpha
@@ -202,16 +206,19 @@ class FreeEnergy(eqx.Module):
 # \Phi(\balpha_i) = \Nn_\text{ICNN}(\balpha_i) - \dfrac{\partial \Nn_\text{ICNN}}{\partial\balpha_i}(\balpha_i=0):\balpha_i
 # $$
 
+
 class ICNNDissipationPotential(ICNN):
     def icnn_potential(self, alpha_dot):
         I1, I2, I3 = jax.vmap(main_invariants)(alpha_dot)
-        return super().__call__(1e3*I2)
-       
+        return super().__call__(1e3 * I2)
+
     def __call__(self, isv_dot):
         alpha_dot = isv_dot.alpha.tensor
         return (
             self.icnn_potential(alpha_dot)
-            - jax.jvp(self.icnn_potential, (jnp.zeros_like(alpha_dot),), (alpha_dot,))[1]
+            - jax.jvp(self.icnn_potential, (jnp.zeros_like(alpha_dot),), (alpha_dot,))[
+                1
+            ]
         )
 
 
@@ -226,7 +233,7 @@ for Nvar in Nvar_list:
     icnn_dissipation_potential = ICNNDissipationPotential(Nvar, hidden_dims, key3)
     E1_ = jax.random.lognormal(key2, shape=(Nvar,)) * 1e3
     viscous_model = jm.LinearElasticIsotropic(E1_, jnp.full_like(E1_, fill_value=nu))
-    free_energy = FreeEnergy(elastic_model=elastic_model, viscous_model=viscous_model)
+    free_energy = FreeEnergy(elasticity=elasticity, viscous_model=viscous_model)
     internal_state = InternalState(Nvar=Nvar)
     gsm_list.append(
         jm.GeneralizedStandardMaterial(
@@ -246,7 +253,9 @@ for Nvar in Nvar_list:
 
 # +
 sig_train = compute_evolution(material, gamma, times)
-sig_noise = SymmetricTensor2(tensor=sig_train.tensor + jax.random.normal(key, shape=sig_train.tensor.shape))
+sig_noise = SymmetricTensor2(
+    tensor=sig_train.tensor + jax.random.normal(key, shape=sig_train.tensor.shape)
+)
 sig_init = compute_evolution(gsm_list[-1], gamma, times)
 
 plt.figure()
@@ -278,6 +287,7 @@ plt.show()
 # where $\hat\bsig^{(k)}(\btheta)$ denotes the predicted stress tensor by the neural GSM at time step $k$ and $ \bsig^\text{data,(k)}$ the corresponding target value.
 # As the stress evolution depends recursively on the internal variables, the loss is history-dependent.
 # Gradients are automatically computed by JAX through the full time integration and solver iterations.
+
 
 @eqx.filter_jit
 def loss(trainable, args):
@@ -336,7 +346,7 @@ solver = optx.OptaxMinimiser(
 
 for gsm, Nvar in zip(gsm_list, Nvar_list):
 
-    trainable, static = partition_by_node_names(gsm, ["free_energy.elastic_model"])
+    trainable, static = partition_by_node_names(gsm, ["free_energy.elasticity"])
 
     sol = optx.minimise(
         loss,
@@ -381,11 +391,17 @@ for Nmax in Nmax_list:
     E1_ = jax.random.lognormal(key2, shape=(Nmax,)) * 1e3
     tau_ = jnp.logspace(-2, 1, Nmax)
     viscous_model = jm.LinearElasticIsotropic(E1_, jnp.full_like(E1_, fill_value=nu))
-    maxwell_list.append(jm.GeneralizedMaxwell(elasticity=elastic_model, viscous_branches=viscous_model, relaxation_times=tau_))
+    maxwell_list.append(
+        jm.GeneralizedMaxwell(
+            elasticity=elasticity, viscous_branches=viscous_model, relaxation_times=tau_
+        )
+    )
 
 for maxwell, Nmax in zip(maxwell_list, Nmax_list):
 
-    trainable, static = partition_by_node_names(maxwell, ["elasticity", "relaxation_times"])
+    trainable, static = partition_by_node_names(
+        maxwell, ["elasticity", "relaxation_times"]
+    )
 
     sol = optx.minimise(
         loss,

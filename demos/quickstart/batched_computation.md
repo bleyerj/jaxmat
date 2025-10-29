@@ -68,7 +68,7 @@ class YieldStress(eqx.Module):
 
 
 material = jm.GeneralIsotropicHardening(
-    elastic_model=jm.LinearElasticIsotropic(E=200e3, nu=0),
+    elasticity=jm.LinearElasticIsotropic(E=200e3, nu=0),
     yield_stress=YieldStress(sig0=sig0),
     plastic_surface=jm.Hosford(),
 )

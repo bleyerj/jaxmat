@@ -86,6 +86,7 @@ import matplotlib.pyplot as plt
 #
 # [^1]: Since we assume no hardening, we do not need to declare the cumulated plastic strain $p$.
 
+
 class InternalState(jaxmat.state.AbstractState):
     epsvp: SymmetricTensor2 = eqx.field(default_factory=lambda: SymmetricTensor2())
 
@@ -93,6 +94,7 @@ class InternalState(jaxmat.state.AbstractState):
 # ### Green yield surface
 #
 # We now first define the Green plastic yield surface as the `GreenYieldSurface` module. It takes a single float parameter `A` describing the ellipsoid eccentricity. The yield surface expression is defined in the `__call__` dunder method. A `normal` method is then defined from the yield surface gradient to compute the (non-unitary) normal vector. Note that we define a `safe_zero` decorator to avoid NaNs when the stress tensor is zero, which may happen upon initialization for instance. To avoid NaNs in `jnp.where` sections in adjoint computations, we use the [double `where` trick](https://docs.jax.dev/en/latest/faq.html#gradients-contain-nan-where-using-where).
+
 
 # +
 def safe_zero(method):
@@ -123,6 +125,7 @@ class GreenYieldSurface(eqx.Module):
 #
 # Next, the Norton flow is defined similarly as a module with two material parameters `K` and `m`. It takes as input to `__call__` the overstress.
 
+
 class NortonFlow(eqx.Module):
     K: float = eqx.field(converter=jnp.asarray)
     m: float = eqx.field(converter=jnp.asarray)
@@ -151,8 +154,9 @@ class NortonFlow(eqx.Module):
 #
 # The full implementation reads:
 
+
 class GreenViscoPlasticity(jm.SmallStrainBehavior):
-    elastic_model: jm.LinearElasticIsotropic
+    elasticity: jm.LinearElasticIsotropic
     yield_stress: float = eqx.field(converter=jnp.asarray)
     plastic_surface: GreenYieldSurface
     viscoplastic_flow: NortonFlow
@@ -168,7 +172,7 @@ class GreenViscoPlasticity(jm.SmallStrainBehavior):
         sig_old = state.stress
 
         def eval_stress(deps, depsvp):
-            return sig_old + self.elastic_model.C @ (deps - depsvp)
+            return sig_old + self.elasticity.C @ (deps - depsvp)
 
         def solve_state(deps, epsvp_old):
 
@@ -203,12 +207,12 @@ class GreenViscoPlasticity(jm.SmallStrainBehavior):
 #
 # We now instantiate the Green viscoplastic model from its different components
 
-elastic_model = jm.LinearElasticIsotropic(E=210e3, nu=0.3)
+elasticity = jm.LinearElasticIsotropic(E=210e3, nu=0.3)
 sig0 = 300.0
 green_ys = GreenYieldSurface(A=0.6)
 viscoplastic_flow = NortonFlow(K=50.0, m=4.0)
 material = GreenViscoPlasticity(
-    elastic_model=elastic_model,
+    elasticity=elasticity,
     yield_stress=sig0,
     plastic_surface=green_ys,
     viscoplastic_flow=viscoplastic_flow,
@@ -216,6 +220,7 @@ material = GreenViscoPlasticity(
 
 
 # Below, we evaluate the Green yield surface and its normal in the $(p, q)$ space of hydrostatic and deviatoric stresses.
+
 
 # + tags=["hide-input"]
 def compute_pq(sig):

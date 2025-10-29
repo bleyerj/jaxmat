@@ -151,7 +151,7 @@ hardening = CombinedHardening(
 )
 
 material = jm.GeneralHardening(
-    elastic_model=elasticity,
+    elasticity=elasticity,
     yield_stress=100.0,
     plastic_surface=plastic_surface,
     combined_hardening=hardening,
@@ -319,7 +319,7 @@ After training, the final trained model is reconstructed by combining the traine
 
 ```{code-cell} ipython3
 trainable, static = partition_by_node_names(
-    material, ["elastic_model", "combined_hardening.isotropic.sig0"]
+    material, ["elasticity", "combined_hardening.isotropic.sig0"]
 )
 
 
@@ -362,7 +362,7 @@ After convergence, we print the calibrated model parameters to verify their phys
 
 ```{code-cell} ipython3
 print_eqx_fields(
-    trained_material, fields=["elastic_model", "yield_stress", "combined_hardening"]
+    trained_material, fields=["elasticity", "yield_stress", "combined_hardening"]
 )
 ```
 

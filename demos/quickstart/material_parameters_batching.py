@@ -43,9 +43,7 @@ class VoceHardening(eqx.Module):
 elasticity = jm.LinearElasticIsotropic(E=200e3, nu=0.25)
 hardening = VoceHardening(sig0=350.0, sigu=500.0, b=1e3)
 
-material = jm.vonMisesIsotropicHardening(
-    elastic_model=elasticity, yield_stress=hardening
-)
+material = jm.vonMisesIsotropicHardening(elasticity=elasticity, yield_stress=hardening)
 
 print("A single material instance:", material)
 # -

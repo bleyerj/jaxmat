@@ -60,7 +60,7 @@ class AmrstrongFrederickViscoplasticity(SmallStrainBehavior):
             "The Creep of Steel at High Temperatures." McGraw-Hill.
     """
 
-    elastic_model: LinearElasticIsotropic
+    elasticity: LinearElasticIsotropic
     """Linear isotropic elasticity defined by Young modulus and Poisson ratio."""
     yield_stress: eqx.Module
     """Isotropic hardening law controlling the evolution of the yield surface size."""
@@ -86,7 +86,7 @@ class AmrstrongFrederickViscoplasticity(SmallStrainBehavior):
         sig_eq = lambda sig: self.plastic_surface(sig)
 
         def eval_stress(deps, dy):
-            return sig_old + self.elastic_model.C @ (deps - dev(dy.epsp))
+            return sig_old + self.elasticity.C @ (deps - dev(dy.epsp))
 
         def solve_state(deps, y_old):
             def residual(dy, args):
@@ -140,7 +140,7 @@ class GenericViscoplasticity(SmallStrainBehavior):
     and kinematic hardening and viscoplastic flow rule.
     """
 
-    elastic_model: LinearElasticIsotropic
+    elasticity: LinearElasticIsotropic
     """Linear isotropic elasticity defined by Young modulus and Poisson ratio."""
     plastic_surface: AbstractPlasticSurface
     """A generic plastic yield surface."""
@@ -166,7 +166,7 @@ class GenericViscoplasticity(SmallStrainBehavior):
         sig_eq = lambda sig: self.plastic_surface(sig)
 
         def eval_stress(deps, dy):
-            return sig_old + self.elastic_model.C @ (deps - dev(dy.epsp))
+            return sig_old + self.elasticity.C @ (deps - dev(dy.epsp))
 
         def solve_state(deps, y_old):
             def residual(dy, args):

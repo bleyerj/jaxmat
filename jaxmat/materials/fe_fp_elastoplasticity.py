@@ -24,7 +24,7 @@ class InternalState(AbstractState):
 class FeFpJ2Plasticity(FiniteStrainBehavior):
     """Material model based on https://onlinelibrary.wiley.com/doi/epdf/10.1002/nme.6843"""
 
-    elastic_model: LinearElasticIsotropic
+    elasticity: LinearElasticIsotropic
     """Isotropic elastic model."""
     yield_stress: eqx.Module
     """Isotropic hardening law controlling the evolution of the yield surface size."""
@@ -53,13 +53,13 @@ class FeFpJ2Plasticity(FiniteStrainBehavior):
 
             def residual(dy, args):
                 dp, be_bar = dy.p, dy.be_bar
-                s = self.elastic_model.mu * dev(be_bar)
+                s = self.elasticity.mu * dev(be_bar)
                 yield_criterion = self.plastic_surface(s) - self.yield_stress(
                     p_old + dp
                 )
                 n = self.plastic_surface.normal(s)
                 res = (
-                    FB(-yield_criterion / self.elastic_model.E, dp),
+                    FB(-yield_criterion / self.elasticity.E, dp),
                     dev(be_bar - be_bar_trial)
                     + 2 * dp * jnp.linalg.trace(be_bar) / 3 * n
                     + Id * (det(be_bar) - 1),
@@ -75,9 +75,9 @@ class FeFpJ2Plasticity(FiniteStrainBehavior):
         dp = dy.p
         y = isv_old.update(p=isv_old.p + dp, be_bar=be_bar)
 
-        s = self.elastic_model.mu * dev(be_bar)
+        s = self.elasticity.mu * dev(be_bar)
         J = det(F)
-        tau = s + self.elastic_model.kappa / 2 * (J**2 - 1) * Id
+        tau = s + self.elasticity.kappa / 2 * (J**2 - 1) * Id
         P = tau @ (F.T).inv
 
         new_state = state.update(PK1=P, internal=y)

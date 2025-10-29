@@ -126,8 +126,9 @@ class InternalState(AbstractState):
 #
 # Finally, the `@eqx.filter_jit` decorator enables JIT compilation for efficiency.
 
+
 class MultiSurfacePlasticity(SmallStrainBehavior):
-    elastic_model: LinearElasticIsotropic
+    elasticity: LinearElasticIsotropic
     yield_stresses: list[eqx.Module]
     plastic_surfaces: list[AbstractPlasticSurface]
     n_surf: int = eqx.field(static=True, default=1)
@@ -147,7 +148,7 @@ class MultiSurfacePlasticity(SmallStrainBehavior):
         sig_old = state.stress
 
         def eval_stress(deps, dy):
-            return sig_old + self.elastic_model.C @ (deps - dy.epsp)
+            return sig_old + self.elasticity.C @ (deps - dy.epsp)
 
         def solve_state(deps, y_old):
             p_old = y_old.p
@@ -164,7 +165,7 @@ class MultiSurfacePlasticity(SmallStrainBehavior):
                         sig
                     ) - self.yield_stresses[i](p[i])
                     n = self.plastic_surfaces[i].normal(sig)
-                    res_plast.append(FB(-yield_criterion / self.elastic_model.E, dp[i]))
+                    res_plast.append(FB(-yield_criterion / self.elasticity.E, dp[i]))
                     res_epsp -= n * dp[i]
 
                 res = res_plast, res_epsp
@@ -194,6 +195,7 @@ class MultiSurfacePlasticity(SmallStrainBehavior):
 # A simple `YieldStress` class is first introduced to represent constant yield limits for each surface (no hardening).
 # It simply returns a constant scalar value $\sigma_{0i}$ independent of plastic strain.
 
+
 class YieldStress(eqx.Module):
     sig0: float = eqx.field(converter=jnp.asarray)
 
@@ -209,6 +211,7 @@ class YieldStress(eqx.Module):
 # f_\text{cap}(p,q) = \sqrt{(p-p_0)^2 + (q/M)^2} \leq \sigma_c
 # $$
 # where $M$ controls the ellipse aspect ratio, $p_0$ its center along the hydrostatic axis and $\sigma_c$ corresponds to the maximum compressive hydrostatic strength.
+
 
 class EllipticCap(jm.AbstractPlasticSurface):
     M: float = eqx.field(converter=jnp.asarray)
@@ -228,6 +231,7 @@ class EllipticCap(jm.AbstractPlasticSurface):
 # f_\text{t}(p) = \sigma_m = \tfrac{1}{3}\tr(\bsig) \leq \sigma_t
 # $$
 # where $\sigma_t$ is the tensile strength.
+
 
 class HydrostaticTensionCutoff(jm.AbstractPlasticSurface):
     def __call__(self, sig):
@@ -255,7 +259,7 @@ sigc = 10 * sig0
 alpha = 0.1
 M = 0.5
 material = MultiSurfacePlasticity(
-    elastic_model=jm.LinearElasticIsotropic(E=20e3, nu=0),
+    elasticity=jm.LinearElasticIsotropic(E=20e3, nu=0),
     yield_stresses=[
         YieldStress(sig0=tauc),
         YieldStress(sig0=sigc),

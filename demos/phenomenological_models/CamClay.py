@@ -96,6 +96,7 @@ import matplotlib.pyplot as plt
 # The internal variable for the Modified Cam-Clay model is the plastic strain tensor $\bepsp$.
 # We define a small subclass of `AbstractState` to store and update this tensor between time steps.
 
+
 # Define internal state to store plastic strain
 class InternalState(jaxmat.state.AbstractState):
     epsp: SymmetricTensor2 = eqx.field(default_factory=lambda: SymmetricTensor2())
@@ -104,6 +105,7 @@ class InternalState(jaxmat.state.AbstractState):
 # ### Yield surface
 #
 # We now define the Cam-Clay yield surface. The class inherits from `AbstractPlasticSurface` and thus automatically computes the normal vector to the yield surface via its `normal` method. We simply need to implement the expression of the yield surface in the `__call__` dunder method. We decorate the latter with  the `safe_zero` decorator as described in the [](./Green_viscoplasticity.ipynb) demo.
+
 
 class CamClaySurface(jm.AbstractPlasticSurface):
     M: float = eqx.field(converter=jnp.asarray)  # critical state line parameter
@@ -119,6 +121,7 @@ class CamClaySurface(jm.AbstractPlasticSurface):
 # ### Hardening law
 #
 # We next define the exponential hardening rule for the preconsolidation pressure:
+
 
 class Hardening(eqx.Module):
     beta: float = eqx.field(converter=jnp.asarray)
@@ -152,8 +155,9 @@ class Hardening(eqx.Module):
 #
 # We solve the nonlinear system with `optimistix.root_find`, using automatic differentiation for the Jacobian and finally return the updated stress $\bsig$ and internal variable $\bepsp$.
 
+
 class ModifiedCamClay(jm.SmallStrainBehavior):
-    elastic_model: jm.LinearElasticIsotropic
+    elasticity: jm.LinearElasticIsotropic
     plastic_surface: CamClaySurface
     hardening: Hardening
     internal: InternalState = eqx.field(default_factory=InternalState, init=False)
@@ -168,7 +172,7 @@ class ModifiedCamClay(jm.SmallStrainBehavior):
         sig_old = state.stress
 
         def eval_stress(deps, depsp):
-            return sig_old + self.elastic_model.C @ (deps - depsp)
+            return sig_old + self.elasticity.C @ (deps - depsp)
 
         def solve_state(deps, epsp_old):
 
@@ -205,12 +209,12 @@ class ModifiedCamClay(jm.SmallStrainBehavior):
 #
 # We instantiate below the MCC material by choosing $M=0.9$ and $\beta=30$, corresponding to typical clay parameters. The initial critical pressure is chosen here to be $p_{c0}=1\text{ MPa}$.
 
-elastic_model = jm.LinearElasticIsotropic(E=248.28, nu=0.241)
+elasticity = jm.LinearElasticIsotropic(E=248.28, nu=0.241)
 cc_surface = CamClaySurface(M=0.9)
 pc0 = 1.0
 hardening = Hardening(pc0=pc0, beta=30.0)
 material = ModifiedCamClay(
-    elastic_model=elastic_model, hardening=hardening, plastic_surface=cc_surface
+    elasticity=elasticity, hardening=hardening, plastic_surface=cc_surface
 )
 
 
@@ -221,6 +225,7 @@ material = ModifiedCamClay(
 # After this consolidation phase, we further increase the vertical compressive strain $-\varepsilon_{zz}$ while maintaining the lateral confining pressure, i.e. $\sigma_{xx}=\sigma_{yy}=-p_0$.
 #
 # All 6 OCR load cases are integrated simultaneously as a batched simulation.
+
 
 # +
 def compute_pq(sig):
@@ -242,7 +247,7 @@ t_cons = 0.2
 times = jnp.linspace(0, 1.2, Nsteps)
 
 t = 0
-imposed_eps = p0_vals / 3 / elastic_model.kappa
+imposed_eps = p0_vals / 3 / elasticity.kappa
 p, q = jax.vmap(compute_pq)(state.stress)
 
 results = jnp.zeros((Nsteps, Nbatch, 5))

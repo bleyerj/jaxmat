@@ -106,7 +106,7 @@ import optimistix as optx
 import optax
 
 E0, nu = 70e3, 0.3
-elastic_model = jm.LinearElasticIsotropic(E0, nu)
+elasticity = jm.LinearElasticIsotropic(E0, nu)
 
 key = jax.random.PRNGKey(42)
 key1, key2, key3 = jax.random.split(key, num=3)
@@ -116,7 +116,7 @@ E1 = jax.random.lognormal(key1, shape=(len(tau),))*10e3
 viscous_model = jm.LinearElasticIsotropic(E1, jnp.full_like(E1, fill_value=nu))
 
 material = jm.GeneralizedMaxwell(
-    elasticity=elastic_model,
+    elasticity=elasticity,
     viscous_branches=viscous_model,
     relaxation_times=tau,
 )
@@ -184,13 +184,13 @@ The free energy is implemented as a sum of quadratic elastic contributions in th
 
 ```{code-cell} ipython3
 class FreeEnergy(eqx.Module):
-    elastic_model: jm.AbstractLinearElastic
+    elasticity: jm.AbstractLinearElastic
     viscous_model: list[jm.AbstractLinearElastic]
 
     def __call__(self, eps, isv):
 
         alpha = isv.alpha
-        psi_el = 0.5 * jnp.trace(eps @ (self.elastic_model.C @ eps))
+        psi_el = 0.5 * jnp.trace(eps @ (self.elasticity.C @ eps))
 
         def viscous_free_energy(viscous_model, alpha):
             eps_el = eps - alpha
@@ -234,7 +234,7 @@ for Nvar in Nvar_list:
     icnn_dissipation_potential = ICNNDissipationPotential(Nvar, hidden_dims, key3)
     E1_ = jax.random.lognormal(key2, shape=(Nvar,)) * 1e3
     viscous_model = jm.LinearElasticIsotropic(E1_, jnp.full_like(E1_, fill_value=nu))
-    free_energy = FreeEnergy(elastic_model=elastic_model, viscous_model=viscous_model)
+    free_energy = FreeEnergy(elasticity=elasticity, viscous_model=viscous_model)
     internal_state = InternalState(Nvar=Nvar)
     gsm_list.append(
         jm.GeneralizedStandardMaterial(
@@ -345,7 +345,7 @@ This demonstrates that the neural GSM can efficiently compress the complex 6-bra
 ```{code-cell} ipython3
 for gsm, Nvar in zip(gsm_list, Nvar_list):
 
-    trainable, static = partition_by_node_names(gsm, ["free_energy.elastic_model"])
+    trainable, static = partition_by_node_names(gsm, ["free_energy.elasticity"])
 
     sol = optx.minimise(
         loss,
@@ -391,7 +391,7 @@ for Nmax in Nmax_list:
     E1_ = jax.random.lognormal(key2, shape=(Nmax,)) * 1e3
     tau_ = jnp.logspace(-2, 1, Nmax)
     viscous_model = jm.LinearElasticIsotropic(E1_, jnp.full_like(E1_, fill_value=nu))
-    maxwell_list.append(jm.GeneralizedMaxwell(elasticity=elastic_model, viscous_branches=viscous_model, relaxation_times=tau_))
+    maxwell_list.append(jm.GeneralizedMaxwell(elasticity=elasticity, viscous_branches=viscous_model, relaxation_times=tau_))
 
 for maxwell, Nmax in zip(maxwell_list, Nmax_list):
 

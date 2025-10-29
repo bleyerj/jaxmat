@@ -150,7 +150,7 @@ The full implementation reads:
 
 ```{code-cell} ipython3
 class GreenViscoPlasticity(jm.SmallStrainBehavior):
-    elastic_model: jm.LinearElasticIsotropic
+    elasticity: jm.LinearElasticIsotropic
     yield_stress: float = eqx.field(converter=jnp.asarray)
     plastic_surface: GreenYieldSurface
     viscoplastic_flow: NortonFlow
@@ -166,7 +166,7 @@ class GreenViscoPlasticity(jm.SmallStrainBehavior):
         sig_old = state.stress
 
         def eval_stress(deps, depsvp):
-            return sig_old + self.elastic_model.C @ (deps - depsvp)
+            return sig_old + self.elasticity.C @ (deps - depsvp)
 
         def solve_state(deps, epsvp_old):
 
@@ -202,12 +202,12 @@ Finally, after solving, we recover the final stress and viscoplastic strain and 
 We now instantiate the Green viscoplastic model from its different components
 
 ```{code-cell} ipython3
-elastic_model = jm.LinearElasticIsotropic(E=210e3, nu=0.3)
+elasticity = jm.LinearElasticIsotropic(E=210e3, nu=0.3)
 sig0 = 300.0
 green_ys = GreenYieldSurface(A=0.6)
 viscoplastic_flow = NortonFlow(K=50.0, m=4.0)
 material = GreenViscoPlasticity(
-    elastic_model=elastic_model,
+    elasticity=elasticity,
     yield_stress=sig0,
     plastic_surface=green_ys,
     viscoplastic_flow=viscoplastic_flow,
