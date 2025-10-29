@@ -404,9 +404,7 @@
 <span class="n">elasticity</span> <span class="o">=</span> <span class="n">jm</span><span class="o">.</span><span class="n">LinearElasticIsotropic</span><span class="p">(</span><span class="n">E</span><span class="o">=</span><span class="mf">200e3</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
 <span class="n">hardening</span> <span class="o">=</span> <span class="n">VoceHardening</span><span class="p">(</span><span class="n">sig0</span><span class="o">=</span><span class="mf">350.0</span><span class="p">,</span> <span class="n">sigu</span><span class="o">=</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mf">1e3</span><span class="p">)</span>
 
-<span class="n">material</span> <span class="o">=</span> <span class="n">jm</span><span class="o">.</span><span class="n">vonMisesIsotropicHardening</span><span class="p">(</span>
-    <span class="n">elastic_model</span><span class="o">=</span><span class="n">elasticity</span><span class="p">,</span> <span class="n">yield_stress</span><span class="o">=</span><span class="n">hardening</span>
-<span class="p">)</span>
+<span class="n">material</span> <span class="o">=</span> <span class="n">jm</span><span class="o">.</span><span class="n">vonMisesIsotropicHardening</span><span class="p">(</span><span class="n">elasticity</span><span class="o">=</span><span class="n">elasticity</span><span class="p">,</span> <span class="n">yield_stress</span><span class="o">=</span><span class="n">hardening</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A single material instance:&quot;</span><span class="p">,</span> <span class="n">material</span><span class="p">)</span>
 </pre></div>
@@ -414,7 +412,7 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A single material instance: vonMisesIsotropicHardening(
-  elastic_model=LinearElasticIsotropic(E=f64[], nu=f64[]),
+  elasticity=LinearElasticIsotropic(E=f64[], nu=f64[]),
   yield_stress=VoceHardening(sig0=weak_f64[], sigu=weak_f64[], b=weak_f64[])
 )
 </pre></div>
@@ -445,7 +443,7 @@ The resulting <code class="docutils literal notranslate"><span class="pre">batch
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A batch of 100 material instances: vonMisesIsotropicHardening(
   _batch_size=(100,),
-  elastic_model=LinearElasticIsotropic(E=f64[100], nu=f64[100]),
+  elasticity=LinearElasticIsotropic(E=f64[100], nu=f64[100]),
   yield_stress=VoceHardening(sig0=weak_f64[100], sigu=weak_f64[100], b=f64[100]),
   plastic_surface=vonMises(),
   internal=InternalState(
@@ -475,11 +473,6 @@ The resulting <code class="docutils literal notranslate"><span class="pre">batch
 
     <span class="n">state</span> <span class="o">=</span> <span class="n">new_state</span>
     <span class="n">tau</span> <span class="o">=</span> <span class="n">tau</span><span class="o">.</span><span class="n">at</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">new_stress</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Inside batching
 </pre></div>
 </div>
 </div>

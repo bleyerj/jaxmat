@@ -429,7 +429,7 @@ e_I = \epsilon \cos(\theta_k), \quad e_{II} = \epsilon \sin(\theta_k), \quad \th
 
 
 <span class="n">material</span> <span class="o">=</span> <span class="n">jm</span><span class="o">.</span><span class="n">GeneralIsotropicHardening</span><span class="p">(</span>
-    <span class="n">elastic_model</span><span class="o">=</span><span class="n">jm</span><span class="o">.</span><span class="n">LinearElasticIsotropic</span><span class="p">(</span><span class="n">E</span><span class="o">=</span><span class="mf">200e3</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">elasticity</span><span class="o">=</span><span class="n">jm</span><span class="o">.</span><span class="n">LinearElasticIsotropic</span><span class="p">(</span><span class="n">E</span><span class="o">=</span><span class="mf">200e3</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
     <span class="n">yield_stress</span><span class="o">=</span><span class="n">YieldStress</span><span class="p">(</span><span class="n">sig0</span><span class="o">=</span><span class="n">sig0</span><span class="p">),</span>
     <span class="n">plastic_surface</span><span class="o">=</span><span class="n">jm</span><span class="o">.</span><span class="n">Hosford</span><span class="p">(),</span>
 <span class="p">)</span>

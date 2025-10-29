@@ -523,7 +523,7 @@ The constitutive update proceeds first by defining the final stress expression f
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ModifiedCamClay</span><span class="p">(</span><span class="n">jm</span><span class="o">.</span><span class="n">SmallStrainBehavior</span><span class="p">):</span>
-    <span class="n">elastic_model</span><span class="p">:</span> <span class="n">jm</span><span class="o">.</span><span class="n">LinearElasticIsotropic</span>
+    <span class="n">elasticity</span><span class="p">:</span> <span class="n">jm</span><span class="o">.</span><span class="n">LinearElasticIsotropic</span>
     <span class="n">plastic_surface</span><span class="p">:</span> <span class="n">CamClaySurface</span>
     <span class="n">hardening</span><span class="p">:</span> <span class="n">Hardening</span>
     <span class="n">internal</span><span class="p">:</span> <span class="n">InternalState</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">InternalState</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -538,7 +538,7 @@ The constitutive update proceeds first by defining the final stress expression f
         <span class="n">sig_old</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">stress</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">eval_stress</span><span class="p">(</span><span class="n">deps</span><span class="p">,</span> <span class="n">depsp</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">sig_old</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_model</span><span class="o">.</span><span class="n">C</span> <span class="o">@</span> <span class="p">(</span><span class="n">deps</span> <span class="o">-</span> <span class="n">depsp</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">sig_old</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">elasticity</span><span class="o">.</span><span class="n">C</span> <span class="o">@</span> <span class="p">(</span><span class="n">deps</span> <span class="o">-</span> <span class="n">depsp</span><span class="p">)</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">solve_state</span><span class="p">(</span><span class="n">deps</span><span class="p">,</span> <span class="n">epsp_old</span><span class="p">):</span>
 
@@ -580,12 +580,12 @@ The constitutive update proceeds first by defining the final stress expression f
 <p>We instantiate below the MCC material by choosing <span class="math notranslate nohighlight">\(M=0.9\)</span> and <span class="math notranslate nohighlight">\(\beta=30\)</span>, corresponding to typical clay parameters. The initial critical pressure is chosen here to be <span class="math notranslate nohighlight">\(p_{c0}=1\text{ MPa}\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elastic_model</span> <span class="o">=</span> <span class="n">jm</span><span class="o">.</span><span class="n">LinearElasticIsotropic</span><span class="p">(</span><span class="n">E</span><span class="o">=</span><span class="mf">248.28</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">0.241</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elasticity</span> <span class="o">=</span> <span class="n">jm</span><span class="o">.</span><span class="n">LinearElasticIsotropic</span><span class="p">(</span><span class="n">E</span><span class="o">=</span><span class="mf">248.28</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">0.241</span><span class="p">)</span>
 <span class="n">cc_surface</span> <span class="o">=</span> <span class="n">CamClaySurface</span><span class="p">(</span><span class="n">M</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
 <span class="n">pc0</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="n">hardening</span> <span class="o">=</span> <span class="n">Hardening</span><span class="p">(</span><span class="n">pc0</span><span class="o">=</span><span class="n">pc0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">30.0</span><span class="p">)</span>
 <span class="n">material</span> <span class="o">=</span> <span class="n">ModifiedCamClay</span><span class="p">(</span>
-    <span class="n">elastic_model</span><span class="o">=</span><span class="n">elastic_model</span><span class="p">,</span> <span class="n">hardening</span><span class="o">=</span><span class="n">hardening</span><span class="p">,</span> <span class="n">plastic_surface</span><span class="o">=</span><span class="n">cc_surface</span>
+    <span class="n">elasticity</span><span class="o">=</span><span class="n">elasticity</span><span class="p">,</span> <span class="n">hardening</span><span class="o">=</span><span class="n">hardening</span><span class="p">,</span> <span class="n">plastic_surface</span><span class="o">=</span><span class="n">cc_surface</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -618,7 +618,7 @@ The constitutive update proceeds first by defining the final stress expression f
 <span class="n">times</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="n">Nsteps</span><span class="p">)</span>
 
 <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">imposed_eps</span> <span class="o">=</span> <span class="n">p0_vals</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="n">elastic_model</span><span class="o">.</span><span class="n">kappa</span>
+<span class="n">imposed_eps</span> <span class="o">=</span> <span class="n">p0_vals</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="n">elasticity</span><span class="o">.</span><span class="n">kappa</span>
 <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">compute_pq</span><span class="p">)(</span><span class="n">state</span><span class="o">.</span><span class="n">stress</span><span class="p">)</span>
 
 <span class="n">results</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">Nsteps</span><span class="p">,</span> <span class="n">Nbatch</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>

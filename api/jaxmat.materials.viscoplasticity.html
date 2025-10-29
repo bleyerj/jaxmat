@@ -378,7 +378,7 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.elastic_model"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity.elastic_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.elasticity"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity.elasticity</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.yield_stress"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity.yield_stress</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.viscous_flow"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity.viscous_flow</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.kinematic_hardening"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity.kinematic_hardening</span></code></a></li>
@@ -395,7 +395,7 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.elastic_model"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity.elastic_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.elasticity"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity.elasticity</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.plastic_surface"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity.plastic_surface</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.yield_stress"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity.yield_stress</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.viscous_flow"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity.viscous_flow</span></code></a></li>
@@ -479,8 +479,8 @@ Hardening Materials.” CEGB Report RD/B/N731.</p>
 </ul>
 </div>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.elastic_model">
-<span class="sig-name descname"><span class="pre">elastic_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic" title="jaxmat.materials.elasticity.LinearElasticIsotropic"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearElasticIsotropic</span></code></a></em><a class="headerlink" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.elastic_model" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.elasticity">
+<span class="sig-name descname"><span class="pre">elasticity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic" title="jaxmat.materials.elasticity.LinearElasticIsotropic"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearElasticIsotropic</span></code></a></em><a class="headerlink" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.elasticity" title="Link to this definition">#</a></dt>
 <dd><p>Linear isotropic elasticity defined by Young modulus and Poisson ratio.</p>
 </dd></dl>
 
@@ -589,8 +589,8 @@ constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
 <p>Small-strain viscoplastic constitutive model with generic yield surface, isotropic
 and kinematic hardening and viscoplastic flow rule.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.materials.viscoplasticity.GenericViscoplasticity.elastic_model">
-<span class="sig-name descname"><span class="pre">elastic_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic" title="jaxmat.materials.elasticity.LinearElasticIsotropic"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearElasticIsotropic</span></code></a></em><a class="headerlink" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.elastic_model" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="jaxmat.materials.viscoplasticity.GenericViscoplasticity.elasticity">
+<span class="sig-name descname"><span class="pre">elasticity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.materials.elasticity.html#jaxmat.materials.elasticity.LinearElasticIsotropic" title="jaxmat.materials.elasticity.LinearElasticIsotropic"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearElasticIsotropic</span></code></a></em><a class="headerlink" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.elasticity" title="Link to this definition">#</a></dt>
 <dd><p>Linear isotropic elasticity defined by Young modulus and Poisson ratio.</p>
 </dd></dl>
 
@@ -734,7 +734,7 @@ constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.elastic_model"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity.elastic_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.elasticity"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity.elasticity</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.yield_stress"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity.yield_stress</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.viscous_flow"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity.viscous_flow</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.AmrstrongFrederickViscoplasticity.kinematic_hardening"><code class="docutils literal notranslate"><span class="pre">AmrstrongFrederickViscoplasticity.kinematic_hardening</span></code></a></li>
@@ -751,7 +751,7 @@ constitutive behaviors (elastic, plastic, viscoplastic, etc.).</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity</span></code></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.elastic_model"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity.elastic_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.elasticity"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity.elasticity</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.plastic_surface"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity.plastic_surface</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.yield_stress"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity.yield_stress</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.materials.viscoplasticity.GenericViscoplasticity.viscous_flow"><code class="docutils literal notranslate"><span class="pre">GenericViscoplasticity.viscous_flow</span></code></a></li>

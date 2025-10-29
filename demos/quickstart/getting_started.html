@@ -430,14 +430,12 @@
 </div>
 </div>
 </div>
-<p>We now define the final material behavior of type <code class="docutils literal notranslate"><span class="pre">vonMisesIsotropicHardening</span></code>. We can check that it is a module containing an <code class="docutils literal notranslate"><span class="pre">elastic_model</span></code> submodule and a <code class="docutils literal notranslate"><span class="pre">yield_stress</span></code> subdomule. Each of these submodule holds its own material properties. The elastic submodule also allows to access the material elastic shear modulus for instance, which is 80 GPa here.</p>
+<p>We now define the final material behavior of type <code class="docutils literal notranslate"><span class="pre">vonMisesIsotropicHardening</span></code>. We can check that it is a module containing an <code class="docutils literal notranslate"><span class="pre">elasticity</span></code> submodule and a <code class="docutils literal notranslate"><span class="pre">yield_stress</span></code> subdomule. Each of these submodule holds its own material properties. The elastic submodule also allows to access the material elastic shear modulus for instance, which is 80 GPa here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">material</span> <span class="o">=</span> <span class="n">jm</span><span class="o">.</span><span class="n">vonMisesIsotropicHardening</span><span class="p">(</span>
-    <span class="n">elastic_model</span><span class="o">=</span><span class="n">elasticity</span><span class="p">,</span> <span class="n">yield_stress</span><span class="o">=</span><span class="n">hardening</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">material</span> <span class="o">=</span> <span class="n">jm</span><span class="o">.</span><span class="n">vonMisesIsotropicHardening</span><span class="p">(</span><span class="n">elasticity</span><span class="o">=</span><span class="n">elasticity</span><span class="p">,</span> <span class="n">yield_stress</span><span class="o">=</span><span class="n">hardening</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">material</span><span class="o">.</span><span class="n">elastic_model</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">material</span><span class="o">.</span><span class="n">elasticity</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">material</span><span class="o">.</span><span class="n">yield_stress</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
 
 <span class="n">mu</span> <span class="o">=</span> <span class="n">elasticity</span><span class="o">.</span><span class="n">mu</span>
@@ -447,7 +445,7 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>vonMisesIsotropicHardening(
-  elastic_model=LinearElasticIsotropic(E=f64[], nu=f64[]),
+  elasticity=LinearElasticIsotropic(E=f64[], nu=f64[]),
   yield_stress=VoceHardening(sig0=350.0, sigu=500.0, b=1000.0)
 )
 {&#39;E&#39;: Array(200000., dtype=float64), &#39;nu&#39;: Array(0.25, dtype=float64)}
