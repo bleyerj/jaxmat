@@ -1,18 +1,20 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: md:myst,py,ipynb
+#     default_lexer: ipython3
+#     formats: md:myst,py:percent,ipynb
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.16.1
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.18.1
 #   kernelspec:
 #     display_name: fenicsx-v0.9
 #     language: python
 #     name: python3
 # ---
 
+# %% [markdown]
 # # Identification of a nonlinear isotropic hardening rule
 #
 # In this demo, we use stress/plastic strain data of a steel material to show how to identify a nonlinear isotropic hardening rule with `jaxmat`.
@@ -36,7 +38,7 @@
 #
 # The plot below shows the ground-truth stress–strain curve and the noisy data used for training.
 
-# +
+# %%
 import jax
 
 jax.config.update("jax_platform_name", "cpu")
@@ -77,8 +79,7 @@ plt.legend()
 plt.show()
 
 
-# -
-
+# %% [markdown]
 # ## Defining candidate hardening laws
 #
 # We now define two different models for the isotropic hardening law $\sigma_Y(p)$:
@@ -95,7 +96,8 @@ plt.show()
 #
 # Both models are implemented as `equinox.Module`s, allowing them to be handled as JAX PyTrees and trained with differentiable solvers.
 
-# +
+
+# %%
 class SumExpHardening(eqx.Module):
     sig0: float = eqx.field(converter=jnp.asarray)
     dsigu: jax.Array = eqx.field(converter=jnp.asarray)
@@ -121,8 +123,7 @@ class HardeningICNN(ICNN):
 icnn_hardening = HardeningICNN(0, [N], key)
 
 
-# -
-
+# %% [markdown]
 # ## Defining the loss function
 #
 # The training process minimizes a loss function that measures the mean squared error between the predicted yield stress $\hat{\sigma}_Y(p)$ and the noisy data. To prevent overfitting and promote smoothness, we add an $L^1$ regularization term on the model parameters:
@@ -133,7 +134,8 @@ icnn_hardening = HardeningICNN(0, [N], key)
 #
 # where $M$ is the number of data points, $\gamma$ is a regularization coefficient and $n_{\btheta}$ denotes the total number of parameters in $\btheta$. Both the data loss and the regularization term are written in a fully JAX-compatible manner.
 
-# +
+
+# %%
 def loss(hardening, args):
     epsp, sig = args
     M = len(epsp)
@@ -153,8 +155,7 @@ def total_loss(hardening, args):
     return data_loss + gamma * l1reg(hardening), sig_hat
 
 
-# -
-
+# %% [markdown]
 # ## Training procedure
 #
 # We use the quasi-Newton BFGS solver from the `optimistix` library to minimize the total loss. The BFGS algorithm is particularly well suited for small parameter sets and ensures fast convergence without the need for stochastic optimization.
@@ -165,7 +166,7 @@ def total_loss(hardening, args):
 #
 # Note that $\gamma$ is a hyperparameter which must be tuned by chosen before hand by the user.
 
-# +
+# %%
 gamma = 0.1
 solver = optx.BFGS(
     rtol=1e-6,
@@ -203,8 +204,8 @@ for hardening in [sumexp_hardening, icnn_hardening]:
     plt.title(hardening.__class__.__name__)
     plt.legend()
     plt.show()
-# -
 
+# %% [markdown]
 # ## Results and extrapolation
 #
 # After training, we visualize the predicted hardening curves along with the experimental data. The solid black line shows the ground truth, red crosses the noisy training data,

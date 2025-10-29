@@ -2,12 +2,11 @@
 jupytext:
   cell_metadata_filter: -all
   formats: md:myst,py,ipynb
-  main_language: python
   text_representation:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.16.1
+    jupytext_version: 1.18.1
 kernelspec:
   display_name: fenicsx-v0.9
   language: python
@@ -32,7 +31,7 @@ This demo shows:
 ```
 
 To simplify the exposition, we focus exclusively on a viscoelastic material.
-The reference (“ground truth”) data is produced using a Generalized Maxwell model with 6 branches, with randomly generated viscoelastic properties. 
+The reference (“ground truth”) data is produced using a Generalized Maxwell model with 6 branches, with randomly generated viscoelastic properties.
 
 The training objective is to identify a neural GSM model with a reduced number of internal state variables, denoted $N_\text{var}$, while retaining the correct stress relaxation behavior. of internal state variables. The long-term elastic response is assumed to be known.
 
@@ -92,6 +91,7 @@ We first define the ground truth data from a generalized Maxwell model with `Nma
 
 ```{code-cell} ipython3
 import jax
+
 jax.config.update("jax_platform_name", "cpu")
 
 import equinox as eqx
@@ -112,7 +112,7 @@ key = jax.random.PRNGKey(42)
 key1, key2, key3 = jax.random.split(key, num=3)
 
 tau = jnp.asarray([0.005, 0.1, 0.05, 0.2, 2, 10])
-E1 = jax.random.lognormal(key1, shape=(len(tau),))*10e3
+E1 = jax.random.lognormal(key1, shape=(len(tau),)) * 10e3
 viscous_model = jm.LinearElasticIsotropic(E1, jnp.full_like(E1, fill_value=nu))
 
 material = jm.GeneralizedMaxwell(
@@ -212,13 +212,15 @@ $$
 class ICNNDissipationPotential(ICNN):
     def icnn_potential(self, alpha_dot):
         I1, I2, I3 = jax.vmap(main_invariants)(alpha_dot)
-        return super().__call__(1e3*I2)
-       
+        return super().__call__(1e3 * I2)
+
     def __call__(self, isv_dot):
         alpha_dot = isv_dot.alpha.tensor
         return (
             self.icnn_potential(alpha_dot)
-            - jax.jvp(self.icnn_potential, (jnp.zeros_like(alpha_dot),), (alpha_dot,))[1]
+            - jax.jvp(self.icnn_potential, (jnp.zeros_like(alpha_dot),), (alpha_dot,))[
+                1
+            ]
         )
 ```
 
@@ -255,7 +257,9 @@ At this stage, the predicted stress does not match the target relaxation curve �
 
 ```{code-cell} ipython3
 sig_train = compute_evolution(material, gamma, times)
-sig_noise = SymmetricTensor2(tensor=sig_train.tensor + jax.random.normal(key, shape=sig_train.tensor.shape))
+sig_noise = SymmetricTensor2(
+    tensor=sig_train.tensor + jax.random.normal(key, shape=sig_train.tensor.shape)
+)
 sig_init = compute_evolution(gsm_list[-1], gamma, times)
 
 plt.figure()
@@ -391,11 +395,17 @@ for Nmax in Nmax_list:
     E1_ = jax.random.lognormal(key2, shape=(Nmax,)) * 1e3
     tau_ = jnp.logspace(-2, 1, Nmax)
     viscous_model = jm.LinearElasticIsotropic(E1_, jnp.full_like(E1_, fill_value=nu))
-    maxwell_list.append(jm.GeneralizedMaxwell(elasticity=elasticity, viscous_branches=viscous_model, relaxation_times=tau_))
+    maxwell_list.append(
+        jm.GeneralizedMaxwell(
+            elasticity=elasticity, viscous_branches=viscous_model, relaxation_times=tau_
+        )
+    )
 
 for maxwell, Nmax in zip(maxwell_list, Nmax_list):
 
-    trainable, static = partition_by_node_names(maxwell, ["elasticity", "relaxation_times"])
+    trainable, static = partition_by_node_names(
+        maxwell, ["elasticity", "relaxation_times"]
+    )
 
     sol = optx.minimise(
         loss,

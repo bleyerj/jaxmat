@@ -1,18 +1,20 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: md:myst,py,ipynb
+#     default_lexer: ipython3
+#     formats: md:myst,py:percent,ipynb
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.16.1
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.18.1
 #   kernelspec:
 #     display_name: fenicsx-v0.9
 #     language: python
 #     name: python3
 # ---
 
+# %% [markdown]
 # # Physics-Augmented Neural Networks for data-driven hyperelasticity
 #
 # In this demo, we show how to formulate a *Physics-Augmented Neural Network* (PANN) model to learn the hyperelastic potential of a rubber material directly from experimental data.
@@ -35,7 +37,7 @@
 #
 # We load below the data set and define the corresponding training input and output dataset as well as the PT test dataset.
 
-# +
+# %%
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -101,8 +103,7 @@ test_input = {key: dataset[key][0] for key in labels if key not in training_case
 test_output = {key: dataset[key][1] for key in labels if key not in training_cases}
 
 
-# -
-
+# %% [markdown]
 # ## Theory of PANNs
 #
 # PANNs enforce physical constraints on the free-energy potential learned by the network. In particular, they guarantee:
@@ -150,7 +151,8 @@ test_output = {key: dataset[key][1] for key in labels if key not in training_cas
 #
 # Finally, we use `jax.vmap` to define a batched version of the PK1 stress computation for a given PANN material model.
 
-# +
+
+# %%
 class PANN(ICNN):
     def nn_energy(self, lambC):
         I3 = jnp.prod(lambC)
@@ -177,11 +179,11 @@ class PANN(ICNN):
 
 
 batched_compute_stress = jax.vmap(PANN.pann_PK1_stress, in_axes=(None, 0))
-# -
 
+# %% [markdown]
 # A PANN material with 10 neurons in one hidden layer is defined below and randomly initialized. The figure reports the stress-stretch curve for uniaxial tension obtained with this initialization. As expected, the stress is zero in the reference configuration.
 
-# +
+# %%
 input_dim = 4
 hidden_dims = [10]
 key = jax.random.PRNGKey(42)
@@ -203,12 +205,14 @@ plt.ylabel("Engineering stress $P_1$ [MPa]")
 plt.show()
 
 
-# -
-
+# %% [markdown]
 # ## Training the PANN model
 
+# %% [markdown]
 # We are now ready to set up the training. Here, we simply define the error between the predicted and the stress data and use `optimistix` least-square solvers. First, the total error is defined by mapping the `error` function over the training load cases defined as a PyTree. The `total_error` takes as a first argument the PANN model PyTree `material` while training data are stored in the second `args` argument.
 
+
+# %%
 def total_error(material, args):
     input, output = args
 
@@ -219,9 +223,10 @@ def total_error(material, args):
     return jax.tree.map(error, input, output)
 
 
+# %% [markdown]
 # We use a BFGS solver to solve the least-square problem and we do not throw an error in case we reach the maximum number of steps. We retrieve the final trained PANN model from `sol.value`.
 
-# +
+# %%
 solver = optx.BFGS(
     rtol=1e-6,
     atol=1e-8,
@@ -237,12 +242,13 @@ sol = optx.least_squares(
     max_steps=10000,
 )
 trained_PANN = sol.value
-# -
 
+# %% [markdown]
 # ## Results
 #
 # We plot the resulting predicted stresses for the two training load cases (Simple and Biaxial Tension) and also evaluate the performance on the unseen Plane Tension load case. The PANN architecture succeeds in learning a good representation of the data, while ensuring almost zero out-of-plane stress in general. The prediction is still very good even on the unseen Plane Tension case.
 
+# %%
 m = len(labels)
 plt.figure(figsize=(6, 5 * m))
 for i, label in enumerate(labels):
@@ -282,6 +288,7 @@ for i, label in enumerate(labels):
 plt.tight_layout()
 plt.show()
 
+# %% [markdown]
 # ## References
 #
 # ```{bibliography}

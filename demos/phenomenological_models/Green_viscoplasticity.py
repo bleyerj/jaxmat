@@ -1,18 +1,20 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: md:myst,py,ipynb
+#     default_lexer: ipython3
+#     formats: md:myst,py:percent,ipynb
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.16.1
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.18.1
 #   kernelspec:
 #     display_name: fenicsx-v0.9
 #     language: python
 #     name: python3
 # ---
 
+# %% [markdown]
 # # Norton viscoplastic model with a Green yield surface
 #
 # In this example, we implement and solve a rate-dependent viscoplastic constitutive model that combines a Green-type yield surface with a Norton viscoplastic flow rule.
@@ -54,7 +56,7 @@
 #
 # where $\langle \cdot \rangle_+ = \max\{\cdot, 0\}$ is the positive part, $K$ controls the viscosity and $m$ is the Norton exponent.
 
-# +
+# %%
 import jax
 import jax.numpy as jnp
 
@@ -69,8 +71,7 @@ import optimistix as optx
 import matplotlib.pyplot as plt
 
 
-# -
-
+# %% [markdown]
 # ## Model implementation
 #
 # The final viscoplastic behavior is represented in `jaxmat` as an `equinox.Module` consisting of several other submodules corresponding to:
@@ -87,16 +88,18 @@ import matplotlib.pyplot as plt
 # [^1]: Since we assume no hardening, we do not need to declare the cumulated plastic strain $p$.
 
 
+# %%
 class InternalState(jaxmat.state.AbstractState):
     epsvp: SymmetricTensor2 = eqx.field(default_factory=lambda: SymmetricTensor2())
 
 
+# %% [markdown]
 # ### Green yield surface
 #
 # We now first define the Green plastic yield surface as the `GreenYieldSurface` module. It takes a single float parameter `A` describing the ellipsoid eccentricity. The yield surface expression is defined in the `__call__` dunder method. A `normal` method is then defined from the yield surface gradient to compute the (non-unitary) normal vector. Note that we define a `safe_zero` decorator to avoid NaNs when the stress tensor is zero, which may happen upon initialization for instance. To avoid NaNs in `jnp.where` sections in adjoint computations, we use the [double `where` trick](https://docs.jax.dev/en/latest/faq.html#gradients-contain-nan-where-using-where).
 
 
-# +
+# %%
 def safe_zero(method):
     def wrapper(self, x):
         x_norm = jnp.linalg.norm(x)
@@ -119,13 +122,13 @@ class GreenYieldSurface(eqx.Module):
         return jax.jacfwd(self.__call__)(sig)
 
 
-# -
-
+# %% [markdown]
 # ### Viscoplastic flow
 #
 # Next, the Norton flow is defined similarly as a module with two material parameters `K` and `m`. It takes as input to `__call__` the overstress.
 
 
+# %%
 class NortonFlow(eqx.Module):
     K: float = eqx.field(converter=jnp.asarray)
     m: float = eqx.field(converter=jnp.asarray)
@@ -134,6 +137,7 @@ class NortonFlow(eqx.Module):
         return jnp.maximum(overstress / self.K, 0) ** self.m
 
 
+# %% [markdown]
 # ### Implicit integration
 #
 # Finally, we can now define the `GreenViscoPlasticity` behavior. The latter is a subclass of `SmallStrainBehavior` and requires an elastic model, a yield stress (a float here), a plastic yield surface (of Green type here) and a viscoplastic flow (of Norton type here), in addition to its internal state.
@@ -155,6 +159,7 @@ class NortonFlow(eqx.Module):
 # The full implementation reads:
 
 
+# %%
 class GreenViscoPlasticity(jm.SmallStrainBehavior):
     elasticity: jm.LinearElasticIsotropic
     yield_stress: float = eqx.field(converter=jnp.asarray)
@@ -199,6 +204,7 @@ class GreenViscoPlasticity(jm.SmallStrainBehavior):
         return sig, new_state
 
 
+# %% [markdown]
 # Note that the `residual` function returns the above residual as well as the new viscoplastic strain as an auxiliary argument. We then solve an `optimistix` root-finding problem with a default Newton solver (`self.solver`). In `optimistix`, an adjoint method is also defined in order to compute gradients through the root-finding solver. By default, we use an implicit ajoint solver which back-propagates gradient using the Implicit Function Theorem, [see the `optimistix` docs section](https://docs.kidger.site/optimistix/api/adjoints/#optimistix.ImplicitAdjoint) for more details.
 #
 # Finally, after solving, we recover the final stress and viscoplastic strain and update the state and internal state variables accordingly.
@@ -207,6 +213,7 @@ class GreenViscoPlasticity(jm.SmallStrainBehavior):
 #
 # We now instantiate the Green viscoplastic model from its different components
 
+# %%
 elasticity = jm.LinearElasticIsotropic(E=210e3, nu=0.3)
 sig0 = 300.0
 green_ys = GreenYieldSurface(A=0.6)
@@ -219,10 +226,11 @@ material = GreenViscoPlasticity(
 )
 
 
+# %% [markdown]
 # Below, we evaluate the Green yield surface and its normal in the $(p, q)$ space of hydrostatic and deviatoric stresses.
 
 
-# + tags=["hide-input"]
+# %% tags=["hide-input"]
 def compute_pq(sig):
     p = jnp.trace(sig) / 3
     s = dev(sig)
@@ -264,8 +272,8 @@ plt.xlim(-2.0, 2.0)
 plt.ylim(0.0, 1.2)
 plt.gca().set_aspect("equal")
 plt.show()
-# -
 
+# %% [markdown]
 # ## Time-dependent load-cases
 #
 # We now consider a set of time-varying load cases.
@@ -274,7 +282,7 @@ plt.show()
 #
 # We start with an initial hydrostatic stress state $\bsig_{n=0} = - p_0\bI$ for different values of the initial pressure $p_0$. All 8 values for the pressure will form a batch of load cases which will be evaluated simultaneously. We thus start with a default initial state with `material.init_state` with a batch dimension `Nbatch=9`. Then, we modify, in the `state` PyTree, the `stress` field with the imposed initial hydrostatic stresses.
 
-# +
+# %%
 Nbatch = 9
 press_vals = jnp.linspace(-sig0, sig0, Nbatch)
 state = material.init_state(Nbatch)
@@ -287,8 +295,8 @@ def set_initial_press(state, press):
 
 initial_state = eqx.filter_vmap(set_initial_press)(state, press_vals)
 print(initial_state.stress[:, 0, 0])
-# -
 
+# %% [markdown]
 # From this initial state, we consider a time-varying imposed strain of a purely deviatoric form $\beps(t) = \epsilon(t)\diag(1,-1/2,-1/2)$ where the loading is first applied linearly with time at a strain rate $\dot\epsilon$ and is then held fixed once reaching the final strain $\epsilon_\text{max} = 2.10^{-3}$, i.e. $\epsilon(t) = \min\{\dot\epsilon t ; \epsilon_\text{max}\}$.
 #
 # The strain is imposed via the `ImposedLoading` class and the `global_solve` function[^2]. We then recover the stress state in the $(p, q)$ space.
@@ -297,6 +305,7 @@ print(initial_state.stress[:, 0, 0])
 #
 # [^2]: Note that, here, it would also have been possible to impose the total strain `Eps` since the load-case is purely strain-driven.
 
+# %%
 for eps_dot in [1e-4, 1e-2, 1e0, 1e2]:
     eps_max = 2e-3
     Nsteps = 100

@@ -12,12 +12,6 @@ N = len(lamb)
 
 F = jnp.broadcast_to(F, (N, 3, 3))
 F = F.at[:, 0, 0].set(lamb)
-# F = F.at[:, 1, 1].set(1 / jnp.sqrt(lamb))
-# F = F.at[:, 2, 2].set(1 / jnp.sqrt(lamb))
-
-# F = F.at[:, 1, 1].set(1)
-# F = F.at[:, 2, 2].set(1 / lamb)
-
 F = F.at[:, 1, 1].set(lamb)
 F = F.at[:, 2, 2].set(1 / lamb**2)
 

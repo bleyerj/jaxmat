@@ -1,18 +1,20 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: md:myst,py,ipynb
+#     default_lexer: ipython3
+#     formats: md:myst,py:percent,ipynb
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.16.1
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.18.1
 #   kernelspec:
 #     display_name: fenicsx-v0.9
 #     language: python
 #     name: python3
 # ---
 
+# %% [markdown]
 # # Identification of a nonlinear hardening model from cyclic data
 #
 # In this demo, we use shear stress–strain data to identify a mixed nonlinear isotropic and kinematic hardening model with `jaxmat`.
@@ -28,7 +30,7 @@
 # * How to split the material model between a trainable and a frozen part
 # ```
 
-# +
+# %%
 import matplotlib.pyplot as plt
 import numpy as np
 import jax
@@ -43,8 +45,8 @@ from jaxmat.tensors import SymmetricTensor2
 from jaxmat.utils import default_value, partition_by_node_names, print_eqx_fields
 
 key = jax.random.PRNGKey(15071988)
-# -
 
+# %% [markdown]
 # ## Defining a mixed hardening elastoplastic model
 #
 # ### General formulation
@@ -119,7 +121,7 @@ key = jax.random.PRNGKey(15071988)
 #
 # ### Implementation
 
-# +
+# %%
 elasticity = jm.LinearElasticIsotropic(E=jnp.float64(200.0e3), nu=jnp.float64(0.25))
 
 
@@ -157,8 +159,8 @@ material = jm.GeneralHardening(
     plastic_surface=plastic_surface,
     combined_hardening=hardening,
 )
-# -
 
+# %% [markdown]
 # ## Reference cyclic shear strain data
 #
 # We begin by loading the reference cyclic shear strain data representing repeated loading–unloading cycles of increasing strain amplitude.
@@ -173,7 +175,7 @@ material = jm.GeneralHardening(
 #
 # The following figure shows the clean and noisy cyclic data used for training.
 
-# +
+# %%
 data = np.loadtxt("mixed_hardening_data.csv", delimiter=",", skiprows=1)
 gamma_train = data[:, 0]
 tau_train = data[:, 1]
@@ -206,11 +208,11 @@ plt.ylim(-500.0, 500.0)
 plt.show()
 
 
-# -
-
+# %% [markdown]
 # For a given material model, we define the function `compute_evolution` allowing to compute the cyclic stress response as a function of a given shear strain time series. Starting from a initial state, we use `jax.lax.scan` to replace Python `for` loops and output the computed shear stress in the $x,y$ direction.
 
 
+# %%
 @eqx.filter_jit
 def compute_evolution(material, gamma_list, dt=0.0):
     # Initial material state
@@ -237,13 +239,14 @@ def compute_evolution(material, gamma_list, dt=0.0):
     return tau
 
 
+# %% [markdown]
 # ## Initial model
 #
 # We simulate the material response to the prescribed cyclic shear strain history by repeatedly integrating the constitutive equations. The resulting stress signal is compared to the target data.
 #
 # The plot below shows the initial model response (before calibration) against the noisy reference data. At this stage, the predicted hysteresis loops do not match with that observed in the target data.
 
-# +
+# %%
 tau = compute_evolution(material, gamma_train)
 
 plt.figure()
@@ -265,8 +268,7 @@ plt.legend(ncol=2)
 plt.show()
 
 
-# -
-
+# %% [markdown]
 # ## Defining and minimizing the loss function
 #
 # The identification problem is formulated as the minimization of a loss function measuring the discrepancy between the predicted and observed shear stresses over the full loading history. We use the mean-squared error (MSE) as a standard choice:
@@ -287,7 +289,7 @@ plt.show()
 # The overall optimizer is built using `optax.chain`, where each transformation acts sequentially on the gradient:
 
 
-# +
+# %%
 @eqx.filter_jit
 def loss(trainable, args):
     static, tau_data = args
@@ -314,8 +316,8 @@ solver = optx.OptaxMinimiser(
     atol=1e-6,
     # verbose=frozenset({"loss", "step_size"}),
 )
-# -
 
+# %% [markdown]
 # Once the optimizer is defined, we partition the material model into `trainable` and `static` components using the `jaxmat.utils.partition_by_node_names` function. The latter allows to split an `equinox` module in two sets by providing a list of field attribute names.  Here, the whole elastic model is fixed as well as the `sig0` field of the Voce isotropic hardening as the initial yield stress is already stored as a separate attribute. The remaining parameters stored in `trainable` are then optimized when training against the cyclic stress data.
 #
 # During the minimization, the constitutive model is evaluated sequentially at each loading increment to compute the predicted stresses, and the loss is differentiated with respect to the trainable parameters. The keyword argument `options={"jac": "bwd"}` specifies that backward-mode automatic differentiation (reverse-mode AD) is used to compute the Jacobian–vector products required by the optimizer.
@@ -323,7 +325,7 @@ solver = optx.OptaxMinimiser(
 #
 # After training, the final trained model is reconstructed by combining the trained part with the static part using `eqx.combine`.
 
-# +
+# %%
 trainable, static = partition_by_node_names(
     material, ["elasticity", "combined_hardening.isotropic.sig0"]
 )
@@ -346,12 +348,13 @@ if static is None:
     trained_material = trained_params
 else:
     trained_material = eqx.combine(trained_params, static)
-# -
 
+# %% [markdown]
 # ## Results
 #
 # The next figure compares the predicted and experimental stress–strain curves. The trained model captures both the isotropic hardening (loop expansion) and the kinematic hardening (loop translation) effects.
 
+# %%
 plt.figure()
 plt.plot(gamma_train, tau_train, "-C3", alpha=0.75, label="Ground truth")
 plt.plot(gamma_train, tau_hat, "-", color="royalblue", alpha=0.75, label="Prediction")
@@ -362,12 +365,15 @@ plt.ylim(-600.0, 600.0)
 plt.legend(ncol=2)
 plt.show()
 
+# %% [markdown]
 # After convergence, we print the calibrated model parameters to verify their physical consistency. First, we can observe that the Young modulus, Poisson ratio and initial Voce yield stress remained the same since they have been considered frozen parameters. Second, we can see that the hardening rate parameter $b$ and kinematic hardening modulus $H$ have been correctly identified. Regarding the yield stress, the final yield stress is here `sig0+sigu` which is approximately $595 \text{ MPa}$, very close to the ground truth value of $600 \text{ MPa}$. There is a small discrepancy for the initial yield stress $\sigma_0$ which has been identified to be $172 \text{ MPa}$ instead of $200 \text{ MPa}$, probably due to the amount of noise and the lack of enough data in the initial yielding regime.
 
+# %%
 print_eqx_fields(
     trained_material, fields=["elasticity", "yield_stress", "combined_hardening"]
 )
 
+# %% [markdown]
 # Overall, this workflow demonstrates how `jaxmat`, in combination with `equinox`, `optax`, and `optimistix`, provides a fully differentiable framework for constitutive parameter identification from cyclic mechanical tests.
 #
 # Thanks to automatic differentiation (AD), all sensitivities — including those passing through the nonlinear implicit return-mapping solver at each time step — are computed exactly and efficiently. This allows gradients to propagate seamlessly through both the material state updates and the time integration loop, without any manual derivation of tangent operators.

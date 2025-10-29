@@ -2,18 +2,20 @@
 # jupyter:
 #   jupytext:
 #     cell_metadata_filter: -all
-#     formats: md:myst,py,ipynb
+#     default_lexer: ipython3
+#     formats: md:myst,py:percent,ipynb
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.16.1
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.18.1
 #   kernelspec:
 #     display_name: fenicsx-v0.9
 #     language: python
 #     name: python3
 # ---
 
+# %% [markdown]
 # # Neural Generalized Standard Material for viscoelasticity
 #
 # In this demo, we implement a Generalized Standard Material (GSM) model of viscoelasticity, in which part of the model is represented by a neural network. This approach follows the general idea proposed by {cite:p}`flaschel2025convex`, where neural convex potentials are embedded in thermodynamically consistent constitutive models.
@@ -84,11 +86,12 @@
 # $$
 # ```
 
+# %% [markdown]
 # ## Ground-truth data generation
 #
 # We first define the ground truth data from a generalized Maxwell model with `Nmax=6` branches. The viscous elements are generated so that their relaxation times are spaced within the interval $0.005\text{ s}$--$10\text{ s}$ with random stiffness values. The synthetic stress–strain data obtained from this model will serve as our training target.
 
-# +
+# %%
 import jax
 
 jax.config.update("jax_platform_name", "cpu")
@@ -119,20 +122,23 @@ material = jm.GeneralizedMaxwell(
     viscous_branches=viscous_model,
     relaxation_times=tau,
 )
-# -
 
+# %% [markdown]
 # To train the model, we consider a stress relaxation (recovery) test under constant shear strain: $\epsilon_{xy}=\gamma_r/2$ with $\gamma_r=10^{-3}$ applied over a time interval  $10^{-3}--10^2\text{ s}$. The time discretization is logarithmic to capture both the fast initial relaxation and the slower long-term response.
 
+# %%
 Nincr = 50
 times = jnp.logspace(-3, 2, Nincr + 1)
 gamma_r = 1e-3
 gamma = jnp.full_like(jnp.diff(times), fill_value=gamma_r)
 
 
+# %% [markdown]
 # We define a general-purpose function `compute_evolution` that integrates the constitutive equations over time for a given strain path.
 # Starting from the initial state, the model is updated incrementally at each time step using the internal solver provided by `jaxmat` and returns the full stress history. By using `jax.lax.scan`, the loop over time increments is efficiently compiled by JAX, ensuring high performance and differentiability.
 
 
+# %%
 def compute_evolution(material, gamma_list, times):
     # Initial material state
     state0 = material.init_state()
@@ -157,6 +163,7 @@ def compute_evolution(material, gamma_list, times):
     return sig
 
 
+# %% [markdown]
 # ## Defining the neural GSM
 #
 # The GSM model is composed of three parts:
@@ -168,6 +175,7 @@ def compute_evolution(material, gamma_list, times):
 # We first define the internal state PyTree as a batch of symmetric strain tensors $\balpha_i$ representing the $N_\text{var}$ viscous strains in each Maxwell-like branch.
 
 
+# %%
 class InternalState(AbstractState):
     alpha: SymmetricTensor2 = eqx.field(init=False)
     """Viscoelastic strains."""
@@ -178,9 +186,11 @@ class InternalState(AbstractState):
         self.alpha = make_batched(SymmetricTensor2(), self.Nvar)
 
 
+# %% [markdown]
 # The free energy is implemented as a sum of quadratic elastic contributions in the form of an `equinox.Module`. The free energy `__call__` function takes as arguments the total strain $\beps$ (`eps`) and the PyTree (`isv`) of internal state variables $(\balpha_i)$.
 
 
+# %%
 class FreeEnergy(eqx.Module):
     elasticity: jm.AbstractLinearElastic
     viscous_model: list[jm.AbstractLinearElastic]
@@ -198,6 +208,7 @@ class FreeEnergy(eqx.Module):
         return psi_el + psi_v
 
 
+# %% [markdown]
 # The dissipation potential is represented by an Input-Convex Neural Network (ICNN) which guarantees convexity through positive weights and nonnegative increasing activation functions.
 #
 # Inspired by the Physics-Augmented Neural networks (PANN) approach for elasticity, we choose here as inputs of the network the second invariants $I_2(\balpha_i)$ of the state variables. We also add a normalization term so that the thermodynamic force is zero for $\balpha_i=0$, modifying the potential as follows:
@@ -207,6 +218,7 @@ class FreeEnergy(eqx.Module):
 # $$
 
 
+# %%
 class ICNNDissipationPotential(ICNN):
     def icnn_potential(self, alpha_dot):
         I1, I2, I3 = jax.vmap(main_invariants)(alpha_dot)
@@ -222,10 +234,12 @@ class ICNNDissipationPotential(ICNN):
         )
 
 
+# %% [markdown]
 # We build a list of candidate neural GSM models for  $N_\text{var}=1,2,3$. Each model shares the same known long-term stiffness, while the viscous stiffness values and neural potential parameters are initialized randomly. We select here only 8 neurons in a single hidden layer.
 #
 # The idea is to assess how the complexity of the internal structure (i.e., the number of internal variables) affects the ability of the neural GSM to reproduce the reference relaxation behavior.
 
+# %%
 Nvar_list = [1, 2, 3]
 gsm_list = []
 for Nvar in Nvar_list:
@@ -243,6 +257,7 @@ for Nvar in Nvar_list:
         )
     )
 
+# %% [markdown]
 # ## Training procedure
 #
 # ### Initialization
@@ -251,7 +266,7 @@ for Nvar in Nvar_list:
 #
 # At this stage, the predicted stress does not match the target relaxation curve — the neural model’s dissipation potential is untrained and cannot yet capture the correct time-dependent decay.
 
-# +
+# %%
 sig_train = compute_evolution(material, gamma, times)
 sig_noise = SymmetricTensor2(
     tensor=sig_train.tensor + jax.random.normal(key, shape=sig_train.tensor.shape)
@@ -274,8 +289,7 @@ plt.legend()
 plt.show()
 
 
-# -
-
+# %% [markdown]
 # ### Loss function
 #
 # The training process aims to minimize the discrepancy between the predicted and target stress histories.
@@ -289,6 +303,7 @@ plt.show()
 # Gradients are automatically computed by JAX through the full time integration and solver iterations.
 
 
+# %%
 @eqx.filter_jit
 def loss(trainable, args):
     sig_data, static = args
@@ -304,6 +319,7 @@ def loss(trainable, args):
     )
 
 
+# %% [markdown]
 # ### Optimization strategy
 #
 # We employ an `optax` optimizer based on Adam with parameter-block RMS normalization, which rescales gradients according to their variance across model parameters.
@@ -311,7 +327,7 @@ def loss(trainable, args):
 #
 # The optimization is wrapped in an `optimistix.OptaxMinimiser`, which provides a clean interface for running the differentiable solver loop.
 
-# +
+# %%
 learning_rate = 5e-2
 optimizer = optax.chain(
     optax.scale_by_adam(),
@@ -326,8 +342,8 @@ solver = optx.OptaxMinimiser(
     atol=1e-6,
     # verbose=frozenset({"loss", "step_size"}),
 )
-# -
 
+# %% [markdown]
 # ### Results
 #
 # Each neural GSM is trained independently against the same noisy reference data.
@@ -344,6 +360,7 @@ solver = optx.OptaxMinimiser(
 #
 # This demonstrates that the neural GSM can efficiently compress the complex 6-branch Maxwell response into a reduced number of internal variables, while maintaining full thermodynamic consistency.
 
+# %%
 for gsm, Nvar in zip(gsm_list, Nvar_list):
 
     trainable, static = partition_by_node_names(gsm, ["free_energy.elasticity"])
@@ -380,11 +397,12 @@ for gsm, Nvar in zip(gsm_list, Nvar_list):
     plt.legend()
     plt.show()
 
+# %% [markdown]
 # ## Comparison with a reduced generalized Maxwell model
 #
 # Finally, we can train in a very similar fashion a generalized Maxwell model with a reduced number of branches. Below, we show how to do it by fixing the values for the relaxation times and learning only the viscous branches stiffness values.
 
-# +
+# %%
 maxwell_list = []
 Nmax_list = [2, 4, 8]
 for Nmax in Nmax_list:
@@ -434,8 +452,8 @@ for maxwell, Nmax in zip(maxwell_list, Nmax_list):
     plt.ylabel(r"Shear stress $\sigma_{xy}$ [MPa]")
     plt.legend()
     plt.show()
-# -
 
+# %% [markdown]
 # ## References
 #
 # ```{bibliography}

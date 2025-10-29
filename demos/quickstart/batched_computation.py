@@ -1,18 +1,20 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: md:myst,py,ipynb
+#     default_lexer: ipython3
+#     formats: md:myst,py:percent,ipynb
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.16.1
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.18.1
 #   kernelspec:
 #     display_name: fenicsx-v0.9
 #     language: python
 #     name: python3
 # ---
 
+# %% [markdown]
 # # Batching across material points
 #
 # In this section, we extend the previous setup to evaluate the constitutive law for a set of $N$ material points, which we will refer to as a *batch* of size $N$. To achieve this efficiently, we leverage `jax`'s automatic vectorization via the `jax.vmap` function.
@@ -33,7 +35,7 @@
 #
 # We first represent $\boldsymbol{\varepsilon}$ as a batched `SymmetricTensor2` with shape `(N, 3, 3)`. By convention, the batch dimension is always the first axis.
 
-# +
+# %%
 import matplotlib.pyplot as plt
 import jax
 
@@ -52,11 +54,11 @@ eps = eps.at[:, 0, 0].set(eps_ * jnp.cos(theta))
 eps = eps.at[:, 1, 1].set(eps_ * jnp.sin(theta))
 eps = eps.at[:, 2, 2].set(-eps[:, 0, 0] - eps[:, 1, 1])
 eps = SymmetricTensor2(tensor=eps)
-# -
 
+# %% [markdown]
 # Next, we define an elastoplastic material based on `GeneralIsotropicHardening`, which allows us to consider different yield surfaces. Here, we choose a Hosford surface and will vary its shape parameter $a$. The yield stress is nearly constant to mimic perfect plasticity.
 
-# +
+# %%
 sig0 = 300.0
 
 
@@ -73,19 +75,23 @@ material = jm.GeneralIsotropicHardening(
     yield_stress=YieldStress(sig0=sig0),
     plastic_surface=jm.Hosford(),
 )
-# -
 
+# %% [markdown]
 # We then initialize the state for all $N$ points:
 
+# %%
 state = material.init_state(Nbatch=N)
 
+# %% [markdown]
 # To evaluate the constitutive behavior over the entire batch, we vectorize the constitutive update using the `jax.vmap` transform. The method signature is `(material, strain, state, dt)`, so `in_axes=(None, 0, 0, None)` specifies that only the first axes of `strain` and `state` are vectorized, while `material` and the time step `dt` are shared across the batch.
 
+# %%
 batched_constitutive_update = jax.vmap(
     jm.GeneralIsotropicHardening.constitutive_update, in_axes=(None, 0, 0, None)
 )
 
 
+# %% [markdown]
 # ```{attention}
 # We vectorize the **unbound class method** `GeneralIsotropicHardening.constitutive_update` rather than the bound method `material.constitutive_update`. This approach is more general, allowing different instances of the same material to be used without redefining the batched constitutive update.
 # ```
@@ -93,7 +99,7 @@ batched_constitutive_update = jax.vmap(
 # Next, we iterate over different values of the Hosford parameter $a$. Using equinox.tree_at, we update the material PyTree to define a new material instance, then evaluate the batched constitutive update for the batch of strains and states. The resulting batched stress tensors are then plotted on the deviatoric $\pi$-plane.
 
 
-# + tags=["hide-input"]
+# %% tags=["hide-input"]
 def scatter_pi_plane(stress, marker="o", **kwargs):
     from jaxmat.tensors import eigenvalues
 
@@ -110,8 +116,7 @@ def scatter_pi_plane(stress, marker="o", **kwargs):
     plt.gca().set_aspect("equal")
 
 
-# -
-
+# %%
 plt.figure(figsize=(6, 6))
 dt = 0.0
 for i, a in enumerate([2.0, 6.0, 10.0]):

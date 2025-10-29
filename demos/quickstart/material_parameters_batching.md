@@ -5,7 +5,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.16.1
+    jupytext_version: 1.18.1
 kernelspec:
   display_name: fenicsx-v0.9
   language: python
@@ -42,9 +42,7 @@ class VoceHardening(eqx.Module):
 elasticity = jm.LinearElasticIsotropic(E=200e3, nu=0.25)
 hardening = VoceHardening(sig0=350.0, sigu=500.0, b=1e3)
 
-material = jm.vonMisesIsotropicHardening(
-    elasticity=elasticity, yield_stress=hardening
-)
+material = jm.vonMisesIsotropicHardening(elasticity=elasticity, yield_stress=hardening)
 
 print("A single material instance:", material)
 ```
