@@ -116,7 +116,7 @@ class InternalState(AbstractState):
 The `MultiSurfacePlasticity` class defines the main constitutive behavior.
 It extends `SmallStrainBehavior` and is defined by several different fields: an elastic model, a list of yield surfaces, and a list of their corresponding yield stresses.
 
-During initialization, the __post_init__ method checks that the number of yield surfaces matches the number of yield stresses, then sets the internal state (InternalState) with the correct number of plastic multipliers.
+During initialization, the __post_init__ method checks that the number of yield surfaces matches the number of yield stresses. We then implement the `make_internal_state` method to create the internal state (`InternalState`) with the correct number of plastic multipliers.
 This ensures consistency and avoids manual setup when extending the model to more surfaces.
 
 The `constitutive_update` method then performs an implicit return-mapping procedure using `optimistix.root_find`. The residuals correspond to the plasticity complementarity conditions of each surface, enforced using Fischer-Burmeister functions, and the incremental generalized plastic flow rules which leverage the normals of each surface. Note that the final residual, called `res`, is a PyTree as a nested list/tuple and does not need to be flattened. All residuals are then solved together within a single implicit solve.
@@ -129,12 +129,13 @@ class MultiSurfacePlasticity(SmallStrainBehavior):
     yield_stresses: list[eqx.Module]
     plastic_surfaces: list[AbstractPlasticSurface]
     n_surf: int = eqx.field(static=True, default=1)
-    internal: AbstractState = eqx.field(init=False)
 
     def __post_init__(self):
         assert len(self.yield_stresses) == len(self.plastic_surfaces)
         self.n_surf = len(self.plastic_surfaces)
-        self.internal = InternalState(n_surf=self.n_surf)
+        
+    def make_internal_state(self):
+        return InternalState(n_surf=self.n_surf)
 
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)

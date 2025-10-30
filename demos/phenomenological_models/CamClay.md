@@ -157,7 +157,7 @@ class ModifiedCamClay(jm.SmallStrainBehavior):
     elasticity: jm.LinearElasticIsotropic
     plastic_surface: CamClaySurface
     hardening: Hardening
-    internal: InternalState = eqx.field(default_factory=InternalState, init=False)
+    internal_type = InternalState
 
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)

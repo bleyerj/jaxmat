@@ -87,7 +87,6 @@ import matplotlib.pyplot as plt
 #
 # [^1]: Since we assume no hardening, we do not need to declare the cumulated plastic strain $p$.
 
-
 # %%
 class InternalState(jaxmat.state.AbstractState):
     epsvp: SymmetricTensor2 = eqx.field(default_factory=lambda: SymmetricTensor2())
@@ -97,7 +96,6 @@ class InternalState(jaxmat.state.AbstractState):
 # ### Green yield surface
 #
 # We now first define the Green plastic yield surface as the `GreenYieldSurface` module. It takes a single float parameter `A` describing the ellipsoid eccentricity. The yield surface expression is defined in the `__call__` dunder method. A `normal` method is then defined from the yield surface gradient to compute the (non-unitary) normal vector. Note that we define a `safe_zero` decorator to avoid NaNs when the stress tensor is zero, which may happen upon initialization for instance. To avoid NaNs in `jnp.where` sections in adjoint computations, we use the [double `where` trick](https://docs.jax.dev/en/latest/faq.html#gradients-contain-nan-where-using-where).
-
 
 # %%
 def safe_zero(method):
@@ -126,7 +124,6 @@ class GreenYieldSurface(eqx.Module):
 # ### Viscoplastic flow
 #
 # Next, the Norton flow is defined similarly as a module with two material parameters `K` and `m`. It takes as input to `__call__` the overstress.
-
 
 # %%
 class NortonFlow(eqx.Module):
@@ -158,14 +155,13 @@ class NortonFlow(eqx.Module):
 #
 # The full implementation reads:
 
-
 # %%
 class GreenViscoPlasticity(jm.SmallStrainBehavior):
     elasticity: jm.LinearElasticIsotropic
     yield_stress: float = eqx.field(converter=jnp.asarray)
     plastic_surface: GreenYieldSurface
     viscoplastic_flow: NortonFlow
-    internal: InternalState = eqx.field(default_factory=InternalState, init=False)
+    internal_type = InternalState
 
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)
@@ -228,7 +224,6 @@ material = GreenViscoPlasticity(
 
 # %% [markdown]
 # Below, we evaluate the Green yield surface and its normal in the $(p, q)$ space of hydrostatic and deviatoric stresses.
-
 
 # %% tags=["hide-input"]
 def compute_pq(sig):

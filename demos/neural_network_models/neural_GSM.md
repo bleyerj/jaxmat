@@ -1,7 +1,7 @@
 ---
 jupytext:
   cell_metadata_filter: -all
-  formats: md:myst,py,ipynb
+  formats: md:myst,py:percent,ipynb
   text_representation:
     extension: .md
     format_name: myst
@@ -226,6 +226,10 @@ class ICNNDissipationPotential(ICNN):
 
 We build a list of candidate neural GSM models for  $N_\text{var}=1,2,3$. Each model shares the same known long-term stiffness, while the viscous stiffness values and neural potential parameters are initialized randomly. We select here only 8 neurons in a single hidden layer.
 
+```{important}
+Since the structure of internal state variables is not known in advance, `jaxmat.materials.GeneralizedStandardMaterial` is an abstract class which must implement a concrete `make_internal_state` method.
+```
+
 The idea is to assess how the complexity of the internal structure (i.e., the number of internal variables) affects the ability of the neural GSM to reproduce the reference relaxation behavior.
 
 ```{code-cell} ipython3
@@ -237,12 +241,15 @@ for Nvar in Nvar_list:
     E1_ = jax.random.lognormal(key2, shape=(Nvar,)) * 1e3
     viscous_model = jm.LinearElasticIsotropic(E1_, jnp.full_like(E1_, fill_value=nu))
     free_energy = FreeEnergy(elasticity=elasticity, viscous_model=viscous_model)
-    internal_state = InternalState(Nvar=Nvar)
+
+    class GSM(jm.GeneralizedStandardMaterial):
+        def make_internal_state(self):
+            return InternalState(Nvar=Nvar)
+
     gsm_list.append(
-        jm.GeneralizedStandardMaterial(
+        GSM(
             free_energy=free_energy,
             dissipation_potential=icnn_dissipation_potential,
-            internal=internal_state,
         )
     )
 ```

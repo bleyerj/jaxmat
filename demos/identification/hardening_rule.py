@@ -96,7 +96,6 @@ plt.show()
 #
 # Both models are implemented as `equinox.Module`s, allowing them to be handled as JAX PyTrees and trained with differentiable solvers.
 
-
 # %%
 class SumExpHardening(eqx.Module):
     sig0: float = eqx.field(converter=jnp.asarray)
@@ -133,7 +132,6 @@ icnn_hardening = HardeningICNN(0, [N], key)
 # $$
 #
 # where $M$ is the number of data points, $\gamma$ is a regularization coefficient and $n_{\btheta}$ denotes the total number of parameters in $\btheta$. Both the data loss and the regularization term are written in a fully JAX-compatible manner.
-
 
 # %%
 def loss(hardening, args):

@@ -211,7 +211,6 @@ plt.show()
 # %% [markdown]
 # For a given material model, we define the function `compute_evolution` allowing to compute the cyclic stress response as a function of a given shear strain time series. Starting from a initial state, we use `jax.lax.scan` to replace Python `for` loops and output the computed shear stress in the $x,y$ direction.
 
-
 # %%
 @eqx.filter_jit
 def compute_evolution(material, gamma_list, dt=0.0):
@@ -287,7 +286,6 @@ plt.show()
 # Because the model involves variables with very different physical units (e.g. stresses in MPa, strains of order $10^{-3}$), we include a parameter-block RMS scaling (`optax.scale_by_param_block_rms`) step. This operation automatically normalizes gradient magnitudes across parameter groups, effectively preconditioning the optimization. It enables stable training while keeping all parameters expressed in interpretable physical units.
 #
 # The overall optimizer is built using `optax.chain`, where each transformation acts sequentially on the gradient:
-
 
 # %%
 @eqx.filter_jit

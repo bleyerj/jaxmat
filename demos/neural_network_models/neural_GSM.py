@@ -137,7 +137,6 @@ gamma = jnp.full_like(jnp.diff(times), fill_value=gamma_r)
 # We define a general-purpose function `compute_evolution` that integrates the constitutive equations over time for a given strain path.
 # Starting from the initial state, the model is updated incrementally at each time step using the internal solver provided by `jaxmat` and returns the full stress history. By using `jax.lax.scan`, the loop over time increments is efficiently compiled by JAX, ensuring high performance and differentiability.
 
-
 # %%
 def compute_evolution(material, gamma_list, times):
     # Initial material state
@@ -174,7 +173,6 @@ def compute_evolution(material, gamma_list, times):
 #
 # We first define the internal state PyTree as a batch of symmetric strain tensors $\balpha_i$ representing the $N_\text{var}$ viscous strains in each Maxwell-like branch.
 
-
 # %%
 class InternalState(AbstractState):
     alpha: SymmetricTensor2 = eqx.field(init=False)
@@ -188,7 +186,6 @@ class InternalState(AbstractState):
 
 # %% [markdown]
 # The free energy is implemented as a sum of quadratic elastic contributions in the form of an `equinox.Module`. The free energy `__call__` function takes as arguments the total strain $\beps$ (`eps`) and the PyTree (`isv`) of internal state variables $(\balpha_i)$.
-
 
 # %%
 class FreeEnergy(eqx.Module):
@@ -217,7 +214,6 @@ class FreeEnergy(eqx.Module):
 # \Phi(\balpha_i) = \Nn_\text{ICNN}(\balpha_i) - \dfrac{\partial \Nn_\text{ICNN}}{\partial\balpha_i}(\balpha_i=0):\balpha_i
 # $$
 
-
 # %%
 class ICNNDissipationPotential(ICNN):
     def icnn_potential(self, alpha_dot):
@@ -237,6 +233,10 @@ class ICNNDissipationPotential(ICNN):
 # %% [markdown]
 # We build a list of candidate neural GSM models for  $N_\text{var}=1,2,3$. Each model shares the same known long-term stiffness, while the viscous stiffness values and neural potential parameters are initialized randomly. We select here only 8 neurons in a single hidden layer.
 #
+# ```{important}
+# Since the structure of internal state variables is not known in advance, `jaxmat.materials.GeneralizedStandardMaterial` is an abstract class which must implement a concrete `make_internal_state` method.
+# ```
+#
 # The idea is to assess how the complexity of the internal structure (i.e., the number of internal variables) affects the ability of the neural GSM to reproduce the reference relaxation behavior.
 
 # %%
@@ -248,12 +248,15 @@ for Nvar in Nvar_list:
     E1_ = jax.random.lognormal(key2, shape=(Nvar,)) * 1e3
     viscous_model = jm.LinearElasticIsotropic(E1_, jnp.full_like(E1_, fill_value=nu))
     free_energy = FreeEnergy(elasticity=elasticity, viscous_model=viscous_model)
-    internal_state = InternalState(Nvar=Nvar)
+
+    class GSM(jm.GeneralizedStandardMaterial):
+        def make_internal_state(self):
+            return InternalState(Nvar=Nvar)
+
     gsm_list.append(
-        jm.GeneralizedStandardMaterial(
+        GSM(
             free_energy=free_energy,
             dissipation_potential=icnn_dissipation_potential,
-            internal=internal_state,
         )
     )
 
@@ -301,7 +304,6 @@ plt.show()
 # where $\hat\bsig^{(k)}(\btheta)$ denotes the predicted stress tensor by the neural GSM at time step $k$ and $ \bsig^\text{data,(k)}$ the corresponding target value.
 # As the stress evolution depends recursively on the internal variables, the loss is history-dependent.
 # Gradients are automatically computed by JAX through the full time integration and solver iterations.
-
 
 # %%
 @eqx.filter_jit

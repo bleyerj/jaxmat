@@ -99,7 +99,7 @@ In order to evaluate the response of a mechanical behavior, we need a mechanical
 ```{code-cell} ipython3
 state = material.init_state()
 print(state.__dict__)
-internal_state_variables = material.internal
+internal_state_variables = state.internal
 print(internal_state_variables.__dict__)
 ```
 
