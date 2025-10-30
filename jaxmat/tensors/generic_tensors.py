@@ -3,6 +3,7 @@ import jax
 import jax.numpy as jnp
 import equinox as eqx
 from . import linear_algebra
+from . import utils
 
 
 class Tensor(eqx.Module):
@@ -298,6 +299,11 @@ class SymmetricTensor4(Tensor):
         return other.__class__(
             tensor=jnp.tensordot(jnp.asarray(self), jnp.asarray(other).T)
         )
+    
+    def rotate_tensor(self, tensor, angle, axis):
+        R = utils.rotation_matrix_direct(angle, axis)
+        rotated_tensor = jnp.einsum('im,jn,kp,lq,mnpq->ijkl', R, R, R, R, tensor)
+        return rotated_tensor
 
     @property
     def inv(self):

@@ -1,5 +1,10 @@
 from .behavior import SmallStrainBehavior, FiniteStrainBehavior
-from .elasticity import AbstractLinearElastic, LinearElasticIsotropic, ElasticBehavior
+from .elasticity import (
+    AbstractLinearElastic, 
+    LinearElasticIsotropic, 
+    LinearElasticOrthotropic, 
+    LinearElastic,
+    ElasticBehavior)
 from .hyperelasticity import (
     Hyperelasticity,
     HyperelasticPotential,
