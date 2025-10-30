@@ -1,8 +1,8 @@
+from abc import abstractmethod
 import jax
 import equinox as eqx
 import optimistix as optx
 from optax.tree_utils import tree_add, tree_zeros_like, tree_scale
-from jaxmat.state import AbstractState
 from jaxmat.solvers import NewtonTrustRegion
 import jaxmat.materials as jm
 import lineax as lx
@@ -29,6 +29,10 @@ class GeneralizedStandardMaterial(jm.SmallStrainBehavior):
 
     The minimization is performed numerically using a Newton line-search solver.
 
+    Important
+    ---------
+    This is an abstract behavior which must concretely implement ``make_internal_state`` as the structure of internal state variables is not
+    known before hand.
 
     Notes
     -----
@@ -50,12 +54,15 @@ class GeneralizedStandardMaterial(jm.SmallStrainBehavior):
     r"""Module defining the Helmholtz free energy $\Psi(\beps,\balpha)"""
     dissipation_potential: eqx.Module
     r"""Module defining the dissipation pseudo-potential $\Phi(\dot\balpha)$"""
-    internal: AbstractState
-    """Internal state variables (e.g. plastic strain, viscous strain)."""
     minimisation_solver = NewtonTrustRegion(
         rtol=1e-6, atol=1e-6, linear_solver=lx.AutoLinearSolver(well_posed=False)
     )
     """Minimisation solver used to minimize the incremental potential."""
+
+    @abstractmethod
+    def make_internal_state(self):
+        """Create internal state variables."""
+        pass
 
     def incremental_potential(self, d_isv, args):
         r"""Compute the incremental potential for a given internal variable increment.

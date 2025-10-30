@@ -110,12 +110,9 @@ class GeneralizedMaxwell(jm.SmallStrainBehavior):
     """Elastic stiffness models for the Maxwell branches."""
     relaxation_times: jax.Array = eqx.field(converter=jnp.asarray)
     r"""Array of relaxation times $(\tau_i)$ for the Maxwell branches."""
-    internal: GeneralizedMaxwellState = eqx.field(init=False)
-    """Internal state containing viscous strains and stresses."""
 
-    def __post_init__(self):
-        Nbranch = len(self.relaxation_times)
-        self.internal = GeneralizedMaxwellState(Nbranch=Nbranch)
+    def make_internal_state(self):
+        return GeneralizedMaxwellState(Nbranch=len(self.relaxation_times))
 
     def constitutive_update(self, eps, state, dt):
         sigv_old = state.internal.sigv

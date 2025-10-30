@@ -41,7 +41,7 @@ class vonMisesIsotropicHardening(SmallStrainBehavior):
     """Isotropic hardening law controlling the evolution of the yield surface size."""
     plastic_surface: AbstractPlasticSurface = vonMises()
     """von Mises plastic surface."""
-    internal: AbstractState = InternalState()
+    internal_type = InternalState
 
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)
@@ -93,7 +93,7 @@ class GeneralIsotropicHardening(SmallStrainBehavior):
     """Isotropic hardening law controlling the evolution of the yield surface size."""
     plastic_surface: AbstractPlasticSurface
     """Generic plastic surface."""
-    internal = InternalState()
+    internal_type = InternalState
 
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)
@@ -177,10 +177,9 @@ class GeneralHardening(SmallStrainBehavior):
     - ``combined_hardening.dp(alpha, p)`` returning $\dfrac{\partial \psi_\textrm{h}}{\partial p}(\balpha,p)$
     """
     nvar: int = eqx.field(static=True, default=1)
-    internal: AbstractState = eqx.field(init=False)
 
-    def __post_init__(self):
-        self.internal = GeneralHardeningInternalState(nvar=self.nvar)
+    def make_internal_state(self):
+        return GeneralHardeningInternalState(nvar=self.nvar)
 
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)
