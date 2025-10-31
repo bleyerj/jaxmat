@@ -38,21 +38,13 @@ class AbstractLinearElastic(eqx.Module):
 class LinearElastic(AbstractLinearElastic):
     """A generic linear elastic model with custom stiffness tensor."""
 
-    _C: SymmetricTensor4
-
-    def __init__(self, C: SymmetricTensor4):
-        """
-        Initialize a linear elastic material with a given stiffness tensor.
-
-        Args:
-            C: 4th order stiffness tensor (SymmetricTensor4)
-        """
-        self._C = C
+    stiffness: SymmetricTensor4
+    """4th-rank generic stiffness tensor"""
 
     @property
     def C(self) -> SymmetricTensor4:
         """Return the stiffness tensor."""
-        return self._C
+        return self.stiffness
 
 
 class LinearElasticIsotropic(AbstractLinearElastic):
@@ -132,9 +124,9 @@ class LinearElasticOrthotropic(AbstractLinearElastic):
         # Build compliance matrix
         S_diag = jnp.array(
             [
-                [1.0 / self.EL, -self.nuLT / self.EL, -self.nuLN / self.EL],
-                [-self.nuLT / self.EL, 1 / self.ET, -self.nuTN / self.ET],
-                [-self.nuLN / self.EL, -self.nuTN / self.ET, 1 / self.EN],
+                [1.0 / self.EL, -(self.nuLT / self.EL), -(self.nuLN / self.EL)],
+                [-(self.nuLT / self.EL), 1 / self.ET, -(self.nuTN / self.ET)],
+                [-(self.nuLN / self.EL), -self.nuTN / self.ET, 1 / self.EN],
             ]
         )
 
