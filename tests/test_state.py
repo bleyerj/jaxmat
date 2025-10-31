@@ -7,12 +7,19 @@ from jaxmat.state import (
     FiniteStrainState,
     make_batched,
 )
-from jaxmat.tensors import SymmetricTensor2
+from jaxmat.utils import default_value
+from jaxmat.tensors import SymmetricTensor2, Tensor
 import pytest
 
 
 class MyState(SmallStrainState):
     other_attribute: jax.Array = None
+
+
+class OtherState(SmallStrainState):
+    float_attribute: float = default_value(0.0)
+    array_attribute: jax.Array = eqx.field(default_factory=lambda: jnp.ones((3,)))
+    tensor_attribute: SymmetricTensor2 = SymmetricTensor2()
 
 
 def test_state():
@@ -33,6 +40,20 @@ def test_state():
     assert jnp.allclose(state.internal, jnp.zeros((3,)))
     assert state.other_attribute is None
     assert not hasattr(state, "foobar")
+
+
+def test_state_tensor_conversion():
+    state = OtherState(tensor_attribute=SymmetricTensor2.identity())
+    new_state = jax.tree.map(
+        lambda x: x.array if isinstance(x, Tensor) else x,
+        state,
+        is_leaf=lambda x: isinstance(x, Tensor),
+    )
+    assert new_state.strain.shape == (6,)
+    assert new_state.stress.shape == (6,)
+    assert new_state.float_attribute.shape == ()
+    assert new_state.array_attribute.shape == (3,)
+    assert new_state.tensor_attribute.shape == (6,)
 
 
 @pytest.mark.parametrize("Nbatch", [1, 10, 100])
