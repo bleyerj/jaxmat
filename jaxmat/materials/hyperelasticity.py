@@ -25,7 +25,6 @@ class HyperelasticPotential(eqx.Module):
 
 class Hyperelasticity(FiniteStrainBehavior):
     potential: HyperelasticPotential
-    internal = None
 
     def constitutive_update(self, F, state, dt):
         PK1 = self.potential.PK1(F)
