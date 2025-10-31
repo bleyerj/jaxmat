@@ -1,6 +1,7 @@
 # ---
 # jupyter:
 #   jupytext:
+#     default_lexer: ipython3
 #     formats: md:myst,py:percent,ipynb
 #     text_representation:
 #       extension: .py
@@ -119,13 +120,12 @@ class InternalState(AbstractState):
 # The `MultiSurfacePlasticity` class defines the main constitutive behavior.
 # It extends `SmallStrainBehavior` and is defined by several different fields: an elastic model, a list of yield surfaces, and a list of their corresponding yield stresses.
 #
-# During initialization, the __post_init__ method checks that the number of yield surfaces matches the number of yield stresses, then sets the internal state (InternalState) with the correct number of plastic multipliers.
+# During initialization, the __post_init__ method checks that the number of yield surfaces matches the number of yield stresses. We then implement the `make_internal_state` method to create the internal state (`InternalState`) with the correct number of plastic multipliers.
 # This ensures consistency and avoids manual setup when extending the model to more surfaces.
 #
 # The `constitutive_update` method then performs an implicit return-mapping procedure using `optimistix.root_find`. The residuals correspond to the plasticity complementarity conditions of each surface, enforced using Fischer-Burmeister functions, and the incremental generalized plastic flow rules which leverage the normals of each surface. Note that the final residual, called `res`, is a PyTree as a nested list/tuple and does not need to be flattened. All residuals are then solved together within a single implicit solve.
 #
 # Finally, the `@eqx.filter_jit` decorator enables JIT compilation for efficiency.
-
 
 # %%
 class MultiSurfacePlasticity(SmallStrainBehavior):
@@ -133,12 +133,13 @@ class MultiSurfacePlasticity(SmallStrainBehavior):
     yield_stresses: list[eqx.Module]
     plastic_surfaces: list[AbstractPlasticSurface]
     n_surf: int = eqx.field(static=True, default=1)
-    internal: AbstractState = eqx.field(init=False)
 
     def __post_init__(self):
         assert len(self.yield_stresses) == len(self.plastic_surfaces)
         self.n_surf = len(self.plastic_surfaces)
-        self.internal = InternalState(n_surf=self.n_surf)
+        
+    def make_internal_state(self):
+        return InternalState(n_surf=self.n_surf)
 
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)
@@ -197,7 +198,6 @@ class MultiSurfacePlasticity(SmallStrainBehavior):
 # A simple `YieldStress` class is first introduced to represent constant yield limits for each surface (no hardening).
 # It simply returns a constant scalar value $\sigma_{0i}$ independent of plastic strain.
 
-
 # %%
 class YieldStress(eqx.Module):
     sig0: float = eqx.field(converter=jnp.asarray)
@@ -215,7 +215,6 @@ class YieldStress(eqx.Module):
 # f_\text{cap}(p,q) = \sqrt{(p-p_0)^2 + (q/M)^2} \leq \sigma_c
 # $$
 # where $M$ controls the ellipse aspect ratio, $p_0$ its center along the hydrostatic axis and $\sigma_c$ corresponds to the maximum compressive hydrostatic strength.
-
 
 # %%
 class EllipticCap(jm.AbstractPlasticSurface):
@@ -237,7 +236,6 @@ class EllipticCap(jm.AbstractPlasticSurface):
 # f_\text{t}(p) = \sigma_m = \tfrac{1}{3}\tr(\bsig) \leq \sigma_t
 # $$
 # where $\sigma_t$ is the tensile strength.
-
 
 # %%
 class HydrostaticTensionCutoff(jm.AbstractPlasticSurface):

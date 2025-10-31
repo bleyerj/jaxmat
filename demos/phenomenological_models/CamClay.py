@@ -97,7 +97,6 @@ import matplotlib.pyplot as plt
 # The internal variable for the Modified Cam-Clay model is the plastic strain tensor $\bepsp$.
 # We define a small subclass of `AbstractState` to store and update this tensor between time steps.
 
-
 # %%
 # Define internal state to store plastic strain
 class InternalState(jaxmat.state.AbstractState):
@@ -108,7 +107,6 @@ class InternalState(jaxmat.state.AbstractState):
 # ### Yield surface
 #
 # We now define the Cam-Clay yield surface. The class inherits from `AbstractPlasticSurface` and thus automatically computes the normal vector to the yield surface via its `normal` method. We simply need to implement the expression of the yield surface in the `__call__` dunder method. We decorate the latter with  the `safe_zero` decorator as described in the [](./Green_viscoplasticity.ipynb) demo.
-
 
 # %%
 class CamClaySurface(jm.AbstractPlasticSurface):
@@ -126,7 +124,6 @@ class CamClaySurface(jm.AbstractPlasticSurface):
 # ### Hardening law
 #
 # We next define the exponential hardening rule for the preconsolidation pressure:
-
 
 # %%
 class Hardening(eqx.Module):
@@ -162,13 +159,12 @@ class Hardening(eqx.Module):
 #
 # We solve the nonlinear system with `optimistix.root_find`, using automatic differentiation for the Jacobian and finally return the updated stress $\bsig$ and internal variable $\bepsp$.
 
-
 # %%
 class ModifiedCamClay(jm.SmallStrainBehavior):
     elasticity: jm.LinearElasticIsotropic
     plastic_surface: CamClaySurface
     hardening: Hardening
-    internal: InternalState = eqx.field(default_factory=InternalState, init=False)
+    internal_type = InternalState
 
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)
@@ -236,7 +232,6 @@ material = ModifiedCamClay(
 # After this consolidation phase, we further increase the vertical compressive strain $-\varepsilon_{zz}$ while maintaining the lateral confining pressure, i.e. $\sigma_{xx}=\sigma_{yy}=-p_0$.
 #
 # All 6 OCR load cases are integrated simultaneously as a batched simulation.
-
 
 # %%
 def compute_pq(sig):

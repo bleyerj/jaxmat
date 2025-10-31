@@ -154,7 +154,7 @@ class GreenViscoPlasticity(jm.SmallStrainBehavior):
     yield_stress: float = eqx.field(converter=jnp.asarray)
     plastic_surface: GreenYieldSurface
     viscoplastic_flow: NortonFlow
-    internal: InternalState = eqx.field(default_factory=InternalState, init=False)
+    internal_type = InternalState
 
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)

@@ -15,7 +15,6 @@ from jaxmat.solvers import DEFAULT_SOLVERS
 class AbstractBehavior(eqx.Module):
     """Abstract base class describing a mechanical behavior."""
 
-    internal: eqx.AbstractVar[AbstractState]
     """Internal variables state."""
     solver: optx.AbstractRootFinder = eqx.field(
         static=True, init=False, default=DEFAULT_SOLVERS[0]
@@ -27,6 +26,35 @@ class AbstractBehavior(eqx.Module):
     """Adjoint solver."""
     _batch_size: tuple = eqx.field(static=True, init=False, default=None)
 
+    # --- Serializable internal-state class reference ---
+    internal_type: type[AbstractState] = eqx.field(
+        static=True, init=False, default=None
+    )
+    """Class (type) describing the internal-state structure (serialized with the model)."""
+
+    # --- Required by user subclasses ---
+    # @abstractmethod
+    def make_internal_state(self) -> AbstractState:
+        """Return a freshly constructed internal state instance."""
+        pass
+
+    # --- Unified initializer ---
+    def _init_state(self, cls, Nbatch=None):
+        """Initialize a full material state, optionally batched."""
+        # Prefer explicitly stored internal_type (for serialization)
+        if self.internal_type is not None:
+            internal = self.internal_type()
+        else:
+            internal = self.make_internal_state()
+
+        state = cls(internal=internal)
+
+        if Nbatch is None and self._batch_size is None:
+            return state
+
+        Nbatch = self._batch_size[0] if Nbatch is None else Nbatch
+        return make_batched(state, Nbatch)
+
     @abstractmethod
     def constitutive_update(self, inputs, state, dt):
         pass
@@ -36,22 +64,6 @@ class AbstractBehavior(eqx.Module):
         return eqx.filter_jit(
             eqx.filter_vmap(self.constitutive_update, in_axes=(0, 0, None))
         )(inputs, state, dt)
-
-    def _init_state(self, cls, Nbatch=None):
-        state = cls(internal=self.internal)
-        if Nbatch is None:
-            if self._batch_size is None:
-                return cls(internal=self.internal)
-            else:
-                # Handle the case where the material has already been batched
-                # we first batch cls without internals
-                Nbatch = self._batch_size[0]
-                state = make_batched(cls(), Nbatch)
-                # we reaffect the already batched internals
-                state = eqx.tree_at(lambda s: s.internal, state, self.internal)
-                return state
-        else:
-            return make_batched(state, Nbatch)
 
 
 class SmallStrainBehavior(AbstractBehavior):

@@ -73,7 +73,7 @@ class AmrstrongFrederickViscoplasticity(SmallStrainBehavior):
     """
     plastic_surface = vonMises()
     """J2-type yield (or loading) surface based on the deviatoric stress invariant."""
-    internal = AFInternalState()
+    internal_type = AFInternalState
     """Internal variables associated with the accumulated plastic strain and backstress tensor."""
 
     @eqx.filter_jit
@@ -150,11 +150,9 @@ class GenericViscoplasticity(SmallStrainBehavior):
     """A generic viscoplastic flow rule."""
     kinematic_hardening: AbstractKinematicHardening
     """A generic kinematic hardening law."""
-    internal: AbstractState = eqx.field(init=False)
-    """Internal variables associated with the accumulated plastic strain and backstress tensors."""
 
-    def __post_init__(self):
-        self.internal = GenericInternalState(nX=self.kinematic_hardening.nvars)
+    def make_internal_state(self):
+        return GenericInternalState(nX=self.kinematic_hardening.nvars)
 
     @eqx.filter_jit
     @eqx.debug.assert_max_traces(max_traces=1)
