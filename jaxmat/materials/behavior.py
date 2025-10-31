@@ -43,9 +43,9 @@ class AbstractBehavior(eqx.Module):
         """Initialize a full material state, optionally batched."""
         # Prefer explicitly stored internal_type (for serialization)
         if self.internal_type is not None:
-            internal = self.internal_type()
+            internal = self.internal_type()  # pylint: disable=E1102
         else:
-            internal = self.make_internal_state()
+            internal = self.make_internal_state()  # pylint: disable=E1111
 
         state = cls(internal=internal)
 

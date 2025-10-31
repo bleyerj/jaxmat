@@ -117,16 +117,16 @@ class LinearElasticOrthotropic(AbstractLinearElastic):
 
     @property
     def C(self):
-        """Build stiffness matrix for orthotropic material.
-        -----
-        Convention: L=x, T=y, N=z in Voigt notation [xx, yy, zz, xy, xz, yz]
+        r"""Build stiffness matrix for orthotropic material.
+
+        Convention: $L=x, T=y, N=z$ in Voigt notation $[xx, yy, zz, xy, xz, yz]$
         """
         # Build compliance matrix
         S_diag = jnp.array(
             [
                 [1.0 / self.EL, -(self.nuLT / self.EL), -(self.nuLN / self.EL)],
                 [-(self.nuLT / self.EL), 1 / self.ET, -(self.nuTN / self.ET)],
-                [-(self.nuLN / self.EL), -self.nuTN / self.ET, 1 / self.EN],
+                [-(self.nuLN / self.EL), -(self.nuTN / self.ET), 1 / self.EN],
             ]
         )
 
