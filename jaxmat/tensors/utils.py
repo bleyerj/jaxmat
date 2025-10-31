@@ -98,8 +98,7 @@ def FischerBurmeister(x, y):
 
 def rotation_matrix_direct(theta, axis):
     """
-    Calculate the rotation matrix for rotating around an arbitrary axis by angle theta
-    using direct computation of matrix elements.
+    Calculate the rotation matrix for rotating around an arbitrary axis by angle theta.
 
     """
     x, y, z = axis[0], axis[1], axis[2] 

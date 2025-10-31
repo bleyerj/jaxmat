@@ -38,7 +38,10 @@ C_tensor = elasticity.C
 # L<->T permutation
 angle = jnp.pi / 2 
 axis = jnp.array([0., 0., 1.])
-C_rotated_tensor = C_tensor.rotate_tensor(C_tensor.tensor, angle, axis)
+from jaxmat.tensors import utils
+R = utils.rotation_matrix_direct(angle, axis)
+        
+C_rotated_tensor = C_tensor.rotate_tensor(C_tensor.tensor, R)
 from jaxmat.tensors import SymmetricTensor4
 C_rotated = SymmetricTensor4(tensor=C_rotated_tensor)
 
@@ -78,3 +81,5 @@ ax2.grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.show()
+assert jnp.allclose(sig[:, 0, 0], sig_rotated[:, 1, 1], 1e-6)
+assert jnp.allclose(sig[:, 1, 1], sig_rotated[:, 0, 0], 1e-6)
