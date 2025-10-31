@@ -5,7 +5,7 @@ from jaxmat.tensors import SymmetricTensor2, SymmetricTensor4
 from jaxmat.tensors import utils
 
 
-def test_orthotropic_rotation():
+def test_small_strain_orthotropic_rotation():
     """This test instantiates an orthotropic elastic material,
     checks the rotation mechanism.
     We then check that the rotated tensor of angle pi/2 matches with
