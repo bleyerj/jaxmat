@@ -94,26 +94,28 @@ class Tensor(eqx.Module):
 
     def _weaken_with(self, other):
         return self.__class__
-    
-    def rotate_tensor(self, tensor, R):
-        """Rotate the tensor by applying rotation matrix to each index.
-        Only working for rank \leq 13"""
-        # Use different character ranges to avoid collision
+
+    def rotate(self, R):
+        """Rotate the tensor by applying rotation matrix to each index."""
+        # Use different character ranges to avoid collision (works only for rank <= 13)
         # Rotation matrices: ab, cd, ef, gh, ...
         # Tensor indices: ijkl...
         # Output indices: ijkl...
-        
+
         # Generate pairs of indices (a,b), (c,d), (e,f), ...
-        pairs = [(chr(97 + 2*i), chr(97 + 2*i + 1)) for i in range(self.rank)]
-        
+        assert self.rank <= 13
+        pairs = [(chr(97 + 2 * i), chr(97 + 2 * i + 1)) for i in range(self.rank)]
+
         rotation_pairs = [first + second for first, second in pairs]
-        output_indices = ''.join([first for first, _ in pairs])
-        tensor_indices = ''.join([second for _, second in pairs])
-        
-        einsum_str = ','.join(rotation_pairs) + ',' + tensor_indices + '->' + output_indices
-        
-        rotated_tensor = jnp.einsum(einsum_str, *([R] * self.rank), tensor)
-        
+        output_indices = "".join([first for first, _ in pairs])
+        tensor_indices = "".join([second for _, second in pairs])
+
+        einsum_str = (
+            ",".join(rotation_pairs) + "," + tensor_indices + "->" + output_indices
+        )
+
+        rotated_tensor = jnp.einsum(einsum_str, *([R] * self.rank), self.tensor)
+
         return self.__class__(tensor=rotated_tensor)
 
 
