@@ -64,8 +64,8 @@ class SmallStrainState(AbstractState):
     """
 
     internal: AbstractState = None
-    strain: SymmetricTensor2 = SymmetricTensor2()
-    stress: SymmetricTensor2 = SymmetricTensor2()
+    strain: SymmetricTensor2 = eqx.field(default_factory=SymmetricTensor2)
+    stress: SymmetricTensor2 = eqx.field(default_factory=SymmetricTensor2)
 
     # define alias targets to authorize state updates with alias names
     __alias_targets__ = {"eps": "strain", "sig": "stress"}
@@ -132,8 +132,8 @@ class FiniteStrainState(AbstractState):
     """
 
     internal: AbstractState = None
-    strain: Tensor2 = Tensor2().identity()
-    stress: Tensor2 = Tensor2()
+    strain: Tensor2 = eqx.field(default_factory=Tensor2.identity)
+    stress: Tensor2 = eqx.field(default_factory=Tensor2)
 
     # define alias targets to authorize state updates with alias names
     __alias_targets__ = {"F": "strain", "PK1": "stress"}

@@ -30,7 +30,7 @@ class FeFpJ2Plasticity(FiniteStrainBehavior):
     """Isotropic hardening law controlling the evolution of the yield surface size."""
     plastic_surface: AbstractPlasticSurface = vonMises()
     """von Mises plastic surface."""
-    internal: AbstractState = InternalState()
+    internal_type = InternalState
     # use Levenberg-Marquardt to improve convergence robustness
     solver = optx.LevenbergMarquardt(
         rtol=1e-5,

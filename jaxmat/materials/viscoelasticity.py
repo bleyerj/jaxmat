@@ -40,7 +40,7 @@ class StandardLinearSolid(jm.SmallStrainBehavior):
     """Elastic model representing the spring in the Maxwell branch."""
     maxwell_viscosity: float = enforce_dtype()
     r"""Viscosity $\eta$ of the dashpot in the Maxwell branch."""
-    internal: AbstractState = SLSState()
+    internal_type = SLSState
     """Internal state containing the viscous strain."""
 
     @eqx.filter_jit

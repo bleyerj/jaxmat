@@ -22,7 +22,7 @@ def test_small_strain_behavior():
     )
     state = material.init_state()
     assert hasattr(state, "strain")
-    assert hasattr(state, "strain")
+    assert hasattr(state, "stress")
     assert hasattr(state.internal, "p")
     assert hasattr(state.internal, "epsp")
 
@@ -54,7 +54,7 @@ def test_finite_strain_behavior():
     material = jm.FeFpJ2Plasticity(elasticity=elasticity, yield_stress=hardening)
     state = material.init_state()
     assert hasattr(state, "strain")
-    assert hasattr(state, "strain")
+    assert hasattr(state, "stress")
     assert hasattr(state.internal, "p")
     assert hasattr(state.internal, "be_bar")
 
