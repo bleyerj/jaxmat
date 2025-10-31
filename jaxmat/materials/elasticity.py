@@ -127,18 +127,8 @@ class LinearElasticOrthotropic(AbstractLinearElastic):
     def C(self):
         """Build stiffness matrix for orthotropic material.
         -----
-        Convention: L=x, T=y, N=z in Voigt notation [xx, yy, zz, yz, xz, xy]
+        Convention: L=x, T=y, N=z in Voigt notation [xx, yy, zz, xy, xz, yz]
         """
-        print("Building orthotropic stiffness tensor:")
-        print(f"Young's modulus (L): {self.EL}")
-        print(f"Young's modulus (T): {self.ET}")
-        print(f"Young's modulus (N): {self.EN}")
-        print(f"Poisson ratio (nu_LT): {self.nuLT}")
-        print(f"Poisson ratio (nu_LN): {self.nuLN}")
-        print(f"Poisson ratio (nu_TN): {self.nuTN}")
-        print(f"Shear modulus (mu_LT): {self.muLT}")
-        print(f"Shear modulus (mu_LN): {self.muLN}")
-        print(f"Shear modulus (mu_TN): {self.muTN}")
         # Build compliance matrix
         S_diag = jnp.array(
             [
@@ -151,12 +141,12 @@ class LinearElasticOrthotropic(AbstractLinearElastic):
         S_shear = jnp.diag(
             jnp.array(
                 [
-                    1.0 / (2.0 * self.muTN),
-                    1.0 / (2.0 * self.muLN),
                     1.0 / (2.0 * self.muLT),
+                    1.0 / (2.0 * self.muLN),
+                    1.0 / (2.0 * self.muTN),
                 ]
             )
-        )  # [yz, xz, xy] order
+        )  # [xy, xz, yz] order
         S_Mandel = jsc.linalg.block_diag(S_diag, S_shear)
         C_Mandel = jnp.linalg.inv(S_Mandel)
         return SymmetricTensor4(array=C_Mandel)
