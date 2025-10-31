@@ -1,7 +1,8 @@
 from abc import abstractmethod
 import jax.numpy as jnp
+import jax.scipy as jsc
 import equinox as eqx
-from jaxmat.tensors import IsotropicTensor4
+from jaxmat.tensors import IsotropicTensor4, SymmetricTensor4
 from jaxmat.utils import enforce_dtype
 from .behavior import SmallStrainBehavior
 
@@ -32,6 +33,18 @@ class AbstractLinearElastic(eqx.Module):
             Strain tensor
         """
         return 0.5 * jnp.trace(eps @ (self.C @ eps))
+
+
+class LinearElastic(AbstractLinearElastic):
+    """A generic linear elastic model with custom stiffness tensor."""
+
+    stiffness: SymmetricTensor4
+    """4th-rank generic stiffness tensor"""
+
+    @property
+    def C(self) -> SymmetricTensor4:
+        """Return the stiffness tensor."""
+        return self.stiffness
 
 
 class LinearElasticIsotropic(AbstractLinearElastic):
@@ -78,6 +91,57 @@ class LinearElasticIsotropic(AbstractLinearElastic):
         $$\lambda = \dfrac{E\nu}{(1+\nu)(1-2\nu)}$$
         """
         return self.E * self.nu / (1 + self.nu) / (1 - 2 * self.nu)
+
+
+class LinearElasticOrthotropic(AbstractLinearElastic):
+    """An orthotropic linear elastic model."""
+
+    EL: float = enforce_dtype()
+    r"""Longitudinal Young modulus $E_{L}$"""
+    ET: float = enforce_dtype()
+    r"""Longitudinal Young modulus $E_{T}$"""
+    EN: float = enforce_dtype()
+    r"""Longitudinal Young modulus $E_{N}$"""
+    nuLT: float = enforce_dtype()
+    r"""Longitudinal-transverse Poisson coefficient $\nu_{LT}$"""
+    nuLN: float = enforce_dtype()
+    r"""Longitudinal-normal Poisson coefficient $\nu_{LN}$"""
+    nuTN: float = enforce_dtype()
+    r"""Transverse-normal Poisson coefficient $\nu_{TN}$"""
+    muLT: float = enforce_dtype()
+    r"""Longitudinal-transverse shear modulus $\mu_{LT}$"""
+    muLN: float = enforce_dtype()
+    r"""Longitudinal-normal shear modulus $\mu_{LN}$"""
+    muTN: float = enforce_dtype()
+    r"""Transverse-normal shear modulus $\mu_{TN}$"""
+
+    @property
+    def C(self):
+        """Build stiffness matrix for orthotropic material.
+        -----
+        Convention: L=x, T=y, N=z in Voigt notation [xx, yy, zz, xy, xz, yz]
+        """
+        # Build compliance matrix
+        S_diag = jnp.array(
+            [
+                [1.0 / self.EL, -(self.nuLT / self.EL), -(self.nuLN / self.EL)],
+                [-(self.nuLT / self.EL), 1 / self.ET, -(self.nuTN / self.ET)],
+                [-(self.nuLN / self.EL), -self.nuTN / self.ET, 1 / self.EN],
+            ]
+        )
+
+        S_shear = jnp.diag(
+            jnp.array(
+                [
+                    1.0 / (2.0 * self.muLT),
+                    1.0 / (2.0 * self.muLN),
+                    1.0 / (2.0 * self.muTN),
+                ]
+            )
+        )  # [xy, xz, yz] order
+        S_Mandel = jsc.linalg.block_diag(S_diag, S_shear)
+        C_Mandel = jnp.linalg.inv(S_Mandel)
+        return SymmetricTensor4(array=C_Mandel)
 
 
 class ElasticBehavior(SmallStrainBehavior):
