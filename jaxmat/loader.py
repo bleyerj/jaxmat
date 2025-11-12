@@ -2,9 +2,20 @@ import jax
 import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
+import lineax as lx
 from typing import Literal
 from jaxmat.tensors import SymmetricTensor2
-from jaxmat.solvers import DEFAULT_SOLVERS
+
+
+linear_solver = lx.AutoLinearSolver(well_posed=False)
+solver, adjoint = (
+    optx.Newton(
+        rtol=1e-8,
+        atol=1e-8,
+        linear_solver=linear_solver,
+    ),
+    optx.ImplicitAdjoint(linear_solver=linear_solver),
+)
 
 
 class ImposedLoading(eqx.Module):
@@ -128,8 +139,6 @@ def stack_loadings(loadings: list):
 
 
 def solve_mechanical_state(eps0, state, loading_data: ImposedLoading, material, dt):
-    solver, adjoint = DEFAULT_SOLVERS
-
     def res_fn(eps, state):
         res, new_state = residual(material, loading_data, eps, state, dt)
         return res, new_state
