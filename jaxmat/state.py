@@ -111,17 +111,13 @@ class FiniteStrainState(AbstractState):
     internal : AbstractState, optional
         Nested internal state representing material history or additional
         constitutive information. Defaults to None.
-    strain : :class:`Tensor2`
+    F : :class:`Tensor2`
         Deformation gradient $\bF$. Initialized as the identity tensor.
-    stress : :class:`Tensor2`
+    PK1 : :class:`Tensor2`
         First Piola-Kirchhoff stress tensor $\bP$.
 
     Notes
     -----
-    F : :class:`Tensor2`
-        Alias for deformation gradient.
-    PK1 : :class:`Tensor2`
-        Alias for first Piola-Kirchhoff stress tensor.
     PK2 : :class:`SymmetricTensor2`
         Second Piola-Kirchhoff stress tensor $\bS$, computed via :func:`PK1_to_PK2`.
     sig : :class:`SymmetricTensor2`
@@ -132,27 +128,22 @@ class FiniteStrainState(AbstractState):
     """
 
     internal: AbstractState = None
-    strain: Tensor2 = eqx.field(default_factory=Tensor2.identity)
-    stress: Tensor2 = eqx.field(default_factory=Tensor2)
-
-    # define alias targets to authorize state updates with alias names
-    __alias_targets__ = {"F": "strain", "PK1": "stress"}
-
-    @property
-    def F(self):
-        return self.strain
-
-    @property
-    def PK1(self):
-        return self.stress
+    F: Tensor2 = eqx.field(default_factory=Tensor2.identity)
+    PK1: Tensor2 = eqx.field(default_factory=Tensor2)
 
     @property
     def PK2(self):
-        return eqx.filter_vmap(PK1_to_PK2)(self.F, self.PK1)
+        vmap_axes = 0 if self.F.tensor.ndim == 3 else None
+        return eqx.filter_vmap(PK1_to_PK2, in_axes=vmap_axes, out_axes=vmap_axes)(
+            self.F, self.PK1
+        )
 
     @property
     def sig(self):
-        return eqx.filter_vmap(PK1_to_Cauchy)(self.F, self.PK1)
+        vmap_axes = 0 if self.F.tensor.ndim == 3 else None
+        return eqx.filter_vmap(PK1_to_Cauchy, in_axes=vmap_axes, out_axes=vmap_axes)(
+            self.F, self.PK1
+        )
 
     @property
     def Cauchy(self):

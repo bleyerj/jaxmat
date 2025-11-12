@@ -28,7 +28,7 @@ class Hyperelasticity(FiniteStrainBehavior):
 
     def constitutive_update(self, F, state, dt):
         PK1 = self.potential.PK1(F)
-        new_state = state.update(stress=PK1, strain=F)
+        new_state = state.update(PK1=PK1, F=F)
         return PK1, new_state
 
 
