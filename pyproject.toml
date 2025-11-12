@@ -10,9 +10,8 @@ license = { text = "GNU GPLv3" }  # Replace or remove if not using MIT
 keywords = ["material science", "machine learning", "material modeling", "solid mechanics", "automatic differentiation"]
 requires-python = ">=3.10"
 dependencies = [
-    "jax[cuda12]==0.6.1",
-    "jaxlib==0.6.1",
-    "nvidia-cublas-cu12",
+    "jax",
+    "jaxlib",
     "optax",
     "equinox",
     "diffrax",
