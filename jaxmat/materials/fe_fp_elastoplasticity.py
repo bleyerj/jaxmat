@@ -1,10 +1,9 @@
 import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
-import lineax as lx
 from jaxmat.utils import default_value
 from jaxmat.state import AbstractState
-from jaxmat.tensors import SymmetricTensor2, dev, safe_fun
+from jaxmat.tensors import SymmetricTensor2, Tensor2, dev, safe_fun
 from jaxmat.tensors.linear_algebra import det33 as det
 from .behavior import FiniteStrainBehavior
 from .elasticity import LinearElasticIsotropic
@@ -31,12 +30,6 @@ class FeFpJ2Plasticity(FiniteStrainBehavior):
     plastic_surface: AbstractPlasticSurface = vonMises()
     """von Mises plastic surface."""
     internal_type = InternalState
-    # use Levenberg-Marquardt to improve convergence robustness
-    solver = optx.LevenbergMarquardt(
-        rtol=1e-5,
-        atol=1e-5,
-        linear_solver=lx.AutoLinearSolver(well_posed=False),
-    )
 
     def constitutive_update(self, F, state, dt):
         F_old = state.F
@@ -52,6 +45,7 @@ class FeFpJ2Plasticity(FiniteStrainBehavior):
             be_bar_trial = f_bar.T @ be_bar_old @ f_bar
 
             def residual(dy, args):
+                # FIXME: currently we don't account for symmetry of be_bar
                 dp, be_bar = dy.p, dy.be_bar
                 s = self.elasticity.mu * dev(be_bar)
                 yield_criterion = self.plastic_surface(s) - self.yield_stress(
@@ -67,18 +61,20 @@ class FeFpJ2Plasticity(FiniteStrainBehavior):
                 return res
 
             dy0 = isv_old.update(p=0, be_bar=be_bar_trial)
-            sol = optx.root_find(residual, self.solver, dy0, adjoint=self.adjoint)
+            sol = optx.root_find(
+                residual, self.solver, dy0, adjoint=self.adjoint, throw=False
+            )
             return sol.value, be_bar_trial
 
         dy, _ = solve_state(F)
-        be_bar = dy.be_bar
+        be_bar = dy.be_bar.sym  # enforce symmetry
         dp = dy.p
         y = isv_old.update(p=isv_old.p + dp, be_bar=be_bar)
 
         s = self.elasticity.mu * dev(be_bar)
         J = det(F)
         tau = s + self.elasticity.kappa / 2 * (J**2 - 1) * Id
-        P = tau @ (F.T).inv
+        P = Tensor2(tensor=tau @ (F.T).inv)
 
         new_state = state.update(PK1=P, internal=y)
         return P, new_state
