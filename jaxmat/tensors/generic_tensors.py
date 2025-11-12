@@ -163,7 +163,9 @@ class Tensor2(Tensor):
 
     @property
     def sym(self):
-        return SymmetricTensor2(tensor=0.5 * (self.tensor + self.tensor.T))
+        return SymmetricTensor2(
+            tensor=0.5 * (self.tensor + jnp.swapaxes(self.tensor, -1, -2))
+        )
 
     @property
     def inv(self):
@@ -176,11 +178,8 @@ class Tensor2(Tensor):
 
     @property
     def T(self):
-        # we tranpose only the last two indices in case of a batched tensor
-        if self.tensor.ndim == 2:
-            return self.__class__(tensor=jnp.transpose(self.tensor))
-        elif self.tensor.ndim == 3:
-            return self.__class__(tensor=jnp.transpose(self.tensor, axes=[0, 2, 1]))
+        # we transpose only the last two indices in case of a batched tensor
+        return self.__class__(tensor=jnp.swapaxes(self.tensor, -1, -2))
 
 
 class SymmetricTensor2(Tensor2):
