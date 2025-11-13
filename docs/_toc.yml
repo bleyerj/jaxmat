@@ -35,6 +35,7 @@ parts:
       - file: concepts.md
       - file: computational.md
       - file: tensors.md
+      - file: sharp_bits.md
   - caption: API
     chapters:
       - file: api/jaxmat.loader.rst
