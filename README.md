@@ -17,10 +17,15 @@ In `jaxmat`, every input and parameter of a constitutive model is differentiable
 
 ## Installation
 
-Simply run a `pip` install and update `nvidia-cublas-cu12` as there are some issues with the version currently shipped with `jax-0.6.1`.
+Simply run a `pip` install. Use `jaxmat[gpu]` for GPU support.
 
 ```bash
-pip install .
+pip install jaxmat
+```
+
+You may need to update `nvidia-cublas-cu12` as there are some issues with the version shipped with `jax-0.6.1`.
+
+```bash
 pip install --upgrade nvidia-cublas-cu12
 ```
 
