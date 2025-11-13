@@ -20,3 +20,8 @@ def get_path(notebook_fallback: str | None = None) -> Path:
         if notebook_fallback:
             return Path(notebook_fallback).resolve()
         return Path.cwd().resolve()
+
+
+from importlib.metadata import version
+
+__version__ = version("jaxmat")

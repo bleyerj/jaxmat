@@ -1,0 +1,41 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: jaxmat
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Jeremy
+    family-names: Bleyer
+    email: jeremy.bleyer@enpc.fr
+    affiliation: 'Ecole Nationale des Ponts et Chaussées, IP Paris'
+    orcid: 'https://orcid.org/0000-0001-8212-9921'
+  - given-names: Paul
+    family-names: Bouteiller
+    email: paul.bouteiller@cea.fr
+    affiliation: >-
+      Université Paris-Saclay, CEA, Laboratoire Matière en
+      Conditions Extrêmes
+    orcid: 'https://orcid.org/0000-0001-6422-5805'
+repository-code: 'https://github.com/bleyerj/jaxmat'
+url: 'https://bleyerj.github.io/jaxmat/'
+abstract: >-
+  jaxmat is an open-source library for implementing material
+  constitutive models in a way that integrates seamlessly
+  with modern machine learning frameworks and existing
+  finite element software. The library is implemented in JAX
+  and heavily relies on additional features provided by the
+  JAX ecosystem, in particular the equinox, diffrax, and
+  optimistix libraries.
+keywords:
+  - material science
+  - machine learning
+  - automatic differentiation
+  - constitutive models
+  - solid mechanics
+  - neural networks
+license: GPL-3.0+
+version: 0.0.1

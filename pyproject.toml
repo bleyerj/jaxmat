@@ -4,18 +4,24 @@ version = "0.0.1"
 description = "Automated material constitutive modeling in JAX"
 readme = "README.md"
 authors = [
-    { name = "Jeremy Bleyer", email = "jeremy.bleyer@enpc.fr" }
+    { name = "Jeremy Bleyer", email = "jeremy.bleyer@enpc.fr" },
+    {name = "Paul Bouteiller", email = "paul.bouteiller@cea.fr"}
 ]
 license = { text = "GNU GPLv3" }  # Replace or remove if not using MIT
 keywords = ["material science", "machine learning", "material modeling", "solid mechanics", "automatic differentiation"]
 requires-python = ">=3.10"
 dependencies = [
     "jax>=0.6.1",
-    "nvidia-cublas-cu12",
     "optax",
     "equinox",
     "diffrax",
-    "optimistix"
+    "optimistix",
+    "lineax"
+]
+
+[project.optional-dependencies]
+gpu = [
+    "jax[cuda12]>=0.6.1",
 ]
 
 [build-system]
