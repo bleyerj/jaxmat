@@ -16,36 +16,33 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
-  <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -55,9 +52,11 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "displayMath": [["$$", "$$"], ["\\[", "\\]"]], "macros": {"ba": "\\boldsymbol{a}", "bb": "\\boldsymbol{b}", "bc": "\\boldsymbol{c}", "bd": "\\boldsymbol{d}", "be": "\\boldsymbol{e}", "bf": "\\boldsymbol{f}", "bg": "\\boldsymbol{g}", "bh": "\\boldsymbol{h}", "bi": "\\boldsymbol{i}", "bj": "\\boldsymbol{j}", "bk": "\\boldsymbol{k}", "bl": "\\boldsymbol{l}", "bm": "\\boldsymbol{m}", "bn": "\\boldsymbol{n}", "bo": "\\boldsymbol{o}", "bp": "\\boldsymbol{p}", "bq": "\\boldsymbol{q}", "br": "\\boldsymbol{r}", "bs": "\\boldsymbol{s}", "bt": "\\boldsymbol{t}", "bu": "\\boldsymbol{u}", "bv": "\\boldsymbol{v}", "bw": "\\boldsymbol{w}", "bx": "\\boldsymbol{x}", "by": "\\boldsymbol{y}", "bz": "\\boldsymbol{z}", "bA": "\\boldsymbol{A}", "bB": "\\boldsymbol{B}", "bC": "\\boldsymbol{C}", "bD": "\\boldsymbol{D}", "bE": "\\boldsymbol{E}", "bF": "\\boldsymbol{F}", "bG": "\\boldsymbol{G}", "bH": "\\boldsymbol{H}", "bI": "\\boldsymbol{I}", "bJ": "\\boldsymbol{J}", "bK": "\\boldsymbol{K}", "bL": "\\boldsymbol{L}", "bM": "\\boldsymbol{M}", "bN": "\\boldsymbol{N}", "bO": "\\boldsymbol{O}", "bP": "\\boldsymbol{P}", "bQ": "\\boldsymbol{Q}", "bR": "\\boldsymbol{R}", "bS": "\\boldsymbol{S}", "bT": "\\boldsymbol{T}", "bU": "\\boldsymbol{U}", "bV": "\\boldsymbol{V}", "bW": "\\boldsymbol{W}", "bX": "\\boldsymbol{X}", "bY": "\\boldsymbol{Y}", "bZ": "\\boldsymbol{Z}", "balpha": "\\boldsymbol{\\alpha}", "bbeta": "\\boldsymbol{\\beta}", "bgamma": "\\boldsymbol{\\gamma}", "bdelta": "\\boldsymbol{\\delta}", "bepsilon": "\\boldsymbol{\\epsilon}", "bvarepsilon": "\\boldsymbol{\\varepsilon}", "bzeta": "\\boldsymbol{\\zeta}", "boeta": "\\boldsymbol{\\eta}", "btheta": "\\boldsymbol{\\theta}", "bvartheta": "\\boldsymbol{\\vartheta}", "biota": "\\boldsymbol{\\iota}", "bkappa": "\\boldsymbol{\\kappa}", "blambda": "\\boldsymbol{\\lambda}", "bmu": "\\boldsymbol{\\mu}", "bnu": "\\boldsymbol{\\nu}", "bxi": "\\boldsymbol{\\xi}", "bpi": "\\boldsymbol{\\pi}", "brho": "\\boldsymbol{\\rho}", "bvarrho": "\\boldsymbol{\\varrho}", "bsig": "\\boldsymbol{\\sigma}", "btau": "\\boldsymbol{\\tau}", "bupsilon": "\\boldsymbol{\\upsilon}", "bphi": "\\boldsymbol{\\phi}", "bvarphi": "\\boldsymbol{\\varphi}", "bchi": "\\boldsymbol{\\chi}", "bpsi": "\\boldsymbol{\\psi}", "bomega": "\\boldsymbol{\\omega}", "bGamma": "\\boldsymbol{\\Gamma}", "bDelta": "\\boldsymbol{\\Delta}", "bTheta": "\\boldsymbol{\\Theta}", "bLambda": "\\boldsymbol{\\Lambda}", "bXi": "\\boldsymbol{\\Xi}", "bPi": "\\boldsymbol{\\Pi}", "bSig": "\\boldsymbol{\\Sigma}", "bUpsilon": "\\boldsymbol{\\Upsilon}", "bPhi": "\\boldsymbol{\\Phi}", "bPsi": "\\boldsymbol{\\Psi}", "bOmega": "\\boldsymbol{\\Omega}", "Aa": "\\mathcal{A}", "Bb": "\\mathcal{B}", "Cc": "\\mathcal{C}", "Dd": "\\mathcal{D}", "Ee": "\\mathcal{E}", "Ff": "\\mathcal{F}", "Gg": "\\mathcal{G}", "Hh": "\\mathcal{H}", "Ii": "\\mathcal{I}", "Jj": "\\mathcal{J}", "Kk": "\\mathcal{K}", "Ll": "\\mathcal{L}", "Mm": "\\mathcal{M}", "Nn": "\\mathcal{N}", "Oo": "\\mathcal{O}", "Pp": "\\mathcal{P}", "Qq": "\\mathcal{Q}", "Rr": "\\mathcal{R}", "Ss": "\\mathcal{S}", "Tt": "\\mathcal{T}", "Uu": "\\mathcal{U}", "Vv": "\\mathcal{V}", "Ww": "\\mathcal{W}", "Xx": "\\mathcal{X}", "Yy": "\\mathcal{Y}", "Zz": "\\mathcal{Z}", "AA": "\\mathbb{A}", "BB": "\\mathbb{B}", "CC": "\\mathbb{C}", "DD": "\\mathbb{D}", "EE": "\\mathbb{E}", "FF": "\\mathbb{F}", "GG": "\\mathbb{G}", "HH": "\\mathbb{H}", "II": "\\mathbb{I}", "JJ": "\\mathbb{J}", "KK": "\\mathbb{K}", "LL": "\\mathbb{L}", "MM": "\\mathbb{M}", "NN": "\\mathbb{N}", "OO": "\\mathbb{O}", "PP": "\\mathbb{P}", "QQ": "\\mathbb{Q}", "RR": "\\mathbb{R}", "SS": "\\mathbb{S}", "TT": "\\mathbb{T}", "UU": "\\mathbb{U}", "VV": "\\mathbb{V}", "WW": "\\mathbb{W}", "XX": "\\mathbb{X}", "YY": "\\mathbb{Y}", "ZZ": "\\mathbb{Z}", "diff": "\\,\\text{d}", "div": "\\operatorname{div}", "dev": "\\operatorname{dev}", "sym": "\\operatorname{sym}", "diag": "\\operatorname{diag}", "skew": "\\operatorname{skew}", "tr": "\\operatorname{tr}", "cof": "\\operatorname{cof}", "T": "^{\\text{T}}", "utilde": "\\tilde{#1}", "uttilde": "\\tilde{\\tilde{#1}}", "tgrad": "\\utilde{\\nabla}", "dOm": "\\,\\text{d}\\Omega", "Neumann": "\\partial\\Omega_{\\text{N}}", "Dirichlet": "\\partial\\Omega_{\\text{D}}", "dt": "\\,\\text{d}t", "beps": "\\bvarepsilon", "epsi": "\\varepsilon", "bepsel": "\\bvarepsilon^{\\text{el}}", "bepsp": "\\bvarepsilon^{\\text{p}}", "bepsvp": "\\bvarepsilon^{\\text{vp}}", "epsp": "\\varepsilon^{\\text{p}}"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/jaxmat.state';</script>
@@ -67,7 +66,6 @@
     <link rel="prev" title="jaxmat.solvers.custom_optimistix_solvers" href="jaxmat.solvers.custom_optimistix_solvers.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -83,8 +81,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -92,6 +101,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -99,8 +109,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -116,8 +126,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -147,17 +156,21 @@
     
     
     <img src="../_static/jaxmat_logo.svg" class="logo__image only-light" alt="jaxmat - Home"/>
-    <img src="../_static/jaxmat_logo.svg" class="logo__image only-dark pst-js-only" alt="jaxmat - Home"/>
+    <script>document.write(`<img src="../_static/jaxmat_logo.svg" class="logo__image only-dark" alt="jaxmat - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -173,6 +186,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../demos/quickstart/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">jaxmat</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../demos/quickstart/batched_computation.html">Batching across material points</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../demos/quickstart/material_parameters_batching.html">Batching across material parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demos/quickstart/performance.html">Performance of CPU and GPU material integration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pytrees.html">Composable and differentiable material models</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
@@ -199,6 +213,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../concepts.html">Nonlinear constitutive behaviors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../computational.html">Computational aspects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tensors.html">Conventions for representing tensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sharp_bits.html">Sharp bits</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="current nav bd-sidenav">
@@ -237,14 +252,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -340,16 +350,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -393,13 +411,11 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.PK1_to_Cauchy"><code class="docutils literal notranslate"><span class="pre">PK1_to_Cauchy()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.internal"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.internal</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.strain"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.strain</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.stress"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.stress</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.internal</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.strain</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.stress</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.F"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.F</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.PK1"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.PK1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.internal</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.F</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.PK1</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.PK2"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.PK2</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.sig"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.sig</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.Cauchy"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.Cauchy</span></code></a></li>
@@ -421,7 +437,7 @@
 <span id="jaxmat-state-module"></span><h1>jaxmat.state module<a class="headerlink" href="#module-jaxmat.state" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxmat.state.AbstractState">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AbstractState</span></span><a class="reference internal" href="../_modules/jaxmat/state.html#AbstractState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.state.AbstractState" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AbstractState</span></span><a class="reference internal" href="../_modules/jaxmat/state.html#AbstractState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.state.AbstractState" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
 <p>Abstract base class representing mechanical states.</p>
 <dl class="py method">
@@ -440,7 +456,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxmat.state.SmallStrainState">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SmallStrainState</span></span><a class="reference internal" href="../_modules/jaxmat/state.html#SmallStrainState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.state.SmallStrainState" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SmallStrainState</span></span><a class="reference internal" href="../_modules/jaxmat/state.html#SmallStrainState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.state.SmallStrainState" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#jaxmat.state.AbstractState" title="jaxmat.state.AbstractState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractState</span></code></a></p>
 <p>State representation for small-strain behaviors.</p>
 <p>This class stores the current strain <span class="math notranslate nohighlight">\(\beps\)</span> and stress <span class="math notranslate nohighlight">\(\bsig\)</span> tensors under the assumption
@@ -497,23 +513,23 @@ hardening variables, etc.). Defaults to None.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">strain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor2" title="jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">SymmetricTensor2(dim=3,</span> <span class="pre">rank=2,</span> <span class="pre">_tensor=f64[3,3])</span></em><a class="headerlink" href="#id1" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">strain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor2" title="jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a></em><a class="headerlink" href="#id1" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id2">
-<span class="sig-name descname"><span class="pre">stress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor2" title="jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">SymmetricTensor2(dim=3,</span> <span class="pre">rank=2,</span> <span class="pre">_tensor=f64[3,3])</span></em><a class="headerlink" href="#id2" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.SymmetricTensor2" title="jaxmat.tensors.generic_tensors.SymmetricTensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></a></em><a class="headerlink" href="#id2" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="jaxmat.state.SmallStrainState.eps">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">eps</span></span><a class="headerlink" href="#jaxmat.state.SmallStrainState.eps" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">eps</span></span><a class="headerlink" href="#jaxmat.state.SmallStrainState.eps" title="Link to this definition">#</a></dt>
 <dd><p>Alias for <code class="docutils literal notranslate"><span class="pre">strain</span></code>.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="jaxmat.state.SmallStrainState.sig">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sig</span></span><a class="headerlink" href="#jaxmat.state.SmallStrainState.sig" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sig</span></span><a class="headerlink" href="#jaxmat.state.SmallStrainState.sig" title="Link to this definition">#</a></dt>
 <dd><p>Alias for <code class="docutils literal notranslate"><span class="pre">stress</span></code>.</p>
 </dd></dl>
 
@@ -535,7 +551,7 @@ Cauchy stress tensor. Enforce symmetry explicitly.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="jaxmat.state.FiniteStrainState">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FiniteStrainState</span></span><a class="reference internal" href="../_modules/jaxmat/state.html#FiniteStrainState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.state.FiniteStrainState" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FiniteStrainState</span></span><a class="reference internal" href="../_modules/jaxmat/state.html#FiniteStrainState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxmat.state.FiniteStrainState" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#jaxmat.state.AbstractState" title="jaxmat.state.AbstractState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractState</span></code></a></p>
 <p>State representation for finite-strain continuum mechanics.</p>
 <p>This class encapsulates the deformation gradient <span class="math notranslate nohighlight">\(\bF\)</span> (<code class="docutils literal notranslate"><span class="pre">F</span></code>) and first Piola-Kirchhoff
@@ -555,8 +571,8 @@ constitutive information. Defaults to None.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.state.FiniteStrainState.strain">
-<span class="sig-name descname"><span class="pre">strain</span></span><a class="headerlink" href="#jaxmat.state.FiniteStrainState.strain" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="jaxmat.state.FiniteStrainState.F">
+<span class="sig-name descname"><span class="pre">F</span></span><a class="headerlink" href="#jaxmat.state.FiniteStrainState.F" title="Link to this definition">#</a></dt>
 <dd><p>Deformation gradient <span class="math notranslate nohighlight">\(\bF\)</span>. Initialized as the identity tensor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -566,8 +582,8 @@ constitutive information. Defaults to None.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="jaxmat.state.FiniteStrainState.stress">
-<span class="sig-name descname"><span class="pre">stress</span></span><a class="headerlink" href="#jaxmat.state.FiniteStrainState.stress" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="jaxmat.state.FiniteStrainState.PK1">
+<span class="sig-name descname"><span class="pre">PK1</span></span><a class="headerlink" href="#jaxmat.state.FiniteStrainState.PK1" title="Link to this definition">#</a></dt>
 <dd><p>First Piola-Kirchhoff stress tensor <span class="math notranslate nohighlight">\(\bP\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -579,10 +595,6 @@ constitutive information. Defaults to None.</p>
 <div class="admonition-notes admonition">
 <p class="admonition-title">Notes</p>
 <dl>
-<dt>F<span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor2</span></code></span></dt><dd><p>Alias for deformation gradient.</p>
-</dd>
-<dt>PK1<span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor2</span></code></span></dt><dd><p>Alias for first Piola-Kirchhoff stress tensor.</p>
-</dd>
 <dt>PK2<span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></span></dt><dd><p>Second Piola-Kirchhoff stress tensor <span class="math notranslate nohighlight">\(\bS\)</span>, computed via <a class="reference internal" href="#jaxmat.state.PK1_to_PK2" title="jaxmat.state.PK1_to_PK2"><code class="xref py py-func docutils literal notranslate"><span class="pre">PK1_to_PK2()</span></code></a>.</p>
 </dd>
 <dt>sig<span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricTensor2</span></code></span></dt><dd><p>Cauchy stress tensor <span class="math notranslate nohighlight">\(\bsig\)</span>, computed via <a class="reference internal" href="#jaxmat.state.PK1_to_Cauchy" title="jaxmat.state.PK1_to_Cauchy"><code class="xref py py-func docutils literal notranslate"><span class="pre">PK1_to_Cauchy()</span></code></a>.</p>
@@ -598,37 +610,27 @@ constitutive information. Defaults to None.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id4">
-<span class="sig-name descname"><span class="pre">strain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2" title="jaxmat.tensors.generic_tensors.Tensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor2</span></code></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Tensor2(dim=3,</span> <span class="pre">rank=2,</span> <span class="pre">_tensor=f64[3,3])</span></em><a class="headerlink" href="#id4" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">F</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2" title="jaxmat.tensors.generic_tensors.Tensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor2</span></code></a></em><a class="headerlink" href="#id4" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id5">
-<span class="sig-name descname"><span class="pre">stress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2" title="jaxmat.tensors.generic_tensors.Tensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor2</span></code></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Tensor2(dim=3,</span> <span class="pre">rank=2,</span> <span class="pre">_tensor=f64[3,3])</span></em><a class="headerlink" href="#id5" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.state.FiniteStrainState.F">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">F</span></span><a class="headerlink" href="#jaxmat.state.FiniteStrainState.F" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="jaxmat.state.FiniteStrainState.PK1">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PK1</span></span><a class="headerlink" href="#jaxmat.state.FiniteStrainState.PK1" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">PK1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="jaxmat.tensors.generic_tensors.html#jaxmat.tensors.generic_tensors.Tensor2" title="jaxmat.tensors.generic_tensors.Tensor2"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor2</span></code></a></em><a class="headerlink" href="#id5" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="jaxmat.state.FiniteStrainState.PK2">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PK2</span></span><a class="headerlink" href="#jaxmat.state.FiniteStrainState.PK2" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PK2</span></span><a class="headerlink" href="#jaxmat.state.FiniteStrainState.PK2" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="jaxmat.state.FiniteStrainState.sig">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sig</span></span><a class="headerlink" href="#jaxmat.state.FiniteStrainState.sig" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sig</span></span><a class="headerlink" href="#jaxmat.state.FiniteStrainState.sig" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="jaxmat.state.FiniteStrainState.Cauchy">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Cauchy</span></span><a class="headerlink" href="#jaxmat.state.FiniteStrainState.Cauchy" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Cauchy</span></span><a class="headerlink" href="#jaxmat.state.FiniteStrainState.Cauchy" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -710,8 +712,7 @@ constitutive information. Defaults to None.</p>
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -740,13 +741,11 @@ constitutive information. Defaults to None.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.PK1_to_Cauchy"><code class="docutils literal notranslate"><span class="pre">PK1_to_Cauchy()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState</span></code></a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.internal"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.internal</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.strain"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.strain</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.stress"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.stress</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.internal</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.strain</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.stress</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.F"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.F</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.PK1"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.PK1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.internal</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.F</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.PK1</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.PK2"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.PK2</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.sig"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.sig</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxmat.state.FiniteStrainState.Cauchy"><code class="docutils literal notranslate"><span class="pre">FiniteStrainState.Cauchy</span></code></a></li>
@@ -794,8 +793,8 @@ By Jeremy Bleyer
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -16,36 +16,33 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
-  <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
@@ -55,9 +52,11 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "displayMath": [["$$", "$$"], ["\\[", "\\]"]], "macros": {"ba": "\\boldsymbol{a}", "bb": "\\boldsymbol{b}", "bc": "\\boldsymbol{c}", "bd": "\\boldsymbol{d}", "be": "\\boldsymbol{e}", "bf": "\\boldsymbol{f}", "bg": "\\boldsymbol{g}", "bh": "\\boldsymbol{h}", "bi": "\\boldsymbol{i}", "bj": "\\boldsymbol{j}", "bk": "\\boldsymbol{k}", "bl": "\\boldsymbol{l}", "bm": "\\boldsymbol{m}", "bn": "\\boldsymbol{n}", "bo": "\\boldsymbol{o}", "bp": "\\boldsymbol{p}", "bq": "\\boldsymbol{q}", "br": "\\boldsymbol{r}", "bs": "\\boldsymbol{s}", "bt": "\\boldsymbol{t}", "bu": "\\boldsymbol{u}", "bv": "\\boldsymbol{v}", "bw": "\\boldsymbol{w}", "bx": "\\boldsymbol{x}", "by": "\\boldsymbol{y}", "bz": "\\boldsymbol{z}", "bA": "\\boldsymbol{A}", "bB": "\\boldsymbol{B}", "bC": "\\boldsymbol{C}", "bD": "\\boldsymbol{D}", "bE": "\\boldsymbol{E}", "bF": "\\boldsymbol{F}", "bG": "\\boldsymbol{G}", "bH": "\\boldsymbol{H}", "bI": "\\boldsymbol{I}", "bJ": "\\boldsymbol{J}", "bK": "\\boldsymbol{K}", "bL": "\\boldsymbol{L}", "bM": "\\boldsymbol{M}", "bN": "\\boldsymbol{N}", "bO": "\\boldsymbol{O}", "bP": "\\boldsymbol{P}", "bQ": "\\boldsymbol{Q}", "bR": "\\boldsymbol{R}", "bS": "\\boldsymbol{S}", "bT": "\\boldsymbol{T}", "bU": "\\boldsymbol{U}", "bV": "\\boldsymbol{V}", "bW": "\\boldsymbol{W}", "bX": "\\boldsymbol{X}", "bY": "\\boldsymbol{Y}", "bZ": "\\boldsymbol{Z}", "balpha": "\\boldsymbol{\\alpha}", "bbeta": "\\boldsymbol{\\beta}", "bgamma": "\\boldsymbol{\\gamma}", "bdelta": "\\boldsymbol{\\delta}", "bepsilon": "\\boldsymbol{\\epsilon}", "bvarepsilon": "\\boldsymbol{\\varepsilon}", "bzeta": "\\boldsymbol{\\zeta}", "boeta": "\\boldsymbol{\\eta}", "btheta": "\\boldsymbol{\\theta}", "bvartheta": "\\boldsymbol{\\vartheta}", "biota": "\\boldsymbol{\\iota}", "bkappa": "\\boldsymbol{\\kappa}", "blambda": "\\boldsymbol{\\lambda}", "bmu": "\\boldsymbol{\\mu}", "bnu": "\\boldsymbol{\\nu}", "bxi": "\\boldsymbol{\\xi}", "bpi": "\\boldsymbol{\\pi}", "brho": "\\boldsymbol{\\rho}", "bvarrho": "\\boldsymbol{\\varrho}", "bsig": "\\boldsymbol{\\sigma}", "btau": "\\boldsymbol{\\tau}", "bupsilon": "\\boldsymbol{\\upsilon}", "bphi": "\\boldsymbol{\\phi}", "bvarphi": "\\boldsymbol{\\varphi}", "bchi": "\\boldsymbol{\\chi}", "bpsi": "\\boldsymbol{\\psi}", "bomega": "\\boldsymbol{\\omega}", "bGamma": "\\boldsymbol{\\Gamma}", "bDelta": "\\boldsymbol{\\Delta}", "bTheta": "\\boldsymbol{\\Theta}", "bLambda": "\\boldsymbol{\\Lambda}", "bXi": "\\boldsymbol{\\Xi}", "bPi": "\\boldsymbol{\\Pi}", "bSig": "\\boldsymbol{\\Sigma}", "bUpsilon": "\\boldsymbol{\\Upsilon}", "bPhi": "\\boldsymbol{\\Phi}", "bPsi": "\\boldsymbol{\\Psi}", "bOmega": "\\boldsymbol{\\Omega}", "Aa": "\\mathcal{A}", "Bb": "\\mathcal{B}", "Cc": "\\mathcal{C}", "Dd": "\\mathcal{D}", "Ee": "\\mathcal{E}", "Ff": "\\mathcal{F}", "Gg": "\\mathcal{G}", "Hh": "\\mathcal{H}", "Ii": "\\mathcal{I}", "Jj": "\\mathcal{J}", "Kk": "\\mathcal{K}", "Ll": "\\mathcal{L}", "Mm": "\\mathcal{M}", "Nn": "\\mathcal{N}", "Oo": "\\mathcal{O}", "Pp": "\\mathcal{P}", "Qq": "\\mathcal{Q}", "Rr": "\\mathcal{R}", "Ss": "\\mathcal{S}", "Tt": "\\mathcal{T}", "Uu": "\\mathcal{U}", "Vv": "\\mathcal{V}", "Ww": "\\mathcal{W}", "Xx": "\\mathcal{X}", "Yy": "\\mathcal{Y}", "Zz": "\\mathcal{Z}", "AA": "\\mathbb{A}", "BB": "\\mathbb{B}", "CC": "\\mathbb{C}", "DD": "\\mathbb{D}", "EE": "\\mathbb{E}", "FF": "\\mathbb{F}", "GG": "\\mathbb{G}", "HH": "\\mathbb{H}", "II": "\\mathbb{I}", "JJ": "\\mathbb{J}", "KK": "\\mathbb{K}", "LL": "\\mathbb{L}", "MM": "\\mathbb{M}", "NN": "\\mathbb{N}", "OO": "\\mathbb{O}", "PP": "\\mathbb{P}", "QQ": "\\mathbb{Q}", "RR": "\\mathbb{R}", "SS": "\\mathbb{S}", "TT": "\\mathbb{T}", "UU": "\\mathbb{U}", "VV": "\\mathbb{V}", "WW": "\\mathbb{W}", "XX": "\\mathbb{X}", "YY": "\\mathbb{Y}", "ZZ": "\\mathbb{Z}", "diff": "\\,\\text{d}", "div": "\\operatorname{div}", "dev": "\\operatorname{dev}", "sym": "\\operatorname{sym}", "diag": "\\operatorname{diag}", "skew": "\\operatorname{skew}", "tr": "\\operatorname{tr}", "cof": "\\operatorname{cof}", "T": "^{\\text{T}}", "utilde": "\\tilde{#1}", "uttilde": "\\tilde{\\tilde{#1}}", "tgrad": "\\utilde{\\nabla}", "dOm": "\\,\\text{d}\\Omega", "Neumann": "\\partial\\Omega_{\\text{N}}", "Dirichlet": "\\partial\\Omega_{\\text{D}}", "dt": "\\,\\text{d}t", "beps": "\\bvarepsilon", "epsi": "\\varepsilon", "bepsel": "\\bvarepsilon^{\\text{el}}", "bepsp": "\\bvarepsilon^{\\text{p}}", "bepsvp": "\\bvarepsilon^{\\text{vp}}", "epsp": "\\varepsilon^{\\text{p}}"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'demos/phenomenological_models/CamClay';</script>
@@ -67,7 +66,6 @@
     <link rel="prev" title="Norton viscoplastic model with a Green yield surface" href="Green_viscoplasticity.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -83,8 +81,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="../../search.html"
       method="get">
@@ -92,6 +101,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -99,8 +109,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -116,8 +126,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -147,17 +156,21 @@
     
     
     <img src="../../_static/jaxmat_logo.svg" class="logo__image only-light" alt="jaxmat - Home"/>
-    <img src="../../_static/jaxmat_logo.svg" class="logo__image only-dark pst-js-only" alt="jaxmat - Home"/>
+    <script>document.write(`<img src="../../_static/jaxmat_logo.svg" class="logo__image only-dark" alt="jaxmat - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -173,6 +186,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">jaxmat</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/batched_computation.html">Batching across material points</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/material_parameters_batching.html">Batching across material parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/performance.html">Performance of CPU and GPU material integration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../pytrees.html">Composable and differentiable material models</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
@@ -199,6 +213,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../concepts.html">Nonlinear constitutive behaviors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../computational.html">Computational aspects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tensors.html">Conventions for representing tensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sharp_bits.html">Sharp bits</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="nav bd-sidenav">
@@ -237,14 +252,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -340,16 +350,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -406,7 +424,7 @@
 <li><p>Evaluate the model response for non-proportional load paths.</p></li>
 </ul>
 </div>
-<p>The workflow follows the same structure as in the <span class="xref myst">Green viscoplastic model demo</span>: we successively define the internal variables, the yield surface, the hardening law, and the constitutive update.
+<p>The workflow follows the same structure as in the <a class="reference internal" href="Green_viscoplasticity.html"><span class="std std-doc">Green viscoplastic model demo</span></a>: we successively define the internal variables, the yield surface, the hardening law, and the constitutive update.
 We then simulate several over-consolidation ratios (OCRs) to study the material’s transition from contractant to dilatant behavior.</p>
 <section id="model-overview">
 <h2>Model overview<a class="headerlink" href="#model-overview" title="Link to this heading">#</a></h2>
@@ -472,7 +490,7 @@ We define a small subclass of <code class="docutils literal notranslate"><span c
 </section>
 <section id="yield-surface">
 <h3>Yield surface<a class="headerlink" href="#yield-surface" title="Link to this heading">#</a></h3>
-<p>We now define the Cam-Clay yield surface. The class inherits from <code class="docutils literal notranslate"><span class="pre">AbstractPlasticSurface</span></code> and thus automatically computes the normal vector to the yield surface via its <code class="docutils literal notranslate"><span class="pre">normal</span></code> method. We simply need to implement the expression of the yield surface in the <code class="docutils literal notranslate"><span class="pre">__call__</span></code> dunder method. We decorate the latter with  the <code class="docutils literal notranslate"><span class="pre">safe_zero</span></code> decorator as described in the <span class="xref myst"></span> demo.</p>
+<p>We now define the Cam-Clay yield surface. The class inherits from <code class="docutils literal notranslate"><span class="pre">AbstractPlasticSurface</span></code> and thus automatically computes the normal vector to the yield surface via its <code class="docutils literal notranslate"><span class="pre">normal</span></code> method. We simply need to implement the expression of the yield surface in the <code class="docutils literal notranslate"><span class="pre">__call__</span></code> dunder method. We decorate the latter with  the <code class="docutils literal notranslate"><span class="pre">safe_zero</span></code> decorator as described in the <a class="reference internal" href="Green_viscoplasticity.html"><span class="std std-doc">Norton viscoplastic model with a Green yield surface</span></a> demo.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">CamClaySurface</span><span class="p">(</span><span class="n">jm</span><span class="o">.</span><span class="n">AbstractPlasticSurface</span><span class="p">):</span>
@@ -526,7 +544,7 @@ The constitutive update proceeds first by defining the final stress expression f
     <span class="n">elasticity</span><span class="p">:</span> <span class="n">jm</span><span class="o">.</span><span class="n">LinearElasticIsotropic</span>
     <span class="n">plastic_surface</span><span class="p">:</span> <span class="n">CamClaySurface</span>
     <span class="n">hardening</span><span class="p">:</span> <span class="n">Hardening</span>
-    <span class="n">internal</span><span class="p">:</span> <span class="n">InternalState</span> <span class="o">=</span> <span class="n">eqx</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">InternalState</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">internal_type</span> <span class="o">=</span> <span class="n">InternalState</span>
 
     <span class="nd">@eqx</span><span class="o">.</span><span class="n">filter_jit</span>
     <span class="nd">@eqx</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">assert_max_traces</span><span class="p">(</span><span class="n">max_traces</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -646,13 +664,67 @@ The constitutive update proceeds first by defining the final stress expression f
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">35</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span>     <span class="n">loading</span> <span class="o">=</span> <span class="n">ImposedLoading</span><span class="p">(</span><span class="n">epszz</span><span class="o">=-</span><span class="n">imposed_eps</span><span class="p">,</span> <span class="n">sigxx</span><span class="o">=-</span><span class="n">p0_vals</span><span class="p">,</span> <span class="n">sigyy</span><span class="o">=-</span><span class="n">p0_vals</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="n">Eps</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">strain</span>
+<span class="ne">---&gt; </span><span class="mi">35</span> <span class="n">Eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">stats</span> <span class="o">=</span> <span class="n">global_solve</span><span class="p">(</span><span class="n">Eps</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">loading</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span> <span class="n">Sig</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">stress</span>
+<span class="g g-Whitespace">     </span><span class="mi">39</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">compute_pq</span><span class="p">)(</span><span class="n">Sig</span><span class="p">)</span>
+
+<span class="nn">File ~/codes/jaxmat/jaxmat/loader.py:160,</span> in <span class="ni">global_solve</span><span class="nt">(Eps0, state, loading_data, material, dt, in_axes)</span>
+<span class="g g-Whitespace">    </span><span class="mi">156</span>     <span class="k">return</span> <span class="n">eqx</span><span class="o">.</span><span class="n">filter_jit</span><span class="p">(</span><span class="n">solve_mechanical_state</span><span class="p">)(</span>
+<span class="g g-Whitespace">    </span><span class="mi">157</span>         <span class="n">Eps0</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">loading_data</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">dt</span>
+<span class="g g-Whitespace">    </span><span class="mi">158</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">159</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">160</span>     <span class="k">return</span> <span class="n">eqx</span><span class="o">.</span><span class="n">filter_jit</span><span class="p">(</span><span class="n">eqx</span><span class="o">.</span><span class="n">filter_vmap</span><span class="p">(</span><span class="n">solve_mechanical_state</span><span class="p">,</span> <span class="n">in_axes</span><span class="o">=</span><span class="n">in_axes</span><span class="p">))(</span>
+<span class="g g-Whitespace">    </span><span class="mi">161</span>         <span class="n">Eps0</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">loading_data</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">dt</span>
+<span class="g g-Whitespace">    </span><span class="mi">162</span>     <span class="p">)</span>
+
+    <span class="p">[</span><span class="o">...</span> <span class="n">skipping</span> <span class="n">hidden</span> <span class="mi">1</span> <span class="n">frame</span><span class="p">]</span>
+
+<span class="nn">File ~/miniconda3/envs/jaxmat-env/lib/python3.14/site-packages/equinox/_jit.py:263,</span> in <span class="ni">_call</span><span class="nt">(jit_wrapper, is_lower, args, kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">259</span>         <span class="n">marker</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">out</span> <span class="o">=</span> <span class="n">jit_wrapper</span><span class="o">.</span><span class="n">_cached</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span>             <span class="n">dynamic_donate</span><span class="p">,</span> <span class="n">dynamic_nodonate</span><span class="p">,</span> <span class="n">static</span>
+<span class="g g-Whitespace">    </span><span class="mi">261</span>         <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">262</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">263</span>     <span class="n">marker</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">out</span> <span class="o">=</span> <span class="n">jit_wrapper</span><span class="o">.</span><span class="n">_cached</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">264</span>         <span class="n">dynamic_donate</span><span class="p">,</span> <span class="n">dynamic_nodonate</span><span class="p">,</span> <span class="n">static</span>
+<span class="g g-Whitespace">    </span><span class="mi">265</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">266</span> <span class="c1"># We need to include the explicit `isinstance(marker, jax.Array)` check due</span>
+<span class="g g-Whitespace">    </span><span class="mi">267</span> <span class="c1"># to https://github.com/patrick-kidger/equinox/issues/988</span>
+<span class="g g-Whitespace">    </span><span class="mi">268</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">marker</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Tracer</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">269</span>     <span class="n">marker</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span>
+<span class="g g-Whitespace">    </span><span class="mi">270</span> <span class="p">):</span>
+
+<span class="ne">ValueError</span>: INTERNAL: CpuCallback error calling callback: Traceback (most recent call last):
+  <span class="n">File</span> <span class="s2">&quot;/home/bleyerj/miniconda3/envs/jaxmat-env/lib/python3.14/site-packages/jax/_src/callback.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">784</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_wrapped_callback</span>
+  <span class="n">File</span> <span class="s2">&quot;/home/bleyerj/miniconda3/envs/jaxmat-env/lib/python3.14/site-packages/jax/_src/callback.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">223</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_callback</span>
+  <span class="n">File</span> <span class="s2">&quot;/home/bleyerj/miniconda3/envs/jaxmat-env/lib/python3.14/site-packages/jax/_src/callback.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">95</span><span class="p">,</span> <span class="ow">in</span> <span class="n">pure_callback_impl</span>
+  <span class="n">File</span> <span class="s2">&quot;/home/bleyerj/miniconda3/envs/jaxmat-env/lib/python3.14/site-packages/jax/_src/callback.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">70</span><span class="p">,</span> <span class="ow">in</span> <span class="fm">__call__</span>
+  <span class="n">File</span> <span class="s2">&quot;/home/bleyerj/miniconda3/envs/jaxmat-env/lib/python3.14/site-packages/equinox/_errors.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">88</span><span class="p">,</span> <span class="ow">in</span> <span class="n">raises</span>
+<span class="ne">_EquinoxRuntimeError</span>: A linear solver received non-finite (NaN or inf) input and cannot determine a 
+<span class="n">solution</span><span class="o">.</span> 
+
+<span class="n">This</span> <span class="n">means</span> <span class="n">that</span> <span class="n">you</span> <span class="n">have</span> <span class="n">a</span> <span class="n">bug</span> <span class="n">upstream</span> <span class="n">of</span> <span class="n">Lineax</span> <span class="ow">and</span> <span class="n">should</span> <span class="n">check</span> <span class="n">the</span> <span class="n">inputs</span> <span class="n">to</span> 
+<span class="err">`</span><span class="n">lineax</span><span class="o">.</span><span class="n">linear_solve</span><span class="err">`</span> <span class="k">for</span> <span class="n">non</span><span class="o">-</span><span class="n">finite</span> <span class="n">values</span><span class="o">.</span>
+
+
+<span class="gt">--------------------</span>
+<span class="n">An</span> <span class="n">error</span> <span class="n">occurred</span> <span class="n">during</span> <span class="n">the</span> <span class="n">runtime</span> <span class="n">of</span> <span class="n">your</span> <span class="n">JAX</span> <span class="n">program</span><span class="o">!</span><span class="w"> </span>Unfortunately<span class="w"> </span>you<span class="w"> </span><span class="k">do</span><span class="w"> </span>not<span class="w"> </span>appear<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>using<span class="w"> </span><span class="sb">`</span>equinox.filter_jit<span class="sb">`</span><span class="w"> </span><span class="o">(</span>perhaps<span class="w"> </span>you<span class="w"> </span>are<span class="w"> </span>using<span class="w"> </span><span class="sb">`</span>jax.jit<span class="sb">`</span><span class="w"> </span>instead?<span class="o">)</span><span class="w"> </span>and<span class="w"> </span>so<span class="w"> </span>further<span class="w"> </span>information<span class="w"> </span>about<span class="w"> </span>the<span class="w"> </span>error<span class="w"> </span>cannot<span class="w"> </span>be<span class="w"> </span>displayed.<span class="w"> </span><span class="o">(</span>Probably<span class="w"> </span>you<span class="w"> </span>are<span class="w"> </span>seeing<span class="w"> </span>a<span class="w"> </span>very<span class="w"> </span>large<span class="w"> </span>but<span class="w"> </span>uninformative<span class="w"> </span>error<span class="w"> </span>message<span class="w"> </span>right<span class="w"> </span>now.<span class="o">)</span><span class="w"> </span>Please<span class="w"> </span>wrap<span class="w"> </span>your<span class="w"> </span>program<span class="w"> </span>with<span class="w"> </span><span class="sb">`</span>equinox.filter_jit<span class="sb">`</span>.
+<span class="gt">--------------------</span>
+</pre></div>
+</div>
+</div>
 </div>
 <p>Finally, we plot the corresponding stress and strain evolutions for the different OCR. The first plot shows the vertical stress/strain curve where we can clearly observe softening for the over-consolidated cases and hardening otherwise. The second plot shows the typical transition between contractance and dilatance during the softening evolutions. Finally, the last plot represents the stress paths in the <span class="math notranslate nohighlight">\((p,q)\)</span> space. The star symbols denote the final stress state for each cases which all fall on the critical state line of equation <span class="math notranslate nohighlight">\(q=Mp\)</span>.</p>
 <div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">)</span>
@@ -691,7 +763,7 @@ The constitutive update proceeds first by defining the final stress expression f
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/19da7cc033c0680151b53c2b111c6445eb59ad9bb70fc3ba61f8298ed533a4fa.png" src="../../_images/19da7cc033c0680151b53c2b111c6445eb59ad9bb70fc3ba61f8298ed533a4fa.png" />
+<img alt="../../_images/3ea6b929e829a56797944192ea8e7a73af55ba96457a6425dfce8079e6c5ddc6.png" src="../../_images/3ea6b929e829a56797944192ea8e7a73af55ba96457a6425dfce8079e6c5ddc6.png" />
 </div>
 </div>
 </section>
@@ -752,8 +824,7 @@ The constitutive update proceeds first by defining the final stress expression f
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -813,8 +884,8 @@ By Jeremy Bleyer
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
