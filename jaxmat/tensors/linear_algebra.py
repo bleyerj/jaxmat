@@ -149,27 +149,10 @@ def eig33(A, rtol=1e-16):
         two nearly equal eigenvalues. *International Journal for Numerical Methods in
         Engineering*, 124(5), 1089-1110.
     """
-    # def dyad_3_distinct(A, lamb):
-    #     """
-    #     Hartmann, S. (2019) “Computational Aspects of the Symmetric Eigenvalue Problem of Second Order Tensors”,
-    #     Technische Mechanik - European Journal of Engineering Mechanics, 23(2-4), pp. 283–294.
-    #     Available at: https://journals.ub.ovgu.de/index.php/techmech/article/view/989
-    #     """
-    #     Id = jnp.eye(3)
-    #     A2 = A @ A
-    #     d = jnp.array([lamb[0] - lamb[1], lamb[1] - lamb[2], lamb[2] - lamb[1]])
-    #     D = jnp.array([-d[0] * d[2], -d[0] * d[1], -d[1] * d[2]])
-    #     h1 = jnp.array([lamb[1] * lamb[2], -(lamb[1] + lamb[2]), 1]) / D[0]
-    #     N1 = h1[0] * Id + h1[1] * A + h1[2] * A2
-    #     h2 = jnp.array([lamb[0] * lamb[2], -(lamb[0] + lamb[2]), 1]) / D[1]
-    #     N2 = h2[0] * Id + h2[1] * A + h2[2] * A2
-    #     h3 = jnp.array([lamb[0] * lamb[1], -(lamb[0] + lamb[1]), 1]) / D[2]
-    #     N3 = h3[0] * Id + h3[1] * A + h3[2] * A2
-    #     return (N1, N2, N3)
 
     def compute_eigvals_HarariAlbocher(A):
         """
-        Eigendecomposition of 3x3 symmetric matrix based on Harari, I., & Albocher, U. (2023)
+        Eigendecomposition of 3x3 symmetric matrix based on Harari, I., & Albocher, U. (2023).
         """
         A = jnp.asarray(A)
         norm = safe_norm(A)
