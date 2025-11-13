@@ -58,7 +58,7 @@ class VoceHardening(eqx.Module):
 hardening = VoceHardening(sig0=350.0, sigu=500.0, b=1e3)
 
 # %% [markdown]
-# We now define the final material behavior of type `vonMisesIsotropicHardening`. We can check that it is a module containing an `elasticity` submodule and a `yield_stress` subdomule. Each of these submodule holds its own material properties. The elastic submodule also allows to access the material elastic shear modulus for instance, which is 80 GPa here.
+# We now define the final material behavior of type `vonMisesIsotropicHardening`. We can check that it is a module containing an `elasticity` submodule and a `yield_stress` submodule. Each of these submodule holds its own material properties. The elastic submodule also allows to access the material elastic shear modulus for instance, which is 80 GPa here.
 
 # %%
 material = jm.vonMisesIsotropicHardening(elasticity=elasticity, yield_stress=hardening)
@@ -97,7 +97,7 @@ plt.show()
 # %% [markdown]
 # ## Mechanical states
 #
-# In order to evaluate the response of a mechanical behavior, we need a mechanical state. Each material provides an `init_state` method to initialize its correponding mechanical state with default initial values (usually 0). Below, we see that the present state contrains a `strain` and a `stress`, each of them being a symmetric 2nd-rank tensor. In addition, it also contains an `internal` field, which is itself a state consisting of many internal state variables. In the present case, both the cumulated plastic strain $p$ and the total plastic strain $\bepsp$ are declared as internal state variables.
+# In order to evaluate the response of a mechanical behavior, we need a mechanical state. Each material provides an `init_state` method to initialize its corresponding mechanical state with default initial values (usually 0). Below, we see that the present state contains a `strain` and a `stress`, each of them being a symmetric 2nd-rank tensor. In addition, it also contains an `internal` field, which is itself a state consisting of many internal state variables. In the present case, both the cumulated plastic strain $p$ and the total plastic strain $\bepsp$ are declared as internal state variables.
 
 # %%
 state = material.init_state()

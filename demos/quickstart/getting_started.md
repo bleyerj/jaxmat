@@ -55,7 +55,7 @@ class VoceHardening(eqx.Module):
 hardening = VoceHardening(sig0=350.0, sigu=500.0, b=1e3)
 ```
 
-We now define the final material behavior of type `vonMisesIsotropicHardening`. We can check that it is a module containing an `elasticity` submodule and a `yield_stress` subdomule. Each of these submodule holds its own material properties. The elastic submodule also allows to access the material elastic shear modulus for instance, which is 80 GPa here.
+We now define the final material behavior of type `vonMisesIsotropicHardening`. We can check that it is a module containing an `elasticity` submodule and a `yield_stress` submodule. Each of these submodule holds its own material properties. The elastic submodule also allows to access the material elastic shear modulus for instance, which is 80 GPa here.
 
 ```{code-cell} ipython3
 material = jm.vonMisesIsotropicHardening(elasticity=elasticity, yield_stress=hardening)
