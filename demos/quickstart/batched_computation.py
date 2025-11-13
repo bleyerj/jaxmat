@@ -9,7 +9,7 @@
 #       format_version: '1.3'
 #       jupytext_version: 1.18.1
 #   kernelspec:
-#     display_name: fenicsx-v0.9
+#     display_name: jaxmat-env
 #     language: python
 #     name: python3
 # ---
@@ -97,6 +97,7 @@ batched_constitutive_update = jax.vmap(
 # ```
 #
 # Next, we iterate over different values of the Hosford parameter $a$. Using equinox.tree_at, we update the material PyTree to define a new material instance, then evaluate the batched constitutive update for the batch of strains and states. The resulting batched stress tensors are then plotted on the deviatoric $\pi$-plane.
+
 
 # %% tags=["hide-input"]
 def scatter_pi_plane(stress, marker="o", **kwargs):

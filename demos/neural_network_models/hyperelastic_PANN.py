@@ -9,7 +9,7 @@
 #       format_version: '1.3'
 #       jupytext_version: 1.18.1
 #   kernelspec:
-#     display_name: fenicsx-v0.9
+#     display_name: jaxmat-env
 #     language: python
 #     name: python3
 # ---
@@ -151,6 +151,7 @@ test_output = {key: dataset[key][1] for key in labels if key not in training_cas
 #
 # Finally, we use `jax.vmap` to define a batched version of the PK1 stress computation for a given PANN material model.
 
+
 # %%
 class PANN(ICNN):
     def nn_energy(self, lambC):
@@ -209,6 +210,7 @@ plt.show()
 
 # %% [markdown]
 # We are now ready to set up the training. Here, we simply define the error between the predicted and the stress data and use `optimistix` least-square solvers. First, the total error is defined by mapping the `error` function over the training load cases defined as a PyTree. The `total_error` takes as a first argument the PANN model PyTree `material` while training data are stored in the second `args` argument.
+
 
 # %%
 def total_error(material, args):

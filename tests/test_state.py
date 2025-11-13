@@ -100,11 +100,8 @@ def test_small_strain():
 
 def test_finite_strain():
     state = FiniteStrainState()
-    assert jnp.allclose(state.strain, jnp.eye(3))
     assert jnp.allclose(state.F, jnp.eye(3))
-    state = state.update(stress=2 * state.strain)
-    assert jnp.allclose(state.stress, 2 * jnp.eye(3))
+    state = state.update(PK1=2 * state.F)
     assert jnp.allclose(state.PK1, 2 * jnp.eye(3))
-    state = state.update(PK1=3 * state.strain)
-    assert jnp.allclose(state.stress, 3 * jnp.eye(3))
+    state = state.update(PK1=3 * state.F)
     assert jnp.allclose(state.PK1, 3 * jnp.eye(3))

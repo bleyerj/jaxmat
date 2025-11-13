@@ -1,3 +1,8 @@
+import warnings
+
+warnings.filterwarnings(
+    "ignore"
+)  # Suppress all warnings FIXME: this is to remove equinox warnings when using init=False in module definition with arrays
 import jax.numpy as jnp
 from .generic_tensors import (
     Tensor,

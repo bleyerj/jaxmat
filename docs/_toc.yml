@@ -12,6 +12,7 @@ parts:
         - file: demos/quickstart/getting_started.ipynb
         - file: demos/quickstart/batched_computation.ipynb
         - file: demos/quickstart/material_parameters_batching.ipynb
+        - file: demos/quickstart/performance.ipynb
         - file: pytrees.md
   - caption: Examples
     chapters:
@@ -34,6 +35,7 @@ parts:
       - file: concepts.md
       - file: computational.md
       - file: tensors.md
+      - file: sharp_bits.md
   - caption: API
     chapters:
       - file: api/jaxmat.loader.rst

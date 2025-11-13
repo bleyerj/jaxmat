@@ -7,7 +7,7 @@ jupytext:
     format_version: 0.13
     jupytext_version: 1.18.1
 kernelspec:
-  display_name: fenicsx-v0.9
+  display_name: jaxmat-env
   language: python
   name: python3
 ---
@@ -71,7 +71,7 @@ plt.plot(epsp, sig, "-k", label="Ground truth")
 plt.plot(epsp_noise, sig_noise, "xC3", linewidth=1, label="Training data")
 plt.xlim(0, 8e-2)
 plt.xlabel("Equivalent plastic strain $p$")
-plt.ylabel("Yield stress $\sigma_Y$")
+plt.ylabel(r"Yield stress $\sigma_Y$")
 plt.legend()
 plt.show()
 ```
@@ -192,7 +192,7 @@ for hardening in [sumexp_hardening, icnn_hardening]:
     plt.xlim(0, 14e-2)
     plt.ylim(400, 1e3)
     plt.xlabel("Equivalent plastic strain $p$")
-    plt.ylabel("Yield stress $\sigma_Y$")
+    plt.ylabel(r"Yield stress $\sigma_Y$")
     plt.title(hardening.__class__.__name__)
     plt.legend()
     plt.show()

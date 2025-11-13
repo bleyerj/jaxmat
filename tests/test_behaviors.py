@@ -53,17 +53,23 @@ def test_finite_strain_behavior():
 
     material = jm.FeFpJ2Plasticity(elasticity=elasticity, yield_stress=hardening)
     state = material.init_state()
-    assert hasattr(state, "strain")
-    assert hasattr(state, "stress")
+    assert hasattr(state, "F")
+    assert hasattr(state, "PK1")
+    assert hasattr(state, "Cauchy")
     assert hasattr(state.internal, "p")
     assert hasattr(state.internal, "be_bar")
 
     Nbatch = 10
     batched_state = material.init_state(Nbatch)
+    assert hasattr(batched_state, "F")
+    assert hasattr(batched_state, "PK1")
+    assert hasattr(batched_state, "Cauchy")
+    assert hasattr(batched_state.internal, "p")
+    assert hasattr(batched_state.internal, "be_bar")
     assert jnp.array_equal(
-        batched_state.strain, jnp.broadcast_to(jnp.eye(3), (Nbatch, 3, 3))
+        batched_state.F, jnp.broadcast_to(jnp.eye(3), (Nbatch, 3, 3))
     )
-    assert jnp.array_equal(batched_state.stress, jnp.zeros((Nbatch, 3, 3)))
+    assert jnp.array_equal(batched_state.PK1, jnp.zeros((Nbatch, 3, 3)))
     assert jnp.array_equal(
         batched_state.internal.be_bar, jnp.broadcast_to(jnp.eye(3), (Nbatch, 3, 3))
     )
@@ -75,8 +81,8 @@ def test_finite_strain_behavior():
         batched_material.elasticity.E, jnp.full((Nbatch,), elasticity.E)
     )
     state = batched_material.init_state()
-    assert jnp.array_equal(state.strain, jnp.broadcast_to(jnp.eye(3), (Nbatch, 3, 3)))
-    assert jnp.array_equal(state.stress, jnp.zeros((Nbatch, 3, 3)))
+    assert jnp.array_equal(state.F, jnp.broadcast_to(jnp.eye(3), (Nbatch, 3, 3)))
+    assert jnp.array_equal(state.PK1, jnp.zeros((Nbatch, 3, 3)))
     assert jnp.array_equal(
         state.internal.be_bar, jnp.broadcast_to(jnp.eye(3), (Nbatch, 3, 3))
     )

@@ -71,7 +71,7 @@ def test_finite_strain():
     Nbatch = len(loadings)
 
     state = material.init_state(Nbatch)
-    F0 = state.strain
+    F0 = state.F
     dt = 0.0
     F_sol, state_sol, stats = global_solve(F0, state, loadings, material, dt)
     assert jnp.allclose(state_sol.PK2[0], jnp.diag(S))

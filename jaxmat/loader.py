@@ -2,12 +2,43 @@ import jax
 import jax.numpy as jnp
 import equinox as eqx
 import optimistix as optx
+import lineax as lx
 from typing import Literal
 from jaxmat.tensors import SymmetricTensor2
-from jaxmat.solvers import DEFAULT_SOLVERS
+
+
+linear_solver = lx.AutoLinearSolver(well_posed=False)
+solver, adjoint = (
+    optx.Newton(
+        rtol=1e-8,
+        atol=1e-8,
+        linear_solver=linear_solver,
+    ),
+    optx.ImplicitAdjoint(linear_solver=linear_solver),
+)
 
 
 class ImposedLoading(eqx.Module):
+    """
+    Represents an imposed loading condition defined by strain and stress values.
+
+    This class constructs arrays of imposed strains and stresses, together with a
+    mask identifying which components are strain-controlled. It is typically used to
+    generate loading paths for constitutive model evaluations or parameter
+    identification tasks.
+
+    Parameters
+    ----------
+    hypothesis : {'small_strain', 'finite_strain'}, optional
+        The kinematic hypothesis to use when generating the loading.
+        Defaults to ``'small_strain'``.
+    kwargs :
+        Additional keyword arguments defining the actual loading path.
+          - ``small_strain``: args can be ``epsij`` or ``sigij``
+          - ``finite_strain``: args can be ``Fij`` or ``Pij``
+        where ``ij`` are either ``xx``, ``yy``, ``zz``, ``xy``, ``xz`` or ``yz``
+    """
+
     eps_vals: jnp.ndarray
     sig_vals: jnp.ndarray
     strain_mask: jnp.ndarray
@@ -128,8 +159,6 @@ def stack_loadings(loadings: list):
 
 
 def solve_mechanical_state(eps0, state, loading_data: ImposedLoading, material, dt):
-    solver, adjoint = DEFAULT_SOLVERS
-
     def res_fn(eps, state):
         res, new_state = residual(material, loading_data, eps, state, dt)
         return res, new_state
