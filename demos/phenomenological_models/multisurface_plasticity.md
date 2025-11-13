@@ -7,7 +7,7 @@ jupytext:
     format_version: 0.13
     jupytext_version: 1.18.1
 kernelspec:
-  display_name: fenicsx-v0.9
+  display_name: jaxmat-env
   language: python
   name: python3
 ---
@@ -133,7 +133,7 @@ class MultiSurfacePlasticity(SmallStrainBehavior):
     def __post_init__(self):
         assert len(self.yield_stresses) == len(self.plastic_surfaces)
         self.n_surf = len(self.plastic_surfaces)
-        
+
     def make_internal_state(self):
         return InternalState(n_surf=self.n_surf)
 

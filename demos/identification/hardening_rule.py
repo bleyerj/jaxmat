@@ -9,7 +9,7 @@
 #       format_version: '1.3'
 #       jupytext_version: 1.18.1
 #   kernelspec:
-#     display_name: fenicsx-v0.9
+#     display_name: jaxmat-env
 #     language: python
 #     name: python3
 # ---
@@ -74,7 +74,7 @@ plt.plot(epsp, sig, "-k", label="Ground truth")
 plt.plot(epsp_noise, sig_noise, "xC3", linewidth=1, label="Training data")
 plt.xlim(0, 8e-2)
 plt.xlabel("Equivalent plastic strain $p$")
-plt.ylabel("Yield stress $\sigma_Y$")
+plt.ylabel(r"Yield stress $\sigma_Y$")
 plt.legend()
 plt.show()
 
@@ -95,6 +95,7 @@ plt.show()
 #     This model enforces convexity of the potential by construction, guaranteeing a monotonic hardening behavior. The yield stress is defined as the gradient of the convex potential output by the ICNN, see also [](../neural_network_models/hyperelastic_PANN).
 #
 # Both models are implemented as `equinox.Module`s, allowing them to be handled as JAX PyTrees and trained with differentiable solvers.
+
 
 # %%
 class SumExpHardening(eqx.Module):
@@ -132,6 +133,7 @@ icnn_hardening = HardeningICNN(0, [N], key)
 # $$
 #
 # where $M$ is the number of data points, $\gamma$ is a regularization coefficient and $n_{\btheta}$ denotes the total number of parameters in $\btheta$. Both the data loss and the regularization term are written in a fully JAX-compatible manner.
+
 
 # %%
 def loss(hardening, args):
@@ -198,7 +200,7 @@ for hardening in [sumexp_hardening, icnn_hardening]:
     plt.xlim(0, 14e-2)
     plt.ylim(400, 1e3)
     plt.xlabel("Equivalent plastic strain $p$")
-    plt.ylabel("Yield stress $\sigma_Y$")
+    plt.ylabel(r"Yield stress $\sigma_Y$")
     plt.title(hardening.__class__.__name__)
     plt.legend()
     plt.show()

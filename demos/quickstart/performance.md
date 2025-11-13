@@ -7,7 +7,7 @@ jupytext:
     format_version: 0.13
     jupytext_version: 1.18.1
 kernelspec:
-  display_name: fenicsx-v0.10
+  display_name: jaxmat-env
   language: python
   name: python3
 ---
@@ -88,7 +88,7 @@ $$
 r_{\bbe} = \dev(\bbebar - \bbebar_\text{trial})  + \sqrt{\dfrac{2}{3}}\Delta p \operatorname{tr}(\bbebar) \dfrac{\bs}{\|\bs\|}   + \bI (\det(\bbebar) - 1) = 0
 $$
 
-Note that the first part of $r_{\bbe}$ is deviatoric only and enforce the plastic flow rule whereas the last term is purely spherical and enforces the plastic incompressibility condition. 
+Note that the first part of $r_{\bbe}$ is deviatoric only and enforce the plastic flow rule whereas the last term is purely spherical and enforces the plastic incompressibility condition.
 The nonlinear Newton system $(r_p,r_{\bbe})$ is then solved using `optimistix` for $\Delta p$ and $\bbebar$.
 
 Finally, the first Piola-Kirchhoff stress is obtained from the Kirchhoff stress as follows:
@@ -123,15 +123,23 @@ style = {"jac": "-", "no_jac": "--"}
 
 for jac in ["no_jac", "jac"]:
     for platform in ["cpu", "gpu"]:
-        data = np.loadtxt(current_path / "../demos/_data" / f"performance_{jac}_{platform}.csv", delimiter=",")
+        data = np.loadtxt(
+            current_path / "../demos/_data" / f"performance_{jac}_{platform}.csv",
+            delimiter=",",
+        )
         Nbatch_list = data[:, 0]
         times = data[:, 1:]
         plt.errorbar(
             Nbatch_list,
             np.mean(times, axis=1),
-            np.std(times, axis=1), fmt=f"o{style[jac]}", markerfacecolor="white",
+            np.std(times, axis=1),
+            fmt=f"o{style[jac]}",
+            markerfacecolor="white",
             color=colors[platform],
-            label=platform.upper()+"-"+jac,linewidth=4.0, alpha=0.75, elinewidth=2.0
+            label=platform.upper() + "-" + jac,
+            linewidth=4.0,
+            alpha=0.75,
+            elinewidth=2.0,
         )
 plt.gca().set_xscale("log")
 plt.gca().set_yscale("log")

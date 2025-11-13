@@ -9,7 +9,7 @@
 #       format_version: '1.3'
 #       jupytext_version: 1.18.1
 #   kernelspec:
-#     display_name: fenicsx-v0.9
+#     display_name: jaxmat-env
 #     language: python
 #     name: python3
 # ---

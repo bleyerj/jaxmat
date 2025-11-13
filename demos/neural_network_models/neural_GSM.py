@@ -10,7 +10,7 @@
 #       format_version: '1.3'
 #       jupytext_version: 1.18.1
 #   kernelspec:
-#     display_name: fenicsx-v0.9
+#     display_name: jaxmat-env
 #     language: python
 #     name: python3
 # ---
@@ -137,6 +137,7 @@ gamma = jnp.full_like(jnp.diff(times), fill_value=gamma_r)
 # We define a general-purpose function `compute_evolution` that integrates the constitutive equations over time for a given strain path.
 # Starting from the initial state, the model is updated incrementally at each time step using the internal solver provided by `jaxmat` and returns the full stress history. By using `jax.lax.scan`, the loop over time increments is efficiently compiled by JAX, ensuring high performance and differentiability.
 
+
 # %%
 def compute_evolution(material, gamma_list, times):
     # Initial material state
@@ -173,6 +174,7 @@ def compute_evolution(material, gamma_list, times):
 #
 # We first define the internal state PyTree as a batch of symmetric strain tensors $\balpha_i$ representing the $N_\text{var}$ viscous strains in each Maxwell-like branch.
 
+
 # %%
 class InternalState(AbstractState):
     alpha: SymmetricTensor2 = eqx.field(init=False)
@@ -186,6 +188,7 @@ class InternalState(AbstractState):
 
 # %% [markdown]
 # The free energy is implemented as a sum of quadratic elastic contributions in the form of an `equinox.Module`. The free energy `__call__` function takes as arguments the total strain $\beps$ (`eps`) and the PyTree (`isv`) of internal state variables $(\balpha_i)$.
+
 
 # %%
 class FreeEnergy(eqx.Module):
@@ -213,6 +216,7 @@ class FreeEnergy(eqx.Module):
 # $$
 # \Phi(\balpha_i) = \Nn_\text{ICNN}(\balpha_i) - \dfrac{\partial \Nn_\text{ICNN}}{\partial\balpha_i}(\balpha_i=0):\balpha_i
 # $$
+
 
 # %%
 class ICNNDissipationPotential(ICNN):
@@ -304,6 +308,7 @@ plt.show()
 # where $\hat\bsig^{(k)}(\btheta)$ denotes the predicted stress tensor by the neural GSM at time step $k$ and $ \bsig^\text{data,(k)}$ the corresponding target value.
 # As the stress evolution depends recursively on the internal variables, the loss is history-dependent.
 # Gradients are automatically computed by JAX through the full time integration and solver iterations.
+
 
 # %%
 @eqx.filter_jit
