@@ -14,7 +14,7 @@ kernelspec:
 
 # Performance of CPU and GPU material integration
 
-This short demo reports the computational performance that can be expected when running `jaxmat` on a CPU or GPU for a batch of $N$ material points.
+This short demo reports the computational performance that can be expected when running `jaxmat` on a CPU or GPU for a batch of $N$ material points.$\newcommand{\bFe}{\boldsymbol{F}^\text{e}}\newcommand{\bFp}{\boldsymbol{F}^\text{p}}\newcommand{\bbe}{\boldsymbol{b}^\text{e}}\newcommand{\bbebar}{\overline{\boldsymbol{b}}^\text{e}}$
 
 The behavior is a finite-strain $\bF^\text{e}\bF^\text{p}$ elastoplastic model implemented in the `FeFpJ2Plasticity` behavior. We perform a monotonic strain-driven constitutive integration for 20 steps for $\epsilon=0$ to $5.10^{-2}$ for an isochoric tension:
 
@@ -38,25 +38,20 @@ $$
 $$
 where $\bbebar = J^{-2/3}\bbe$ with $\bbe=\bFe{\bFe}^\text{T}$ being the elastic left Cauchy-Green strain tensor.
 
-For the plastic part, we assume a von Mises-type J2 plasticity with the following yield function:
+For the plastic part, we assume a von Mises-type $J_2$ plasticity with the following yield function:
 
 $$
-f(\btau;p) = \|\bs\| - \sqrt{\dfrac{2}{3}}R(p)
+f(\btau;p) = \sqrt{\dfrac{3}{2}}\|\bs\| - R(p)
 $$
 where $p$ is the cumulated plastic strain and $R(p)$ a user-defined yield stress.
 
-The evolution of $p$ is given by the associated plastic flow rule given by:
-
-$$
-\dev(\mathcal{L}_v(\bbe)) = - \sqrt{\dfrac{2}{3}}\dot{p}\operatorname{tr}(\bbe)\dfrac{\bs}{\|\bs\|}
-$$
-where $\mathcal{L}_v(\bbe)$ is the Lie derivative of the elastic strain. The isotropic part evolution being given by the isochoric plastic condition $\det(\bbe)=J^2$.
+The evolution of $p$ is given by the associated plastic flow rule, while the isotropic part evolution is given by the isochoric plastic condition $\det(\bbe)=J^2$.
 
 ### Discrete evolutions equations
 
-Discretization of the above evolution equations follows a procedure similar to the integration of small-strain elastoplastic models as described in [](/jax_elastoplasticity.md).
+Discretization of the above evolution equations follows a procedure similar to the integration of small-strain elastoplastic models. In particular, we use the Fischer-Burmeister approach to enforce plastic consistency conditions.
 
-In our implementation, internal state variables are the cumulated plastic strain $p$ and the volume preserving elastic strain $\bbebar$.
+In our implementation, internal state variables are the cumulated plastic strain $p$ and the volume preserving elastic strain $\bbebar$. The latter is initialized with the identity tensor to specify a natural unstressed elastic configuration.
 
 We first compute an elastic stress predictor based on the relative deformation gradient given by:
 
@@ -73,19 +68,28 @@ Assuming an elastic evolution at first, the trial elastic strain is given by:
 $$
 \bbebar_\text{trial} = \bar{\boldsymbol{f}}_{n+1}^\text{T}\bbebar_n\bar{\boldsymbol{f}}_{n+1}
 $$
-which is used to compute the elastic trial deviatoric stress $\bs_\text{trial} = \mu\dev(\bbebar_\text{trial})$.
 
-The yield condition is then evaluated for this trial state $f_\text{trial} = \|\bs_\text{trial}\| - \sqrt{\dfrac{2}{3}}R(p_n)$.
+For the new elastic strain $\bbebar$, the deviatoric stress is $\bs = \mu\dev(\bbebar)$.
 
-For an elastic evolution, $f_\text{trial} \leq 0$ we set $\bbebar = \bbebar_\text{trial}$ and $\Delta p =0$. For a plastic evolution $f_\text{trial} > 0$, we write the following disrete evolution equations, see again {cite:p}`seidl2022calibration` for more details.
+The yield condition is then given by:
+$$
+f(\bs) = \sqrt{\dfrac{3}{2}} \|\bs\| - R(p_n+\Delta p)
+$$
+
+The plastic consistency conditions are then encoded using the Fischer-Burmeister function $\text{FB}$ as:
 
 $$
-\begin{align}
-r_p &=  \|\bs\| - \sqrt{\dfrac{2}{3}}R(p_n+\Delta p) =0\\
-r_{\bbe} &= \dev(\bbebar - \bbebar_\text{trial})  + \sqrt{\dfrac{2}{3}}\Delta p \operatorname{tr}(\bbebar) \dfrac{\bs}{\|\bs\|}               + \bI (\det(\bbebar) - 1) = 0
-\end{align}
+r_p = \text{FB}(-f(\bs),\Delta p) = 0
 $$
-Note that the first part of $r_{\bbe}$ is deviatoric only and enforce the plastic flow rule whereas the last term is purely spherical and enforces the plastic incompressibility condition. This nonlinear Newton system is solved using the `JAXNewtonSolver` for $\Delta p$ and $\bbebar$. 
+
+Finally, the remaining discrete evolution equations are given following {cite:p}`seidl2022calibration` as:
+
+$$
+r_{\bbe} = \dev(\bbebar - \bbebar_\text{trial})  + \sqrt{\dfrac{2}{3}}\Delta p \operatorname{tr}(\bbebar) \dfrac{\bs}{\|\bs\|}   + \bI (\det(\bbebar) - 1) = 0
+$$
+
+Note that the first part of $r_{\bbe}$ is deviatoric only and enforce the plastic flow rule whereas the last term is purely spherical and enforces the plastic incompressibility condition. 
+The nonlinear Newton system $(r_p,r_{\bbe})$ is then solved using `optimistix` for $\Delta p$ and $\bbebar$.
 
 Finally, the first Piola-Kirchhoff stress is obtained from the Kirchhoff stress as follows:
 
@@ -95,11 +99,9 @@ $$
 
 The tangent operator is again computed using AD which avoids us to compute explicitly the consistent tangent operator which is particularly nasty for such $\bFe\bFp$ models.
 
-Finally, the internal state variable $\overline{\boldsymbol{b}}^\text{e}$ describing the intermediate elastic configuration must be initialized with the identity tensor to specify a natural unstressed elastic configuration.
-
 ## Performance timing
 
-The constitutive integration is done for a batch of $N$ material points using `vmap` and is jitted. We also possibly compute the consistent tangent operator (case `jac`), otherwise only stress and state are computed without tangent operator (case `no_jac`).
+The constitutive integration is done for a batch of $N$ material points using `vmap` and is jitted. We also possibly compute the consistent tangent operator (case `jac`), otherwise only stress and state are computed without tangent operator (case `no_jac`). Computations are done in the {download}`generate_performance_data.py` script.
 
 Timing for integrating the whole batch is reported for each increment. Timing varies with increment number due to elastic vs. plastic regime but material parameters and loading amplitude are chosen to yield substantial plastic evolution. Note that a dummy integration is launched first to remove JIT compilation overhead from the reported timings.
 
@@ -147,5 +149,3 @@ Finally, because of the smaller cost on GPU the jacobian overhead is more visibl
 ```{bibliography}
 :filter: docname in docnames
 ```
-
-+++
