@@ -52,7 +52,7 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -424,15 +424,14 @@ document.write(`
 <ul class="simple">
 <li><p>Define a custom multi-surface plasticity model in <code class="docutils literal notranslate"><span class="pre">jaxmat</span></code>.</p></li>
 <li><p>Combine several yield surfaces and associated yield stresses within the same constitutive update.</p></li>
-<li><p>Use Fischer-Burmeister functions to tackle plastic complementarity, thereby avoiding an explicit tracking of active/inactive yield surfaces.</p></li>
+<li><p>Use <a class="reference internal" href="../../sharp_bits.html"><span class="std std-doc">Fischer-Burmeister functions</span></a> to tackle plastic complementarity, thereby avoiding an explicit tracking of active/inactive yield surfaces.</p></li>
 <li><p>Validate the implementation by visualizing the resulting stress paths in the <span class="math notranslate nohighlight">\((p, q)\)</span> (mean–deviatoric) stress space.</p></li>
 </ul>
 </div>
 <p>For the sake of illustration, we consider a Drucker–Prager yield surface describing the main frictional effect in the plasticity of several geomaterials. We also add an elliptic cap in compression and a hydrostatic tension cutoff. Assuming no hardening, we plot the final yield surface obtained from various strain-driven load paths in the hydrostatic/deviatoric <span class="math notranslate nohighlight">\((p,q)\)</span>-plane.</p>
 <section id="multi-surface-plasticity-setting">
 <h2>Multi-surface plasticity setting<a class="headerlink" href="#multi-surface-plasticity-setting" title="Link to this heading">#</a></h2>
-<p>We consider <span class="math notranslate nohighlight">\(i=1,\ldots, N\)</span> different yield surfaces. Each of them is associated with its own yield stress function <span class="math notranslate nohighlight">\(f_i(\bsig)\)</span> and yield stress <span class="math notranslate nohighlight">\(\sigma_{0i}\)</span>. Here, we do not consider any hardening so the yield stresses are all constants. However it is possible to account for independent isotropic hardening of each surface. Hence, each yield surface is associated with its own plastic multiplier, which we denote <span class="math notranslate nohighlight">\(p_i\)</span> [^1].</p>
-<p>[^1] : This is an abuse of notation regarding the classical cumulated plastic strain of standard <span class="math notranslate nohighlight">\(J_2\)</span>-plasticity, we should rather denote them <span class="math notranslate nohighlight">\(\lambda_ i\)</span>. We chose the notation <span class="math notranslate nohighlight">\(p_i\)</span> to keep the implementation as close as possible to simpler plastic behaviors.</p>
+<p>We consider <span class="math notranslate nohighlight">\(i=1,\ldots, N\)</span> different yield surfaces. Each of them is associated with its own yield stress function <span class="math notranslate nohighlight">\(f_i(\bsig)\)</span> and yield stress <span class="math notranslate nohighlight">\(\sigma_{0i}\)</span>. Here, we do not consider any hardening so the yield stresses are all constants. However it is possible to account for independent isotropic hardening of each surface. Hence, each yield surface is associated with its own plastic multiplier, which we denote <span class="math notranslate nohighlight">\(p_i\)</span> <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <section id="generalized-flow-rule">
 <h3>Generalized flow rule<a class="headerlink" href="#generalized-flow-rule" title="Link to this heading">#</a></h3>
 <p>For a smooth yield surface <span class="math notranslate nohighlight">\(f(\bsig)\)</span>, we now that the associated flow rule is expressed as <span class="math notranslate nohighlight">\(\dot{\bepsp}=\dot{\lambda}\partial_{\bsig} f\)</span>. In the non-smooth case, the flow rule generalizes as follows:</p>
@@ -448,7 +447,7 @@ document.write(`
 </section>
 <section id="plastic-complementarity-conditions">
 <h3>Plastic complementarity conditions<a class="headerlink" href="#plastic-complementarity-conditions" title="Link to this heading">#</a></h3>
-<p>The evolution of these quantities is determined implicitly by a return-mapping–like algorithm formulated as a root-finding problem. Classically, we should choose which surface is active, compute a projected stress and then check if the surface remains active. This active-set strategy is relatively cumbersome to implement. Instead, the use of complementarity functions such as Fischer-Burmeister functions allows to avoid explicitly testing which surface is active or not. Elastic and plastic evolution are simultaneously accounted for by requiring that, for all plastic mechanism <span class="math notranslate nohighlight">\(i\)</span>:</p>
+<p>The evolution of these quantities is determined implicitly by a return-mapping–like algorithm formulated as a root-finding problem. Classically, we should choose which surface is active, compute a projected stress and then check if the surface remains active. This active-set strategy is relatively cumbersome to implement. Instead, the use of complementarity functions such as <a class="reference internal" href="../../sharp_bits.html"><span class="std std-doc">Fischer-Burmeister functions</span></a> allows to avoid explicitly testing which surface is active or not. Elastic and plastic evolution are simultaneously accounted for by requiring that, for all plastic mechanism <span class="math notranslate nohighlight">\(i\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
 \text{FB}(\sigma_0-f_i(\bsig), \Delta p_i) = 0 \quad \Leftrightarrow \quad f_i(\bsig)\leq \sigma_{0i},\: \Delta p_i \geq 0, \: (f_i(\bsig)-\sigma_{0i})\Delta p_i=0
@@ -768,6 +767,13 @@ and that the model correctly reproduces the expected multi-surface plastic behav
 <img alt="../../_images/e6b0c2ffb5454a1fe906a4aea8da2eae071227a56fcc6ff37aecbeb295d823d1.png" src="../../_images/e6b0c2ffb5454a1fe906a4aea8da2eae071227a56fcc6ff37aecbeb295d823d1.png" />
 </div>
 </div>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>This is an abuse of notation regarding the classical cumulated plastic strain of standard <span class="math notranslate nohighlight">\(J_2\)</span>-plasticity, we should rather denote them <span class="math notranslate nohighlight">\(\lambda_ i\)</span>. We chose the notation <span class="math notranslate nohighlight">\(p_i\)</span> to keep the implementation as close as possible to simpler plastic behaviors.</p>
+</aside>
+</aside>
 </section>
 </section>
 
