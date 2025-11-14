@@ -10,10 +10,10 @@ from jaxmat.tensors.utils import safe_norm, safe_sqrt
 def safe_zero(method):
     """Decorator for yield surfaces to avoid NaNs for zero stress in both fwd and bwd AD."""
 
-    def wrapper(self, x, *args):
+    def wrapper(self, x, *args, eps=1e-16):
         x_norm = jnp.linalg.norm(x)
-        x_safe = SymmetricTensor2(tensor=jnp.where(x_norm > 0, x, x))
-        return jnp.where(x_norm > 0, method(self, x_safe, *args), 0.0)
+        x_safe = SymmetricTensor2(tensor=jnp.where(x_norm > eps, x, 0 * x))
+        return jnp.where(x_norm > eps, method(self, x_safe, *args), 0.0)
 
     return wrapper
 

@@ -80,7 +80,7 @@ jax.config.update("jax_platform_name", "cpu")
 
 import jaxmat
 import jaxmat.materials as jm
-from jaxmat.tensors import SymmetricTensor2, dev
+from jaxmat.tensors import SymmetricTensor2, dev, safe_sqrt
 from jaxmat.tensors.utils import FischerBurmeister as FB
 from jaxmat.loader import ImposedLoading, global_solve
 import equinox as eqx
@@ -119,7 +119,7 @@ class CamClaySurface(jm.AbstractPlasticSurface):
         p = -jnp.trace(sig) / 3
         s = dev(sig)
         q2 = 3.0 / 2.0 * jnp.vdot(s, s)
-        return jnp.sqrt((pc - p) ** 2 + q2 / self.M**2)
+        return safe_sqrt((pc - p) ** 2 + q2 / self.M**2)
 
 
 # %% [markdown]
@@ -145,7 +145,7 @@ class Hardening(eqx.Module):
 # We now assemble all components into the main Modified Cam-Clay class. This class inherits from `SmallStrainBehavior` and defines the local integration algorithm to update the stress and state variables implicitly as follows:
 # The constitutive update proceeds first by defining the final stress expression from the known strain increment $\Delta\beps$ and the unknown plastic strain increment $\Delta\bepsp$.
 #
-# The residual system enforcing the plastic flow rule and yield condition is then defined. Note that although the plastic multiplier increment $\Delta\lambda$ has not been defined as a state variable, it is an auxiliary unknown that we need to solve for. Moreover, we use the Fischer–Burmeister function `FB(x,y)` (see [Fischer-Burmeister function](./../computational.md)) to smoothly impose the complementarity condition between plastic consistency and plastic multiplier. The discretized system using an implicit Euler scheme is here to find $(\Delta\lambda,\Delta\bepsp)$ such that:
+# The residual system enforcing the plastic flow rule and yield condition is then defined. Note that although the plastic multiplier increment $\Delta\lambda$ has not been defined as a state variable, it is an auxiliary unknown that we need to solve for. Moreover, we use the Fischer–Burmeister function `FB(x,y)` (see [Fischer-Burmeister functions](./../../sharp_bits.md)) to smoothly impose the complementarity condition between plastic consistency and plastic multiplier. The discretized system using an implicit Euler scheme is here to find $(\Delta\lambda,\Delta\bepsp)$ such that:
 #
 # ```{math}
 # \begin{align*}
@@ -192,13 +192,13 @@ class ModifiedCamClay(jm.SmallStrainBehavior):
                 pc = self.hardening(epspv)
                 yield_criterion = self.plastic_surface(sig, pc) - pc
                 n = self.plastic_surface.normal(sig, pc)
-                res = depsp - dlamb * n, FB(-yield_criterion, dlamb)
+                res = (depsp - dlamb * n), FB(-yield_criterion, dlamb)
                 return (res, epsp)
 
             sol = optx.root_find(
                 residual,
                 self.solver,
-                (0.0, tree_zeros_like(epsp_old)),
+                y0=(0.0, tree_zeros_like(epsp_old)),
                 has_aux=True,
                 adjoint=self.adjoint,
             )
