@@ -25,7 +25,7 @@ This demo is to illustrate how to:
 
 - Combine several yield surfaces and associated yield stresses within the same constitutive update.
 
-- Use Fischer-Burmeister functions to tackle plastic complementarity, thereby avoiding an explicit tracking of active/inactive yield surfaces.
+- Use [Fischer-Burmeister functions](./../../sharp_bits.md) to tackle plastic complementarity, thereby avoiding an explicit tracking of active/inactive yield surfaces.
 
 - Validate the implementation by visualizing the resulting stress paths in the $(p, q)$ (mean–deviatoric) stress space.
 ```
@@ -36,7 +36,7 @@ For the sake of illustration, we consider a Drucker–Prager yield surface descr
 
 We consider $i=1,\ldots, N$ different yield surfaces. Each of them is associated with its own yield stress function $f_i(\bsig)$ and yield stress $\sigma_{0i}$. Here, we do not consider any hardening so the yield stresses are all constants. However it is possible to account for independent isotropic hardening of each surface. Hence, each yield surface is associated with its own plastic multiplier, which we denote $p_i$ [^1].
 
-[^1] : This is an abuse of notation regarding the classical cumulated plastic strain of standard $J_2$-plasticity, we should rather denote them $\lambda_ i$. We chose the notation $p_i$ to keep the implementation as close as possible to simpler plastic behaviors.
+[^1]: This is an abuse of notation regarding the classical cumulated plastic strain of standard $J_2$-plasticity, we should rather denote them $\lambda_ i$. We chose the notation $p_i$ to keep the implementation as close as possible to simpler plastic behaviors.
 
 ### Generalized flow rule
 
@@ -54,7 +54,7 @@ $$
 
 ### Plastic complementarity conditions
 
-The evolution of these quantities is determined implicitly by a return-mapping–like algorithm formulated as a root-finding problem. Classically, we should choose which surface is active, compute a projected stress and then check if the surface remains active. This active-set strategy is relatively cumbersome to implement. Instead, the use of complementarity functions such as Fischer-Burmeister functions allows to avoid explicitly testing which surface is active or not. Elastic and plastic evolution are simultaneously accounted for by requiring that, for all plastic mechanism $i$:
+The evolution of these quantities is determined implicitly by a return-mapping–like algorithm formulated as a root-finding problem. Classically, we should choose which surface is active, compute a projected stress and then check if the surface remains active. This active-set strategy is relatively cumbersome to implement. Instead, the use of complementarity functions such as [Fischer-Burmeister functions](./../../sharp_bits.md) allows to avoid explicitly testing which surface is active or not. Elastic and plastic evolution are simultaneously accounted for by requiring that, for all plastic mechanism $i$:
 
 $$
 \text{FB}(\sigma_0-f_i(\bsig), \Delta p_i) = 0 \quad \Leftrightarrow \quad f_i(\bsig)\leq \sigma_{0i},\: \Delta p_i \geq 0, \: (f_i(\bsig)-\sigma_{0i})\Delta p_i=0
